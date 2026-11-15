@@ -109,6 +109,8 @@
       "enviar": "Send",
       "adjuntarImagen": "Attach image",
       "dictar": "Dictate",
+      "dictadoTranscribiendo": "Transcribing…",
+      "dictadoError": "Could not dictate. Try again or type your question.",
       "leerEnVoz": "Read aloud",
       "detenerVoz": "Stop voice",
       "modoSinConexion": "No connection to the model: answering with the on-board rules.",

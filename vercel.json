@@ -3,7 +3,14 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/chat.ts": { "maxDuration": 30 }
+    "api/chat.ts": { "maxDuration": 30 },
+    "api/stt.ts": { "maxDuration": 30 },
+    "api/tts.ts": { "maxDuration": 30 }
   },
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/((?!api/|src/|@vite/|@id/|@fs/|@react-refresh|node_modules/|assets/).*)",
+      "destination": "/index.html"
+    }
+  ]
 }

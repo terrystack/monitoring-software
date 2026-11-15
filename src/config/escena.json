@@ -161,6 +161,8 @@
     "enviar": "Enviar",
     "adjuntarImagen": "Adjuntar imagen",
     "dictar": "Dictar",
+    "dictadoTranscribiendo": "Transcribiendo…",
+    "dictadoError": "No se pudo dictar. Prueba de nuevo o escribe tu pregunta.",
     "leerEnVoz": "Leer en voz alta",
     "detenerVoz": "Detener voz",
     "modoSinConexion": "Sin conexión con el modelo: respondo con las reglas a bordo.",

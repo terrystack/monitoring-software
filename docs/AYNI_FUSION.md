@@ -101,7 +101,9 @@ Créditos: añade a Marisol como coautora en el README. Si quiere commitear dire
 ```
 api/
   chat.ts                  # Vercel Function: bucle de herramientas con el LLM
-  _llm.ts                  # adaptadores Anthropic y OpenAI-compatible
+  _llm.ts                  # Gemini (AI Studio) + Groq respaldo; OpenAI-compat / Anthropic legado
+  stt.ts                   # Whisper en Groq (dictado)
+  tts.ts                   # Gemini Text-to-speech
   _herramientas.ts         # definiciones y ejecución de herramientas de lectura sobre el contexto
   _instrucciones.ts        # system prompt
 src/
@@ -118,7 +120,7 @@ src/
   chat/contexto.ts         # construye el CONTEXTO desde el store (+ test)
   chat/acciones.ts         # aplica las llamadas de visualización al lienzo (+ test)
   chat/respaldoLocal.ts    # respuestas sin conexión (+ test)
-  chat/voz.ts              # TTS y dictado (Web Speech API)
+  chat/voz.ts              # Gemini TTS; Whisper + dictado navegador
   chat/imagen.ts           # reduce la imagen a ≤1024 px JPEG base64
   chat/pruebas.md          # batería de 20 preguntas
 ```
@@ -471,11 +473,10 @@ Reduce a lado mayor ≤ 1024 px, JPEG calidad 0,8, base64 sin prefijo + `mediaTy
 
 Uso esperado: foto de la pantalla de un glucómetro, de una zona de piel o de cómo se colocó el chaleco. El agente **describe y relaciona con los datos y la guía**; no diagnostica ("Veo una zona enrojecida en el antebrazo. No puedo diagnosticarla; registra 'lesión de piel' y avisa al médico de vuelo si…"). Si la imagen muestra un número de un dispositivo, puede proponer registrarlo y pedir confirmación (botón rápido "Registrar 104 mg/dL").
 
-### 8.4 Voz (`chat/voz.ts`)
+### 8.4 Voz (`chat/voz.ts`, `api/tts.ts`, `api/stt.ts`)
 
-- **TTS:** `window.speechSynthesis` con `SpeechSynthesisUtterance`; voz preferida `es-PE` → `es-419` → `es-*` (o `en-US` en inglés); `rate` 1, `pitch` 1. Interruptor `vozActiva` en la cabecera del chat (persistido). Al llegar una respuesta y `vozActiva` → leer. Botón "Detener voz". Cancelar al cambiar de pestaña. Limpia markdown antes de leer.
-- **Dictado:** `SpeechRecognition || webkitSpeechRecognition` (Chrome/Edge), `lang` según idioma, `interimResults: true`; si no existe, ocultar el botón.
-- TTS de proveedor (opcional, solo si sobra tiempo): `api/voz.ts` que devuelve audio. No es requisito.
+- **TTS:** solo `POST /api/tts` con Gemini Text-to-speech (`gemini-3.8-flash-lite-tts` por defecto, voz `Kore`, clave `GEMINI_API_KEY` solo en servidor). El cliente reproduce el WAV. Sin `speechSynthesis`. Interruptor `vozActiva` en la cabecera (persistido). Al llegar una respuesta y `vozActiva` → leer. Botón "Detener voz". Cancelar al cambiar de pestaña. Limpia markdown antes de leer.
+- **Dictado:** grabación con `MediaRecorder` → `POST /api/stt` (Groq `whisper-large-v3-turbo`, clave `GROQ_API_KEY` solo en servidor). Si falla o no hay red/clave → `SpeechRecognition || webkitSpeechRecognition` (Chrome/Edge). Si no hay ni grabación ni reconocimiento, ocultar el micrófono.
 
 ### 8.5 Contrato `POST /api/chat`
 
@@ -561,17 +562,20 @@ Declara las herramientas en `api/_herramientas.ts` con JSON Schema (`enum` con l
 - `respuestasRapidas`: pide al modelo que termine con una línea `RAPIDAS: a | b | c`; el servidor la separa del texto.
 - Variables de entorno (solo servidor; nunca `VITE_`):
   ```
-  LLM_PROVIDER=anthropic        # anthropic | openai
-  LLM_API_KEY=...
-  LLM_MODEL=...                 # p. ej. claude-sonnet-5-5 o el modelo multimodal del proveedor elegido
-  LLM_BASE_URL=                 # opcional, para OpenAI-compatible
+  GEMINI_API_KEY=...            # primario: AI Studio
+  GROQ_API_KEY=...              # respaldo del agente + Whisper STT
+  LLM_MODEL=gemini-3.5-flash-lite
+  LLM_FALLBACK_MODEL=openai/gpt-oss-120b
   CHAT_MAX_TOKENS=600
+  # Override de prueba: LLM_PROVIDER=anthropic|openai + LLM_API_KEY (+ LLM_BASE_URL)
   ```
-- Adaptador **Anthropic** (`fetch`, sin SDK): `POST https://api.anthropic.com/v1/messages`, headers `x-api-key`, `anthropic-version: 2023-06-01`, `content-type: application/json`. `system` aparte; herramientas `{ name, description, input_schema }`; imagen `{ type: 'image', source: { type: 'base64', media_type, data } }`; resultados con bloques `tool_result` y `tool_use_id`; `stop_reason === 'tool_use'` → otra vuelta.
-- Adaptador **OpenAI-compatible**: `POST {LLM_BASE_URL ?? https://api.openai.com/v1}/chat/completions`; herramientas `{ type: 'function', function: { name, description, parameters } }`; imagen `{ type: 'image_url', image_url: { url: 'data:<mediaType>;base64,<datos>' } }`; resultados con mensajes `role: 'tool'` y `tool_call_id`.
+- **Primario:** Gemini 3.5 Flash-Lite vía endpoint OpenAI-compatible de AI Studio (`https://generativelanguage.googleapis.com/v1beta/openai/`).
+- **Respaldo:** Groq `openai/gpt-oss-120b` (`https://api.groq.com/openai/v1`). Si el primario falla (y no fue abort), se reintenta con el respaldo en la misma petición.
+- Adaptador **OpenAI-compatible** (`fetch`, sin SDK): `POST {base}/chat/completions`; herramientas `{ type: 'function', function: { name, description, parameters } }`; imagen `{ type: 'image_url', image_url: { url: 'data:<mediaType>;base64,<datos>' } }`; resultados con mensajes `role: 'tool'` y `tool_call_id`.
+- Adaptador **Anthropic** conservado solo para `LLM_PROVIDER=anthropic` en pruebas.
 - `temperature` 0,3. Timeout total 25 s (`AbortController`).
-- `vercel.json`: añade `"functions": { "api/chat.ts": { "maxDuration": 30 } }` en el mismo commit en que se crea `api/chat.ts`.
-- Desarrollo local: `npm run dev:full` (`vercel dev`) con `.env.local`. Con `npm run dev` (Vite solo) no existe `/api/chat` → el cliente usa el respaldo, y eso es correcto.
+- `vercel.json`: `"functions": { "api/chat.ts": { "maxDuration": 30 }, "api/stt.ts": { "maxDuration": 30 }, "api/tts.ts": { "maxDuration": 30 } }`.
+- Desarrollo local: `npm run dev:full` (`vercel dev`) con `.env.local`. Con `npm run dev` (Vite solo) no existen `/api/chat`, `/api/stt` ni `/api/tts` → el cliente usa el respaldo local del chat y el dictado del navegador; la lectura en voz alta requiere `/api/tts`.
 - Si se necesita tipado de Node en `api/`, crea `api/tsconfig.json` (o añade `api` a `tsconfig.node.json`) para que `tsc -b` y ESLint lo cubran.
 
 ### 8.9 Respaldo local (`chat/respaldoLocal.ts`)
@@ -734,5 +738,5 @@ Esquema y `chaleco_ayni` (7.1), `EscenaMedicion` + `Chaleco` + `Sensor` (7.3), g
 - [ ] El agente cambia el lienzo (zona 3D, gráfico, guía) en las preguntas 2, 3 y 6.
 - [ ] Voz: lee la respuesta en Chrome; dictado funciona en Chrome/Edge.
 - [ ] Sin clave o sin red: el respaldo local responde y lo dice.
-- [ ] `LLM_API_KEY` solo en Vercel (Production y Preview); no aparece en el bundle (`grep -r LLM_API_KEY dist/` vacío).
+- [ ] `GEMINI_API_KEY` y `GROQ_API_KEY` solo en Vercel (Production y Preview); no aparecen en el bundle (`grep -r API_KEY dist/` vacío).
 - [ ] Chip "Datos sintéticos" visible; aviso "no es un diagnóstico" en todas las pestañas.

@@ -32,6 +32,10 @@ export interface AdaptadorLLM {
 export class ErrorProveedor extends Error {}
 
 const TEMPERATURA = 0.3;
+const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/openai';
+const GROQ_BASE = 'https://api.groq.com/openai/v1';
+const MODELO_GEMINI = 'gemini-3.5-flash-lite';
+const MODELO_GROQ = 'openai/gpt-oss-120b';
 
 async function postJson(
   url: string,
@@ -187,16 +191,45 @@ function openai(clave: string, modelo: string, base: string): AdaptadorLLM {
   };
 }
 
-/** Adaptador según las variables de entorno del servidor; null si falta la clave. */
+/** Si el primario falla (y no fue abort), intenta el respaldo. */
+function cascada(primario: AdaptadorLLM, respaldo: AdaptadorLLM): AdaptadorLLM {
+  return {
+    async completar(p) {
+      try {
+        return await primario.completar(p);
+      } catch (error) {
+        if (p.signal.aborted) throw error;
+        return await respaldo.completar(p);
+      }
+    },
+  };
+}
+
+/**
+ * Primario: Gemini Flash-Lite (AI Studio, OpenAI-compat).
+ * Respaldo: Groq gpt-oss-120b.
+ * Legado: LLM_PROVIDER=anthropic|openai + LLM_API_KEY (tests / override).
+ */
 export function crearAdaptador(env: NodeJS.ProcessEnv): AdaptadorLLM | null {
-  const clave = env.LLM_API_KEY;
-  if (!clave) return null;
-  const proveedor = (env.LLM_PROVIDER ?? 'anthropic').toLowerCase();
-  if (proveedor === 'openai')
+  const proveedor = (env.LLM_PROVIDER ?? '').toLowerCase();
+  if (proveedor === 'anthropic' && env.LLM_API_KEY) {
+    return anthropic(env.LLM_API_KEY, env.LLM_MODEL ?? 'claude-sonnet-5-5');
+  }
+  if (proveedor === 'openai' && env.LLM_API_KEY) {
     return openai(
-      clave,
+      env.LLM_API_KEY,
       env.LLM_MODEL ?? 'gpt-4o-mini',
       env.LLM_BASE_URL || 'https://api.openai.com/v1',
     );
-  return anthropic(clave, env.LLM_MODEL ?? 'claude-sonnet-5-5');
+  }
+
+  const primario = env.GEMINI_API_KEY
+    ? openai(env.GEMINI_API_KEY, env.LLM_MODEL ?? MODELO_GEMINI, GEMINI_BASE)
+    : null;
+  const respaldo = env.GROQ_API_KEY
+    ? openai(env.GROQ_API_KEY, env.LLM_FALLBACK_MODEL ?? MODELO_GROQ, GROQ_BASE)
+    : null;
+
+  if (primario && respaldo) return cascada(primario, respaldo);
+  return primario ?? respaldo;
 }

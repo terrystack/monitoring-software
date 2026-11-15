@@ -1118,9 +1118,10 @@ Hasta la fase 7 `vercel.json` no declara `functions`: Vercel rechaza una entrada
 
 ```
 # Solo servidor (Vercel → Settings → Environment Variables)
-LLM_PROVIDER=
-LLM_API_KEY=
-LLM_MODEL=
+GEMINI_API_KEY=
+GROQ_API_KEY=
+LLM_MODEL=gemini-3.5-flash-lite
+LLM_FALLBACK_MODEL=openai/gpt-oss-120b
 CHAT_MAX_TOKENS=600
 ```
 
@@ -1143,7 +1144,7 @@ CHAT_MAX_TOKENS=600
 
 1. Subir el repositorio a GitHub.
 2. En Vercel: **Add New → Project →** importar el repositorio. Preset **Vite** (detectado automáticamente).
-3. En **Settings → Environment Variables**, cargar `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL` para *Production* y *Preview*.
+3. En **Settings → Environment Variables**, cargar `GEMINI_API_KEY`, `GROQ_API_KEY` (y opcionales `LLM_MODEL`, `LLM_FALLBACK_MODEL`) para *Production* y *Preview*.
 4. Deploy. Cada push a `main` despliega producción; cada rama abre una **Preview URL** para revisar.
 5. Para probar el chat en local: `npm i -g vercel`, `vercel link`, `vercel env pull .env.local`, `npm run dev:full`.
 6. Verificar en la URL pública: carga del 3D, cambio de escenario, chat, y que la clave **no** aparezca en el bundle (buscar en DevTools → Sources).
