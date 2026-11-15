@@ -306,10 +306,32 @@ export const esquemaDispositivo = z
             ]),
             duracionMs: z.number().int().positive(),
             resaltarZona: texto.optional(),
+            /** Error común de este paso (AYNI_FUSION.md §7.1). */
+            error: texto.optional(),
+            /** Sensor que se resalta en este paso. */
+            sensor: texto.optional(),
           })
           .strict(),
       )
       .min(1),
+    sensores: z
+      .array(
+        z
+          .object({
+            id: texto,
+            nombre: texto,
+            donde: texto,
+            indicadores: z.array(texto),
+            posicion: z.discriminatedUnion('tipo', [
+              z
+                .object({ tipo: z.literal('torso'), altura: z.number(), angulo: z.number() })
+                .strict(),
+              z.object({ tipo: z.literal('anclaje'), anclaje: esquemaAnclaje }).strict(),
+            ]),
+          })
+          .strict(),
+      )
+      .optional(),
     erroresComunes: z.array(
       z
         .object({
@@ -360,6 +382,59 @@ export const esquemaEntorno = z
 
 export const esquemaModoCapa = z.enum(['visible', 'translucida', 'oculta']);
 
+const listaPalabras = z.array(texto).min(1);
+export const esquemaRespaldo = z
+  .object({
+    /** Fragmentos (sin tildes, en minúsculas) que activan cada intención. */
+    palabras: z
+      .object({
+        emergencia: listaPalabras,
+        estado: listaPalabras,
+        dispositivo: listaPalabras,
+        medico: listaPalabras,
+        tendencia: listaPalabras,
+        relacion: listaPalabras,
+        diagnostico: listaPalabras,
+        medicamento: listaPalabras,
+        internet: listaPalabras,
+        inventar: listaPalabras,
+        agenda: listaPalabras,
+        animo: listaPalabras,
+        radiacion: listaPalabras,
+        ignorar: z.array(texto),
+      })
+      .strict(),
+    emergencia: texto,
+    noDiagnostico: texto,
+    noMedicamento: texto,
+    sinInternet: texto,
+    queEs: texto,
+    noInvento: texto,
+    otroTripulante: texto,
+    agenda: texto,
+    agendaCompleta: texto,
+    animo: texto,
+    comparar: texto,
+    radiacion: texto,
+    co2: texto,
+    errorPaso: texto,
+    repetirMedicion: texto,
+    estado: texto,
+    todoNormal: texto,
+    zonasFuera: texto,
+    zona: texto,
+    acciones: texto,
+    aviso: texto,
+    indicador: texto,
+    indicadorSinNormal: texto,
+    sinValor: texto,
+    prediccion: texto,
+    dispositivo: texto,
+    medicoNada: texto,
+    noEntiendo: texto,
+  })
+  .strict();
+
 export const esquemaEscena = z
   .object({
     estados: z
@@ -401,8 +476,9 @@ export const esquemaEscena = z
         volverAlCuerpo: texto,
         secciones: texto,
         pestanaCuerpo: texto,
-        pestanaEvolucion: texto,
-        pestanaMedir: texto,
+        pestanaMonitoreo: texto,
+        pestanaMedicion: texto,
+        pestanaAgente: texto,
         diaMision: texto,
         alertas: texto,
         sinAlertas: texto,
@@ -432,10 +508,90 @@ export const esquemaEscena = z
         diaDatos: texto,
         diaAnterior: texto,
         diaSiguiente: texto,
-        proximamenteEvolucion: texto,
-        proximamenteMedir: texto,
+        // Fusión a 4 pestañas (AYNI_FUSION.md §4.4)
+        hoy: texto,
+        puntajeDe: texto,
+        estadoGeneral: texto,
+        presupuestoRadiacion: texto,
+        mSvAcumulados: texto,
+        limiteCarrera: texto,
+        rango: texto,
+        dias: texto,
+        todasLasZonas: texto,
+        prediccion: texto,
+        entrenadoCon: texto,
+        fueraDeTuNormal: texto,
+        dentroDeTuNormal: texto,
+        comparar: texto,
+        agendaHoy: texto,
+        pendiente: texto,
+        hecha: texto,
+        atrasada: texto,
+        guiaDispositivo: texto,
+        errorComun: texto,
+        anterior: texto,
+        siguientePaso: texto,
+        repetirPaso: texto,
+        sensores: texto,
+        tocaUnSensor: texto,
+        registrarMedicion: texto,
+        guardar: texto,
+        medicionGuardada: texto,
+        animoHoy: texto,
+        agenteBienvenida: texto,
+        escribeTuPregunta: texto,
+        enviar: texto,
+        adjuntarImagen: texto,
+        dictar: texto,
+        leerEnVoz: texto,
+        detenerVoz: texto,
+        modoSinConexion: texto,
+        lienzoVacio: texto,
+        preguntarAyni: texto,
+        modeloV1: texto,
+        siSigueAsi: texto,
+        siSigueAsiManana: texto,
+        verEnElCuerpo: texto,
+        diaDeTotal: texto,
+        sinMedicionesRango: texto,
+        pensando: texto,
+        mostradoEnLienzo: texto,
+        abrirEnPestana: texto,
+        quitarImagen: texto,
+        vistaAnterior: texto,
+        vistaSiguiente: texto,
+        tu: texto,
+        ocultarLienzo: texto,
+        mostrarLienzo: texto,
+        preguntaZona: texto,
+        imagenNoValida: texto,
+        resumenHoy: texto,
+        conversacion: texto,
+        lienzo: texto,
+        franjaManana: texto,
+        franjaDia: texto,
+        franjaNoche: texto,
+        franjaSemanal: texto,
+        borrarRegistros: texto,
+        midiendo: texto,
+        mide: texto,
+        sinIndicadores: texto,
+        valor: texto,
+        indicador: texto,
       })
       .strict(),
+    /** Etiquetas de la escala de ánimo, de 1 (muy mal) a 5 (muy bien). */
+    escalaAnimo: z.array(texto).length(5),
+    /** Indicador que registra la escala de ánimo (caras) y que usa el agente al hablar de ánimo. */
+    indicadorAnimo: texto,
+    /** Indicadores que se pueden registrar a mano en la pestaña Medición. */
+    indicadoresRegistro: z.array(texto),
+    /** Botones iniciales del Agente AYNI. */
+    preguntasSugeridas: z.array(texto).min(1),
+    /** Indicadores del reto que encabezan Monitoreo cuando todo está normal. */
+    indicadoresDestacados: z.array(texto),
+    /** Respuestas del agente sin conexión con el modelo (AYNI_FUSION.md §8.9). */
+    respaldo: esquemaRespaldo,
     etiquetasAptitud: z
       .object({ normal: texto, atencion: texto, critico: texto, sin_dato: texto })
       .strict(),
@@ -663,7 +819,24 @@ function validarReferencias(config: ConfigAyni): ErrorConfig[] {
           `indicador "${id}" no existe en indicadores.json`,
         );
     });
+    const sensores = new Set((d.sensores ?? []).map((s) => s.id));
+    (d.sensores ?? []).forEach((s, j) => {
+      s.indicadores.forEach((id, k) => {
+        if (!indicadores.has(id))
+          agregar(
+            'dispositivos',
+            `${base}.sensores[${j}].indicadores[${k}]`,
+            `indicador "${id}" no existe en indicadores.json`,
+          );
+      });
+    });
     d.pasos.forEach((p, j) => {
+      if (p.sensor && !sensores.has(p.sensor))
+        agregar(
+          'dispositivos',
+          `${base}.pasos[${j}].sensor`,
+          `sensor "${p.sensor}" no existe en sensores`,
+        );
       if (p.resaltarZona && !zonas.has(p.resaltarZona))
         agregar(
           'dispositivos',
@@ -780,6 +953,28 @@ function validarReferencias(config: ConfigAyni): ErrorConfig[] {
     if (!capasEscena.has(zona.capa))
       agregar('escena', 'capas', `falta la capa "${zona.capa}" que usa la zona "${zona.id}"`);
   }
+  if (!indicadores.has(config.escena.indicadorAnimo))
+    agregar(
+      'escena',
+      'indicadorAnimo',
+      `indicador "${config.escena.indicadorAnimo}" no existe en indicadores.json`,
+    );
+  config.escena.indicadoresRegistro.forEach((id, i) => {
+    if (!indicadores.has(id))
+      agregar(
+        'escena',
+        `indicadoresRegistro[${i}]`,
+        `indicador "${id}" no existe en indicadores.json`,
+      );
+  });
+  config.escena.indicadoresDestacados.forEach((id, i) => {
+    if (!indicadores.has(id))
+      agregar(
+        'escena',
+        `indicadoresDestacados[${i}]`,
+        `indicador "${id}" no existe en indicadores.json`,
+      );
+  });
   if (!config.escenarios.some((e) => e.id === config.escena.escenarioInicial))
     agregar(
       'escena',

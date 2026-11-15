@@ -46,7 +46,7 @@ export function ControlCapas({ escena }: Props) {
           <ul className="flex flex-col gap-1.5">
             {capas.map((capa) => (
               <li key={capa.id} className="flex items-center justify-between gap-3">
-                <span className="text-[0.86rem] text-tinta">{capa.nombre}</span>
+                <span className="text-[0.9rem] text-tinta">{capa.nombre}</span>
                 <div
                   role="radiogroup"
                   aria-label={capa.nombre}

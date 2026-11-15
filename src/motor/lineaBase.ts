@@ -68,6 +68,21 @@ export function ventanaPrevia(
   return serie.filter((v) => v.dia >= desde && v.dia < diaActual);
 }
 
+export interface BandaNormal {
+  media: number;
+  inf: number;
+  sup: number;
+}
+
+/** "Tu normal": media ± z·σ de la línea base (la misma banda que dibujan los gráficos). */
+export function bandaNormal(lineaBase: LineaBase, z = 2): BandaNormal {
+  return {
+    media: lineaBase.media,
+    inf: lineaBase.media - z * lineaBase.desv,
+    sup: lineaBase.media + z * lineaBase.desv,
+  };
+}
+
 /**
  * Media y desviación (muestral) de la ventana previa. Con menos de `minDias` días devuelve null.
  * Si σ = 0 se usa el 1 % de la media (4.4.3).

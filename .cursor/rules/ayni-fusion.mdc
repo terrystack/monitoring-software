@@ -1,0 +1,12 @@
+---
+description: Fusión de AYNI a 4 pestañas (Cuerpo 3D, Monitoreo y predicción, Medición, Agente AYNI)
+alwaysApply: true
+---
+
+- El plan vigente está en docs/AYNI_FUSION.md. Donde contradiga a docs/AYNI_SPEC.md, manda AYNI_FUSION.md.
+- Trabaja en la rama fusion-4-pestanas, por fases (A a F de la sección 10), con un commit por fase y test + build + lint en verde.
+- Las pestañas son: cuerpo3d, monitoreo, medicion, agente.
+- El agente usa solo los datos propios de AYNI (CSV sintético, lecturas manuales, configuración y motor) y las fuentes nombradas en su system prompt. Sin búsqueda web ni herramientas externas. La clave del LLM vive solo en el servidor (/api/chat), nunca con prefijo VITE_.
+- Un solo Canvas 3D montado a la vez en toda la app.
+- No se portan del repo de Marisol: StylizedBody, GLBBody, sus GLB, rules.ts, zscore.ts ni scenarios.ts. Su assistant.ts es por palabras clave (no es un LLM) y solo inspira el respaldo local.
+- Todo texto nuevo de interfaz va en escena.json y en idiomas/en.json, y se declara en el esquema.

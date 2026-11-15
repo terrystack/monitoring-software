@@ -15,7 +15,14 @@ import type {
   LineaBase,
 } from '../datos/tipos';
 import { conUnidad as conUnidadEn, FRASES_BASE, numero, rellenar } from './frases';
-import { agregarPorDia, calcularLineaBase, diaDe, sumarDias, type ValorDiario } from './lineaBase';
+import {
+  agregarPorDia,
+  bandaNormal,
+  calcularLineaBase,
+  diaDe,
+  sumarDias,
+  type ValorDiario,
+} from './lineaBase';
 
 export const RANGO_ESTADO: Record<EstadoZona, number> = {
   sin_dato: 0,
@@ -85,13 +92,14 @@ function reglaLineaBase(r: ReglaDe<'linea_base'>, ctx: ContextoRegla): Resultado
   }
   const z = (actual.valor - lineaBase.media) / lineaBase.desv;
   const riesgo = riesgoSegunDireccion(z, ind.direccionRiesgo);
+  const banda = bandaNormal(lineaBase, r.zAmbar);
   return {
     estado: riesgo >= r.zRojo ? 'critico' : riesgo >= r.zAmbar ? 'atencion' : 'normal',
     motivo: rellenar(frases.lineaBase, {
       nombre: ind.nombre,
       valor,
-      min: numero(lineaBase.min, frases),
-      max: numero(lineaBase.max, frases),
+      min: numero(banda.inf, frases),
+      max: numero(banda.sup, frases),
       z: numero(z, frases),
     }),
     lineaBase,

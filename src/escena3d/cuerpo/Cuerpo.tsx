@@ -37,7 +37,7 @@ function CapasProcedurales({ onListo }: { onListo: () => void }) {
  * Orquesta el cuerpo (anatómico por defecto; `?cuerpo=procedural` fuerza el procedural),
  * el halo, la respiración leve y la selección de zonas.
  */
-export function Cuerpo() {
+export function Cuerpo({ interactivo = true }: { interactivo?: boolean }) {
   const grupo = useRef<THREE.Group>(null);
   const reducido = useMovimientoReducido();
   const calidad = useAyni((s) => s.calidad);
@@ -64,7 +64,7 @@ export function Cuerpo() {
 
   const respaldo = <CapasProcedurales onListo={registrar} />;
   return (
-    <group ref={grupo} name="cuerpo" {...manejadores}>
+    <group ref={grupo} name="cuerpo" {...(interactivo ? manejadores : {})}>
       {procedural ? (
         respaldo
       ) : (

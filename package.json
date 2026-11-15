@@ -19,6 +19,7 @@
     "@react-three/drei": "9.114.6",
     "@react-three/fiber": "8.17.14",
     "@react-three/postprocessing": "2.16.7",
+    "echarts": "5.5.1",
     "idb-keyval": "6.3.0",
     "lucide-react": "0.460.0",
     "papaparse": "5.4.1",

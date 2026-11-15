@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Check, ExternalLink, X } from 'lucide-react';
+import { Check, ExternalLink, MessageCircle, X } from 'lucide-react';
 import type { ConfigAyni } from '../../config/esquemas';
+import { sensorParaIndicadores } from '../../escena3d/dispositivo/estadoSensor';
 import type { Seleccion } from '../../estado/seleccion';
 import { useAyni } from '../../estado/store';
 import { IconoEstado } from '../../ui/IconoEstado';
+import { plantilla } from '../../ui/textos';
 
 interface Props {
   config: ConfigAyni;
@@ -47,7 +49,7 @@ function CuerpoDesplazable({ children }: { children: ReactNode }) {
 function Apartado({ titulo, children }: { titulo: string; children: ReactNode }) {
   return (
     <section>
-      <h3 className="text-[0.86rem] font-semibold text-tinta-suave">{titulo}</h3>
+      <h3 className="text-[0.82rem] font-semibold text-tinta-suave">{titulo}</h3>
       {children}
     </section>
   );
@@ -122,7 +124,7 @@ export function TarjetaAccion({ config, seleccion }: Props) {
         <Apartado titulo={textos.queCambio}>
           <p className="mt-1.5 text-[0.9rem] leading-relaxed text-tinta">{tarjeta.queCambio}</p>
           {tarjeta.queSignifica && (
-            <p className="mt-2 text-[0.86rem] leading-relaxed text-tinta-suave">
+            <p className="mt-2 text-[0.82rem] leading-relaxed text-tinta-suave">
               {tarjeta.queSignifica}
             </p>
           )}
@@ -185,7 +187,7 @@ export function TarjetaAccion({ config, seleccion }: Props) {
 
         {tarjeta.porQueEspacio && (
           <Apartado titulo={textos.porQueEspacio}>
-            <p className="mt-1.5 text-[0.86rem] leading-relaxed text-tinta-suave">
+            <p className="mt-1.5 text-[0.82rem] leading-relaxed text-tinta-suave">
               {tarjeta.porQueEspacio}
             </p>
             {tarjeta.fuente && (
@@ -206,17 +208,41 @@ export function TarjetaAccion({ config, seleccion }: Props) {
         )}
       </CuerpoDesplazable>
 
-      <div className="flex shrink-0 gap-3 border-t border-linea/60 px-5 pb-5 pt-4">
+      <div className="flex shrink-0 flex-wrap gap-3 border-t border-linea/60 px-5 pb-5 pt-4">
         <button
           type="button"
-          onClick={() => setPestana('evolucion')}
+          onClick={() => {
+            const s = useAyni.getState();
+            s.setBorradorAgente(plantilla(textos.preguntaZona, { zona: zona?.nombre ?? zonaId }));
+            s.setLienzo({ tipo: 'cuerpo', zona: zonaId });
+            s.setPestana('agente');
+          }}
+          className="flex w-full items-center justify-center gap-2 rounded-md px-3 py-1.5 text-[0.84rem] text-acento underline decoration-acento/40 underline-offset-4 hover:decoration-acento"
+        >
+          <MessageCircle size={15} aria-hidden="true" />
+          {textos.preguntarAyni}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            useAyni.getState().setZonaFiltro(zonaId);
+            setPestana('monitoreo');
+          }}
           className="flex-1 whitespace-nowrap rounded-md border border-linea px-3 py-2.5 text-[0.88rem] text-tinta transition-colors hover:border-tinta-tenue"
         >
           {textos.verEvolucion}
         </button>
         <button
           type="button"
-          onClick={() => setPestana('medir')}
+          onClick={() => {
+            const s = useAyni.getState();
+            const indicadores = config.indicadores
+              .filter((i) => i.zonas.includes(zonaId))
+              .map((i) => i.id);
+            s.setPasoDispositivo(0);
+            s.setSensorSeleccionado(sensorParaIndicadores(config, indicadores)?.id ?? null);
+            setPestana('medicion');
+          }}
           className="flex-1 whitespace-nowrap rounded-md border border-acento/60 bg-acento/15 px-3 py-2.5 text-[0.88rem] font-semibold text-tinta transition-colors hover:bg-acento/25"
         >
           {textos.medirAhora}

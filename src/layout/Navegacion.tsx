@@ -6,15 +6,16 @@ interface Props {
   textos: ConfigEscena['textos'];
 }
 
-/** Las tres pestañas de la sección 9, operables con flechas, Inicio y Fin. */
+/** Las cuatro pestañas (AYNI_FUSION.md §4.3), operables con flechas, Inicio y Fin. */
 export function Navegacion({ textos }: Props) {
   const pestana = useAyni((s) => s.pestana);
   const setPestana = useAyni((s) => s.setPestana);
   const botones = useRef<(HTMLButtonElement | null)[]>([]);
   const pestanas: { id: Pestana; nombre: string }[] = [
     { id: 'cuerpo3d', nombre: textos.pestanaCuerpo },
-    { id: 'evolucion', nombre: textos.pestanaEvolucion },
-    { id: 'medir', nombre: textos.pestanaMedir },
+    { id: 'monitoreo', nombre: textos.pestanaMonitoreo },
+    { id: 'medicion', nombre: textos.pestanaMedicion },
+    { id: 'agente', nombre: textos.pestanaAgente },
   ];
 
   const alPulsar = (e: KeyboardEvent, i: number) => {
@@ -53,7 +54,7 @@ export function Navegacion({ textos }: Props) {
               tabIndex={activa ? 0 : -1}
               onClick={() => setPestana(p.id)}
               onKeyDown={(e) => alPulsar(e, i)}
-              className={`relative whitespace-nowrap px-3 text-[0.86rem] transition-colors duration-200 ${
+              className={`relative whitespace-nowrap px-3 text-[0.9rem] transition-colors duration-200 ${
                 activa ? 'font-semibold text-tinta' : 'text-tinta-suave hover:text-tinta'
               }`}
             >

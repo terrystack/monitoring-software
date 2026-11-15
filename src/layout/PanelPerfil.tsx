@@ -1,9 +1,11 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import type { ConfigAyni } from '../config/esquemas';
+import { borrarLecturasManuales } from '../datos/almacen';
 import { diaMision, type Seleccion } from '../estado/seleccion';
 import { useAyni } from '../estado/store';
 import { conUnidad, numero } from '../motor/frases';
+import { normalDe } from '../motor/series';
 import { Interruptor } from '../ui/Interruptor';
 import { iniciales, plantilla } from '../ui/textos';
 
@@ -68,7 +70,10 @@ export function PanelPerfil({ config, seleccion }: Props) {
             {iniciales(tripulante?.nombre ?? '')}
           </span>
           <div className="min-w-0 flex-1">
-            <h2 id="perfil-titulo" className="text-[1.1rem] font-semibold leading-tight text-tinta">
+            <h2
+              id="perfil-titulo"
+              className="text-[1.05rem] font-semibold leading-tight text-tinta"
+            >
               {tripulante?.nombre}
             </h2>
             <p className="mt-0.5 text-[0.84rem] text-tinta-suave">
@@ -257,13 +262,13 @@ function LineaBase({ config }: { config: ConfigAyni }) {
     <Seccion titulo={textos.lineaBase}>
       <dl className="divide-y divide-linea/50 text-[0.84rem]">
         {conLineaBase.map((i) => {
-          const lb = indicadores?.[i.id]?.lineaBase;
+          const banda = normalDe(i, indicadores?.[i.id]?.lineaBase ?? null);
           return (
             <div key={i.id} className="flex items-baseline justify-between gap-3 py-1.5">
               <dt className="text-tinta-suave">{i.nombre}</dt>
               <dd className="whitespace-nowrap tabular-nums text-tinta">
-                {lb
-                  ? `${numero(lb.min, config.frases)}–${conUnidad(lb.max, i.unidad, config.frases)}`
+                {banda
+                  ? `${numero(banda.inf, config.frases)}–${conUnidad(banda.sup, i.unidad, config.frases)}`
                   : textos.sinLineaBase}
               </dd>
             </div>
@@ -293,6 +298,15 @@ function Accesibilidad({ config }: { config: ConfigAyni }) {
         activo={movimientoReducido}
         alCambiar={setMovimientoReducido}
       />
+      <button
+        type="button"
+        onClick={() => {
+          void borrarLecturasManuales().then(() => useAyni.getState().setLecturasManuales([]));
+        }}
+        className="mt-2 self-start rounded-md border border-linea px-3 py-1.5 text-[0.82rem] text-tinta-suave hover:border-estado-critico/60 hover:text-tinta"
+      >
+        {textos.borrarRegistros}
+      </button>
     </Seccion>
   );
 }

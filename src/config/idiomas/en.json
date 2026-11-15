@@ -43,8 +43,6 @@
       "volverAlCuerpo": "Back to the body",
       "secciones": "Sections",
       "pestanaCuerpo": "3D Body",
-      "pestanaEvolucion": "Trends and forecast",
-      "pestanaMedir": "Measure and devices",
       "diaMision": "Day {dia}",
       "alertas": "Alerts",
       "sinAlertas": "No zone is outside your normal.",
@@ -74,15 +72,166 @@
       "diaDatos": "Data day",
       "diaAnterior": "Previous day",
       "diaSiguiente": "Next day",
-      "proximamenteEvolucion": "Here you will see each indicator against your normal and its seven-day forecast. Coming in AYNI's next phase.",
-      "proximamenteMedir": "Here you will find today's schedule, the 3D guide for each device and the measurement log. Coming in an upcoming AYNI phase."
+      "pestanaMonitoreo": "Monitoring & forecast",
+      "pestanaMedicion": "Measurement",
+      "pestanaAgente": "AYNI Agent",
+      "hoy": "Today",
+      "puntajeDe": "of 100",
+      "estadoGeneral": "Overall status {puntaje} of 100",
+      "presupuestoRadiacion": "Radiation budget",
+      "mSvAcumulados": "mSv accumulated",
+      "limiteCarrera": "Career limit {limite} mSv (NASA-STD-3001).",
+      "rango": "Range",
+      "dias": "{n} days",
+      "todasLasZonas": "All zones",
+      "prediccion": "7-day forecast",
+      "entrenadoCon": "Model: {modelo} · data: {datos}",
+      "fueraDeTuNormal": "Outside your normal",
+      "dentroDeTuNormal": "Within your normal",
+      "comparar": "Compare",
+      "agendaHoy": "Today's schedule",
+      "pendiente": "Pending",
+      "hecha": "Done",
+      "atrasada": "Overdue",
+      "guiaDispositivo": "How to put on the vest",
+      "errorComun": "Common mistake in this step",
+      "anterior": "Previous",
+      "siguientePaso": "Next step",
+      "repetirPaso": "Repeat step",
+      "sensores": "Sensors",
+      "tocaUnSensor": "Tap a sensor to see what it measures",
+      "registrarMedicion": "Log a measurement",
+      "guardar": "Save",
+      "medicionGuardada": "Saved. The 3D body and your charts are already updated.",
+      "animoHoy": "Today's mood",
+      "agenteBienvenida": "I am AYNI. I explain your data on board and tell you when to call the flight surgeon. I do not diagnose.",
+      "escribeTuPregunta": "Ask about an indicator, a measurement or a risk",
+      "enviar": "Send",
+      "adjuntarImagen": "Attach image",
+      "dictar": "Dictate",
+      "leerEnVoz": "Read aloud",
+      "detenerVoz": "Stop voice",
+      "modoSinConexion": "No connection to the model: answering with the on-board rules.",
+      "lienzoVacio": "The body, charts or the guide we use to explain your question will appear here.",
+      "preguntarAyni": "Ask AYNI",
+      "modeloV1": "14-day linear regression",
+      "siSigueAsi": "If this continues, {nombre} could leave your normal in {n} days.",
+      "verEnElCuerpo": "See on the body",
+      "diaDeTotal": "Day {dia} of {total}",
+      "sinMedicionesRango": "No measurements in this range.",
+      "siSigueAsiManana": "If this continues, {nombre} could leave your normal tomorrow.",
+      "pensando": "AYNI is thinking…",
+      "mostradoEnLienzo": "Shown on the canvas",
+      "abrirEnPestana": "Open in its tab",
+      "quitarImagen": "Remove image",
+      "vistaAnterior": "Previous view",
+      "vistaSiguiente": "Next view",
+      "tu": "You",
+      "ocultarLienzo": "Hide canvas",
+      "mostrarLienzo": "Show canvas",
+      "preguntaZona": "What does my {zona} result mean and what do I do?",
+      "imagenNoValida": "I could not use that image: it must be a JPG, PNG or WebP under 4 MB.",
+      "resumenHoy": "Today's summary",
+      "conversacion": "Conversation with AYNI",
+      "lienzo": "Canvas",
+      "franjaManana": "Morning",
+      "franjaDia": "Day",
+      "franjaNoche": "Night",
+      "franjaSemanal": "Weekly",
+      "borrarRegistros": "Delete my logs",
+      "midiendo": "Measuring…",
+      "mide": "Measures: {lista}",
+      "sinIndicadores": "Supports the other sensors",
+      "valor": "Value",
+      "indicador": "Indicator"
     },
     "etiquetasAptitud": {
       "normal": "Ready",
       "atencion": "With caution",
       "critico": "Not ready today",
       "sin_dato": "No data"
-    }
+    },
+    "preguntasSugeridas": [
+      "How am I today?",
+      "Why is my heart amber?",
+      "Show me my sleep over the last 2 weeks",
+      "How do I put on the vest?",
+      "Should I call the flight surgeon?"
+    ],
+    "respaldo": {
+      "palabras": {
+        "emergencia": [
+          "chest pain",
+          "my chest hurts",
+          "short of breath",
+          "cannot breathe",
+          "can't breathe",
+          "faint",
+          "confused",
+          "confusion",
+          "bleeding"
+        ],
+        "estado": ["how am i", "overall", "summary", "how am i doing"],
+        "dispositivo": [
+          "vest",
+          "measure myself",
+          "put on",
+          "how do i measure",
+          "how do i put",
+          "wear the"
+        ],
+        "medico": ["surgeon", "doctor", "call"],
+        "tendencia": ["trend", "evolution", "chart", "last", "week", "forecast", "show me"],
+        "ignorar": [
+          "hours",
+          "blood",
+          "cabin",
+          "today",
+          "normal",
+          "variability",
+          "sensor",
+          "sensors",
+          "personal"
+        ],
+        "relacion": ["related", "relationship", "affect", "linked", "compare"],
+        "diagnostico": ["disease", "illness", "diagnos", "do i have", "heart attack"],
+        "medicamento": ["medication", "medicine", "pill", "prescri", "drug", "what should i take"],
+        "internet": ["internet", "search the web", "google", "look up online"],
+        "inventar": ["make up", "invent", "fake"],
+        "agenda": ["measure now", "what should i measure", "schedule", "agenda", "what is next"],
+        "animo": ["down", "sad", "stressed", "anxious", "lonely", "overwhelmed"],
+        "radiacion": ["radiation", "cumulative dose", "msv"]
+      },
+      "emergencia": "Follow the spacecraft's emergency protocol now and tell the crew and the flight surgeon immediately.",
+      "estado": "Your overall status today is {puntaje} of 100. {motivo}",
+      "todoNormal": "Everything is within your normal.",
+      "zonasFuera": "Outside your normal: {lista}.",
+      "zona": "{zona}: {estado}. {queCambio}",
+      "acciones": "What to do now: {acciones}",
+      "aviso": "When to call the flight surgeon: {aviso}",
+      "indicador": "{nombre} today: {valor}; your normal: {normal}.",
+      "indicadorSinNormal": "{nombre} today: {valor}.",
+      "sinValor": "I have no measurements of {nombre} yet; you can measure it with the vest or log it.",
+      "prediccion": "Based on your data, it could leave your normal in {n} days.",
+      "dispositivo": "{dispositivo}, step {n}: {paso}",
+      "medicoNada": "No zone is outside your normal; keep your routine and report any symptoms.",
+      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with the vest.",
+      "noDiagnostico": "I can't diagnose diseases; I only compare your data with your normal.",
+      "noMedicamento": "I don't prescribe medication or doses: the flight surgeon decides that.",
+      "sinInternet": "I don't have internet; I explain with what is on board.",
+      "queEs": "{nombre}: {queEs}",
+      "noInvento": "I don't make up values. Here is your real {nombre} series; if a day is missing, you can measure or log it.",
+      "otroTripulante": "I only have the data of the active crew member ({tripulante}). To see someone else, switch in the profile.",
+      "agenda": "Next on your schedule: {hora} · {titulo}.",
+      "agendaCompleta": "You already did everything on today's schedule.",
+      "animo": "Thanks for telling me; feeling this way on a long mission is normal. Logging your mood today helps see if it changes. Talk to someone in the crew or to the psychological support team.",
+      "comparar": "Here are {a} and {b} together. Moving at the same time doesn't prove one causes the other.",
+      "radiacion": "{nombre}: {valor}, {porcentaje} % of your career limit of {limite} mSv ({fuente}).",
+      "co2": "{nombre}: {valor}. On-board reference: {limite}.",
+      "errorPaso": "Common mistake: {error}",
+      "repetirMedicion": "If the value surprises you, fix that and repeat the measurement before drawing conclusions."
+    },
+    "escalaAnimo": ["Very bad", "Bad", "Okay", "Good", "Very good"]
   },
   "frases": {
     "separadorDecimal": ".",
@@ -108,10 +257,22 @@
     "dentroDeTuNormal": "Your indicators are within your normal."
   },
   "zonas": {
-    "cerebro": { "nombre": "Brain", "funcion": "Controls sleep, mood and attention." },
-    "nervios": { "nombre": "Nerves", "funcion": "Carries signals between the brain and the body." },
-    "corazon": { "nombre": "Heart", "funcion": "Pumps blood to the whole body." },
-    "pulmones": { "nombre": "Lungs", "funcion": "Bring oxygen into the blood." },
+    "cerebro": {
+      "nombre": "Brain",
+      "funcion": "Controls sleep, mood and attention."
+    },
+    "nervios": {
+      "nombre": "Nerves",
+      "funcion": "Carries signals between the brain and the body."
+    },
+    "corazon": {
+      "nombre": "Heart",
+      "funcion": "Pumps blood to the whole body."
+    },
+    "pulmones": {
+      "nombre": "Lungs",
+      "funcion": "Bring oxygen into the blood."
+    },
     "metabolismo": {
       "nombre": "Metabolism",
       "funcion": "Turns food into energy and regulates glucose."
@@ -128,12 +289,18 @@
       "nombre": "Bones",
       "funcion": "Support the body; lose density in microgravity."
     },
-    "musculos": { "nombre": "Muscles", "funcion": "Move the body; waste away without load." },
+    "musculos": {
+      "nombre": "Muscles",
+      "funcion": "Move the body; waste away without load."
+    },
     "piel_inmune": {
       "nombre": "Skin and immunity",
       "funcion": "First barrier; reflects fever and immune changes."
     },
-    "todo_cuerpo": { "nombre": "Whole body", "funcion": "Exposure to space radiation." }
+    "todo_cuerpo": {
+      "nombre": "Whole body",
+      "funcion": "Exposure to space radiation."
+    }
   },
   "indicadores": {
     "pulso_reposo": {
@@ -412,9 +579,15 @@
       }
     },
     "aptitud": {
-      "eva": { "nombre": "Spacewalk" },
-      "precision": { "nombre": "Precision task" },
-      "gravedad": { "nombre": "Return to gravity" }
+      "eva": {
+        "nombre": "Spacewalk"
+      },
+      "precision": {
+        "nombre": "Precision task"
+      },
+      "gravedad": {
+        "nombre": "Return to gravity"
+      }
     }
   },
   "entornos": {
@@ -486,9 +659,18 @@
     }
   },
   "tripulantes": {
-    "A01": { "nombre": "Cmdr. Rosa", "rol": "Commander" },
-    "A02": { "nombre": "Eng. Kenji", "rol": "Flight engineer" },
-    "A03": { "nombre": "Dr. Amara", "rol": "Medical officer" }
+    "A01": {
+      "nombre": "Cmdr. Rosa",
+      "rol": "Commander"
+    },
+    "A02": {
+      "nombre": "Eng. Kenji",
+      "rol": "Flight engineer"
+    },
+    "A03": {
+      "nombre": "Dr. Amara",
+      "rol": "Medical officer"
+    }
   },
   "dispositivos": {
     "generico_muneca": {
@@ -539,17 +721,89 @@
       "erroresComunes": [
         "Dosimeter kept in a pocket or drawer: it does not record your real exposure."
       ]
+    },
+    "chaleco_ayni": {
+      "nombre": "AYNI biometric vest",
+      "pasos": [
+        "Moisten the electrodes: a drop of water on each ECG electrode improves skin contact.",
+        "Put the vest on snugly: close to the body without restricting breathing, with the band at sternum level.",
+        "Clip the oximeter on your index finger, clean and warm. Wait for the light to settle.",
+        "Keep the dosimeter in the chest pocket, also while you sleep.",
+        "Stay still for 60 seconds: the first resting reading sets your value for the day.",
+        "Done. Watch your heart update on the 3D body."
+      ],
+      "erroresComunes": ["Loose vest: the sensors move and read noise."],
+      "erroresPasos": [
+        "Dry electrodes: the pulse signal gets lost.",
+        "Loose vest: the sensors move and read noise.",
+        "Cold finger or dark nail polish: SpO₂ reads low without being low.",
+        "Dosimeter away from the body: the recorded dose is not yours.",
+        "Measuring right after exercise: a high pulse triggers a false alert.",
+        ""
+      ],
+      "sensores": {
+        "ecg": {
+          "nombre": "ECG electrodes",
+          "donde": "Chest, below the left collarbone and over the ribs"
+        },
+        "respiracion": {
+          "nombre": "Breathing band",
+          "donde": "Around the chest, at sternum level"
+        },
+        "oximetro": {
+          "nombre": "Oximeter",
+          "donde": "Clip on the index finger"
+        },
+        "temperatura": {
+          "nombre": "Skin temperature sensor",
+          "donde": "Left side, below the armpit"
+        },
+        "co2": {
+          "nombre": "Cabin CO₂ sensor",
+          "donde": "Right shoulder, near the mouth"
+        },
+        "dosimetro": {
+          "nombre": "Personal dosimeter",
+          "donde": "Chest pocket, right side"
+        },
+        "pulsera": {
+          "nombre": "Activity and sleep band",
+          "donde": "Left wrist"
+        },
+        "brazalete": {
+          "nombre": "Blood pressure and glucose cuff",
+          "donde": "Left arm, at heart level"
+        }
+      }
     }
   },
   "rutina": {
-    "pulso_hrv_despertar": { "titulo": "Pulse and variability on waking" },
-    "presion": { "titulo": "Blood pressure" },
-    "sueno_anoche": { "titulo": "Last night's sleep" },
-    "glucosa_almuerzo": { "titulo": "Glucose after lunch" },
-    "ejercicio": { "titulo": "Resistance exercise" },
-    "temperatura": { "titulo": "Body temperature" },
-    "animo_sintomas": { "titulo": "Mood and symptoms" },
-    "masa_corporal": { "titulo": "Body mass" },
-    "prueba_reaccion": { "titulo": "Reaction test" }
+    "pulso_hrv_despertar": {
+      "titulo": "Pulse and variability on waking"
+    },
+    "presion": {
+      "titulo": "Blood pressure"
+    },
+    "sueno_anoche": {
+      "titulo": "Last night's sleep"
+    },
+    "glucosa_almuerzo": {
+      "titulo": "Glucose after lunch"
+    },
+    "ejercicio": {
+      "titulo": "Resistance exercise"
+    },
+    "temperatura": {
+      "titulo": "Body temperature"
+    },
+    "animo_sintomas": {
+      "titulo": "Mood and symptoms"
+    },
+    "masa_corporal": {
+      "titulo": "Body mass"
+    },
+    "prueba_reaccion": {
+      "titulo": "Reaction test"
+    }
   }
 }

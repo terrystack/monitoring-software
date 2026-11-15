@@ -9,6 +9,7 @@
     --tinta: 236 238 244;
     --tinta-suave: 184 189 205;
     --tinta-tenue: 138 144 166;
+    --acento: 34 211 238;
     --opacidad-panel: 0.88;
     /* 14 px en una laptop de 1280 px, 17 px en 1920 px. */
     font-size: clamp(14px, 0.47vw + 8px, 17px);
@@ -64,6 +65,15 @@
 
   .rotulo {
     @apply text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

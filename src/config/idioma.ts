@@ -21,6 +21,9 @@ export const esquemaTraduccion = z
         modosCapa: z.record(z.string(), t),
         textos: esquemaEscena.shape.textos,
         etiquetasAptitud: esquemaEscena.shape.etiquetasAptitud,
+        preguntasSugeridas: esquemaEscena.shape.preguntasSugeridas,
+        respaldo: esquemaEscena.shape.respaldo,
+        escalaAnimo: esquemaEscena.shape.escalaAnimo,
       })
       .strict(),
     frases: esquemaFrases,
@@ -51,7 +54,16 @@ export const esquemaTraduccion = z
     tripulantes: z.record(z.string(), z.object({ nombre: t, rol: t }).strict()),
     dispositivos: z.record(
       z.string(),
-      z.object({ nombre: t, pasos: z.array(t), erroresComunes: z.array(t) }).strict(),
+      z
+        .object({
+          nombre: t,
+          pasos: z.array(t),
+          erroresComunes: z.array(t),
+          /** Error común de cada paso ("" si el paso no tiene). */
+          erroresPasos: z.array(z.string()).optional(),
+          sensores: z.record(z.string(), z.object({ nombre: t, donde: t }).strict()).optional(),
+        })
+        .strict(),
     ),
     rutina: z.record(z.string(), z.object({ titulo: t }).strict()),
   })
@@ -146,6 +158,14 @@ export function faltantesTraduccion(config: ConfigAyni, tr: Traduccion): string[
   );
   for (const d of config.dispositivos) {
     mismoLargo(`dispositivos.${d.id}.pasos`, d.pasos, tr.dispositivos[d.id]?.pasos);
+    if (d.pasos.some((p) => p.error))
+      mismoLargo(`dispositivos.${d.id}.erroresPasos`, d.pasos, tr.dispositivos[d.id]?.erroresPasos);
+    if (d.sensores)
+      mismosIds(
+        `dispositivos.${d.id}.sensores`,
+        d.sensores.map((s) => s.id),
+        tr.dispositivos[d.id]?.sensores ?? {},
+      );
     mismoLargo(
       `dispositivos.${d.id}.erroresComunes`,
       d.erroresComunes,
@@ -178,6 +198,12 @@ export function traducirConfig(config: ConfigAyni, tr: Traduccion): ConfigAyni {
       })),
       textos: tr.escena.textos,
       etiquetasAptitud: tr.escena.etiquetasAptitud,
+      preguntasSugeridas: tr.escena.preguntasSugeridas,
+      respaldo: tr.escena.respaldo,
+      escalaAnimo: tr.escena.escalaAnimo,
+      indicadoresRegistro: escena.indicadoresRegistro,
+      indicadorAnimo: escena.indicadorAnimo,
+      indicadoresDestacados: escena.indicadoresDestacados,
       escenarioInicial: escena.escenarioInicial,
     },
     frases: tr.frases,
@@ -217,7 +243,16 @@ export function traducirConfig(config: ConfigAyni, tr: Traduccion): ConfigAyni {
         ? {
             ...d,
             nombre: x.nombre,
-            pasos: d.pasos.map((p, i) => ({ ...p, texto: x.pasos[i] ?? p.texto })),
+            pasos: d.pasos.map((p, i) => ({
+              ...p,
+              texto: x.pasos[i] ?? p.texto,
+              ...(p.error ? { error: x.erroresPasos?.[i] || p.error } : {}),
+            })),
+            ...(d.sensores
+              ? {
+                  sensores: d.sensores.map((s) => ({ ...s, ...x.sensores?.[s.id] })),
+                }
+              : {}),
             erroresComunes: d.erroresComunes.map((e, i) => ({
               ...e,
               texto: x.erroresComunes[i] ?? e.texto,

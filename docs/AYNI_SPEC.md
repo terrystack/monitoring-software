@@ -1,5 +1,7 @@
 # AYNI · Especificación técnica para Cursor (versión 1)
 
+> **Desde el 14 nov 2026 manda `docs/AYNI_FUSION.md`** donde contradiga a este documento: la app pasa a 4 pestañas (`cuerpo3d`, `monitoreo`, `medicion`, `agente`), los textos de interfaz de 4.4.11 se amplían según su §4.4 (incluida `escena.preguntasSugeridas`) y "tu normal" se muestra como **media ± 2σ** de la línea base (texto del motor, tabla, perfil y bandas de los gráficos).
+
 > Plataforma web de autoevaluación de salud para astronautas.
 > NASA Space Apps Challenge 2026 · Reto: *Create Health Monitoring Software for Astronauts on Space Missions*.
 > Este archivo es la fuente de verdad para construir la **versión 1 (general, con datos sintéticos)** y desplegarla en **Vercel**.

@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist, subscribeWithSelector } from 'zustand/middleware';
+import type { DiasRango, EstadoLienzo, MensajeChat } from '../chat/tipos';
 import type { ConfigAyni, IdCapa, ModoCapa } from '../config/esquemas';
 import type { Idioma } from '../config/idioma';
-import type { EstadoMotor } from '../datos/tipos';
+import type { EstadoMotor, Lectura } from '../datos/tipos';
 import type { EstadoCuerpo } from '../escena3d/estadoDesdeMotor';
 
 export type Calidad = 'alta' | 'media' | 'baja';
-export type Pestana = 'cuerpo3d' | 'evolucion' | 'medir';
+export type Pestana = 'cuerpo3d' | 'monitoreo' | 'medicion' | 'agente';
+export const PESTANAS: Pestana[] = ['cuerpo3d', 'monitoreo', 'medicion', 'agente'];
 
 export const MODO_CAPA_INICIAL: Record<IdCapa, ModoCapa> = {
   piel: 'visible',
@@ -40,6 +42,25 @@ interface EstadoApp {
   dia: number | null;
   /** Pasos de la tarjeta marcados como hechos; clave `tripulante|dia|zona|paso`. */
   pasosHechos: Record<string, true>;
+  /** Todas las lecturas del CSV sintético. */
+  lecturas: Lectura[];
+  /** Lecturas registradas a mano (IndexedDB, fuente "manual"). */
+  lecturasManuales: Lectura[];
+  /** Filtros de la pestaña Monitoreo. */
+  rangoDias: DiasRango;
+  zonaFiltro: string | null;
+  /** Guía del dispositivo (pestaña Medición y lienzo del agente). */
+  pasoDispositivo: number;
+  sensorSeleccionado: string | null;
+  /** Se incrementa con "Repetir paso" para relanzar la animación del paso activo. */
+  repeticionPaso: number;
+  /** Conversación con el Agente AYNI (no se persiste). */
+  chat: MensajeChat[];
+  lienzo: EstadoLienzo;
+  /** Leer en voz alta las respuestas del agente. */
+  vozActiva: boolean;
+  /** Pregunta prellenada para el agente (botón "Preguntar a AYNI"). */
+  borradorAgente: string | null;
   /** Se incrementa para pedir a la cámara que vuelva a la vista frontal. */
   vistaFrontalPedida: number;
   /** Cambia cada vez que la escena vuelve a medir las zonas (centros para etiquetas y cámara). */
@@ -65,6 +86,18 @@ interface EstadoApp {
   /** Escenario de demo: su tripulante, el entorno de ese tripulante y su día de demo. */
   elegirEscenario: (tripulanteId: string, dia: number) => void;
   alternarPaso: (clave: string) => void;
+  setLecturas: (lecturas: Lectura[]) => void;
+  setLecturasManuales: (lecturas: Lectura[]) => void;
+  setRangoDias: (dias: DiasRango) => void;
+  setZonaFiltro: (zona: string | null) => void;
+  setPasoDispositivo: (paso: number) => void;
+  setSensorSeleccionado: (sensor: string | null) => void;
+  repetirPaso: () => void;
+  agregarMensaje: (mensaje: MensajeChat) => void;
+  limpiarChat: () => void;
+  setLienzo: (lienzo: EstadoLienzo) => void;
+  setVozActiva: (activa: boolean) => void;
+  setBorradorAgente: (texto: string | null) => void;
   vistaFrontal: () => void;
   marcarZonasRegistradas: () => void;
 }
@@ -90,6 +123,17 @@ export const useAyni = create<EstadoApp>()(
         entornoId: null,
         dia: null,
         pasosHechos: {},
+        lecturas: [],
+        lecturasManuales: [],
+        rangoDias: 14,
+        zonaFiltro: null,
+        pasoDispositivo: 0,
+        sensorSeleccionado: null,
+        repeticionPaso: 0,
+        chat: [],
+        lienzo: { tipo: 'vacio' },
+        vozActiva: false,
+        borradorAgente: null,
         vistaFrontalPedida: 0,
         versionZonas: 0,
 
@@ -118,14 +162,28 @@ export const useAyni = create<EstadoApp>()(
             else pasosHechos[clave] = true;
             return { pasosHechos };
           }),
+        setLecturas: (lecturas) => set({ lecturas }),
+        setLecturasManuales: (lecturasManuales) => set({ lecturasManuales }),
+        setRangoDias: (rangoDias) => set({ rangoDias }),
+        setZonaFiltro: (zonaFiltro) => set({ zonaFiltro }),
+        setPasoDispositivo: (pasoDispositivo) => set({ pasoDispositivo }),
+        setSensorSeleccionado: (sensorSeleccionado) => set({ sensorSeleccionado }),
+        repetirPaso: () => set((s) => ({ repeticionPaso: s.repeticionPaso + 1 })),
+        agregarMensaje: (mensaje) => set((s) => ({ chat: [...s.chat, mensaje] })),
+        limpiarChat: () => set({ chat: [] }),
+        setLienzo: (lienzo) => set({ lienzo }),
+        setVozActiva: (vozActiva) => set({ vozActiva }),
+        setBorradorAgente: (borradorAgente) => set({ borradorAgente }),
         vistaFrontal: () =>
           set((s) => ({ zonaSeleccionada: null, vistaFrontalPedida: s.vistaFrontalPedida + 1 })),
         marcarZonasRegistradas: () => set((s) => ({ versionZonas: s.versionZonas + 1 })),
       }),
       {
         name: 'ayni-preferencias',
-        version: 1,
+        version: 2,
         storage: createJSONStorage(() => localStorage),
+        // v1 → v2 solo añade campos (rangoDias, vozActiva); `pestana` nunca se persiste.
+        migrate: (persistido) => persistido as Partial<EstadoApp>,
         partialize: (s) => ({
           idioma: s.idioma,
           movimientoReducido: s.movimientoReducido,
@@ -135,6 +193,8 @@ export const useAyni = create<EstadoApp>()(
           entornoId: s.entornoId,
           dia: s.dia,
           pasosHechos: s.pasosHechos,
+          rangoDias: s.rangoDias,
+          vozActiva: s.vozActiva,
         }),
       },
     ),

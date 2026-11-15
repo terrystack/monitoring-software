@@ -3,6 +3,7 @@ import type { EvaluacionIndicador } from '../../datos/tipos';
 import { useAyni } from '../../estado/store';
 import { conUnidad, numero } from '../../motor/frases';
 import { RANGO_ESTADO } from '../../motor/reglas';
+import { normalDe } from '../../motor/series';
 import { IconoEstado } from '../../ui/IconoEstado';
 
 interface Props {
@@ -27,10 +28,11 @@ export function TablaZonas({ config }: Props) {
   const valorDe = (ev: EvaluacionIndicador | undefined) => {
     const ind = config.indicadores.find((i) => i.id === ev?.indicador);
     if (!ev || !ind) return { valor: textos.sinValor, normal: textos.sinValor };
+    const banda = normalDe(ind, ev.lineaBase);
     return {
       valor: conUnidad(ev.valor, ind.unidad, config.frases),
-      normal: ev.lineaBase
-        ? `${numero(ev.lineaBase.min, config.frases)}–${numero(ev.lineaBase.max, config.frases)}`
+      normal: banda
+        ? `${numero(banda.inf, config.frases)}–${numero(banda.sup, config.frases)}`
         : textos.sinValor,
     };
   };
@@ -76,9 +78,10 @@ export function TablaZonas({ config }: Props) {
               return (
                 <tr
                   key={zona.id}
+                  onClick={() => seleccionarZona(activa ? null : zona.id)}
                   onMouseEnter={() => setZonaHover(zona.id)}
                   onMouseLeave={() => setZonaHover(null)}
-                  className={`border-t border-linea/45 transition-colors ${
+                  className={`cursor-pointer border-t border-linea/45 transition-colors ${
                     activa ? 'bg-acento/10' : 'hover:bg-white/[0.04]'
                   }`}
                 >
@@ -90,7 +93,6 @@ export function TablaZonas({ config }: Props) {
                     <button
                       type="button"
                       aria-pressed={activa}
-                      onClick={() => seleccionarZona(activa ? null : zona.id)}
                       onFocus={() => setZonaHover(zona.id)}
                       onBlur={() => setZonaHover(null)}
                       className={`text-left ${activa ? 'font-semibold text-tinta' : 'text-tinta'}`}

@@ -6,8 +6,10 @@ import { useFuenteEstado } from './estado/useFuenteEstado';
 import { BarraSuperior } from './layout/BarraSuperior';
 import { PaginaCreditos, RUTA_CREDITOS } from './layout/PaginaCreditos';
 import { PanelPerfil } from './layout/PanelPerfil';
+import { PestanaAgente } from './chat/PestanaAgente';
 import { PestanaCuerpo3D } from './pestanas/Cuerpo3D/PestanaCuerpo3D';
-import { PestanaProxima } from './pestanas/PestanaProxima';
+import { PestanaMedicion } from './pestanas/Medicion/PestanaMedicion';
+import { PestanaMonitoreo } from './pestanas/Monitoreo/PestanaMonitoreo';
 
 interface Props {
   resultadoConfig: ResultadoConfig;
@@ -65,7 +67,6 @@ function Aplicacion({ base }: { base: ConfigAyni }) {
 
   if (window.location.pathname === RUTA_CREDITOS) return <PaginaCreditos config={config} />;
 
-  const { textos } = config.escena;
   return (
     <div className="flex h-full flex-col bg-gradient-to-b from-fondo-medio to-fondo-profundo">
       <BarraSuperior config={config} seleccion={seleccion} />
@@ -76,12 +77,9 @@ function Aplicacion({ base }: { base: ConfigAyni }) {
         className="relative min-h-0 flex-1"
       >
         {pestana === 'cuerpo3d' && <PestanaCuerpo3D config={config} seleccion={seleccion} />}
-        {pestana === 'evolucion' && (
-          <PestanaProxima titulo={textos.pestanaEvolucion} texto={textos.proximamenteEvolucion} />
-        )}
-        {pestana === 'medir' && (
-          <PestanaProxima titulo={textos.pestanaMedir} texto={textos.proximamenteMedir} />
-        )}
+        {pestana === 'monitoreo' && <PestanaMonitoreo config={config} seleccion={seleccion} />}
+        {pestana === 'medicion' && <PestanaMedicion config={config} seleccion={seleccion} />}
+        {pestana === 'agente' && <PestanaAgente config={config} seleccion={seleccion} />}
       </main>
       <PanelPerfil config={config} seleccion={seleccion} />
     </div>

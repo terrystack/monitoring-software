@@ -92,7 +92,10 @@ describe('4. regla linea_base', () => {
     const atencion = evaluarIndicador(ind, serie('pulso_reposo', [...BASE, 64]), ref(11))!;
     expect(atencion.estado).toBe('atencion');
     expect(atencion.lineaBase).toMatchObject({ media: 61.1, min: 59, max: 63 });
-    expect(atencion.motivo).toMatch(/^Pulso en reposo 64 lpm; tu normal es 59–63 \(z = 2,\d\)\.$/);
+    // "Tu normal" es media ± 2σ: 61,1 ± 2 × 1,197.
+    expect(atencion.motivo).toMatch(
+      /^Pulso en reposo 64 lpm; tu normal es 58,7–63,5 \(z = 2,\d\)\.$/,
+    );
     expect(evaluarIndicador(ind, serie('pulso_reposo', [...BASE, 70]), ref(11))!.estado).toBe(
       'critico',
     );

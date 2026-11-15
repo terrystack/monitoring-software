@@ -49,7 +49,7 @@ export function PestanaCuerpo3D({ config, seleccion }: Props) {
         </div>
       </div>
 
-      <footer className="relative z-[45] flex items-baseline gap-4 px-4 py-4 text-[0.76rem] text-tinta-tenue lg:absolute lg:bottom-2 lg:left-3 lg:p-0">
+      <footer className="relative z-[45] flex items-baseline gap-4 px-4 py-4 text-[0.72rem] text-tinta-tenue lg:absolute lg:bottom-2 lg:left-3 lg:p-0">
         <p>{textos.noDiagnostico}</p>
         <a
           href={RUTA_CREDITOS}

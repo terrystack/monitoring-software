@@ -13,7 +13,7 @@ export default {
           critico: '#F87171',
           sinDato: '#64748B',
         },
-        acento: '#22D3EE',
+        acento: 'rgb(var(--acento) / <alpha-value>)',
         fondo: {
           profundo: '#050816',
           medio: '#0B1026',

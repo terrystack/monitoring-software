@@ -41,7 +41,7 @@ export function BarraSuperior({ config, seleccion }: Props) {
           <span aria-hidden="true">·</span>
           <span>{entorno?.nombre}</span>
         </p>
-        <span className="whitespace-nowrap rounded-md border border-acento/45 px-2 py-1 text-[0.72rem] text-acento sm:px-2.5 sm:text-[0.76rem]">
+        <span className="whitespace-nowrap rounded-md border border-acento/45 px-2 py-1 text-[0.72rem] text-acento sm:px-2.5 sm:text-[0.8rem]">
           {textos.datosSinteticos}
         </span>
         <Campana config={config} />
@@ -129,7 +129,7 @@ function Campana({ config }: { config: ConfigAyni }) {
       >
         <Bell size={18} strokeWidth={1.8} aria-hidden="true" />
         {alertas.length > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-estado-critico px-1 text-[0.65rem] font-bold tabular-nums text-fondo-profundo">
+          <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-estado-critico px-1 text-[0.72rem] font-bold leading-none tabular-nums text-fondo-profundo">
             {alertas.length}
           </span>
         )}
@@ -138,7 +138,7 @@ function Campana({ config }: { config: ConfigAyni }) {
         <div className="panel absolute right-0 top-10 w-72 p-2 shadow-[0_12px_32px_rgb(0_0_0/0.45)]">
           <p className="rotulo px-2 pb-1.5 pt-1">{textos.alertas}</p>
           {alertas.length === 0 ? (
-            <p className="px-2 pb-2 text-[0.86rem] text-tinta-suave">{textos.sinAlertas}</p>
+            <p className="px-2 pb-2 text-[0.82rem] text-tinta-suave">{textos.sinAlertas}</p>
           ) : (
             <ul>
               {alertas.map((z) => {
@@ -148,7 +148,7 @@ function Campana({ config }: { config: ConfigAyni }) {
                     <button
                       type="button"
                       onClick={() => elegir(z.id)}
-                      className="flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-left text-[0.86rem] hover:bg-white/5"
+                      className="flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-left text-[0.82rem] hover:bg-white/5"
                     >
                       {estado && <IconoEstado estado={estado.id} color={estado.color} />}
                       <span className="text-tinta">{z.nombre}</span>

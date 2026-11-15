@@ -1,23 +1,76 @@
 {
   "estados": [
-    { "id": "normal", "etiqueta": "Normal", "color": "#34D399" },
-    { "id": "atencion", "etiqueta": "Atención", "color": "#FBBF24" },
-    { "id": "critico", "etiqueta": "Crítico", "color": "#F87171" },
-    { "id": "sin_dato", "etiqueta": "Sin dato", "color": "#64748B" }
+    {
+      "id": "normal",
+      "etiqueta": "Normal",
+      "color": "#34D399"
+    },
+    {
+      "id": "atencion",
+      "etiqueta": "Atención",
+      "color": "#FBBF24"
+    },
+    {
+      "id": "critico",
+      "etiqueta": "Crítico",
+      "color": "#F87171"
+    },
+    {
+      "id": "sin_dato",
+      "etiqueta": "Sin dato",
+      "color": "#64748B"
+    }
   ],
   "capas": [
-    { "id": "piel", "nombre": "Piel", "orden": 1 },
-    { "id": "musculos", "nombre": "Músculos", "orden": 2 },
-    { "id": "esqueleto", "nombre": "Esqueleto", "orden": 3 },
-    { "id": "organos", "nombre": "Órganos", "orden": 4 },
-    { "id": "nervioso", "nombre": "Sistema nervioso", "orden": 5 },
-    { "id": "vascular", "nombre": "Sistema vascular", "orden": 6 },
-    { "id": "halo", "nombre": "Radiación", "orden": 7 }
+    {
+      "id": "piel",
+      "nombre": "Piel",
+      "orden": 1
+    },
+    {
+      "id": "musculos",
+      "nombre": "Músculos",
+      "orden": 2
+    },
+    {
+      "id": "esqueleto",
+      "nombre": "Esqueleto",
+      "orden": 3
+    },
+    {
+      "id": "organos",
+      "nombre": "Órganos",
+      "orden": 4
+    },
+    {
+      "id": "nervioso",
+      "nombre": "Sistema nervioso",
+      "orden": 5
+    },
+    {
+      "id": "vascular",
+      "nombre": "Sistema vascular",
+      "orden": 6
+    },
+    {
+      "id": "halo",
+      "nombre": "Radiación",
+      "orden": 7
+    }
   ],
   "modosCapa": [
-    { "id": "visible", "etiqueta": "Visible" },
-    { "id": "translucida", "etiqueta": "Semitransparente" },
-    { "id": "oculta", "etiqueta": "Oculta" }
+    {
+      "id": "visible",
+      "etiqueta": "Visible"
+    },
+    {
+      "id": "translucida",
+      "etiqueta": "Semitransparente"
+    },
+    {
+      "id": "oculta",
+      "etiqueta": "Oculta"
+    }
   ],
   "textos": {
     "datosSinteticos": "Datos sintéticos",
@@ -42,8 +95,6 @@
     "volverAlCuerpo": "Volver al cuerpo",
     "secciones": "Secciones",
     "pestanaCuerpo": "Cuerpo 3D",
-    "pestanaEvolucion": "Evolución y predicción",
-    "pestanaMedir": "Medir y dispositivos",
     "diaMision": "Día {dia}",
     "alertas": "Alertas",
     "sinAlertas": "Ninguna zona fuera de tu normal.",
@@ -73,8 +124,78 @@
     "diaDatos": "Día de datos",
     "diaAnterior": "Día anterior",
     "diaSiguiente": "Día siguiente",
-    "proximamenteEvolucion": "Aquí verás cada indicador frente a tu normal y su predicción a siete días. Llega en la próxima fase de AYNI.",
-    "proximamenteMedir": "Aquí estarán tu agenda del día, la guía 3D de cada dispositivo y el registro de mediciones. Llega en una próxima fase de AYNI."
+    "pestanaMonitoreo": "Monitoreo y predicción",
+    "pestanaMedicion": "Medición",
+    "pestanaAgente": "Agente AYNI",
+    "hoy": "Hoy",
+    "puntajeDe": "de 100",
+    "estadoGeneral": "Estado general {puntaje} de 100",
+    "presupuestoRadiacion": "Presupuesto de radiación",
+    "mSvAcumulados": "mSv acumulados",
+    "limiteCarrera": "Límite de carrera {limite} mSv (NASA-STD-3001).",
+    "rango": "Rango",
+    "dias": "{n} días",
+    "todasLasZonas": "Todas las zonas",
+    "prediccion": "Predicción 7 días",
+    "entrenadoCon": "Modelo: {modelo} · datos: {datos}",
+    "fueraDeTuNormal": "Fuera de tu normal",
+    "dentroDeTuNormal": "Dentro de tu normal",
+    "comparar": "Comparar",
+    "agendaHoy": "Agenda de hoy",
+    "pendiente": "Pendiente",
+    "hecha": "Hecha",
+    "atrasada": "Atrasada",
+    "guiaDispositivo": "Cómo ponerte el chaleco",
+    "errorComun": "Error común en este paso",
+    "anterior": "Anterior",
+    "siguientePaso": "Siguiente paso",
+    "repetirPaso": "Repetir paso",
+    "sensores": "Sensores",
+    "tocaUnSensor": "Toca un sensor para ver qué mide",
+    "registrarMedicion": "Registrar medición",
+    "guardar": "Guardar",
+    "medicionGuardada": "Guardado. El cuerpo 3D y tus gráficos ya se actualizaron.",
+    "animoHoy": "Ánimo de hoy",
+    "agenteBienvenida": "Soy AYNI. Te explico tus datos a bordo y te digo cuándo avisar al médico de vuelo. No diagnostico.",
+    "escribeTuPregunta": "Pregunta sobre un indicador, una medición o un riesgo",
+    "enviar": "Enviar",
+    "adjuntarImagen": "Adjuntar imagen",
+    "dictar": "Dictar",
+    "leerEnVoz": "Leer en voz alta",
+    "detenerVoz": "Detener voz",
+    "modoSinConexion": "Sin conexión con el modelo: respondo con las reglas a bordo.",
+    "lienzoVacio": "Aquí aparecerán el cuerpo, gráficos o la guía que usemos para explicar tu consulta.",
+    "preguntarAyni": "Preguntar a AYNI",
+    "modeloV1": "regresión lineal de 14 días",
+    "siSigueAsi": "Si sigue así, {nombre} podría salir de tu normal en {n} días.",
+    "verEnElCuerpo": "Ver en el cuerpo",
+    "diaDeTotal": "Día {dia} de {total}",
+    "sinMedicionesRango": "Sin mediciones en este rango.",
+    "siSigueAsiManana": "Si sigue así, {nombre} podría salir de tu normal mañana.",
+    "pensando": "AYNI está pensando…",
+    "mostradoEnLienzo": "Mostrado en el lienzo",
+    "abrirEnPestana": "Abrir en su pestaña",
+    "quitarImagen": "Quitar imagen",
+    "vistaAnterior": "Vista anterior",
+    "vistaSiguiente": "Vista siguiente",
+    "tu": "Tú",
+    "ocultarLienzo": "Ocultar lienzo",
+    "mostrarLienzo": "Mostrar lienzo",
+    "preguntaZona": "¿Qué significa lo de mi {zona} y qué hago?",
+    "imagenNoValida": "No pude usar esa imagen: debe ser JPG, PNG o WebP de menos de 4 MB.",
+    "resumenHoy": "Resumen de hoy",
+    "conversacion": "Conversación con AYNI",
+    "lienzo": "Lienzo",
+    "franjaManana": "Mañana",
+    "franjaDia": "Día",
+    "franjaNoche": "Noche",
+    "franjaSemanal": "Semanal",
+    "borrarRegistros": "Borrar mis registros",
+    "midiendo": "Midiendo…",
+    "mide": "Mide: {lista}",
+    "sinIndicadores": "Apoya a los demás sensores",
+    "valor": "Valor",
+    "indicador": "Indicador"
   },
   "etiquetasAptitud": {
     "normal": "Apto",
@@ -82,5 +203,124 @@
     "critico": "No apto hoy",
     "sin_dato": "Sin dato"
   },
-  "escenarioInicial": "multisenal_fatiga"
+  "escenarioInicial": "multisenal_fatiga",
+  "preguntasSugeridas": [
+    "¿Cómo estoy hoy?",
+    "¿Por qué mi corazón está en ámbar?",
+    "Muéstrame mi sueño de las últimas 2 semanas",
+    "¿Cómo me pongo el chaleco?",
+    "¿Debo avisar al médico de vuelo?"
+  ],
+  "indicadoresDestacados": [
+    "presion_sistolica",
+    "pulso_reposo",
+    "glucosa",
+    "temperatura",
+    "sueno_horas",
+    "animo"
+  ],
+  "respaldo": {
+    "palabras": {
+      "emergencia": [
+        "dolor en el pecho",
+        "dolor de pecho",
+        "duele el pecho",
+        "falta el aire",
+        "falta de aire",
+        "no puedo respirar",
+        "desmay",
+        "confundid",
+        "confusion",
+        "sangrado"
+      ],
+      "estado": ["como estoy", "estado general", "resumen", "como voy"],
+      "dispositivo": [
+        "chaleco",
+        "medirme",
+        "ponerme",
+        "ponerse",
+        "como me mido",
+        "como me pongo",
+        "colocar"
+      ],
+      "medico": ["medico", "doctor", "avisar"],
+      "tendencia": [
+        "tendencia",
+        "evolucion",
+        "grafico",
+        "ultimas",
+        "ultimos",
+        "semana",
+        "prediccion",
+        "muestrame"
+      ],
+      "ignorar": [
+        "horas",
+        "estado",
+        "sangre",
+        "cabina",
+        "dosis",
+        "cuanto",
+        "cuanta",
+        "tienes",
+        "normal",
+        "sensor",
+        "sensores",
+        "personal"
+      ],
+      "relacion": ["tiene que ver", "relacion", "influye", "afecta", "comparar", "compara"],
+      "diagnostico": ["enfermedad", "enfermo", "diagnost", "tengo cancer", "que tengo", "infarto"],
+      "medicamento": ["medicamento", "medicina", "pastilla", "receta", "farmaco", "que tomo"],
+      "internet": ["internet", "busca en", "buscar en", "google", "web"],
+      "inventar": ["inventa", "invente", "inventame", "simula un valor"],
+      "agenda": ["medir ahora", "que tengo que medir", "que me toca", "agenda", "que mido"],
+      "animo": ["desanimad", "triste", "estresad", "ansios", "agobiad", "solo y", "sin ganas"],
+      "radiacion": ["radiacion", "dosis acumulada", "msv"]
+    },
+    "emergencia": "Sigue ya el protocolo de emergencia de la nave y avisa de inmediato a la tripulación y al médico de vuelo.",
+    "estado": "Tu estado general hoy es {puntaje} de 100. {motivo}",
+    "todoNormal": "Todo está dentro de tu normal.",
+    "zonasFuera": "Fuera de tu normal: {lista}.",
+    "zona": "{zona}: {estado}. {queCambio}",
+    "acciones": "Qué hacer ahora: {acciones}",
+    "aviso": "Cuándo avisar al médico de vuelo: {aviso}",
+    "indicador": "{nombre} hoy: {valor}; tu normal: {normal}.",
+    "indicadorSinNormal": "{nombre} hoy: {valor}.",
+    "sinValor": "Todavía no tengo mediciones de {nombre}; puedes medirlo con el chaleco o registrarlo.",
+    "prediccion": "Según tus datos, podría salir de tu normal en {n} días.",
+    "dispositivo": "{dispositivo}, paso {n}: {paso}",
+    "medicoNada": "Ninguna zona está fuera de tu normal; sigue tu rutina y avisa si aparecen síntomas.",
+    "noEntiendo": "Puedo explicarte tu estado de hoy, una zona del cuerpo, un indicador o cómo medirte con el chaleco.",
+    "noDiagnostico": "No puedo diagnosticar enfermedades; solo comparo tus datos con tu normal.",
+    "noMedicamento": "No receto medicamentos ni dosis: eso lo decide el médico de vuelo.",
+    "sinInternet": "No tengo internet; te explico con lo que hay a bordo.",
+    "queEs": "{nombre}: {queEs}",
+    "noInvento": "No invento valores. Te muestro tu serie real de {nombre}; si falta un día, puedes medirlo o registrarlo.",
+    "otroTripulante": "Solo tengo los datos de la persona activa ({tripulante}). Para ver a otra persona, cámbiala en el perfil.",
+    "agenda": "Lo siguiente en tu agenda: {hora} · {titulo}.",
+    "agendaCompleta": "Ya hiciste todo lo de tu agenda de hoy.",
+    "animo": "Gracias por contarlo; es normal sentirse así en una misión larga. Registrar tu ánimo hoy ayuda a ver si cambia. Habla con alguien de la tripulación o con el equipo de apoyo psicológico.",
+    "comparar": "Te muestro {a} y {b} juntos. Que se muevan a la vez no prueba que uno cause el otro.",
+    "radiacion": "{nombre}: {valor}, el {porcentaje} % de tu límite de carrera de {limite} mSv ({fuente}).",
+    "co2": "{nombre}: {valor}. Referencia a bordo: {limite}.",
+    "errorPaso": "Error común: {error}",
+    "repetirMedicion": "Si el valor te sorprende, corrige eso y repite la medición antes de sacar conclusiones."
+  },
+  "escalaAnimo": ["Muy mal", "Mal", "Regular", "Bien", "Muy bien"],
+  "indicadorAnimo": "animo",
+  "indicadoresRegistro": [
+    "presion_sistolica",
+    "presion_diastolica",
+    "pulso_reposo",
+    "glucosa",
+    "temperatura",
+    "sueno_horas",
+    "spo2",
+    "ejercicio_min",
+    "masa_corporal",
+    "tiempo_reaccion",
+    "cefalea",
+    "mareo",
+    "lesion_piel"
+  ]
 }

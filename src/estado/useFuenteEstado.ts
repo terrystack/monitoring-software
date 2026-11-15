@@ -1,24 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ConfigAyni, IdCapa, ModoCapa } from '../config/esquemas';
+import { leerLecturasManuales } from '../datos/almacen';
 import { cargarCsv } from '../datos/cargarCsv';
-import type { Lectura } from '../datos/tipos';
 import { estadoDesdeMotor } from '../escena3d/estadoDesdeMotor';
 import { crearMockEstadoCuerpo } from '../escena3d/mockEstadoCuerpo';
 import { configConEntorno, evaluarSeleccion, resolverSeleccion } from './seleccion';
 import { useAyni } from './store';
 
-type Carga = { tipo: 'cargando' } | { tipo: 'listo'; lecturas: Lectura[] } | { tipo: 'error' };
+type Carga = 'cargando' | 'listo' | 'error';
 
 /**
- * Alimenta el cuerpo con el motor sobre el CSV sintético para el tripulante, entorno y día
- * elegidos en el perfil. Sin CSV usa el estado de ejemplo. `?zona=<id>` abre la app con esa
- * zona elegida; `?capas=piel,esqueleto` deja visibles solo esas capas.
+ * Alimenta el cuerpo con el motor sobre el CSV sintético más las lecturas manuales, para el
+ * tripulante, entorno y día elegidos en el perfil. Sin CSV usa el estado de ejemplo.
+ * `?zona=<id>` abre la app con esa zona elegida; `?capas=piel,esqueleto` deja visibles solo
+ * esas capas.
  */
 export function useFuenteEstado(config: ConfigAyni) {
-  const [carga, setCarga] = useState<Carga>({ tipo: 'cargando' });
+  const [carga, setCarga] = useState<Carga>('cargando');
   const tripulanteId = useAyni((s) => s.tripulanteId);
   const entornoId = useAyni((s) => s.entornoId);
   const dia = useAyni((s) => s.dia);
+  const lecturas = useAyni((s) => s.lecturas);
+  const lecturasManuales = useAyni((s) => s.lecturasManuales);
   const seleccion = useMemo(
     () => resolverSeleccion(config, { tripulanteId, entornoId, dia }),
     [config, tripulanteId, entornoId, dia],
@@ -42,26 +45,36 @@ export function useFuenteEstado(config: ConfigAyni) {
 
   useEffect(() => {
     let vigente = true;
+    const { setLecturas, setLecturasManuales } = useAyni.getState();
     cargarCsv()
-      .then(({ lecturas }) => vigente && setCarga({ tipo: 'listo', lecturas }))
-      .catch(() => vigente && setCarga({ tipo: 'error' }));
+      .then((r) => {
+        if (!vigente) return;
+        setLecturas(r.lecturas);
+        setCarga('listo');
+      })
+      .catch(() => vigente && setCarga('error'));
+    leerLecturasManuales()
+      .then((manuales) => vigente && setLecturasManuales(manuales))
+      .catch(() => undefined);
     return () => {
       vigente = false;
     };
   }, []);
 
+  const todas = useMemo(() => [...lecturas, ...lecturasManuales], [lecturas, lecturasManuales]);
+
   useEffect(() => {
     const { setEstadoCuerpo, setMotor } = useAyni.getState();
-    if (carga.tipo === 'cargando') return;
-    if (carga.tipo === 'error') {
+    if (carga === 'cargando') return;
+    if (carga === 'error' && lecturasManuales.length === 0) {
       setMotor(null);
       setEstadoCuerpo(crearMockEstadoCuerpo(config));
       return;
     }
-    const motor = evaluarSeleccion(carga.lecturas, config, seleccion);
+    const motor = evaluarSeleccion(todas, config, seleccion);
     setMotor(motor);
     setEstadoCuerpo(estadoDesdeMotor(motor, configConEntorno(config, seleccion)));
-  }, [carga, config, seleccion]);
+  }, [carga, todas, lecturasManuales.length, config, seleccion]);
 
   return seleccion;
 }

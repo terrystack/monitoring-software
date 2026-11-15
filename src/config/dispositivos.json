@@ -1,5 +1,160 @@
 [
   {
+    "id": "chaleco_ayni",
+    "nombre": "Chaleco biométrico AYNI",
+    "modelo": "procedural:chaleco",
+    "anclaje": "pecho",
+    "indicadores": [
+      "pulso_reposo",
+      "hrv",
+      "spo2",
+      "temperatura",
+      "co2_cabina",
+      "dosis_radiacion",
+      "tasa_dosis_dia",
+      "sueno_horas",
+      "ejercicio_min",
+      "presion_sistolica",
+      "presion_diastolica",
+      "glucosa"
+    ],
+    "sensores": [
+      {
+        "id": "ecg",
+        "nombre": "Electrodos de ECG",
+        "donde": "Pecho, bajo la clavícula izquierda y sobre las costillas",
+        "indicadores": ["pulso_reposo", "hrv"],
+        "posicion": {
+          "tipo": "torso",
+          "altura": 1.33,
+          "angulo": 25
+        }
+      },
+      {
+        "id": "respiracion",
+        "nombre": "Banda de respiración",
+        "donde": "Alrededor del tórax, a la altura del esternón",
+        "indicadores": [],
+        "posicion": {
+          "tipo": "torso",
+          "altura": 1.2,
+          "angulo": 0
+        }
+      },
+      {
+        "id": "oximetro",
+        "nombre": "Oxímetro",
+        "donde": "Clip en el dedo índice",
+        "indicadores": ["spo2"],
+        "posicion": {
+          "tipo": "anclaje",
+          "anclaje": "dedo_indice"
+        }
+      },
+      {
+        "id": "temperatura",
+        "nombre": "Sensor de temperatura de piel",
+        "donde": "Costado izquierdo, bajo la axila",
+        "indicadores": ["temperatura"],
+        "posicion": {
+          "tipo": "torso",
+          "altura": 1.28,
+          "angulo": 85
+        }
+      },
+      {
+        "id": "co2",
+        "nombre": "Sensor de CO₂ de cabina",
+        "donde": "Hombro derecho, cerca de la boca",
+        "indicadores": ["co2_cabina"],
+        "posicion": {
+          "tipo": "torso",
+          "altura": 1.41,
+          "angulo": -40
+        }
+      },
+      {
+        "id": "dosimetro",
+        "nombre": "Dosímetro personal",
+        "donde": "Bolsillo del pecho, lado derecho",
+        "indicadores": ["dosis_radiacion", "tasa_dosis_dia"],
+        "posicion": {
+          "tipo": "torso",
+          "altura": 1.3,
+          "angulo": -25
+        }
+      },
+      {
+        "id": "pulsera",
+        "nombre": "Pulsera de actividad y sueño",
+        "donde": "Muñeca izquierda",
+        "indicadores": ["sueno_horas", "ejercicio_min"],
+        "posicion": {
+          "tipo": "anclaje",
+          "anclaje": "muneca_izq"
+        }
+      },
+      {
+        "id": "brazalete",
+        "nombre": "Brazalete de presión y glucosa",
+        "donde": "Brazo izquierdo, a la altura del corazón",
+        "indicadores": ["presion_sistolica", "presion_diastolica", "glucosa"],
+        "posicion": {
+          "tipo": "anclaje",
+          "anclaje": "brazo_izq"
+        }
+      }
+    ],
+    "pasos": [
+      {
+        "texto": "Humedece los electrodos: una gota de agua en cada electrodo de ECG mejora el contacto con la piel.",
+        "animacion": "presentar",
+        "duracionMs": 2500,
+        "sensor": "ecg",
+        "error": "Electrodos secos: la señal de pulso se pierde."
+      },
+      {
+        "texto": "Ponte el chaleco ajustado: pegado al cuerpo sin cortar la respiración, con la banda a la altura del esternón.",
+        "animacion": "volar_a_anclaje",
+        "duracionMs": 2500,
+        "sensor": "respiracion",
+        "error": "Chaleco flojo: los sensores se mueven y leen ruido."
+      },
+      {
+        "texto": "Coloca el clip del oxímetro en el dedo índice, limpio y tibio. Espera a que la luz se estabilice.",
+        "animacion": "ajustar",
+        "duracionMs": 2500,
+        "sensor": "oximetro",
+        "error": "Dedo frío o esmalte oscuro: la SpO₂ sale baja sin estarlo."
+      },
+      {
+        "texto": "Guarda el dosímetro en el bolsillo del pecho, también mientras duermes.",
+        "animacion": "ajustar",
+        "duracionMs": 2000,
+        "sensor": "dosimetro",
+        "error": "Dosímetro fuera del cuerpo: la dosis registrada no es la tuya."
+      },
+      {
+        "texto": "Quédate quieto 60 segundos: la primera lectura en reposo fija tu valor del día.",
+        "animacion": "medir",
+        "duracionMs": 4000,
+        "error": "Medir justo después de ejercicio: el pulso alto dispara una alerta falsa."
+      },
+      {
+        "texto": "Listo. Mira cómo se actualiza tu corazón en el cuerpo 3D.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "corazon"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Chaleco flojo: los sensores se mueven y leen ruido.",
+        "desplazamiento": [0, -0.04, 0]
+      }
+    ]
+  },
+  {
     "id": "generico_muneca",
     "nombre": "Pulsera de signos vitales",
     "modelo": "procedural:generico",
@@ -107,7 +262,11 @@
         "animacion": "ajustar",
         "duracionMs": 1500
       },
-      { "texto": "Espera el aviso de lectura completa.", "animacion": "medir", "duracionMs": 3000 },
+      {
+        "texto": "Espera el aviso de lectura completa.",
+        "animacion": "medir",
+        "duracionMs": 3000
+      },
       {
         "texto": "Listo. Revisa tu piel e inmunidad en el cuerpo 3D.",
         "animacion": "mostrar_resultado",

@@ -29,7 +29,7 @@ export function PanelAptitud({ config }: Props) {
           const nombre =
             config.reglasCompuestas.aptitud.find((x) => x.id === a.id)?.nombre ?? a.nombre;
           return (
-            <li key={a.id} className="flex items-center gap-3 py-2 text-[0.86rem]">
+            <li key={a.id} className="flex items-center gap-3 py-2 text-[0.9rem]">
               <span className="text-tinta">{nombre}</span>
               <span
                 className={`ml-auto flex items-center gap-1.5 whitespace-nowrap text-[0.8rem] font-semibold ${
