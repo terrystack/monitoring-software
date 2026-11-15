@@ -31,6 +31,15 @@ import {
   rutaTirante,
 } from './arnes/geometria';
 import { TORSO_MEDIDO } from './arnes/torsoMedido';
+import {
+  BRAZOS,
+  elevacionBanda,
+  puntoCabeza,
+  puntosEeg,
+  radioCabeza,
+  rutaBajada,
+  rutaBrazo,
+} from './eeg/geometria';
 import { CAMARA, CARCASA, MASCARA, PUERTO, puntoMascara, rutaUmbilical, T } from './puma/geometria';
 
 const resultado = cargarConfig();
@@ -39,8 +48,8 @@ const config = resultado.config;
 const lista = dispositivosConSensores(config);
 
 describe('dispositivos de la pestaña Medición', () => {
-  it('son PUMA y el arnés ECG, con pasos que apuntan a sensores válidos', () => {
-    expect(lista.map((d) => d.id)).toEqual(['puma', 'arnes_ecg']);
+  it('son PUMA, el arnés ECG y la diadema EEG, con pasos que apuntan a sensores válidos', () => {
+    expect(lista.map((d) => d.id)).toEqual(['puma', 'arnes_ecg', 'eeg']);
     for (const d of lista) {
       const ids = new Set(d.sensores!.map((s) => s.id));
       for (const p of d.pasos) if (p.sensor) expect(ids.has(p.sensor)).toBe(true);
@@ -180,5 +189,37 @@ describe('arnés ECG', () => {
     const adentro = puntoManguito(0.5, -90);
     expect(afuera.x).toBeGreaterThan(0.265);
     expect(adentro.x).toBeLessThan(0.18);
+  });
+});
+
+describe('diadema EEG', () => {
+  it('la cabeza medida llega a la coronilla y la frente', () => {
+    expect(puntoCabeza(0, 90).y).toBeGreaterThan(CARA.coronilla - 0.01);
+    expect(puntoCabeza(0, 27).z).toBeGreaterThan(CARA.frente.z - 0.02);
+  });
+  it('la banda va sobre las cejas al frente y baja en la nuca', () => {
+    const frente = puntoCabeza(0, elevacionBanda(0));
+    const nuca = puntoCabeza(180, elevacionBanda(180));
+    expect(frente.y).toBeGreaterThan(CARA.nariz.y + 0.06);
+    expect(nuca.y).toBeLessThan(frente.y - 0.04);
+  });
+  it('los brazos van por fuera de la piel y terminan en su electrodo', () => {
+    for (let i = 0; i < BRAZOS.length; i++) {
+      const rutas = [rutaBrazo(i), rutaBajada(i) ?? []];
+      for (const r of rutas)
+        for (const q of r) {
+          const d = q.clone().sub(new THREE.Vector3(0, 1.66, 0.035));
+          const el = THREE.MathUtils.radToDeg(Math.asin(d.y / d.length()));
+          const az = THREE.MathUtils.radToDeg(Math.atan2(d.x, d.z));
+          expect(d.length()).toBeGreaterThan(radioCabeza(az, el) + 0.004);
+        }
+      const fin = rutaBrazo(i).at(-1)!;
+      expect(fin.distanceTo(puntoCabeza(BRAZOS[i].acimut, BRAZOS[i].elevacion))).toBeLessThan(0.03);
+    }
+  });
+  it('el módulo queda en la nuca y los frontales en la frente', () => {
+    const p = puntosEeg();
+    expect(p.modulo.z).toBeLessThan(-0.05);
+    expect(p.frontales.z).toBeGreaterThan(0.12);
   });
 });

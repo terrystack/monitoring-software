@@ -141,7 +141,7 @@
       "tasa_dosis_dia"
     ],
     "ficha": {
-      "inspiradoEn": "Propuesta del equipo AYNI: Holter de ECG, dosímetro personal (como el Crew Active Dosimeter de la ISS) y tensiómetro de brazo en un solo arnés",
+      "inspiradoEn": "Propuesta AYNI: Holter ECG, dosímetro personal (tipo Crew Active Dosimeter de la ISS) y tensiómetro de brazo",
       "fuente": "https://srag.jsc.nasa.gov/spaceradiation/how/how.cfm",
       "mide": [
         "ECG de 4 electrodos (pulso y variabilidad)",
@@ -251,6 +251,107 @@
       {
         "texto": "Banda floja: el registrador se mueve y mete ruido en el ECG.",
         "desplazamiento": [0, -0.04, 0]
+      }
+    ]
+  },
+  {
+    "id": "eeg",
+    "nombre": "Diadema EEG · 8 electrodos secos",
+    "modelo": "procedural:eeg",
+    "anclaje": "frente",
+    "indicadores": ["sueno_horas", "estres"],
+    "ficha": {
+      "inspiradoEn": "Propuesta AYNI: diadema EEG de electrodos secos en posiciones 10-20 para sueño y carga mental",
+      "fuente": "https://ece.au.dk/forskning/forskningscentre/center-for-ear-eeg/projects/sleep-in-orbit",
+      "mide": [
+        "EEG de 8 canales: Fp1, Fpz, Fp2, Fz, F3, F4, C3 y C4",
+        "Etapas del sueño (con los electrodos centrales)",
+        "Carga mental y estrés (con los electrodos frontales)"
+      ],
+      "peso": "Diseño conceptual: electrodos secos de ≈ 25 mm de diámetro",
+      "autonomia": "Diseño conceptual: una noche completa de registro"
+    },
+    "partes": {
+      "banda": "Banda ajustable con hebillas",
+      "frontales": "3 electrodos frontales (Fp1, Fpz, Fp2)",
+      "modulo": "Módulo de electrónica y batería",
+      "espina": "Espina y núcleo de la coronilla",
+      "brazos": "5 brazos flexibles segmentados",
+      "electrodos": "5 electrodos secos (Fz, F3, F4, C3, C4)"
+    },
+    "sensores": [
+      {
+        "id": "frontales",
+        "nombre": "Electrodos frontales",
+        "donde": "Banda sobre la frente, encima de las cejas",
+        "indicadores": ["estres"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "frontales"
+        }
+      },
+      {
+        "id": "centrales",
+        "nombre": "Electrodos de los brazos",
+        "donde": "Cuero cabelludo, de la frente a la coronilla",
+        "indicadores": ["sueno_horas"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "centrales"
+        }
+      },
+      {
+        "id": "modulo",
+        "nombre": "Módulo de registro",
+        "donde": "Nuca, al centro de la banda",
+        "indicadores": [],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "modulo"
+        }
+      }
+    ],
+    "pasos": [
+      {
+        "texto": "Revisa que los 8 electrodos estén limpios y que el módulo tenga batería.",
+        "animacion": "presentar",
+        "duracionMs": 2500,
+        "sensor": "modulo",
+        "error": "Electrodos con grasa de la piel: la señal sale con ruido."
+      },
+      {
+        "texto": "Colócate la diadema con el módulo en la nuca y los 3 electrodos frontales sobre la frente.",
+        "animacion": "colocar",
+        "duracionMs": 2500,
+        "sensor": "frontales",
+        "error": "Banda sobre las cejas: los electrodos frontales captan el parpadeo."
+      },
+      {
+        "texto": "Ajusta las hebillas laterales hasta que la banda quede firme sin apretar.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "sensor": "frontales",
+        "error": "Banda floja: los electrodos frontales pierden contacto."
+      },
+      {
+        "texto": "Acomoda cada brazo hasta que su electrodo toque el cuero cabelludo; aparta el pelo debajo.",
+        "animacion": "ajustar",
+        "duracionMs": 2400,
+        "sensor": "centrales",
+        "error": "Pelo bajo el electrodo: la señal de ese canal se pierde."
+      },
+      {
+        "texto": "Cierra los ojos y quédate quieto 2 minutos para registrar tu línea base.",
+        "animacion": "medir",
+        "duracionMs": 4000,
+        "resaltarZona": "cerebro",
+        "error": "Apretar la mandíbula o moverte: artefactos musculares en el EEG."
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Banda sobre las cejas: los electrodos frontales captan el parpadeo.",
+        "desplazamiento": [0, -0.02, 0]
       }
     ]
   },

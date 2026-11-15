@@ -9,7 +9,7 @@ interface Props {
   activo: string;
 }
 
-/** Pestañas internas de la escena: PUMA · Arnés ECG, y el botón de despiece. */
+/** Pestañas internas de la escena: PUMA · Arnés ECG · Diadema EEG, y el botón de despiece. */
 export function SelectorDispositivo({ config, activo }: Props) {
   const despiece = useAyni((s) => s.despiece);
   const { setDispositivoActivo, setDespiece } = useAyni.getState();

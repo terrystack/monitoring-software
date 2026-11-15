@@ -65,7 +65,7 @@ export function definirHerramientas(c: ContextoAgente): DefinicionHerramienta[] 
     {
       nombre: 'consultar_dispositivo',
       descripcion:
-        'Pasos, errores comunes y sensores de un dispositivo (PUMA o arnés ECG). Sin argumentos: la lista de dispositivos.',
+        'Pasos, errores comunes y sensores de un dispositivo (PUMA, arnés ECG o diadema EEG). Sin argumentos: la lista de dispositivos.',
       parametros: objeto({
         ...dispositivo,
         paso: { type: 'integer', minimum: 1, maximum: pasos },
@@ -102,7 +102,7 @@ export function definirHerramientas(c: ContextoAgente): DefinicionHerramienta[] 
     {
       nombre: 'mostrar_guia_dispositivo',
       descripcion:
-        'Muestra en el lienzo un dispositivo (PUMA o arnés ECG) sobre el cuerpo, en un paso de su guía o un sensor.',
+        'Muestra en el lienzo un dispositivo (PUMA, arnés ECG o diadema EEG) sobre el cuerpo, en un paso de su guía o un sensor.',
       parametros: objeto({
         ...dispositivo,
         paso: { type: 'integer', minimum: 1, maximum: pasos },

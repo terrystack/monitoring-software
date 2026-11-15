@@ -226,11 +226,11 @@
       "aviso": "When to call the flight surgeon: {aviso}",
       "indicador": "{nombre} today: {valor}; your normal: {normal}.",
       "indicadorSinNormal": "{nombre} today: {valor}.",
-      "sinValor": "I have no measurements of {nombre} yet; you can measure it with PUMA or the ECG harness or log it.",
+      "sinValor": "I have no measurements of {nombre} yet; you can measure it with PUMA, the ECG harness or the EEG headset, or log it.",
       "prediccion": "Based on your data, it could leave your normal in {n} days.",
       "dispositivo": "{dispositivo}, step {n}: {paso}",
       "medicoNada": "No zone is outside your normal; keep your routine and report any symptoms.",
-      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with PUMA or the ECG harness.",
+      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with PUMA, the ECG harness or the EEG headset.",
       "noDiagnostico": "I can't diagnose diseases; I only compare your data with your normal.",
       "noMedicamento": "I don't prescribe medication or doses: the flight surgeon decides that.",
       "sinInternet": "I don't have internet; I explain with what is on board.",
@@ -932,7 +932,7 @@
         }
       },
       "ficha": {
-        "inspiradoEn": "AYNI team proposal: ECG Holter, personal dosimeter (like the ISS Crew Active Dosimeter) and upper-arm blood pressure monitor in one harness",
+        "inspiradoEn": "AYNI proposal: ECG Holter, personal dosimeter (like the ISS Crew Active Dosimeter) and upper-arm BP monitor",
         "mide": [
           "4-electrode ECG (pulse and variability)",
           "Breathing by impedance through the same electrodes",
@@ -951,6 +951,56 @@
         "dosimetro": "Personal dosimeter",
         "manguito": "Blood pressure cuff",
         "manguera": "Cuff air tube"
+      }
+    },
+    "eeg": {
+      "nombre": "EEG headset · 8 dry electrodes",
+      "pasos": [
+        "Check that the 8 electrodes are clean and the module is charged.",
+        "Put on the headset with the module at the back of your neck and the 3 frontal electrodes on your forehead.",
+        "Tighten the side buckles until the band is firm but not tight.",
+        "Adjust each arm until its electrode touches the scalp; move the hair underneath aside.",
+        "Close your eyes and keep still for 2 minutes to record your baseline."
+      ],
+      "erroresComunes": ["Band over the eyebrows: the frontal electrodes pick up blinking."],
+      "erroresPasos": [
+        "Electrodes with skin oil: the signal is noisy.",
+        "Band over the eyebrows: the frontal electrodes pick up blinking.",
+        "Loose band: the frontal electrodes lose contact.",
+        "Hair under the electrode: that channel loses its signal.",
+        "Clenching your jaw or moving: muscle artifacts in the EEG."
+      ],
+      "sensores": {
+        "frontales": {
+          "nombre": "Frontal electrodes",
+          "donde": "Band on the forehead, above the eyebrows"
+        },
+        "centrales": {
+          "nombre": "Arm electrodes",
+          "donde": "Scalp, from the forehead to the crown"
+        },
+        "modulo": {
+          "nombre": "Recording module",
+          "donde": "Back of the neck, middle of the band"
+        }
+      },
+      "ficha": {
+        "inspiradoEn": "AYNI proposal: dry-electrode EEG headset at 10-20 positions for sleep and mental workload",
+        "mide": [
+          "8-channel EEG: Fp1, Fpz, Fp2, Fz, F3, F4, C3 and C4",
+          "Sleep stages (central electrodes)",
+          "Mental workload and stress (frontal electrodes)"
+        ],
+        "peso": "Concept design: dry electrodes ≈ 25 mm in diameter",
+        "autonomia": "Concept design: one full night of recording"
+      },
+      "partes": {
+        "banda": "Adjustable band with buckles",
+        "frontales": "3 frontal electrodes (Fp1, Fpz, Fp2)",
+        "modulo": "Electronics and battery module",
+        "espina": "Spine and crown hub",
+        "brazos": "5 flexible segmented arms",
+        "electrodos": "5 dry electrodes (Fz, F3, F4, C3, C4)"
       }
     },
     "generico_muneca": {
