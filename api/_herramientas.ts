@@ -104,9 +104,10 @@ export function definirHerramientas(c: ContextoAgente): DefinicionHerramienta[] 
     {
       nombre: 'abrir_pestana',
       descripcion: 'Cambia de pestaña. Úsala solo si el astronauta lo pide explícitamente.',
-      parametros: objeto({ pestana: enumDe(['cuerpo3d', 'monitoreo', 'medicion', 'agente']) }, [
-        'pestana',
-      ]),
+      parametros: objeto(
+        { pestana: enumDe(['cuerpo3d', 'monitoreo', 'medicion', 'evaluaciones', 'agente']) },
+        ['pestana'],
+      ),
     },
   ];
 }

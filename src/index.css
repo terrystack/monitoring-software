@@ -11,6 +11,8 @@
     --tinta-tenue: 138 144 166;
     --acento: 34 211 238;
     --opacidad-panel: 0.88;
+    /* Estímulo del PVT-B (casilla verde, como el protocolo de referencia). No es un color de estado. */
+    --estimulo: 74 222 128;
     /* 14 px en una laptop de 1280 px, 17 px en 1920 px. */
     font-size: clamp(14px, 0.47vw + 8px, 17px);
     color-scheme: dark;
@@ -65,6 +67,16 @@
 
   .rotulo {
     @apply text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue;
+  }
+
+  /* Casillas de la cuadrícula del PVT-B: se encienden por atributo desde el bucle de cuadros. */
+  .celda-pvt {
+    @apply relative grid select-none place-items-center border border-linea;
+    touch-action: none;
+  }
+  .celda-pvt[data-on='1'] {
+    background-color: rgb(var(--estimulo));
+    color: #050816;
   }
 }
 

@@ -4,11 +4,22 @@
     "nombre": "Pulso en reposo",
     "unidad": "lpm",
     "zonas": ["corazon"],
-    "validacion": { "min": 30, "max": 220 },
+    "validacion": {
+      "min": 30,
+      "max": 220
+    },
     "direccionRiesgo": "ambas",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": ["ejercicio"],
-    "reglas": [{ "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 }],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
     "textos": {
       "queEs": "Cuántas veces late tu corazón por minuto en reposo.",
       "queSignifica": "Un pulso en reposo por encima de tu normal puede indicar fatiga, deshidratación o estrés.",
@@ -37,11 +48,22 @@
     "nombre": "Variabilidad cardíaca",
     "unidad": "ms",
     "zonas": ["corazon"],
-    "validacion": { "min": 5, "max": 250 },
+    "validacion": {
+      "min": 5,
+      "max": 250
+    },
     "direccionRiesgo": "baja",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": ["ejercicio"],
-    "reglas": [{ "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 }],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
     "textos": {
       "queEs": "Cuánto varía el tiempo entre un latido y el siguiente.",
       "queSignifica": "Una variabilidad más baja que tu normal suele acompañar al cansancio o al estrés acumulado.",
@@ -57,20 +79,39 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_muneca",
     "entrada": "dispositivo",
-    "sintetico": { "media": 55, "desv": 8, "frecuencia": "tres_veces_dia", "decimales": 0 }
+    "sintetico": {
+      "media": 55,
+      "desv": 8,
+      "frecuencia": "tres_veces_dia",
+      "decimales": 0
+    }
   },
   {
     "id": "presion_sistolica",
     "nombre": "Presión sistólica",
     "unidad": "mmHg",
     "zonas": ["vascular"],
-    "validacion": { "min": 60, "max": 250 },
+    "validacion": {
+      "min": 60,
+      "max": 250
+    },
     "direccionRiesgo": "ambas",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": ["ejercicio"],
     "reglas": [
-      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
-      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 140, "rojo": 160 }
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      },
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 140,
+        "rojo": 160
+      }
     ],
     "textos": {
       "queEs": "La presión de la sangre en tus arterias cuando el corazón late.",
@@ -87,20 +128,39 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_brazo",
     "entrada": "dispositivo",
-    "sintetico": { "media": 116, "desv": 6, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 116,
+      "desv": 6,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   },
   {
     "id": "presion_diastolica",
     "nombre": "Presión diastólica",
     "unidad": "mmHg",
     "zonas": ["vascular"],
-    "validacion": { "min": 30, "max": 150 },
+    "validacion": {
+      "min": 30,
+      "max": 150
+    },
     "direccionRiesgo": "ambas",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": ["ejercicio"],
     "reglas": [
-      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
-      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 90, "rojo": 100 }
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      },
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 90,
+        "rojo": 100
+      }
     ],
     "textos": {
       "queEs": "La presión de la sangre en tus arterias entre un latido y otro.",
@@ -113,20 +173,39 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_brazo",
     "entrada": "dispositivo",
-    "sintetico": { "media": 75, "desv": 4, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 75,
+      "desv": 4,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   },
   {
     "id": "spo2",
     "nombre": "Saturación de oxígeno",
     "unidad": "%",
     "zonas": ["pulmones"],
-    "validacion": { "min": 70, "max": 100 },
+    "validacion": {
+      "min": 70,
+      "max": 100
+    },
     "direccionRiesgo": "baja",
     "agregacionDiaria": "min",
     "contextosIgnorados": [],
     "reglas": [
-      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
-      { "tipo": "limite_fijo", "comparador": "<", "ambar": 95, "rojo": 92 }
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      },
+      {
+        "tipo": "limite_fijo",
+        "comparador": "<",
+        "ambar": 95,
+        "rojo": 92
+      }
     ],
     "textos": {
       "queEs": "Qué porcentaje de tu sangre lleva oxígeno.",
@@ -143,20 +222,39 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_muneca",
     "entrada": "dispositivo",
-    "sintetico": { "media": 98, "desv": 0.7, "frecuencia": "tres_veces_dia", "decimales": 0 }
+    "sintetico": {
+      "media": 98,
+      "desv": 0.7,
+      "frecuencia": "tres_veces_dia",
+      "decimales": 0
+    }
   },
   {
     "id": "temperatura",
     "nombre": "Temperatura corporal",
     "unidad": "°C",
     "zonas": ["piel_inmune"],
-    "validacion": { "min": 34, "max": 42 },
+    "validacion": {
+      "min": 34,
+      "max": 42
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "max",
     "contextosIgnorados": ["ejercicio"],
     "reglas": [
-      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
-      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 37.8, "rojo": 38.5 }
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      },
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 37.8,
+        "rojo": 38.5
+      }
     ],
     "textos": {
       "queEs": "La temperatura interna de tu cuerpo.",
@@ -186,13 +284,27 @@
     "nombre": "Glucosa en sangre",
     "unidad": "mg/dL",
     "zonas": ["metabolismo"],
-    "validacion": { "min": 40, "max": 500 },
+    "validacion": {
+      "min": 40,
+      "max": 500
+    },
     "direccionRiesgo": "ambas",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": [],
     "reglas": [
-      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
-      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 180, "rojo": 250 }
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      },
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 180,
+        "rojo": 250
+      }
     ],
     "textos": {
       "queEs": "La cantidad de azúcar que circula en tu sangre.",
@@ -209,14 +321,22 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_brazo",
     "entrada": "dispositivo",
-    "sintetico": { "media": 98, "desv": 10, "frecuencia": "tres_veces_dia", "decimales": 0 }
+    "sintetico": {
+      "media": 98,
+      "desv": 10,
+      "frecuencia": "tres_veces_dia",
+      "decimales": 0
+    }
   },
   {
     "id": "sueno_horas",
     "nombre": "Horas de sueño",
     "unidad": "h",
     "zonas": ["cerebro"],
-    "validacion": { "min": 0, "max": 16 },
+    "validacion": {
+      "min": 0,
+      "max": 16
+    },
     "direccionRiesgo": "baja",
     "agregacionDiaria": "suma",
     "contextosIgnorados": [],
@@ -251,14 +371,22 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_muneca",
     "entrada": "dispositivo",
-    "sintetico": { "media": 7.2, "desv": 0.5, "frecuencia": "diaria", "decimales": 1 }
+    "sintetico": {
+      "media": 7.2,
+      "desv": 0.5,
+      "frecuencia": "diaria",
+      "decimales": 1
+    }
   },
   {
     "id": "animo",
     "nombre": "Estado de ánimo",
     "unidad": "escala_1_5",
     "zonas": ["cerebro"],
-    "validacion": { "min": 1, "max": 5 },
+    "validacion": {
+      "min": 1,
+      "max": 5
+    },
     "direccionRiesgo": "baja",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": [],
@@ -293,20 +421,36 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "manual",
     "entrada": "manual",
-    "sintetico": { "media": 4, "desv": 0.5, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 4,
+      "desv": 0.5,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   },
   {
     "id": "tiempo_reaccion",
     "nombre": "Tiempo de reacción",
     "unidad": "ms",
     "zonas": ["nervios"],
-    "validacion": { "min": 100, "max": 1500 },
+    "validacion": {
+      "min": 100,
+      "max": 5000
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 }],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
     "textos": {
-      "queEs": "Cuánto tardas en responder a una señal en la prueba de 60 segundos.",
+      "queEs": "Tu tiempo de reacción medio en la prueba PVT-B de 3 minutos.",
       "queSignifica": "Un tiempo más lento que tu normal suele reflejar cansancio o falta de sueño.",
       "porQueEspacio": "La fatiga, el CO₂ y el sueño irregular afectan la atención en misión."
     },
@@ -320,19 +464,247 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "manual",
     "entrada": "manual",
-    "sintetico": { "media": 280, "desv": 20, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 280,
+      "desv": 20,
+      "frecuencia": "rutina",
+      "decimales": 0
+    }
+  },
+  {
+    "id": "velocidad_respuesta",
+    "nombre": "Velocidad de respuesta",
+    "unidad": "1/s",
+    "zonas": ["nervios"],
+    "validacion": {
+      "min": 0,
+      "max": 10
+    },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
+    "textos": {
+      "queEs": "La medida principal del PVT-B: el promedio de 1000 dividido por tu tiempo de reacción. Más alto es más rápido.",
+      "queSignifica": "Una velocidad más baja que tu normal suele acompañar a la falta de sueño o al cansancio.",
+      "porQueEspacio": "En la estación espacial, dormir 6 horas o menos se asoció con reacciones más lentas."
+    },
+    "acciones": [
+      "Revisa cuántas horas dormiste.",
+      "Evita tareas de precisión hasta repetir la prueba.",
+      "Repite el PVT-B en tu próximo horario."
+    ],
+    "avisoMedico": "Si sigue por debajo de tu normal en 2 pruebas seguidas o notas confusión.",
+    "fuente": "https://doi.org/10.1093/sleep/zsac006",
+    "fuenteNombre": "Jones et al. 2022",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": {
+      "media": 3.6,
+      "desv": 0.2,
+      "frecuencia": "rutina",
+      "decimales": 2
+    }
+  },
+  {
+    "id": "estres",
+    "nombre": "Estrés percibido",
+    "unidad": "escala_0_100",
+    "zonas": ["cerebro"],
+    "validacion": {
+      "min": 0,
+      "max": 100
+    },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 14,
+        "minDias": 5,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
+    "textos": {
+      "queEs": "Cuánto estrés sientes, de 0 (nada) a 100 (mucho), justo antes de cada PVT-B.",
+      "queSignifica": "Un estrés por encima de tu normal merece atención, sobre todo si coincide con poco sueño.",
+      "porQueEspacio": "En misiones de 6 meses, dormir menos de 6 horas se asoció con más estrés, y el estrés subió a lo largo de la misión."
+    },
+    "acciones": [
+      "Haz 5 minutos de respiración lenta.",
+      "Revisa tu carga de trabajo de hoy con la tripulación.",
+      "Protege tus horas de sueño esta noche."
+    ],
+    "avisoMedico": "Si sigue por encima de tu normal varios días o te impide dormir, habla con el equipo de apoyo psicológico.",
+    "fuente": "https://doi.org/10.1093/sleep/zsac006",
+    "fuenteNombre": "Jones et al. 2022",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": {
+      "media": 30,
+      "desv": 8,
+      "frecuencia": "rutina",
+      "decimales": 0
+    }
+  },
+  {
+    "id": "mhcl_adaptacion",
+    "nombre": "Adaptación positiva",
+    "unidad": "escala_0_10",
+    "zonas": ["cerebro"],
+    "validacion": {
+      "min": 0,
+      "max": 10
+    },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 56,
+        "minDias": 4,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
+    "textos": {
+      "queEs": "Promedio semanal de 0 a 10 de estados como sentirte competente, en control, decidido o inspirado.",
+      "queSignifica": "Una adaptación más baja que tu normal puede indicar desgaste o desconexión.",
+      "porQueEspacio": "En estaciones antárticas, la adaptación positiva bajó y la mala autorregulación subió a lo largo de los meses de aislamiento."
+    },
+    "acciones": [
+      "Dedica tiempo a algo que disfrutes y fíjate en lo que salió bien.",
+      "Habla con alguien de la tripulación.",
+      "Programa una llamada o mensaje a casa."
+    ],
+    "avisoMedico": "Si baja varias semanas seguidas o te sientes desconectado, habla con el equipo de apoyo psicológico.",
+    "fuente": "https://doi.org/10.1016/j.actaastro.2019.03.007",
+    "fuenteNombre": "Bower et al. 2019",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": {
+      "media": 5.1,
+      "desv": 0.5,
+      "frecuencia": "rutina",
+      "decimales": 1
+    }
+  },
+  {
+    "id": "mhcl_autorregulacion",
+    "nombre": "Mala autorregulación",
+    "unidad": "escala_0_10",
+    "zonas": ["cerebro"],
+    "validacion": {
+      "min": 0,
+      "max": 10
+    },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 56,
+        "minDias": 4,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
+    "textos": {
+      "queEs": "Promedio semanal de 0 a 10 de dificultades de atención, inquietud, olvidos o somnolencia.",
+      "queSignifica": "Una puntuación por encima de tu normal suele acompañar a poco sueño o a molestias físicas.",
+      "porQueEspacio": "En estaciones antárticas, la adaptación positiva bajó y la mala autorregulación subió a lo largo de los meses de aislamiento."
+    },
+    "acciones": [
+      "Revisa tus horas de sueño de la semana.",
+      "Organiza las tareas difíciles en tus horas más alerta.",
+      "Haz pausas cortas entre tareas largas."
+    ],
+    "avisoMedico": "Si sube varias semanas seguidas o afecta tu trabajo, habla con el médico de vuelo.",
+    "fuente": "https://doi.org/10.1016/j.actaastro.2019.03.007",
+    "fuenteNombre": "Bower et al. 2019",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": {
+      "media": 5.2,
+      "desv": 0.5,
+      "frecuencia": "rutina",
+      "decimales": 1
+    }
+  },
+  {
+    "id": "mhcl_aprension",
+    "nombre": "Aprensión ansiosa",
+    "unidad": "escala_0_10",
+    "zonas": ["cerebro"],
+    "validacion": {
+      "min": 0,
+      "max": 10
+    },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "linea_base",
+        "ventanaDias": 56,
+        "minDias": 4,
+        "zAmbar": 2,
+        "zRojo": 3
+      }
+    ],
+    "textos": {
+      "queEs": "Promedio semanal de 0 a 10 de preocupación, ansiedad, pensamientos acelerados o sentirte abrumado.",
+      "queSignifica": "Una puntuación por encima de tu normal indica más preocupación de lo habitual para ti.",
+      "porQueEspacio": "En estaciones antárticas, la adaptación positiva bajó y la mala autorregulación subió a lo largo de los meses de aislamiento."
+    },
+    "acciones": [
+      "Haz 5 minutos de respiración lenta.",
+      "Escribe lo que te preocupa y compártelo con alguien.",
+      "Revisa tu carga de trabajo con la tripulación."
+    ],
+    "avisoMedico": "Si sube varias semanas seguidas o te cuesta dormir por la preocupación, habla con el equipo de apoyo psicológico.",
+    "fuente": "https://doi.org/10.1016/j.actaastro.2019.03.007",
+    "fuenteNombre": "Bower et al. 2019",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": {
+      "media": 5.3,
+      "desv": 0.5,
+      "frecuencia": "rutina",
+      "decimales": 1
+    }
   },
   {
     "id": "masa_corporal",
     "nombre": "Masa corporal",
     "unidad": "kg",
     "zonas": ["metabolismo"],
-    "validacion": { "min": 30, "max": 200 },
+    "validacion": {
+      "min": 30,
+      "max": 200
+    },
     "direccionRiesgo": "baja",
     "agregacionDiaria": "ultimo",
     "contextosIgnorados": [],
     "reglas": [
-      { "tipo": "porcentaje_cambio", "referencia": "inicio", "ambarPct": 5, "rojoPct": 10 }
+      {
+        "tipo": "porcentaje_cambio",
+        "referencia": "inicio",
+        "ambarPct": 5,
+        "rojoPct": 10
+      }
     ],
     "textos": {
       "queEs": "Tu masa corporal medida en el dispositivo de la nave.",
@@ -349,18 +721,33 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "manual",
     "entrada": "ambos",
-    "sintetico": { "media": 72, "desv": 0.3, "frecuencia": "diaria", "decimales": 1 }
+    "sintetico": {
+      "media": 72,
+      "desv": 0.3,
+      "frecuencia": "diaria",
+      "decimales": 1
+    }
   },
   {
     "id": "ejercicio_min",
     "nombre": "Ejercicio de resistencia",
     "unidad": "min",
     "zonas": ["musculos", "huesos"],
-    "validacion": { "min": 0, "max": 300 },
+    "validacion": {
+      "min": 0,
+      "max": 300
+    },
     "direccionRiesgo": "baja",
     "agregacionDiaria": "suma",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "meta_diaria", "meta": 90, "diasAmbar": 2, "diasRojo": 4 }],
+    "reglas": [
+      {
+        "tipo": "meta_diaria",
+        "meta": 90,
+        "diasAmbar": 2,
+        "diasRojo": 4
+      }
+    ],
     "textos": {
       "queEs": "Minutos de ejercicio de resistencia que hiciste hoy.",
       "queSignifica": "No llegar a la meta varios días seguidos acelera la pérdida de hueso y músculo.",
@@ -376,19 +763,33 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "generico_muneca",
     "entrada": "dispositivo",
-    "sintetico": { "media": 105, "desv": 10, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 105,
+      "desv": 10,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   },
   {
     "id": "co2_cabina",
     "nombre": "CO₂ de cabina (1 h)",
     "unidad": "mmHg",
     "zonas": ["pulmones"],
-    "validacion": { "min": 0, "max": 20 },
+    "validacion": {
+      "min": 0,
+      "max": 20
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "promedio",
     "contextosIgnorados": [],
     "reglas": [
-      { "tipo": "limite_fijo", "comparador": ">", "ambar": 3, "rojo": 4.5, "ventanaHoras": 1 }
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">",
+        "ambar": 3,
+        "rojo": 4.5,
+        "ventanaHoras": 1
+      }
     ],
     "textos": {
       "queEs": "La concentración de dióxido de carbono en el aire de la cabina.",
@@ -405,18 +806,33 @@
     "fuenteNombre": "NASA OCHMO",
     "dispositivo": "manual",
     "entrada": "dispositivo",
-    "sintetico": { "media": 2.2, "desv": 0.3, "frecuencia": "cada_hora", "decimales": 1 }
+    "sintetico": {
+      "media": 2.2,
+      "desv": 0.3,
+      "frecuencia": "cada_hora",
+      "decimales": 1
+    }
   },
   {
     "id": "dosis_radiacion",
     "nombre": "Dosis acumulada",
     "unidad": "mSv",
     "zonas": ["todo_cuerpo"],
-    "validacion": { "min": 0, "max": 2000 },
+    "validacion": {
+      "min": 0,
+      "max": 2000
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "ultimo",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "presupuesto", "limite": 600, "ambarPct": 80, "rojoPct": 100 }],
+    "reglas": [
+      {
+        "tipo": "presupuesto",
+        "limite": 600,
+        "ambarPct": 80,
+        "rojoPct": 100
+      }
+    ],
     "textos": {
       "queEs": "La radiación total que has recibido durante tu carrera.",
       "queSignifica": "Cuanto más cerca del límite de carrera, más importa protegerte en cada evento solar.",
@@ -445,11 +861,21 @@
     "nombre": "Dosis del día",
     "unidad": "mSv",
     "zonas": ["todo_cuerpo"],
-    "validacion": { "min": 0, "max": 1000 },
+    "validacion": {
+      "min": 0,
+      "max": 1000
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "suma",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 2, "rojo": 10 }],
+    "reglas": [
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 2,
+        "rojo": 10
+      }
+    ],
     "textos": {
       "queEs": "La radiación que recibiste hoy.",
       "queSignifica": "Una dosis diaria alta suele deberse a un evento de partículas solares.",
@@ -465,18 +891,33 @@
     "fuenteNombre": "NASA OCHMO",
     "dispositivo": "generico_pecho",
     "entrada": "dispositivo",
-    "sintetico": { "media": 0.4, "desv": 0.05, "frecuencia": "diaria", "decimales": 2 }
+    "sintetico": {
+      "media": 0.4,
+      "desv": 0.05,
+      "frecuencia": "diaria",
+      "decimales": 2
+    }
   },
   {
     "id": "cefalea",
     "nombre": "Dolor de cabeza",
     "unidad": "escala_0_3",
     "zonas": ["cerebro"],
-    "validacion": { "min": 0, "max": 3 },
+    "validacion": {
+      "min": 0,
+      "max": 3
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "max",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 1, "rojo": 3 }],
+    "reglas": [
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 1,
+        "rojo": 3
+      }
+    ],
     "textos": {
       "queEs": "Cuánto te duele la cabeza, de 0 (nada) a 3 (mucho).",
       "queSignifica": "El dolor de cabeza puede deberse al ambiente de la cabina, al sueño o a la hidratación.",
@@ -492,18 +933,33 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "manual",
     "entrada": "manual",
-    "sintetico": { "media": 0, "desv": 0, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 0,
+      "desv": 0,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   },
   {
     "id": "mareo",
     "nombre": "Mareo",
     "unidad": "escala_0_3",
     "zonas": ["vascular", "nervios"],
-    "validacion": { "min": 0, "max": 3 },
+    "validacion": {
+      "min": 0,
+      "max": 3
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "max",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 1, "rojo": 3 }],
+    "reglas": [
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 1,
+        "rojo": 3
+      }
+    ],
     "textos": {
       "queEs": "Cuánto mareo sientes, de 0 (nada) a 3 (mucho).",
       "queSignifica": "El mareo suele aparecer cuando cambia la gravedad o la presión arterial.",
@@ -515,18 +971,33 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "manual",
     "entrada": "manual",
-    "sintetico": { "media": 0, "desv": 0, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 0,
+      "desv": 0,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   },
   {
     "id": "lesion_piel",
     "nombre": "Lesión en la piel",
     "unidad": "escala_0_3",
     "zonas": ["piel_inmune"],
-    "validacion": { "min": 0, "max": 3 },
+    "validacion": {
+      "min": 0,
+      "max": 3
+    },
     "direccionRiesgo": "sube",
     "agregacionDiaria": "max",
     "contextosIgnorados": [],
-    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 1, "rojo": 3 }],
+    "reglas": [
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">=",
+        "ambar": 1,
+        "rojo": 3
+      }
+    ],
     "textos": {
       "queEs": "Si tienes irritación, sarpullido o heridas en la piel, de 0 (nada) a 3 (mucho).",
       "queSignifica": "Los cambios en la piel pueden reflejar irritación o una respuesta del sistema inmune.",
@@ -542,6 +1013,11 @@
     "fuenteNombre": "NASA HRP",
     "dispositivo": "manual",
     "entrada": "manual",
-    "sintetico": { "media": 0, "desv": 0, "frecuencia": "diaria", "decimales": 0 }
+    "sintetico": {
+      "media": 0,
+      "desv": 0,
+      "frecuencia": "diaria",
+      "decimales": 0
+    }
   }
 ]

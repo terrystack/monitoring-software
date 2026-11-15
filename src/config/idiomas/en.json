@@ -75,6 +75,7 @@
       "pestanaMonitoreo": "Monitoring & forecast",
       "pestanaMedicion": "Measurement",
       "pestanaAgente": "AYNI Agent",
+      "pestanaEvaluaciones": "Assessments",
       "hoy": "Today",
       "puntajeDe": "of 100",
       "estadoGeneral": "Overall status {puntaje} of 100",
@@ -431,7 +432,7 @@
     "tiempo_reaccion": {
       "nombre": "Reaction time",
       "textos": {
-        "queEs": "How long you take to respond to a signal in the 60-second test.",
+        "queEs": "Your mean reaction time in the 3-minute PVT-B test.",
         "queSignifica": "A time slower than your normal often reflects tiredness or lack of sleep.",
         "porQueEspacio": "Fatigue, CO₂ and irregular sleep affect attention during a mission."
       },
@@ -441,6 +442,76 @@
         "Check your hours of sleep."
       ],
       "avisoMedico": "If it stays slower than your normal for 2 tests in a row or you notice confusion."
+    },
+    "velocidad_respuesta": {
+      "nombre": "Response speed",
+      "textos": {
+        "queEs": "The main PVT-B measure: the average of 1000 divided by your reaction time. Higher is faster.",
+        "queSignifica": "A speed lower than your normal often comes with lack of sleep or tiredness.",
+        "porQueEspacio": "On the space station, sleeping 6 hours or less was associated with slower reactions."
+      },
+      "acciones": [
+        "Check how many hours you slept.",
+        "Avoid precision tasks until you repeat the test.",
+        "Repeat the PVT-B at your next scheduled time."
+      ],
+      "avisoMedico": "If it stays below your normal for 2 tests in a row or you notice confusion."
+    },
+    "estres": {
+      "nombre": "Perceived stress",
+      "textos": {
+        "queEs": "How stressed you feel, from 0 (not at all) to 100 (very), right before each PVT-B.",
+        "queSignifica": "Stress above your normal deserves attention, especially if it comes with little sleep.",
+        "porQueEspacio": "On 6-month missions, sleeping under 6 hours was associated with more stress, and stress rose over the mission."
+      },
+      "acciones": [
+        "Do 5 minutes of slow breathing.",
+        "Review today's workload with the crew.",
+        "Protect your sleep hours tonight."
+      ],
+      "avisoMedico": "If it stays above your normal for several days or keeps you from sleeping, talk to the psychological support team."
+    },
+    "mhcl_adaptacion": {
+      "nombre": "Positive adaptation",
+      "textos": {
+        "queEs": "Weekly 0–10 average of states such as feeling competent, in control, determined or inspired.",
+        "queSignifica": "Adaptation lower than your normal can signal wear or disconnection.",
+        "porQueEspacio": "At Antarctic stations, positive adaptation fell and poor self-regulation rose over the months of isolation."
+      },
+      "acciones": [
+        "Make time for something you enjoy and notice what went well.",
+        "Talk with someone on the crew.",
+        "Schedule a call or message home."
+      ],
+      "avisoMedico": "If it drops several weeks in a row or you feel disconnected, talk to the psychological support team."
+    },
+    "mhcl_autorregulacion": {
+      "nombre": "Poor self-regulation",
+      "textos": {
+        "queEs": "Weekly 0–10 average of trouble paying attention, restlessness, forgetfulness or sleepiness.",
+        "queSignifica": "A score above your normal often comes with little sleep or physical complaints.",
+        "porQueEspacio": "At Antarctic stations, positive adaptation fell and poor self-regulation rose over the months of isolation."
+      },
+      "acciones": [
+        "Check your sleep hours this week.",
+        "Schedule hard tasks for your most alert hours.",
+        "Take short breaks between long tasks."
+      ],
+      "avisoMedico": "If it rises several weeks in a row or affects your work, talk to the flight surgeon."
+    },
+    "mhcl_aprension": {
+      "nombre": "Anxious apprehension",
+      "textos": {
+        "queEs": "Weekly 0–10 average of worry, anxiety, racing thoughts or feeling overwhelmed.",
+        "queSignifica": "A score above your normal means more worry than usual for you.",
+        "porQueEspacio": "At Antarctic stations, positive adaptation fell and poor self-regulation rose over the months of isolation."
+      },
+      "acciones": [
+        "Do 5 minutes of slow breathing.",
+        "Write down what worries you and share it with someone.",
+        "Review your workload with the crew."
+      ],
+      "avisoMedico": "If it rises several weeks in a row or worry keeps you from sleeping, talk to the psychological support team."
     },
     "masa_corporal": {
       "nombre": "Body mass",
@@ -804,8 +875,133 @@
     "masa_corporal": {
       "titulo": "Body mass"
     },
-    "prueba_reaccion": {
-      "titulo": "Reaction test"
+    "pvt_despertar": {
+      "titulo": "PVT-B and stress on waking"
+    },
+    "pvt_noche": {
+      "titulo": "PVT-B and stress before bed"
+    },
+    "mhcl_semanal": {
+      "titulo": "Mental Health Checklist (MHCL)"
+    }
+  },
+  "evaluaciones": {
+    "textos": {
+      "titulo": "Assessments",
+      "intro": "Short alertness and mental-health tests. They are not diagnoses: each result is compared with yourself over the mission.",
+      "pvtNombre": "PVT-B · Alertness",
+      "pvtResumen": "3-minute reaction test, with your 0–100 stress rating right before. Twice a day: on waking and 2 hours before bed.",
+      "mhclNombre": "Mental Health Checklist (MHCL)",
+      "mhclResumen": "23 questions on how you have felt this week, from 0 (never) to 10 (always). Once a week.",
+      "hoy": "Today",
+      "estaSemana": "This week",
+      "momento": "Time",
+      "momentoDespertar": "On waking",
+      "momentoNoche": "Before bed",
+      "momentoLibre": "Unscheduled",
+      "comoFunciona": "How it works",
+      "pvtPasos": [
+        "You will see an empty grid. Do nothing.",
+        "Suddenly one square turns green and a number starts running in milliseconds.",
+        "Tap that square (or press the B key) as fast as you can. The number stops and stays visible for 1 second.",
+        "Repeat until time runs out. Do not tap before the square appears."
+      ],
+      "pvtSinAviso": "You are not told when you miss: that is part of the protocol.",
+      "empezar": "Start",
+      "antesDeLaPrueba": "Before the test",
+      "preguntaEstres": "How stressed do you feel right now?",
+      "ayudaEstres": "0 = not stressed at all, 100 = very stressed. Move the slider to answer.",
+      "sinResponder": "–",
+      "estresNada": "Not at all",
+      "estresMucho": "Very",
+      "horasSueno": "Hours you slept last night (optional)",
+      "continuar": "Continue",
+      "listoTitulo": "Ready to start",
+      "listoTexto": "The test opens full screen and lasts 3 minutes. Keep your finger near the screen or your index finger on the B key, silence notifications and watch the grid the whole time.",
+      "iniciarPrueba": "Start test",
+      "cancelar": "Cancel",
+      "instruccionPrueba": "Tap the green square or press B when it appears",
+      "tiempoRestante": "{s} s left",
+      "salirPrueba": "Exit test",
+      "resultados": "Results",
+      "avisoResultados": "A single result does not show whether there is stress or lack of sleep. The study compares these variables across groups of measurements, and it is observational.",
+      "velocidad": "Response speed",
+      "ayudaVelocidad": "Average of 1000/RT. Higher = faster and more alert.",
+      "trMedio": "Mean reaction time",
+      "lapsos": "Lapses",
+      "ayudaLapsos": "Responses of {ms} ms or more, and no response within 30 s.",
+      "salidasFalsas": "False starts",
+      "ayudaSalidas": "Taps with no square or RT under {ms} ms.",
+      "estresReportado": "Reported stress",
+      "sueno": "Sleep",
+      "intentos": "Trials",
+      "graficoIntentos": "Reaction time per trial",
+      "historial": "Previous sessions",
+      "sinSesiones": "No sessions yet.",
+      "guardado": "Result saved to your measurements.",
+      "otraVez": "Do another",
+      "volver": "Back",
+      "entrada": "Input",
+      "entradaTeclado": "Keyboard",
+      "entradaTactil": "Touch",
+      "entradaRaton": "Mouse",
+      "avisoTactil": "Touchscreen or mouse times are not comparable with keyboard times.",
+      "fuentePvt": "Based on Jones et al. (2022), SLEEP 45(3), and the PVT-B by Basner et al. (2011).",
+      "mhclInstruccion": "During the past week, how often did you feel this way?",
+      "mhclAnclas": [
+        { "valor": 0, "texto": "Never" },
+        { "valor": 3, "texto": "Rarely" },
+        { "valor": 7, "texto": "Often" },
+        { "valor": 10, "texto": "Always" }
+      ],
+      "preguntaDe": "Question {n} of {total}",
+      "anterior": "Previous",
+      "siguiente": "Next",
+      "terminar": "Finish",
+      "mhclAviso": "Scores are compared with your previous weeks. They are not a diagnosis; if something worries you, talk to the psychological support team.",
+      "promedioSubescala": "Average from 0 to 10",
+      "referenciaEstudio": "Study reference: {v}",
+      "fuenteMhcl": "Mental Health Checklist (Bower et al., 2019; Alfano et al., 2021).",
+      "fecha": "Date"
+    },
+    "subescalas": {
+      "adaptacion": {
+        "nombre": "Positive adaptation",
+        "descripcion": "More presence of states linked to adaptation, competence and well-being."
+      },
+      "autorregulacion": {
+        "nombre": "Poor self-regulation",
+        "descripcion": "More presence of trouble with attention, restlessness or sleepiness."
+      },
+      "aprension": {
+        "nombre": "Anxious apprehension",
+        "descripcion": "More presence of worry, anxiety and persistent thoughts."
+      }
+    },
+    "items": {
+      "abrumado": "Overwhelmed",
+      "alegre": "Cheerful / happy",
+      "fuerte": "Strong / resilient",
+      "entusiasmado": "Enthused / spirited",
+      "perfeccionista": "Perfectionistic",
+      "preocupado": "Worried",
+      "competitivo": "Competitive",
+      "competente": "Competent",
+      "en_control": "In full control",
+      "eficaz": "Effective / successful",
+      "obsesionado": "Obsessional / stuck on certain things",
+      "orgulloso": "Proud",
+      "interesado": "Interested / fascinated",
+      "pensamientos_acelerados": "Racing thoughts",
+      "inquieto": "Restless / fidgety",
+      "desatento": "Inattentive",
+      "aburrido": "Bored",
+      "inspirado": "Inspired",
+      "olvidadizo": "Forgetful",
+      "ansioso": "Anxious / nervous",
+      "amable": "Gracious / courteous",
+      "decidido": "Determined",
+      "somnoliento": "Sleepy / trouble maintaining wake"
     }
   }
 }

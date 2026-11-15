@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { esquemaEscena, esquemaFrases, type ConfigAyni } from './esquemas';
+import { esquemaEscena, esquemaEvaluaciones, esquemaFrases, type ConfigAyni } from './esquemas';
 import enJson from './idiomas/en.json';
 
 /** El español es el idioma base de src/config; los demás son capas con los mismos ids. */
@@ -66,6 +66,13 @@ export const esquemaTraduccion = z
         .strict(),
     ),
     rutina: z.record(z.string(), z.object({ titulo: t }).strict()),
+    evaluaciones: z
+      .object({
+        textos: esquemaEvaluaciones.shape.textos,
+        subescalas: z.record(z.string(), z.object({ nombre: t, descripcion: t }).strict()),
+        items: z.record(z.string(), t),
+      })
+      .strict(),
   })
   .strict();
 
@@ -177,6 +184,27 @@ export function faltantesTraduccion(config: ConfigAyni, tr: Traduccion): string[
     config.rutina.map((x) => x.id),
     tr.rutina,
   );
+  const { mhcl } = config.evaluaciones;
+  mismosIds(
+    'evaluaciones.subescalas',
+    mhcl.subescalas.map((x) => x.id),
+    tr.evaluaciones.subescalas,
+  );
+  mismosIds(
+    'evaluaciones.items',
+    mhcl.items.map((x) => x.id),
+    tr.evaluaciones.items,
+  );
+  mismoLargo(
+    'evaluaciones.textos.mhclAnclas',
+    config.evaluaciones.textos.mhclAnclas,
+    tr.evaluaciones.textos.mhclAnclas,
+  );
+  mismoLargo(
+    'evaluaciones.textos.pvtPasos',
+    config.evaluaciones.textos.pvtPasos,
+    tr.evaluaciones.textos.pvtPasos,
+  );
   return errores;
 }
 
@@ -261,6 +289,21 @@ export function traducirConfig(config: ConfigAyni, tr: Traduccion): ConfigAyni {
         : d;
     }),
     rutina: config.rutina.map((r) => ({ ...r, ...tr.rutina[r.id] })),
+    evaluaciones: {
+      ...config.evaluaciones,
+      textos: tr.evaluaciones.textos,
+      mhcl: {
+        ...config.evaluaciones.mhcl,
+        subescalas: config.evaluaciones.mhcl.subescalas.map((x) => ({
+          ...x,
+          ...tr.evaluaciones.subescalas[x.id],
+        })),
+        items: config.evaluaciones.mhcl.items.map((x) => ({
+          ...x,
+          texto: tr.evaluaciones.items[x.id] ?? x.texto,
+        })),
+      },
+    },
   };
 }
 

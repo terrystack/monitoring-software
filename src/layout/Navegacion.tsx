@@ -6,7 +6,7 @@ interface Props {
   textos: ConfigEscena['textos'];
 }
 
-/** Las cuatro pestañas (AYNI_FUSION.md §4.3), operables con flechas, Inicio y Fin. */
+/** Las cinco pestañas (AYNI_FUSION.md §4.3), operables con flechas, Inicio y Fin. */
 export function Navegacion({ textos }: Props) {
   const pestana = useAyni((s) => s.pestana);
   const setPestana = useAyni((s) => s.setPestana);
@@ -15,6 +15,7 @@ export function Navegacion({ textos }: Props) {
     { id: 'cuerpo3d', nombre: textos.pestanaCuerpo },
     { id: 'monitoreo', nombre: textos.pestanaMonitoreo },
     { id: 'medicion', nombre: textos.pestanaMedicion },
+    { id: 'evaluaciones', nombre: textos.pestanaEvaluaciones },
     { id: 'agente', nombre: textos.pestanaAgente },
   ];
 

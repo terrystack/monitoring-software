@@ -9,6 +9,7 @@ import tripulantesJson from './tripulantes.json';
 import reglasCompuestasJson from './reglas-compuestas.json';
 import escenaJson from './escena.json';
 import frasesJson from './frases.json';
+import evaluacionesJson from './evaluaciones.json';
 
 // --- 4.4.1 Tipos comunes ---------------------------------------------------
 
@@ -24,6 +25,7 @@ export const esquemaContexto = z.enum([
   'post_comida',
   'noche',
   'manual',
+  'despertar',
 ]);
 export const esquemaFranja = z.enum(['manana', 'dia', 'noche', 'semanal']);
 export const esquemaAnclaje = z.enum([
@@ -135,7 +137,8 @@ export const esquemaIndicador = z
       .object({
         media: z.number(),
         desv: z.number().nonnegative(),
-        frecuencia: z.enum(['diaria', 'tres_veces_dia', 'cada_hora']),
+        /** `rutina`: a la hora de cada tarea de rutina.json que incluye el indicador. */
+        frecuencia: z.enum(['diaria', 'tres_veces_dia', 'cada_hora', 'rutina']),
         decimales: z.number().int().nonnegative(),
         cicloDiario: z.number().optional(),
         acumulado: z.boolean().optional(),
@@ -344,6 +347,136 @@ export const esquemaDispositivo = z
   })
   .strict();
 
+// --- Evaluaciones (PVT-B y MHCL) ---------------------------------------------
+
+const ms = z.number().int().nonnegative();
+const textosEvaluaciones = z
+  .object({
+    titulo: texto,
+    intro: texto,
+    pvtNombre: texto,
+    pvtResumen: texto,
+    mhclNombre: texto,
+    mhclResumen: texto,
+    hoy: texto,
+    fecha: texto,
+    estaSemana: texto,
+    momento: texto,
+    momentoDespertar: texto,
+    momentoNoche: texto,
+    momentoLibre: texto,
+    comoFunciona: texto,
+    pvtPasos: z.array(texto).min(1),
+    pvtSinAviso: texto,
+    empezar: texto,
+    antesDeLaPrueba: texto,
+    preguntaEstres: texto,
+    ayudaEstres: texto,
+    sinResponder: texto,
+    estresNada: texto,
+    estresMucho: texto,
+    horasSueno: texto,
+    continuar: texto,
+    listoTitulo: texto,
+    listoTexto: texto,
+    iniciarPrueba: texto,
+    cancelar: texto,
+    instruccionPrueba: texto,
+    tiempoRestante: texto,
+    salirPrueba: texto,
+    resultados: texto,
+    avisoResultados: texto,
+    velocidad: texto,
+    ayudaVelocidad: texto,
+    trMedio: texto,
+    lapsos: texto,
+    ayudaLapsos: texto,
+    salidasFalsas: texto,
+    ayudaSalidas: texto,
+    estresReportado: texto,
+    sueno: texto,
+    intentos: texto,
+    graficoIntentos: texto,
+    historial: texto,
+    sinSesiones: texto,
+    guardado: texto,
+    otraVez: texto,
+    volver: texto,
+    entrada: texto,
+    entradaTeclado: texto,
+    entradaTactil: texto,
+    entradaRaton: texto,
+    avisoTactil: texto,
+    fuentePvt: texto,
+    mhclInstruccion: texto,
+    /** Etiquetas guía de la escala, ubicadas bajo el número que indican. */
+    mhclAnclas: z.array(z.object({ valor: z.number().int(), texto }).strict()).min(2),
+    preguntaDe: texto,
+    anterior: texto,
+    siguiente: texto,
+    terminar: texto,
+    mhclAviso: texto,
+    promedioSubescala: texto,
+    referenciaEstudio: texto,
+    fuenteMhcl: texto,
+  })
+  .strict();
+
+export const esquemaEvaluaciones = z
+  .object({
+    pvt: z
+      .object({
+        duracionS: z.number().positive(),
+        esperaMinMs: ms,
+        esperaMaxMs: ms,
+        retroalimentacionMs: ms,
+        maxRespuestaMs: z.number().int().positive(),
+        umbralLapsoMs: z.number().int().positive(),
+        umbralFalsaMs: z.number().int().positive(),
+        pasoContadorMs: z.number().int().positive(),
+        tecla: z.string().length(1),
+        filas: z.number().int().min(1).max(12),
+        columnas: z.number().int().min(1).max(12),
+        indicadores: z.object({ tiempoReaccion: texto, velocidad: texto, estres: texto }).strict(),
+        momentos: z
+          .array(z.object({ id: texto, tarea: texto, contexto: esquemaContexto }).strict())
+          .min(1),
+      })
+      .strict()
+      .refine((p) => p.esperaMinMs <= p.esperaMaxMs, {
+        message: 'esperaMinMs debe ser ≤ esperaMaxMs',
+        path: ['esperaMinMs'],
+      }),
+    mhcl: z
+      .object({
+        escalaMin: z.number().int(),
+        escalaMax: z.number().int(),
+        tarea: texto,
+        nota: z.string().optional(),
+        subescalas: z
+          .array(
+            z.object({ id: texto, nombre: texto, descripcion: texto, indicador: texto }).strict(),
+          )
+          .min(1),
+        items: z
+          .array(
+            z
+              .object({
+                id: texto,
+                texto,
+                subescala: texto,
+                /** Media (DE) del ítem en la tabla 3 del estudio de referencia; solo orientación. */
+                referencia: z.object({ media: z.number(), desv: z.number() }).strict().optional(),
+              })
+              .strict(),
+          )
+          .min(1),
+      })
+      .strict(),
+    textos: textosEvaluaciones,
+  })
+  .strict();
+
 // --- 4.4.9 Rutina ------------------------------------------------------------
 
 export const esquemaTarea = z
@@ -358,6 +491,8 @@ export const esquemaTarea = z
     duracionMin: z.number().positive(),
     puntos: z.number().int().nonnegative(),
     obligatoria: z.boolean(),
+    /** Si se indica, la tarea solo cuenta como hecha con lecturas de ese contexto. */
+    contexto: esquemaContexto.optional(),
   })
   .strict()
   .refine((t) => (t.franja === 'semanal') === (t.diasSemana !== undefined), {
@@ -479,6 +614,7 @@ export const esquemaEscena = z
         pestanaMonitoreo: texto,
         pestanaMedicion: texto,
         pestanaAgente: texto,
+        pestanaEvaluaciones: texto,
         diaMision: texto,
         alertas: texto,
         sinAlertas: texto,
@@ -654,6 +790,7 @@ export type IdCapa = z.infer<typeof esquemaCapa>;
 export type ModoCapa = z.infer<typeof esquemaModoCapa>;
 export type ConfigEscena = z.infer<typeof esquemaEscena>;
 export type Frases = z.infer<typeof esquemaFrases>;
+export type ConfigEvaluaciones = z.infer<typeof esquemaEvaluaciones>;
 
 export interface ConfigAyni {
   escena: ConfigEscena;
@@ -666,6 +803,7 @@ export interface ConfigAyni {
   rutina: Tarea[];
   tripulantes: ConfigTripulantes;
   reglasCompuestas: ReglasCompuestas;
+  evaluaciones: ConfigEvaluaciones;
 }
 
 export interface ConfigCruda {
@@ -679,6 +817,7 @@ export interface ConfigCruda {
   rutina: unknown;
   tripulantes: unknown;
   reglasCompuestas: unknown;
+  evaluaciones: unknown;
 }
 
 export interface ErrorConfig {
@@ -703,6 +842,7 @@ const ARCHIVOS: Record<keyof ConfigCruda, string> = {
   rutina: 'rutina.json',
   tripulantes: 'tripulantes.json',
   reglasCompuestas: 'reglas-compuestas.json',
+  evaluaciones: 'evaluaciones.json',
 };
 
 const ESQUEMAS = {
@@ -716,6 +856,7 @@ const ESQUEMAS = {
   rutina: z.array(esquemaTarea),
   tripulantes: esquemaConfigTripulantes,
   reglasCompuestas: esquemaReglasCompuestas,
+  evaluaciones: esquemaEvaluaciones,
 } as const;
 
 const mapaErroresEs: z.ZodErrorMap = (issue, ctx) => {
@@ -988,6 +1129,53 @@ function validarReferencias(config: ConfigAyni): ErrorConfig[] {
     if (!modos.has(modo)) agregar('escena', 'modosCapa', `falta el modo "${modo}"`);
   }
 
+  const ev = config.evaluaciones;
+  const tareas = new Set(config.rutina.map((t) => t.id));
+  Object.entries(ev.pvt.indicadores).forEach(([clave, id]) => {
+    if (!indicadores.has(id))
+      agregar(
+        'evaluaciones',
+        `pvt.indicadores.${clave}`,
+        `indicador "${id}" no existe en indicadores.json`,
+      );
+  });
+  ev.pvt.momentos.forEach((m, i) => {
+    if (!tareas.has(m.tarea))
+      agregar(
+        'evaluaciones',
+        `pvt.momentos[${i}].tarea`,
+        `tarea "${m.tarea}" no existe en rutina.json`,
+      );
+  });
+  if (!tareas.has(ev.mhcl.tarea))
+    agregar('evaluaciones', 'mhcl.tarea', `tarea "${ev.mhcl.tarea}" no existe en rutina.json`);
+  const subescalas = new Set(ev.mhcl.subescalas.map((s) => s.id));
+  ev.mhcl.subescalas.forEach((s, i) => {
+    if (!indicadores.has(s.indicador))
+      agregar(
+        'evaluaciones',
+        `mhcl.subescalas[${i}].indicador`,
+        `indicador "${s.indicador}" no existe en indicadores.json`,
+      );
+  });
+  ev.mhcl.items.forEach((it, i) => {
+    if (!subescalas.has(it.subescala))
+      agregar(
+        'evaluaciones',
+        `mhcl.items[${i}].subescala`,
+        `subescala "${it.subescala}" no existe`,
+      );
+  });
+  for (const s of ev.mhcl.subescalas)
+    if (!ev.mhcl.items.some((it) => it.subescala === s.id))
+      agregar('evaluaciones', 'mhcl.items', `la subescala "${s.id}" no tiene ítems`);
+  ev.textos.mhclAnclas.forEach((a, i) => {
+    if (a.valor < ev.mhcl.escalaMin || a.valor > ev.mhcl.escalaMax)
+      agregar('evaluaciones', `textos.mhclAnclas[${i}].valor`, 'fuera de la escala de la MHCL');
+  });
+  if (ev.mhcl.escalaMin >= ev.mhcl.escalaMax)
+    agregar('evaluaciones', 'mhcl.escalaMin', 'escalaMin debe ser menor que escalaMax');
+
   return errores;
 }
 
@@ -1034,6 +1222,7 @@ export const configCruda: ConfigCruda = {
   rutina: rutinaJson,
   tripulantes: tripulantesJson,
   reglasCompuestas: reglasCompuestasJson,
+  evaluaciones: evaluacionesJson,
 };
 
 /** Valida los JSON de src/config incluidos en el bundle. */

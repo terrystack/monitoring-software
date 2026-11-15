@@ -1,0 +1,345 @@
+{
+  "pvt": {
+    "duracionS": 180,
+    "esperaMinMs": 0,
+    "esperaMaxMs": 3000,
+    "retroalimentacionMs": 1000,
+    "maxRespuestaMs": 30000,
+    "umbralLapsoMs": 355,
+    "umbralFalsaMs": 130,
+    "pasoContadorMs": 50,
+    "tecla": "b",
+    "filas": 7,
+    "columnas": 7,
+    "indicadores": {
+      "tiempoReaccion": "tiempo_reaccion",
+      "velocidad": "velocidad_respuesta",
+      "estres": "estres"
+    },
+    "momentos": [
+      {
+        "id": "despertar",
+        "tarea": "pvt_despertar",
+        "contexto": "despertar"
+      },
+      {
+        "id": "noche",
+        "tarea": "pvt_noche",
+        "contexto": "noche"
+      }
+    ]
+  },
+  "mhcl": {
+    "escalaMin": 0,
+    "escalaMax": 10,
+    "tarea": "mhcl_semanal",
+    "nota": "Asignación de ítems a subescalas PROVISIONAL (por contenido); confirmar con la tabla de cargas de Bower et al. (2019), Acta Astronautica 161:405-414. Referencias de ítems: tabla 3 de PMC8242690.",
+    "subescalas": [
+      {
+        "id": "adaptacion",
+        "nombre": "Adaptación positiva",
+        "descripcion": "Mayor presencia de estados asociados con adaptación, competencia y bienestar.",
+        "indicador": "mhcl_adaptacion"
+      },
+      {
+        "id": "autorregulacion",
+        "nombre": "Mala autorregulación",
+        "descripcion": "Mayor presencia de dificultades de atención, inquietud o somnolencia.",
+        "indicador": "mhcl_autorregulacion"
+      },
+      {
+        "id": "aprension",
+        "nombre": "Aprensión ansiosa",
+        "descripcion": "Mayor presencia de preocupación, ansiedad y pensamientos persistentes.",
+        "indicador": "mhcl_aprension"
+      }
+    ],
+    "items": [
+      {
+        "id": "abrumado",
+        "texto": "Abrumado/a",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 5.87,
+          "desv": 2.77
+        }
+      },
+      {
+        "id": "alegre",
+        "texto": "Alegre / feliz",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 5.29,
+          "desv": 2.08
+        }
+      },
+      {
+        "id": "fuerte",
+        "texto": "Fuerte / resiliente",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 5.72,
+          "desv": 2.22
+        }
+      },
+      {
+        "id": "entusiasmado",
+        "texto": "Entusiasmado/a / con ánimo",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 4.37,
+          "desv": 2.45
+        }
+      },
+      {
+        "id": "perfeccionista",
+        "texto": "Perfeccionista",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 4.58,
+          "desv": 2.9
+        }
+      },
+      {
+        "id": "preocupado",
+        "texto": "Preocupado/a",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 6.83,
+          "desv": 2.33
+        }
+      },
+      {
+        "id": "competitivo",
+        "texto": "Competitivo/a",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 3.1,
+          "desv": 2.77
+        }
+      },
+      {
+        "id": "competente",
+        "texto": "Competente",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 6.21,
+          "desv": 2.29
+        }
+      },
+      {
+        "id": "en_control",
+        "texto": "Con pleno control",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 3.92,
+          "desv": 2.66
+        }
+      },
+      {
+        "id": "eficaz",
+        "texto": "Eficaz / exitoso/a",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 5.11,
+          "desv": 2.29
+        }
+      },
+      {
+        "id": "obsesionado",
+        "texto": "Obsesionado/a / atascado/a en ciertas cosas",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 4.88,
+          "desv": 3.04
+        }
+      },
+      {
+        "id": "orgulloso",
+        "texto": "Orgulloso/a",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 4.59,
+          "desv": 2.6
+        }
+      },
+      {
+        "id": "interesado",
+        "texto": "Interesado/a / fascinado/a",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 4.9,
+          "desv": 2.55
+        }
+      },
+      {
+        "id": "pensamientos_acelerados",
+        "texto": "Con pensamientos acelerados",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 5.74,
+          "desv": 2.99
+        }
+      },
+      {
+        "id": "inquieto",
+        "texto": "Inquieto/a / sin poder estarte quieto/a",
+        "subescala": "autorregulacion",
+        "referencia": {
+          "media": 5.81,
+          "desv": 2.76
+        }
+      },
+      {
+        "id": "desatento",
+        "texto": "Desatento/a",
+        "subescala": "autorregulacion",
+        "referencia": {
+          "media": 5.32,
+          "desv": 2.6
+        }
+      },
+      {
+        "id": "aburrido",
+        "texto": "Aburrido/a",
+        "subescala": "autorregulacion",
+        "referencia": {
+          "media": 5.21,
+          "desv": 3.06
+        }
+      },
+      {
+        "id": "inspirado",
+        "texto": "Inspirado/a",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 4.02,
+          "desv": 2.39
+        }
+      },
+      {
+        "id": "olvidadizo",
+        "texto": "Olvidadizo/a",
+        "subescala": "autorregulacion",
+        "referencia": {
+          "media": 4.66,
+          "desv": 2.69
+        }
+      },
+      {
+        "id": "ansioso",
+        "texto": "Ansioso/a / nervioso/a",
+        "subescala": "aprension",
+        "referencia": {
+          "media": 6.27,
+          "desv": 2.79
+        }
+      },
+      {
+        "id": "amable",
+        "texto": "Amable / cortés",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 6.06,
+          "desv": 2.45
+        }
+      },
+      {
+        "id": "decidido",
+        "texto": "Decidido/a",
+        "subescala": "adaptacion",
+        "referencia": {
+          "media": 5.6,
+          "desv": 2.47
+        }
+      },
+      {
+        "id": "somnoliento",
+        "texto": "Somnoliento/a / con dificultad para mantenerte despierto/a",
+        "subescala": "autorregulacion",
+        "referencia": {
+          "media": 5.24,
+          "desv": 2.95
+        }
+      }
+    ]
+  },
+  "textos": {
+    "titulo": "Evaluaciones",
+    "intro": "Pruebas breves de alerta y salud mental. No son diagnósticos: cada resultado se compara contigo a lo largo de la misión.",
+    "pvtNombre": "PVT-B · Alerta",
+    "pvtResumen": "Prueba de reacción de 3 minutos, con tu estrés de 0 a 100 justo antes. Dos veces al día: al despertar y 2 horas antes de dormir.",
+    "mhclNombre": "Lista de salud mental (MHCL)",
+    "mhclResumen": "23 preguntas sobre cómo te has sentido esta semana, de 0 (nunca) a 10 (siempre). Una vez por semana.",
+    "hoy": "Hoy",
+    "estaSemana": "Esta semana",
+    "momento": "Momento",
+    "momentoDespertar": "Al despertar",
+    "momentoNoche": "Antes de dormir",
+    "momentoLibre": "Fuera de horario",
+    "comoFunciona": "Cómo funciona",
+    "pvtPasos": [
+      "Verás una cuadrícula vacía. No hagas nada.",
+      "De pronto una casilla se pondrá verde y un número empezará a correr en milisegundos.",
+      "Toca esa casilla (o presiona la tecla B) lo más rápido posible. El número se detiene y queda visible 1 segundo.",
+      "Repite hasta que termine el tiempo. No toques antes de que aparezca la casilla."
+    ],
+    "pvtSinAviso": "No se te avisa si fallas: es parte del protocolo.",
+    "empezar": "Empezar",
+    "antesDeLaPrueba": "Antes de la prueba",
+    "preguntaEstres": "¿Cuánto estrés sientes ahora mismo?",
+    "ayudaEstres": "0 = nada estresado, 100 = muy estresado. Mueve el deslizador para responder.",
+    "sinResponder": "–",
+    "estresNada": "Nada",
+    "estresMucho": "Mucho",
+    "horasSueno": "Horas que dormiste anoche (opcional)",
+    "continuar": "Continuar",
+    "listoTitulo": "Listo para empezar",
+    "listoTexto": "La prueba se abrirá a pantalla completa y dura 3 minutos. Pon el dedo cerca de la pantalla o el índice sobre la tecla B, silencia las notificaciones y mira la cuadrícula todo el tiempo.",
+    "iniciarPrueba": "Iniciar prueba",
+    "cancelar": "Cancelar",
+    "instruccionPrueba": "Toca la casilla verde o presiona B cuando aparezca",
+    "tiempoRestante": "Quedan {s} s",
+    "salirPrueba": "Salir de la prueba",
+    "resultados": "Resultados",
+    "avisoResultados": "Un solo resultado no indica si hay estrés o falta de sueño. El estudio compara estas variables en grupos de mediciones, y es observacional.",
+    "velocidad": "Velocidad de respuesta",
+    "ayudaVelocidad": "Promedio de 1000/TR. Más alto = más rápido y más alerta.",
+    "trMedio": "Tiempo de reacción medio",
+    "lapsos": "Lapsos",
+    "ayudaLapsos": "Respuestas de {ms} ms o más, y sin respuesta en 30 s.",
+    "salidasFalsas": "Salidas en falso",
+    "ayudaSalidas": "Toques sin casilla o con TR menor a {ms} ms.",
+    "estresReportado": "Estrés reportado",
+    "sueno": "Sueño",
+    "intentos": "Intentos",
+    "graficoIntentos": "Tiempo de reacción por intento",
+    "historial": "Sesiones anteriores",
+    "sinSesiones": "Aún no hay sesiones.",
+    "guardado": "Resultado guardado en tus mediciones.",
+    "otraVez": "Hacer otra",
+    "volver": "Volver",
+    "entrada": "Entrada",
+    "entradaTeclado": "Teclado",
+    "entradaTactil": "Táctil",
+    "entradaRaton": "Ratón",
+    "avisoTactil": "Los tiempos con pantalla táctil o ratón no son comparables con los de teclado.",
+    "fuentePvt": "Basado en Jones et al. (2022), SLEEP 45(3), y en el PVT-B de Basner et al. (2011).",
+    "mhclInstruccion": "Durante la última semana, ¿con qué frecuencia te sentiste así?",
+    "mhclAnclas": [
+      { "valor": 0, "texto": "Nunca" },
+      { "valor": 3, "texto": "Pocas veces" },
+      { "valor": 7, "texto": "Muchas veces" },
+      { "valor": 10, "texto": "Siempre" }
+    ],
+    "preguntaDe": "Pregunta {n} de {total}",
+    "anterior": "Anterior",
+    "siguiente": "Siguiente",
+    "terminar": "Terminar",
+    "mhclAviso": "Las puntuaciones se comparan con tus semanas anteriores. No son un diagnóstico; si algo te preocupa, habla con el equipo de apoyo psicológico.",
+    "promedioSubescala": "Promedio de 0 a 10",
+    "referenciaEstudio": "Referencia del estudio: {v}",
+    "fuenteMhcl": "Mental Health Checklist (Bower et al., 2019; Alfano et al., 2021).",
+    "fecha": "Fecha"
+  }
+}

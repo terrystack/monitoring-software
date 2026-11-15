@@ -5,10 +5,12 @@ import type { ConfigAyni, IdCapa, ModoCapa } from '../config/esquemas';
 import type { Idioma } from '../config/idioma';
 import type { EstadoMotor, Lectura } from '../datos/tipos';
 import type { EstadoCuerpo } from '../escena3d/estadoDesdeMotor';
+import type { SesionMhclGuardada } from '../evaluaciones/mhcl';
+import type { SesionPvtGuardada } from '../evaluaciones/pvt';
 
 export type Calidad = 'alta' | 'media' | 'baja';
-export type Pestana = 'cuerpo3d' | 'monitoreo' | 'medicion' | 'agente';
-export const PESTANAS: Pestana[] = ['cuerpo3d', 'monitoreo', 'medicion', 'agente'];
+export type Pestana = 'cuerpo3d' | 'monitoreo' | 'medicion' | 'evaluaciones' | 'agente';
+export const PESTANAS: Pestana[] = ['cuerpo3d', 'monitoreo', 'medicion', 'evaluaciones', 'agente'];
 
 export const MODO_CAPA_INICIAL: Record<IdCapa, ModoCapa> = {
   piel: 'visible',
@@ -46,6 +48,9 @@ interface EstadoApp {
   lecturas: Lectura[];
   /** Lecturas registradas a mano (IndexedDB, fuente "manual"). */
   lecturasManuales: Lectura[];
+  /** Sesiones de la pestaña Evaluaciones (IndexedDB; null = aún no cargadas). */
+  sesionesPvt: SesionPvtGuardada[] | null;
+  sesionesMhcl: SesionMhclGuardada[] | null;
   /** Filtros de la pestaña Monitoreo. */
   rangoDias: DiasRango;
   zonaFiltro: string | null;
@@ -88,6 +93,8 @@ interface EstadoApp {
   alternarPaso: (clave: string) => void;
   setLecturas: (lecturas: Lectura[]) => void;
   setLecturasManuales: (lecturas: Lectura[]) => void;
+  setSesionesPvt: (sesiones: SesionPvtGuardada[]) => void;
+  setSesionesMhcl: (sesiones: SesionMhclGuardada[]) => void;
   setRangoDias: (dias: DiasRango) => void;
   setZonaFiltro: (zona: string | null) => void;
   setPasoDispositivo: (paso: number) => void;
@@ -125,6 +132,8 @@ export const useAyni = create<EstadoApp>()(
         pasosHechos: {},
         lecturas: [],
         lecturasManuales: [],
+        sesionesPvt: null,
+        sesionesMhcl: null,
         rangoDias: 14,
         zonaFiltro: null,
         pasoDispositivo: 0,
@@ -164,6 +173,8 @@ export const useAyni = create<EstadoApp>()(
           }),
         setLecturas: (lecturas) => set({ lecturas }),
         setLecturasManuales: (lecturasManuales) => set({ lecturasManuales }),
+        setSesionesPvt: (sesionesPvt) => set({ sesionesPvt }),
+        setSesionesMhcl: (sesionesMhcl) => set({ sesionesMhcl }),
         setRangoDias: (rangoDias) => set({ rangoDias }),
         setZonaFiltro: (zonaFiltro) => set({ zonaFiltro }),
         setPasoDispositivo: (pasoDispositivo) => set({ pasoDispositivo }),

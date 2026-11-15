@@ -28,8 +28,10 @@ describe('generador sintético', () => {
     expect([a.gauss(), a.gauss()]).toEqual([b.gauss(), b.gauss()]);
   });
 
-  it('genera 52 lecturas por tripulante y día', () => {
-    expect(lecturas).toHaveLength(3 * 30 * 52);
+  it('genera 57 lecturas por tripulante y día, más la MHCL de los 4 domingos', () => {
+    // 51 del flujo principal + 6 del PVT-B (velocidad, TR y estrés, al despertar y de noche)
+    // + 3 subescalas de la MHCL cada domingo.
+    expect(lecturas).toHaveLength(3 * (30 * 57 + 4 * 3));
     expect(de('A01', 'co2_cabina', 1)).toHaveLength(24);
     expect(de('A01', 'hrv', 1)).toHaveLength(3);
     expect(de('A01', 'presion_sistolica', 1).map((l) => l.fechaHora)).toEqual([
