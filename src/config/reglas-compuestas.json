@@ -1,0 +1,73 @@
+{
+  "multisenal": [
+    {
+      "id": "fatiga",
+      "nombre": "Posible fatiga acumulada",
+      "ventanaHoras": 48,
+      "minimoCondiciones": 3,
+      "condiciones": [
+        { "indicador": "pulso_reposo", "medida": "z", "comparador": ">=", "umbral": 2 },
+        { "indicador": "hrv", "medida": "z", "comparador": "<=", "umbral": -2 },
+        { "indicador": "sueno_horas", "medida": "valor", "comparador": "<", "umbral": 6 }
+      ],
+      "estado": "atencion",
+      "zonas": ["corazon", "cerebro"],
+      "tarjeta": {
+        "queSignifica": "Varias señales cambiaron a la vez y suelen acompañar al cansancio acumulado.",
+        "acciones": [
+          "Prioriza 8 horas de sueño esta noche.",
+          "Reduce la carga de trabajo intensa hoy.",
+          "Repite pulso y variabilidad mañana al despertar."
+        ],
+        "avisoMedico": "Si no mejora en 48 h o tienes mareo, dolor en el pecho o confusión.",
+        "porQueEspacio": "El aislamiento, los horarios irregulares y la luz artificial alteran el sueño en misión.",
+        "fuente": "https://www.nasa.gov/hrp/hazards",
+        "fuenteNombre": "NASA HRP"
+      }
+    },
+    {
+      "id": "co2_sintomas",
+      "nombre": "Síntomas probablemente ambientales",
+      "ventanaHoras": 6,
+      "minimoCondiciones": 2,
+      "condiciones": [
+        { "indicador": "co2_cabina", "medida": "valor", "comparador": ">", "umbral": 3 },
+        { "indicador": "cefalea", "medida": "valor", "comparador": ">=", "umbral": 1 }
+      ],
+      "estado": "atencion",
+      "zonas": ["pulmones", "cerebro"],
+      "tarjeta": {
+        "queSignifica": "El dolor de cabeza coincide con CO₂ alto en la cabina; es probable que la causa sea ambiental.",
+        "acciones": [
+          "Avisa a la tripulación para revisar la remoción de CO₂.",
+          "Ve a un módulo con mejor ventilación.",
+          "Bebe agua y descansa 20 minutos."
+        ],
+        "avisoMedico": "Si el dolor sigue cuando el CO₂ vuelva a la normalidad, o aparece confusión o visión borrosa.",
+        "porQueEspacio": "En una nave cerrada el CO₂ se acumula y puede causar dolor de cabeza aun en niveles moderados.",
+        "fuente": "https://www.nasa.gov/ochmo-tb-004-carbon-dioxide-2/",
+        "fuenteNombre": "NASA OCHMO"
+      }
+    }
+  ],
+  "aptitud": [
+    {
+      "id": "eva",
+      "nombre": "Caminata espacial",
+      "zonas": ["corazon", "pulmones", "nervios", "cerebro"],
+      "criterio": "peor_estado"
+    },
+    {
+      "id": "precision",
+      "nombre": "Tarea de precisión",
+      "zonas": ["cerebro", "nervios"],
+      "criterio": "peor_estado"
+    },
+    {
+      "id": "gravedad",
+      "nombre": "Regreso a la gravedad",
+      "zonas": ["vascular", "corazon", "huesos", "musculos"],
+      "criterio": "peor_estado"
+    }
+  ]
+}

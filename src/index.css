@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --superficie: 9 11 26;
+    --linea: 34 52 74;
+    --tinta: 236 238 244;
+    --tinta-suave: 184 189 205;
+    --tinta-tenue: 138 144 166;
+    --opacidad-panel: 0.88;
+    /* 14 px en una laptop de 1280 px, 17 px en 1920 px. */
+    font-size: clamp(14px, 0.47vw + 8px, 17px);
+    color-scheme: dark;
+  }
+
+  :root.texto-grande {
+    font-size: clamp(16px, 0.55vw + 9.5px, 20px);
+  }
+
+  :root.alto-contraste {
+    --superficie: 2 3 10;
+    --linea: 150 170 196;
+    --tinta: 255 255 255;
+    --tinta-suave: 236 240 248;
+    --tinta-tenue: 206 212 226;
+    --opacidad-panel: 0.97;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-fondo-profundo font-sans text-tinta antialiased;
+    letter-spacing: -0.012em;
+  }
+
+  ::selection {
+    background: rgb(34 211 238 / 0.35);
+    color: rgb(var(--tinta));
+  }
+
+  :focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--linea)) transparent;
+  }
+}
+
+@layer components {
+  .panel {
+    background-color: rgb(var(--superficie) / var(--opacidad-panel));
+    @apply rounded-lg border border-linea/70;
+  }
+
+  .rotulo {
+    @apply text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+:root.movimiento-reducido *,
+:root.movimiento-reducido *::before,
+:root.movimiento-reducido *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+}

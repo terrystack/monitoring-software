@@ -1,0 +1,166 @@
+[
+  {
+    "id": "generico_muneca",
+    "nombre": "Pulsera de signos vitales",
+    "modelo": "procedural:generico",
+    "anclaje": "muneca_izq",
+    "indicadores": ["pulso_reposo", "hrv", "spo2", "sueno_horas", "ejercicio_min"],
+    "pasos": [
+      {
+        "texto": "Este es tu sensor de muñeca: mide pulso, variabilidad y oxígeno.",
+        "animacion": "presentar",
+        "duracionMs": 2500
+      },
+      {
+        "texto": "Colócalo en la muñeca izquierda, dos dedos por encima del hueso.",
+        "animacion": "volar_a_anclaje",
+        "duracionMs": 2000
+      },
+      {
+        "texto": "Ajusta la correa: firme, sin apretar. Los sensores deben tocar la piel.",
+        "animacion": "ajustar",
+        "duracionMs": 2000
+      },
+      {
+        "texto": "Quédate quieto y respira normal durante 60 segundos.",
+        "animacion": "medir",
+        "duracionMs": 4000
+      },
+      {
+        "texto": "Listo. Mira cómo se actualiza tu corazón en el cuerpo 3D.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "corazon"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Sensor sobre el hueso de la muñeca: la lectura sale inestable.",
+        "desplazamiento": [0, -0.03, 0]
+      },
+      {
+        "texto": "Medir justo después de moverte: espera 5 minutos en reposo.",
+        "anclajeIncorrecto": "muneca_der"
+      }
+    ]
+  },
+  {
+    "id": "generico_brazo",
+    "nombre": "Brazalete de presión y glucosa",
+    "modelo": "procedural:generico",
+    "anclaje": "brazo_izq",
+    "indicadores": ["presion_sistolica", "presion_diastolica", "glucosa"],
+    "pasos": [
+      {
+        "texto": "Este brazalete mide presión arterial y glucosa.",
+        "animacion": "presentar",
+        "duracionMs": 2500
+      },
+      {
+        "texto": "Colócalo en el brazo izquierdo, a la altura del corazón.",
+        "animacion": "volar_a_anclaje",
+        "duracionMs": 2000
+      },
+      {
+        "texto": "Ajústalo de modo que quepa un dedo entre el brazalete y la piel.",
+        "animacion": "ajustar",
+        "duracionMs": 2000
+      },
+      {
+        "texto": "Apoya el brazo, no hables y espera a que termine.",
+        "animacion": "medir",
+        "duracionMs": 5000
+      },
+      {
+        "texto": "Listo. Revisa tu sistema vascular en el cuerpo 3D.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "vascular"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Brazalete en el antebrazo: la presión sale más alta de lo real.",
+        "anclajeIncorrecto": "muneca_izq"
+      }
+    ]
+  },
+  {
+    "id": "generico_frente",
+    "nombre": "Termómetro de frente",
+    "modelo": "procedural:generico",
+    "anclaje": "frente",
+    "indicadores": ["temperatura"],
+    "pasos": [
+      {
+        "texto": "Este sensor mide tu temperatura corporal sin contacto prolongado.",
+        "animacion": "presentar",
+        "duracionMs": 2500
+      },
+      {
+        "texto": "Acércalo al centro de la frente.",
+        "animacion": "volar_a_anclaje",
+        "duracionMs": 2000
+      },
+      {
+        "texto": "Mantenlo a 1 cm de la piel, sin pelo ni sudor de por medio.",
+        "animacion": "ajustar",
+        "duracionMs": 1500
+      },
+      { "texto": "Espera el aviso de lectura completa.", "animacion": "medir", "duracionMs": 3000 },
+      {
+        "texto": "Listo. Revisa tu piel e inmunidad en el cuerpo 3D.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "piel_inmune"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Sensor demasiado lejos de la frente: la temperatura sale más baja.",
+        "desplazamiento": [0, 0, 0.08]
+      }
+    ]
+  },
+  {
+    "id": "generico_pecho",
+    "nombre": "Dosímetro personal",
+    "modelo": "procedural:generico",
+    "anclaje": "pecho",
+    "indicadores": ["dosis_radiacion", "tasa_dosis_dia"],
+    "pasos": [
+      {
+        "texto": "Este dosímetro registra la radiación que recibes durante el día.",
+        "animacion": "presentar",
+        "duracionMs": 2500
+      },
+      {
+        "texto": "Sujétalo al centro del pecho, sobre la ropa.",
+        "animacion": "volar_a_anclaje",
+        "duracionMs": 2000
+      },
+      {
+        "texto": "Comprueba que la cara del sensor mire hacia fuera.",
+        "animacion": "ajustar",
+        "duracionMs": 1500
+      },
+      {
+        "texto": "Llévalo puesto todo el día; al final se suma tu dosis.",
+        "animacion": "medir",
+        "duracionMs": 3000
+      },
+      {
+        "texto": "Listo. El halo muestra tu presupuesto de radiación.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "todo_cuerpo"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Dosímetro guardado en un bolsillo o cajón: no registra tu exposición real.",
+        "desplazamiento": [0.25, -0.4, 0]
+      }
+    ]
+  }
+]

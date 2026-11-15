@@ -1,0 +1,86 @@
+[
+  {
+    "id": "normal",
+    "nombre": "Día normal",
+    "descripcion": "Todos los indicadores dentro de su normal personal.",
+    "tripulanteId": "A03",
+    "alteraciones": [],
+    "diaDemo": 20
+  },
+  {
+    "id": "deterioro_sueno",
+    "nombre": "Deterioro del sueño",
+    "descripcion": "Las horas de sueño bajan durante cuatro noches y el ánimo cae un punto.",
+    "tripulanteId": "A01",
+    "alteraciones": [
+      {
+        "indicador": "sueno_horas",
+        "diaInicio": 21,
+        "diaFin": 25,
+        "modo": "rampa",
+        "valor": 6.4,
+        "valorFinal": 5.1
+      },
+      { "indicador": "animo", "diaInicio": 24, "diaFin": 25, "modo": "sumar", "valor": -1 }
+    ],
+    "diaDemo": 25
+  },
+  {
+    "id": "multisenal_fatiga",
+    "nombre": "Fatiga multiseñal",
+    "descripcion": "Pulso en reposo sube, la variabilidad cardíaca baja y el sueño es corto a la vez.",
+    "tripulanteId": "A01",
+    "alteraciones": [
+      { "indicador": "pulso_reposo", "diaInicio": 27, "diaFin": 28, "modo": "sumar", "valor": 6 },
+      { "indicador": "hrv", "diaInicio": 27, "diaFin": 28, "modo": "sumar", "valor": -12 },
+      { "indicador": "sueno_horas", "diaInicio": 27, "diaFin": 28, "modo": "fijar", "valor": 5.2 }
+    ],
+    "diaDemo": 27
+  },
+  {
+    "id": "co2_alto_cefalea",
+    "nombre": "CO₂ alto con dolor de cabeza",
+    "descripcion": "El CO₂ de cabina supera el límite durante un día y aparece dolor de cabeza.",
+    "tripulanteId": "A02",
+    "alteraciones": [
+      { "indicador": "co2_cabina", "diaInicio": 28, "diaFin": 28, "modo": "fijar", "valor": 3.8 },
+      { "indicador": "cefalea", "diaInicio": 28, "diaFin": 28, "modo": "fijar", "valor": 2 }
+    ],
+    "diaDemo": 28
+  },
+  {
+    "id": "evento_solar",
+    "nombre": "Evento de partículas solares",
+    "descripcion": "Una tormenta solar eleva la dosis del día y el acumulado de radiación.",
+    "tripulanteId": "A03",
+    "alteraciones": [
+      { "indicador": "tasa_dosis_dia", "diaInicio": 29, "diaFin": 29, "modo": "fijar", "valor": 12 }
+    ],
+    "diaDemo": 29
+  },
+  {
+    "id": "preparacion_aterrizaje",
+    "nombre": "Preparación para el aterrizaje",
+    "descripcion": "La presión baja de forma progresiva, aparece mareo leve y el ejercicio se reduce a la mitad.",
+    "tripulanteId": "A02",
+    "alteraciones": [
+      {
+        "indicador": "presion_sistolica",
+        "diaInicio": 25,
+        "diaFin": 30,
+        "modo": "rampa",
+        "valor": 116,
+        "valorFinal": 104
+      },
+      { "indicador": "mareo", "diaInicio": 29, "diaFin": 30, "modo": "fijar", "valor": 1 },
+      {
+        "indicador": "ejercicio_min",
+        "diaInicio": 27,
+        "diaFin": 30,
+        "modo": "multiplicar",
+        "valor": 0.5
+      }
+    ],
+    "diaDemo": 29
+  }
+]

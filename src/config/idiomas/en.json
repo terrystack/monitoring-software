@@ -1,0 +1,555 @@
+{
+  "escena": {
+    "estados": {
+      "normal": "Normal",
+      "atencion": "Attention",
+      "critico": "Critical",
+      "sin_dato": "No data"
+    },
+    "capas": {
+      "piel": "Skin",
+      "musculos": "Muscles",
+      "esqueleto": "Skeleton",
+      "organos": "Organs",
+      "nervioso": "Nervous system",
+      "vascular": "Vascular system",
+      "halo": "Radiation"
+    },
+    "modosCapa": {
+      "visible": "Visible",
+      "translucida": "See-through",
+      "oculta": "Hidden"
+    },
+    "textos": {
+      "datosSinteticos": "Synthetic data",
+      "noDiagnostico": "Not a medical diagnosis",
+      "capas": "Layers",
+      "vistaFrontal": "Front view",
+      "cerrar": "Close",
+      "cargandoEscena": "Loading the 3D body…",
+      "queCambio": "What changed",
+      "queSignifica": "What it means",
+      "acciones": "What to do now",
+      "avisoMedico": "When to call the flight surgeon",
+      "porQueEspacio": "Why it happens in space",
+      "fuente": "Source",
+      "creditos": "Credits",
+      "tituloCreditos": "Credits and licenses",
+      "introCreditos": "AYNI's 3D body combines these open models. For AYNI we aligned them with each other, simplified them, changed the pose of the skin and grouped the structures into health zones.",
+      "licenciaDerivada": "The resulting model (modelos/cuerpo.glb) is shared under the same CC BY-SA 4.0 license.",
+      "verLicencia": "View license",
+      "verFuente": "View source",
+      "creditosNoDisponibles": "The credits list could not be read. Reload the page to try again.",
+      "volverAlCuerpo": "Back to the body",
+      "secciones": "Sections",
+      "pestanaCuerpo": "3D Body",
+      "pestanaEvolucion": "Trends and forecast",
+      "pestanaMedir": "Measure and devices",
+      "diaMision": "Day {dia}",
+      "alertas": "Alerts",
+      "sinAlertas": "No zone is outside your normal.",
+      "abrirPerfil": "Open {nombre}'s profile",
+      "idioma": "Language",
+      "aptitudDelDia": "Today's readiness",
+      "zonasDelCuerpo": "Body zones",
+      "columnaZona": "Zone",
+      "columnaEstado": "Status",
+      "columnaValor": "Value",
+      "columnaNormal": "Your normal",
+      "sinValor": "—",
+      "eligeZona": "Pick a zone on the body or in the table to see what changed and what to do.",
+      "verEvolucion": "See trend",
+      "medirAhora": "Measure now",
+      "perfil": "Profile",
+      "tripulante": "Crew member",
+      "entorno": "Environment",
+      "lineaBase": "Your normal (last 14 days)",
+      "sinLineaBase": "Not enough days yet",
+      "accesibilidad": "Accessibility",
+      "textoGrande": "Large text",
+      "altoContraste": "High contrast",
+      "movimientoReducido": "Reduced motion",
+      "modoDemo": "Demo mode",
+      "escenario": "Scenario",
+      "diaDatos": "Data day",
+      "diaAnterior": "Previous day",
+      "diaSiguiente": "Next day",
+      "proximamenteEvolucion": "Here you will see each indicator against your normal and its seven-day forecast. Coming in AYNI's next phase.",
+      "proximamenteMedir": "Here you will find today's schedule, the 3D guide for each device and the measurement log. Coming in an upcoming AYNI phase."
+    },
+    "etiquetasAptitud": {
+      "normal": "Ready",
+      "atencion": "With caution",
+      "critico": "Not ready today",
+      "sin_dato": "No data"
+    }
+  },
+  "frases": {
+    "separadorDecimal": ".",
+    "indicadorNoConfigurado": "The indicator \"{indicador}\" is not configured.",
+    "fueraDeRango": "{nombre}: {valor} is outside the possible range ({min}–{max}). Repeat the measurement.",
+    "faltanDias": "{nombre} {valor}; more days are needed to calculate your normal ({dias} of {minDias}).",
+    "lineaBase": "{nombre} {valor}; your normal is {min}–{max} (z = {z}).",
+    "promedioHoras": " ({horas} h average)",
+    "dentroDelLimite": "{nombre} {valor}{detalle}; within the limit.",
+    "fueraDelLimite": "{nombre} {valor}{detalle}; outside the limit ({comparador} {umbral}).",
+    "tendencia": "{nombre} {comparador} {umbral} for {dias} days in a row (latest: {valor}).",
+    "sinTendencia": "{nombre} {valor}; no sustained trend.",
+    "sinReferencia": "{nombre} {valor}; no reference to compare with yet.",
+    "cambio": "{nombre} {valor}; {pct} % since {referencia} ({valorReferencia}).",
+    "referenciaInicio": "the start",
+    "referenciaNormal": "your normal",
+    "metaCumplida": "{nombre}: {meta} goal met yesterday ({valorAyer}).",
+    "metaUnDia": "{nombre}: 1 day below the {meta} goal (yesterday: {valorAyer}).",
+    "metaDias": "{nombre}: {dias} days in a row below the {meta} goal (yesterday: {valorAyer}).",
+    "presupuesto": "{nombre} {valor}: {pct} % of your {limite} budget.",
+    "multisenal": "{nombre}: {motivos}",
+    "sinMediciones": "There are no measurements for this zone yet.",
+    "dentroDeTuNormal": "Your indicators are within your normal."
+  },
+  "zonas": {
+    "cerebro": { "nombre": "Brain", "funcion": "Controls sleep, mood and attention." },
+    "nervios": { "nombre": "Nerves", "funcion": "Carries signals between the brain and the body." },
+    "corazon": { "nombre": "Heart", "funcion": "Pumps blood to the whole body." },
+    "pulmones": { "nombre": "Lungs", "funcion": "Bring oxygen into the blood." },
+    "metabolismo": {
+      "nombre": "Metabolism",
+      "funcion": "Turns food into energy and regulates glucose."
+    },
+    "rinones": {
+      "nombre": "Kidneys",
+      "funcion": "Filter the blood (risk of kidney stones in space)."
+    },
+    "vascular": {
+      "nombre": "Vascular system",
+      "funcion": "Carries the blood; changes with gravity."
+    },
+    "huesos": {
+      "nombre": "Bones",
+      "funcion": "Support the body; lose density in microgravity."
+    },
+    "musculos": { "nombre": "Muscles", "funcion": "Move the body; waste away without load." },
+    "piel_inmune": {
+      "nombre": "Skin and immunity",
+      "funcion": "First barrier; reflects fever and immune changes."
+    },
+    "todo_cuerpo": { "nombre": "Whole body", "funcion": "Exposure to space radiation." }
+  },
+  "indicadores": {
+    "pulso_reposo": {
+      "nombre": "Resting pulse",
+      "unidad": "bpm",
+      "textos": {
+        "queEs": "How many times your heart beats per minute at rest.",
+        "queSignifica": "A resting pulse above your normal can signal fatigue, dehydration or stress.",
+        "porQueEspacio": "Microgravity shifts fluids toward the chest and changes how hard the heart works."
+      },
+      "acciones": [
+        "Rest for 10 minutes and repeat the measurement.",
+        "Drink water.",
+        "Check your hours of sleep."
+      ],
+      "avisoMedico": "If it stays outside your normal for 48 h or you feel dizzy or have chest pain."
+    },
+    "hrv": {
+      "nombre": "Heart rate variability",
+      "textos": {
+        "queEs": "How much the time between one heartbeat and the next varies.",
+        "queSignifica": "Variability lower than your normal often comes with tiredness or built-up stress.",
+        "porQueEspacio": "The mission schedule, noise and isolation shift the balance between rest and alertness."
+      },
+      "acciones": [
+        "Do 5 minutes of slow breathing.",
+        "Cut back on intense work today.",
+        "Repeat the measurement tomorrow when you wake up."
+      ],
+      "avisoMedico": "If it stays below your normal 3 days in a row or comes with palpitations."
+    },
+    "presion_sistolica": {
+      "nombre": "Systolic pressure",
+      "textos": {
+        "queEs": "The pressure of blood in your arteries when the heart beats.",
+        "queSignifica": "A change from your normal means your circulation is adapting to gravity or effort.",
+        "porQueEspacio": "Without gravity, blood redistributes and the body adjusts pressure; back in gravity it can drop when you stand up."
+      },
+      "acciones": [
+        "Sit for 5 minutes and repeat the measurement.",
+        "Drink water.",
+        "Stand up slowly if you feel dizzy."
+      ],
+      "avisoMedico": "If it stays outside your normal for 2 measurements in a row or you have dizziness, blurred vision or a strong headache."
+    },
+    "presion_diastolica": {
+      "nombre": "Diastolic pressure",
+      "textos": {
+        "queEs": "The pressure of blood in your arteries between heartbeats.",
+        "queSignifica": "A change from your normal means your circulation is adapting.",
+        "porQueEspacio": "Fluid redistribution in microgravity changes the tone of the blood vessels."
+      },
+      "acciones": ["Sit for 5 minutes and repeat the measurement.", "Drink water."],
+      "avisoMedico": "If it stays outside your normal for 2 measurements in a row or you have a strong headache."
+    },
+    "spo2": {
+      "nombre": "Oxygen saturation",
+      "textos": {
+        "queEs": "What percentage of your blood is carrying oxygen.",
+        "queSignifica": "A value lower than your normal means less oxygen is reaching your blood.",
+        "porQueEspacio": "The spacecraft atmosphere and cabin pressure changes affect oxygenation."
+      },
+      "acciones": [
+        "Breathe deeply and slowly for 2 minutes and repeat the measurement.",
+        "Check that the sensor is placed correctly.",
+        "Tell the crew if the cabin has air alarms."
+      ],
+      "avisoMedico": "If it drops below 92 %, or you are short of breath, have bluish lips or feel confused."
+    },
+    "temperatura": {
+      "nombre": "Body temperature",
+      "textos": {
+        "queEs": "Your body's internal temperature.",
+        "queSignifica": "A temperature above your normal can mean your body is responding to something.",
+        "porQueEspacio": "During a mission the immune system changes and some latent viruses can reactivate."
+      },
+      "acciones": [
+        "Rest and drink water.",
+        "Repeat the measurement in 1 hour.",
+        "Note any other symptoms."
+      ],
+      "avisoMedico": "If it reaches 38.5 °C or stays high for more than 24 h."
+    },
+    "glucosa": {
+      "nombre": "Blood glucose",
+      "textos": {
+        "queEs": "The amount of sugar circulating in your blood.",
+        "queSignifica": "A value outside your normal means a change in how you use energy from food.",
+        "porQueEspacio": "Relative inactivity and the mission diet change how the body uses glucose."
+      },
+      "acciones": [
+        "Review what and when you ate.",
+        "Repeat the measurement 2 hours after eating.",
+        "Keep up your exercise routine."
+      ],
+      "avisoMedico": "If it goes above 250 mg/dL, or you have intense thirst, dizziness or confusion."
+    },
+    "sueno_horas": {
+      "nombre": "Hours of sleep",
+      "textos": {
+        "queEs": "How many hours you slept last night.",
+        "queSignifica": "Sleeping little several nights in a row lowers attention and mood.",
+        "porQueEspacio": "Artificial light, noise and shifts disrupt the body clock during a mission."
+      },
+      "acciones": [
+        "Plan 8 hours of sleep tonight.",
+        "Avoid screens 30 minutes before bed.",
+        "Use an eye mask and earplugs if there is light or noise."
+      ],
+      "avisoMedico": "If you sleep less than 5 hours 3 nights in a row or notice confusion."
+    },
+    "animo": {
+      "nombre": "Mood",
+      "textos": {
+        "queEs": "How you feel today, from 1 (very bad) to 5 (very good).",
+        "queSignifica": "Several days of low mood deserve attention and support.",
+        "porQueEspacio": "Isolation, distance from home and a closed routine affect mood on long missions."
+      },
+      "acciones": [
+        "Talk with someone on the crew.",
+        "Schedule a call or message home.",
+        "Spend 20 minutes on something you enjoy."
+      ],
+      "avisoMedico": "If your mood stays low for 3 days or you have thoughts that worry you."
+    },
+    "tiempo_reaccion": {
+      "nombre": "Reaction time",
+      "textos": {
+        "queEs": "How long you take to respond to a signal in the 60-second test.",
+        "queSignifica": "A time slower than your normal often reflects tiredness or lack of sleep.",
+        "porQueEspacio": "Fatigue, CO₂ and irregular sleep affect attention during a mission."
+      },
+      "acciones": [
+        "Rest for 15 minutes and repeat the test.",
+        "Avoid precision tasks until you repeat it.",
+        "Check your hours of sleep."
+      ],
+      "avisoMedico": "If it stays slower than your normal for 2 tests in a row or you notice confusion."
+    },
+    "masa_corporal": {
+      "nombre": "Body mass",
+      "textos": {
+        "queEs": "Your body mass measured with the spacecraft's device.",
+        "queSignifica": "Losing mass steadily means you are eating less than you burn.",
+        "porQueEspacio": "During a mission appetite tends to drop and daily exercise raises energy use."
+      },
+      "acciones": [
+        "Finish all of today's meals.",
+        "Add a snack between meals.",
+        "Log what you eat for 3 days."
+      ],
+      "avisoMedico": "If you have lost more than 5 % since the start of the mission."
+    },
+    "ejercicio_min": {
+      "nombre": "Resistance exercise",
+      "textos": {
+        "queEs": "Minutes of resistance exercise you did today.",
+        "queSignifica": "Missing the goal several days in a row speeds up bone and muscle loss.",
+        "porQueEspacio": "Without the load of gravity, bones and muscles weaken; daily exercise protects them."
+      },
+      "acciones": [
+        "Finish today's exercise session.",
+        "Split the exercise into two blocks if it is hard.",
+        "Prioritize loaded exercises."
+      ],
+      "avisoMedico": "If you cannot exercise because of pain or dizziness."
+    },
+    "co2_cabina": {
+      "nombre": "Cabin CO₂ (1 h)",
+      "textos": {
+        "queEs": "The concentration of carbon dioxide in the cabin air.",
+        "queSignifica": "High cabin CO₂ can cause headaches and lower concentration.",
+        "porQueEspacio": "In a closed spacecraft CO₂ builds up if the removal systems cannot keep up."
+      },
+      "acciones": [
+        "Tell the crew to check CO₂ removal.",
+        "Move to a module with better ventilation.",
+        "Avoid intense exercise until it drops."
+      ],
+      "avisoMedico": "If you have a headache, dizziness or trouble concentrating while CO₂ is high."
+    },
+    "dosis_radiacion": {
+      "nombre": "Cumulative dose",
+      "textos": {
+        "queEs": "The total radiation you have received during your career.",
+        "queSignifica": "The closer you are to the career limit, the more it matters to protect yourself in each solar event.",
+        "porQueEspacio": "Away from Earth there is no magnetic field or thick atmosphere to stop radiation."
+      },
+      "acciones": [
+        "Follow the shelter plan if there is a solar alert.",
+        "Always wear your dosimeter.",
+        "Spend less time outside the shielded areas."
+      ],
+      "avisoMedico": "If you get close to 80 % of your budget or feel nauseous after a solar event."
+    },
+    "tasa_dosis_dia": {
+      "nombre": "Today's dose",
+      "textos": {
+        "queEs": "The radiation you received today.",
+        "queSignifica": "A high daily dose is usually caused by a solar particle event.",
+        "porQueEspacio": "Solar storms can multiply in hours the dose of several days."
+      },
+      "acciones": [
+        "Go to the shielded shelter and follow the solar event protocol.",
+        "Keep your dosimeter on.",
+        "Drink water and rest."
+      ],
+      "avisoMedico": "If today's dose goes over the limit or you have nausea, vomiting or intense fatigue."
+    },
+    "cefalea": {
+      "nombre": "Headache",
+      "textos": {
+        "queEs": "How much your head hurts, from 0 (none) to 3 (a lot).",
+        "queSignifica": "A headache can come from the cabin environment, sleep or hydration.",
+        "porQueEspacio": "In microgravity fluids rise to the head and cabin CO₂ can add discomfort."
+      },
+      "acciones": [
+        "Check the cabin CO₂.",
+        "Drink water and rest for 20 minutes.",
+        "Cut down on screens and bright light."
+      ],
+      "avisoMedico": "If the pain is intense, comes on suddenly or comes with blurred vision or confusion."
+    },
+    "mareo": {
+      "nombre": "Dizziness",
+      "textos": {
+        "queEs": "How dizzy you feel, from 0 (not at all) to 3 (a lot).",
+        "queSignifica": "Dizziness often appears when gravity or blood pressure changes.",
+        "porQueEspacio": "The inner ear and circulation adapt when moving from microgravity to gravity."
+      },
+      "acciones": ["Sit or lie down until it passes.", "Stand up slowly.", "Drink water."],
+      "avisoMedico": "If the dizziness is strong, does not improve with rest or you faint."
+    },
+    "lesion_piel": {
+      "nombre": "Skin lesion",
+      "textos": {
+        "queEs": "Whether you have irritation, a rash or wounds on your skin, from 0 (none) to 3 (a lot).",
+        "queSignifica": "Skin changes can reflect irritation or an immune system response.",
+        "porQueEspacio": "Skin dries out and heals more slowly during a mission; the immune system changes too."
+      },
+      "acciones": [
+        "Clean and dry the area.",
+        "Use the moisturizing cream from the medical kit.",
+        "Photograph the area to compare tomorrow."
+      ],
+      "avisoMedico": "If the lesion grows, oozes, hurts a lot or a fever appears."
+    }
+  },
+  "reglasCompuestas": {
+    "multisenal": {
+      "fatiga": {
+        "nombre": "Possible built-up fatigue",
+        "tarjeta": {
+          "queSignifica": "Several signals changed at once and often come with built-up tiredness.",
+          "acciones": [
+            "Make 8 hours of sleep a priority tonight.",
+            "Cut back on intense work today.",
+            "Repeat pulse and variability tomorrow when you wake up."
+          ],
+          "avisoMedico": "If it does not improve in 48 h or you have dizziness, chest pain or confusion.",
+          "porQueEspacio": "Isolation, irregular schedules and artificial light disrupt sleep during a mission."
+        }
+      },
+      "co2_sintomas": {
+        "nombre": "Symptoms likely caused by the environment",
+        "tarjeta": {
+          "queSignifica": "The headache coincides with high cabin CO₂; the cause is likely environmental.",
+          "acciones": [
+            "Tell the crew to check CO₂ removal.",
+            "Move to a module with better ventilation.",
+            "Drink water and rest for 20 minutes."
+          ],
+          "avisoMedico": "If the pain continues once CO₂ is back to normal, or confusion or blurred vision appears.",
+          "porQueEspacio": "In a closed spacecraft CO₂ builds up and can cause headaches even at moderate levels."
+        }
+      }
+    },
+    "aptitud": {
+      "eva": { "nombre": "Spacewalk" },
+      "precision": { "nombre": "Precision task" },
+      "gravedad": { "nombre": "Return to gravity" }
+    }
+  },
+  "entornos": {
+    "nave_transito": {
+      "nombre": "Spacecraft in transit",
+      "riesgosDestacados": [
+        "Space radiation without a planet's protection",
+        "Microgravity: bone and muscle loss",
+        "Isolation and confined space"
+      ]
+    },
+    "estacion": {
+      "nombre": "Orbital station",
+      "riesgosDestacados": [
+        "Microgravity: fluids shift toward the head",
+        "Cabin CO₂",
+        "Sleep disrupted by light cycles"
+      ]
+    },
+    "rover": {
+      "nombre": "Surface rover",
+      "riesgosDestacados": [
+        "Small cabin: CO₂ and temperature",
+        "Vibration and fatigue on long drives",
+        "Radiation exposure on the surface"
+      ]
+    },
+    "base_lunar": {
+      "nombre": "Lunar base",
+      "riesgosDestacados": [
+        "Lunar dust on skin and airways",
+        "Radiation on the surface",
+        "Partial gravity: less load on bones and muscles"
+      ]
+    },
+    "base_marciana": {
+      "nombre": "Mars base",
+      "riesgosDestacados": [
+        "Communication delay with Earth",
+        "Radiation accumulated during the mission",
+        "Adapting to partial gravity after the journey"
+      ]
+    }
+  },
+  "escenarios": {
+    "normal": {
+      "nombre": "Normal day",
+      "descripcion": "All indicators within their personal normal."
+    },
+    "deterioro_sueno": {
+      "nombre": "Worsening sleep",
+      "descripcion": "Sleep hours drop over four nights and mood falls by one point."
+    },
+    "multisenal_fatiga": {
+      "nombre": "Multi-signal fatigue",
+      "descripcion": "Resting pulse rises, heart rate variability drops and sleep is short at the same time."
+    },
+    "co2_alto_cefalea": {
+      "nombre": "High CO₂ with headache",
+      "descripcion": "Cabin CO₂ exceeds the limit for a day and a headache appears."
+    },
+    "evento_solar": {
+      "nombre": "Solar particle event",
+      "descripcion": "A solar storm raises today's dose and the cumulative radiation."
+    },
+    "preparacion_aterrizaje": {
+      "nombre": "Landing preparation",
+      "descripcion": "Blood pressure drops gradually, mild dizziness appears and exercise is cut in half."
+    }
+  },
+  "tripulantes": {
+    "A01": { "nombre": "Cmdr. Rosa", "rol": "Commander" },
+    "A02": { "nombre": "Eng. Kenji", "rol": "Flight engineer" },
+    "A03": { "nombre": "Dr. Amara", "rol": "Medical officer" }
+  },
+  "dispositivos": {
+    "generico_muneca": {
+      "nombre": "Vital signs wristband",
+      "pasos": [
+        "This is your wrist sensor: it measures pulse, variability and oxygen.",
+        "Place it on your left wrist, two fingers above the bone.",
+        "Adjust the strap: firm, not tight. The sensors must touch the skin.",
+        "Keep still and breathe normally for 60 seconds.",
+        "Done. Watch your heart update on the 3D body."
+      ],
+      "erroresComunes": [
+        "Sensor over the wrist bone: the reading is unstable.",
+        "Measuring right after moving: wait 5 minutes at rest."
+      ]
+    },
+    "generico_brazo": {
+      "nombre": "Blood pressure and glucose cuff",
+      "pasos": [
+        "This cuff measures blood pressure and glucose.",
+        "Place it on your left arm, at heart level.",
+        "Adjust it so one finger fits between the cuff and the skin.",
+        "Rest your arm, do not talk and wait until it finishes.",
+        "Done. Check your vascular system on the 3D body."
+      ],
+      "erroresComunes": ["Cuff on the forearm: the pressure reads higher than it really is."]
+    },
+    "generico_frente": {
+      "nombre": "Forehead thermometer",
+      "pasos": [
+        "This sensor measures your body temperature without lasting contact.",
+        "Bring it to the center of your forehead.",
+        "Hold it 1 cm from the skin, with no hair or sweat in between.",
+        "Wait for the reading-complete signal.",
+        "Done. Check your skin and immunity on the 3D body."
+      ],
+      "erroresComunes": ["Sensor too far from the forehead: the temperature reads lower."]
+    },
+    "generico_pecho": {
+      "nombre": "Personal dosimeter",
+      "pasos": [
+        "This dosimeter records the radiation you receive during the day.",
+        "Clip it to the center of your chest, over your clothes.",
+        "Check that the sensor face points outward.",
+        "Wear it all day; your dose is added up at the end.",
+        "Done. The halo shows your radiation budget."
+      ],
+      "erroresComunes": [
+        "Dosimeter kept in a pocket or drawer: it does not record your real exposure."
+      ]
+    }
+  },
+  "rutina": {
+    "pulso_hrv_despertar": { "titulo": "Pulse and variability on waking" },
+    "presion": { "titulo": "Blood pressure" },
+    "sueno_anoche": { "titulo": "Last night's sleep" },
+    "glucosa_almuerzo": { "titulo": "Glucose after lunch" },
+    "ejercicio": { "titulo": "Resistance exercise" },
+    "temperatura": { "titulo": "Body temperature" },
+    "animo_sintomas": { "titulo": "Mood and symptoms" },
+    "masa_corporal": { "titulo": "Body mass" },
+    "prueba_reaccion": { "titulo": "Reaction test" }
+  }
+}

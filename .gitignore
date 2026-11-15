@@ -1,0 +1,17 @@
+node_modules
+# Modelos fuente pesados (se regeneran con scripts/preparar-modelos.ts)
+assets-fuente
+dist
+*.tsbuildinfo
+.vercel
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+# Capturas y diffs de revisi�n de Impeccable (se regeneran)
+.impeccable/review
+.impeccable/build/font-match
+.vercel
+.env*

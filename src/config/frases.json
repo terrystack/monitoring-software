@@ -1,0 +1,23 @@
+{
+  "separadorDecimal": ",",
+  "indicadorNoConfigurado": "El indicador \"{indicador}\" no está configurado.",
+  "fueraDeRango": "{nombre}: {valor} está fuera del rango posible ({min}–{max}). Repite la medición.",
+  "faltanDias": "{nombre} {valor}; faltan días para calcular tu normal ({dias} de {minDias}).",
+  "lineaBase": "{nombre} {valor}; tu normal es {min}–{max} (z = {z}).",
+  "promedioHoras": " (promedio de {horas} h)",
+  "dentroDelLimite": "{nombre} {valor}{detalle}; dentro del límite.",
+  "fueraDelLimite": "{nombre} {valor}{detalle}; fuera del límite ({comparador} {umbral}).",
+  "tendencia": "{nombre} {comparador} {umbral} durante {dias} días seguidos (último: {valor}).",
+  "sinTendencia": "{nombre} {valor}; sin tendencia sostenida.",
+  "sinReferencia": "{nombre} {valor}; aún no hay referencia para comparar.",
+  "cambio": "{nombre} {valor}; {pct} % desde {referencia} ({valorReferencia}).",
+  "referenciaInicio": "el inicio",
+  "referenciaNormal": "tu normal",
+  "metaCumplida": "{nombre}: meta de {meta} cumplida ayer ({valorAyer}).",
+  "metaUnDia": "{nombre}: 1 día por debajo de la meta de {meta} (ayer: {valorAyer}).",
+  "metaDias": "{nombre}: {dias} días seguidos por debajo de la meta de {meta} (ayer: {valorAyer}).",
+  "presupuesto": "{nombre} {valor}: {pct} % de tu presupuesto de {limite}.",
+  "multisenal": "{nombre}: {motivos}",
+  "sinMediciones": "Todavía no hay mediciones de esta zona.",
+  "dentroDeTuNormal": "Tus indicadores están dentro de tu normal."
+}

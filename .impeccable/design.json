@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-11T20:51:00Z",
+  "title": "Design System: AYNI",
+  "extensions": {
+    "colorMeta": {
+      "acento": {
+        "role": "primary",
+        "displayName": "Cian de selección",
+        "canonical": "#22D3EE",
+        "tonalRamp": ["oklch(15% 0.154 211.5)", "oklch(27% 0.154 211.5)", "oklch(39% 0.154 211.5)", "oklch(51% 0.154 211.5)", "oklch(63% 0.154 211.5)", "oklch(75% 0.154 211.5)", "oklch(85% 0.154 211.5)", "oklch(95% 0.154 211.5)"]
+      },
+      "acento-velo": {
+        "role": "primary",
+        "displayName": "Velo cian",
+        "canonical": "rgb(34 211 238 / 0.15)",
+        "tonalRamp": ["rgb(34 211 238 / 0.10)", "rgb(34 211 238 / 0.15)", "rgb(34 211 238 / 0.20)", "rgb(34 211 238 / 0.25)", "rgb(34 211 238 / 0.45)", "rgb(34 211 238 / 0.50)", "rgb(34 211 238 / 0.60)", "rgb(34 211 238 / 0.70)"]
+      },
+      "estado-normal": {
+        "role": "secondary",
+        "displayName": "Verde nominal",
+        "canonical": "#34D399",
+        "tonalRamp": ["oklch(15% 0.177 163.2)", "oklch(27% 0.177 163.2)", "oklch(39% 0.177 163.2)", "oklch(51% 0.177 163.2)", "oklch(63% 0.177 163.2)", "oklch(75% 0.177 163.2)", "oklch(85% 0.177 163.2)", "oklch(95% 0.177 163.2)"]
+      },
+      "estado-atencion": {
+        "role": "secondary",
+        "displayName": "Ámbar de atención",
+        "canonical": "#FBBF24",
+        "tonalRamp": ["oklch(15% 0.189 84.4)", "oklch(27% 0.189 84.4)", "oklch(39% 0.189 84.4)", "oklch(51% 0.189 84.4)", "oklch(63% 0.189 84.4)", "oklch(75% 0.189 84.4)", "oklch(85% 0.189 84.4)", "oklch(95% 0.189 84.4)"]
+      },
+      "estado-critico": {
+        "role": "secondary",
+        "displayName": "Coral crítico",
+        "canonical": "#F87171",
+        "tonalRamp": ["oklch(15% 0.191 22.2)", "oklch(27% 0.191 22.2)", "oklch(39% 0.191 22.2)", "oklch(51% 0.191 22.2)", "oklch(63% 0.191 22.2)", "oklch(75% 0.191 22.2)", "oklch(85% 0.191 22.2)", "oklch(95% 0.191 22.2)"]
+      },
+      "estado-sinDato": {
+        "role": "secondary",
+        "displayName": "Pizarra sin dato",
+        "canonical": "#64748B",
+        "tonalRamp": ["oklch(15% 0.046 257.4)", "oklch(27% 0.046 257.4)", "oklch(39% 0.046 257.4)", "oklch(51% 0.046 257.4)", "oklch(63% 0.046 257.4)", "oklch(75% 0.046 257.4)", "oklch(85% 0.046 257.4)", "oklch(95% 0.046 257.4)"]
+      },
+      "fondo-profundo": {
+        "role": "neutral",
+        "displayName": "Vacío profundo",
+        "canonical": "#050816",
+        "tonalRamp": ["oklch(15% 0.037 272)", "oklch(27% 0.037 272)", "oklch(39% 0.037 272)", "oklch(51% 0.037 272)", "oklch(63% 0.037 272)", "oklch(75% 0.037 272)", "oklch(85% 0.037 272)", "oklch(95% 0.037 272)"]
+      },
+      "fondo-medio": {
+        "role": "neutral",
+        "displayName": "Azul de órbita",
+        "canonical": "#0B1026",
+        "tonalRamp": ["oklch(15% 0.05 273)", "oklch(27% 0.05 273)", "oklch(39% 0.05 273)", "oklch(51% 0.05 273)", "oklch(63% 0.05 273)", "oklch(75% 0.05 273)", "oklch(85% 0.05 273)", "oklch(95% 0.05 273)"]
+      },
+      "superficie": {
+        "role": "neutral",
+        "displayName": "Vidrio de consola",
+        "canonical": "rgb(var(--superficie) / var(--opacidad-panel))",
+        "tonalRamp": ["oklch(15% 0.035 279)", "oklch(27% 0.035 279)", "oklch(39% 0.035 279)", "oklch(51% 0.035 279)", "oklch(63% 0.035 279)", "oklch(75% 0.035 279)", "oklch(85% 0.035 279)", "oklch(95% 0.035 279)"]
+      },
+      "linea": {
+        "role": "neutral",
+        "displayName": "Filete pizarra",
+        "canonical": "rgb(var(--linea))",
+        "tonalRamp": ["oklch(15% 0.045 252)", "oklch(27% 0.045 252)", "oklch(39% 0.045 252)", "oklch(51% 0.045 252)", "oklch(63% 0.045 252)", "oklch(75% 0.045 252)", "oklch(85% 0.045 252)", "oklch(95% 0.045 252)"]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta luna",
+        "canonical": "rgb(var(--tinta))",
+        "tonalRamp": ["oklch(15% 0.008 270)", "oklch(27% 0.008 270)", "oklch(39% 0.008 270)", "oklch(51% 0.008 270)", "oklch(63% 0.008 270)", "oklch(75% 0.008 270)", "oklch(85% 0.008 270)", "oklch(95% 0.008 270)"]
+      },
+      "tinta-suave": {
+        "role": "neutral",
+        "displayName": "Tinta niebla",
+        "canonical": "rgb(var(--tinta-suave))",
+        "tonalRamp": ["oklch(15% 0.022 272)", "oklch(27% 0.022 272)", "oklch(39% 0.022 272)", "oklch(51% 0.022 272)", "oklch(63% 0.022 272)", "oklch(75% 0.022 272)", "oklch(85% 0.022 272)", "oklch(95% 0.022 272)"]
+      },
+      "tinta-tenue": {
+        "role": "neutral",
+        "displayName": "Tinta ceniza",
+        "canonical": "rgb(var(--tinta-tenue))",
+        "tonalRamp": ["oklch(15% 0.03 275)", "oklch(27% 0.03 275)", "oklch(39% 0.03 275)", "oklch(51% 0.03 275)", "oklch(63% 0.03 275)", "oklch(75% 0.03 275)", "oklch(85% 0.03 275)", "oklch(95% 0.03 275)"]
+      },
+      "velo-hover": {
+        "role": "neutral",
+        "displayName": "Velo de paso",
+        "canonical": "rgb(255 255 255 / 0.05)",
+        "tonalRamp": ["rgb(255 255 255 / 0.02)", "rgb(255 255 255 / 0.04)", "rgb(255 255 255 / 0.05)", "rgb(255 255 255 / 0.08)", "rgb(255 255 255 / 0.10)", "rgb(255 255 255 / 0.14)", "rgb(255 255 255 / 0.20)", "rgb(255 255 255 / 0.30)"]
+      }
+    },
+    "modos": {
+      "alto-contraste": {
+        "description": "Clase alto-contraste en :root; reescribe las variables de superficie, filete y tinta. Fondo, cian y estados no cambian.",
+        "variables": {
+          "--superficie": "2 3 10",
+          "--linea": "150 170 196",
+          "--tinta": "255 255 255",
+          "--tinta-suave": "236 240 248",
+          "--tinta-tenue": "206 212 226",
+          "--opacidad-panel": "0.97"
+        }
+      },
+      "texto-grande": {
+        "description": "Clase texto-grande en :root; sube la raíz fluida y con ella toda la UI en rem.",
+        "variables": {
+          "font-size": "clamp(16px, 0.55vw + 9.5px, 20px)"
+        }
+      },
+      "base": {
+        "description": "Raíz fluida por defecto: 14 px a 1280 px de ancho, 17 px a 1920 px.",
+        "variables": {
+          "font-size": "clamp(14px, 0.47vw + 8px, 17px)"
+        }
+      }
+    },
+    "typographyMeta": {
+      "wordmark": { "displayName": "Marca", "purpose": "Solo la palabra AYNI en la barra superior." },
+      "headline": { "displayName": "Titular", "purpose": "Título de la tarjeta de acción (zona · estado) y de estados vacíos de pestaña." },
+      "title": { "displayName": "Título de panel", "purpose": "Encabezado de panel como \"Aptitud del día\"." },
+      "body": { "displayName": "Cuerpo", "purpose": "Texto del procedimiento: qué cambió, pasos y aviso médico." },
+      "body-sm": { "displayName": "Cuerpo pequeño", "purpose": "Metadatos, función de la zona, fuente, datos de la barra superior." },
+      "data": { "displayName": "Dato", "purpose": "Celdas de tabla, valores y rangos; siempre con cifras tabulares." },
+      "label": { "displayName": "Rótulo", "purpose": "Clase .rotulo: mayúsculas con tracking 0.08em en tinta-tenue; título de sección en paneles, menús y bloque de aviso médico." }
+    },
+    "shadows": [
+      { "name": "menu-flotante", "value": "0 12px 32px rgb(0 0 0 / 0.45)", "purpose": "Desplegable de alertas y menú de capas, que flotan sobre otra UI." },
+      { "name": "panel-lateral", "value": "-16px 0 40px rgb(0 0 0 / 0.45)", "purpose": "Cajón del perfil que entra desde la derecha." }
+    ],
+    "motion": [
+      { "name": "color-rapido", "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Transición por defecto de color, fondo y borde en botones, filas y segmentos." },
+      { "name": "estado-control", "value": "200ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Subrayado de pestaña (opacidad) y perilla del interruptor (desplazamiento)." },
+      { "name": "movimiento-reducido", "value": "0.01ms", "purpose": "prefers-reduced-motion o clase movimiento-reducido en :root anulan transiciones y animaciones." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal de un procedimiento o estado vacío: velo cian con borde cian y tinta plena.",
+      "html": "<button class='ds-btn-primary'>Medir ahora</button>",
+      "css": ".ds-btn-primary { font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.88rem; font-weight: 600; letter-spacing: -0.012em; color: rgb(var(--tinta, 236 238 244)); background: rgb(34 211 238 / 0.15); border: 1px solid rgb(34 211 238 / 0.6); border-radius: 6px; padding: 0.625rem 0.75rem; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: rgb(34 211 238 / 0.25); } .ds-btn-primary:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }"
+    },
+    {
+      "name": "Botón secundario",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción alternativa junto al principal: transparente con filete pizarra.",
+      "html": "<button class='ds-btn-secondary'>Ver evolución</button>",
+      "css": ".ds-btn-secondary { font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.88rem; font-weight: 400; letter-spacing: -0.012em; color: rgb(var(--tinta, 236 238 244)); background: transparent; border: 1px solid rgb(var(--linea, 34 52 74)); border-radius: 6px; padding: 0.625rem 0.75rem; cursor: pointer; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-secondary:hover { border-color: rgb(var(--tinta-tenue, 138 144 166)); } .ds-btn-secondary:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }"
+    },
+    {
+      "name": "Barra superior y pestañas",
+      "kind": "nav",
+      "refersTo": "segmento-activo",
+      "description": "Barra de 3rem con marca espaciada y pestañas de altura completa; la activa lleva subrayado cian de 2 px.",
+      "html": "<header class='ds-barra'><span class='ds-marca'>AYNI</span><nav class='ds-pestanas' role='tablist'><button class='ds-pestana' role='tab' aria-selected='true'>Cuerpo 3D</button><button class='ds-pestana' role='tab' aria-selected='false'>Evolución y predicción</button><button class='ds-pestana' role='tab' aria-selected='false'>Medir y dispositivos</button></nav></header>",
+      "css": ".ds-barra { display: flex; align-items: center; gap: 1rem; height: 3rem; padding: 0 1rem; background: rgb(5 8 22 / 0.8); border-bottom: 1px solid rgb(34 211 238 / 0.25); font-family: Biryani, system-ui, 'Segoe UI', sans-serif; } .ds-marca { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.32em; color: rgb(var(--tinta, 236 238 244)); } .ds-pestanas { display: flex; align-items: stretch; gap: 0.25rem; height: 100%; margin-left: 0.75rem; } .ds-pestana { position: relative; padding: 0 0.75rem; font-family: inherit; font-size: 0.86rem; letter-spacing: -0.012em; color: rgb(var(--tinta-suave, 184 189 205)); background: none; border: 0; cursor: pointer; white-space: nowrap; transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-pestana:hover { color: rgb(var(--tinta, 236 238 244)); } .ds-pestana[aria-selected='true'] { font-weight: 600; color: rgb(var(--tinta, 236 238 244)); } .ds-pestana::after { content: ''; position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0; height: 2px; border-radius: 9999px; background: #22D3EE; opacity: 0; transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-pestana[aria-selected='true']::after { opacity: 1; } .ds-pestana:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; border-radius: 4px; }"
+    },
+    {
+      "name": "Chip de datos sintéticos",
+      "kind": "chip",
+      "refersTo": "chip-sintetico",
+      "description": "Etiqueta de honestidad siempre visible en la barra superior; no es un control.",
+      "html": "<span class='ds-chip-sintetico'>Datos sintéticos</span>",
+      "css": ".ds-chip-sintetico { display: inline-block; font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.76rem; color: #22D3EE; border: 1px solid rgb(34 211 238 / 0.45); border-radius: 6px; padding: 0.25rem 0.625rem; white-space: nowrap; }"
+    },
+    {
+      "name": "Control segmentado",
+      "kind": "chip",
+      "refersTo": "segmento",
+      "description": "Grupo de opciones exclusivas (idioma, modo de capa): borde pizarra recortado, activa con velo cian.",
+      "html": "<div class='ds-segmentos' role='group' aria-label='Idioma'><button class='ds-segmento' aria-pressed='true'>ES</button><button class='ds-segmento' aria-pressed='false'>EN</button></div>",
+      "css": ".ds-segmentos { display: inline-flex; overflow: hidden; border: 1px solid rgb(var(--linea, 34 52 74)); border-radius: 6px; font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.72rem; font-weight: 600; } .ds-segmento { padding: 0.25rem 0.5rem; text-transform: uppercase; font: inherit; color: rgb(var(--tinta-tenue, 138 144 166)); background: transparent; border: 0; cursor: pointer; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-segmento:hover { color: rgb(var(--tinta, 236 238 244)); } .ds-segmento[aria-pressed='true'] { background: rgb(34 211 238 / 0.15); color: rgb(var(--tinta, 236 238 244)); } .ds-segmento:focus-visible { outline: 2px solid #22D3EE; outline-offset: -2px; }"
+    },
+    {
+      "name": "Panel de aptitud",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Panel de vidrio con título y filas divididas; el estado va a la derecha con ícono de forma y palabra.",
+      "html": "<section class='ds-panel'><h2 class='ds-panel-titulo'>Aptitud del día</h2><ul class='ds-filas'><li class='ds-fila'><span>Caminata espacial</span><span class='ds-estado ds-estado-atencion'><svg width='13' height='13' viewBox='0 0 16 16' aria-hidden='true'><path d='M8 1.2l7 13H1z' fill='#FBBF24'/><path d='M8 5.5v4.2M8 11.4v1.3' stroke='#050816' stroke-width='1.8'/></svg>Con precaución</span></li><li class='ds-fila'><span>Tarea de precisión</span><span class='ds-estado ds-estado-normal'><svg width='13' height='13' viewBox='0 0 16 16' aria-hidden='true'><circle cx='8' cy='8' r='7' fill='#34D399'/><path d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='#050816' stroke-width='1.8' fill='none'/></svg>Apto</span></li></ul></section>",
+      "css": ".ds-panel { font-family: Biryani, system-ui, 'Segoe UI', sans-serif; letter-spacing: -0.012em; background: rgb(var(--superficie, 9 11 26) / var(--opacidad-panel, 0.88)); border: 1px solid rgb(var(--linea, 34 52 74) / 0.7); border-radius: 8px; padding: 0.875rem 1rem 0.75rem; width: 20rem; } .ds-panel-titulo { margin: 0; font-size: 0.92rem; font-weight: 600; color: rgb(var(--tinta, 236 238 244)); } .ds-filas { list-style: none; margin: 0.5rem 0 0; padding: 0; } .ds-fila { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; font-size: 0.86rem; color: rgb(var(--tinta, 236 238 244)); } .ds-fila + .ds-fila { border-top: 1px solid rgb(var(--linea, 34 52 74) / 0.5); } .ds-estado { margin-left: auto; display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.8rem; font-weight: 600; white-space: nowrap; } .ds-estado-atencion { color: #FBBF24; } .ds-estado-normal { color: #34D399; }"
+    },
+    {
+      "name": "Procedimiento de la tarjeta de acción",
+      "kind": "custom",
+      "refersTo": "tarjeta-accion",
+      "description": "Componente firma: pasos numerados que se marcan al hacerlos y bloque de aviso al médico de vuelo tintado por el estado.",
+      "html": "<div class='ds-tarjeta'><h3 class='ds-apartado'>Qué hacer ahora</h3><ol class='ds-pasos'><li><label class='ds-paso'><input type='checkbox' checked><span class='ds-casilla' aria-hidden='true'><svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg></span><span class='ds-num'>1</span><span class='ds-texto'>Prioriza 8 horas de sueño esta noche.</span></label></li><li><label class='ds-paso'><input type='checkbox'><span class='ds-casilla' aria-hidden='true'></span><span class='ds-num'>2</span><span class='ds-texto'>Reduce la carga de trabajo intensa hoy.</span></label></li></ol><section class='ds-aviso ds-aviso-atencion'><h3 class='ds-rotulo'>Cuándo avisar al médico de vuelo</h3><p>Si no mejora en 48 h o tienes mareo, dolor en el pecho o confusión.</p></section></div>",
+      "css": ".ds-tarjeta { font-family: Biryani, system-ui, 'Segoe UI', sans-serif; letter-spacing: -0.012em; background: rgb(var(--superficie, 9 11 26) / var(--opacidad-panel, 0.88)); border: 1px solid rgb(var(--linea, 34 52 74) / 0.7); border-radius: 8px; padding: 1rem 1.25rem; width: 24rem; display: flex; flex-direction: column; gap: 1.25rem; } .ds-apartado { margin: 0; font-size: 0.86rem; font-weight: 600; color: rgb(var(--tinta-suave, 184 189 205)); } .ds-pasos { list-style: none; margin: -0.75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; } .ds-paso { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.375rem 0.25rem 0.375rem 0; font-size: 0.9rem; cursor: pointer; } .ds-paso input { position: absolute; opacity: 0; width: 1px; height: 1px; } .ds-casilla { margin-top: 0.125rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; display: grid; place-items: center; border: 1px solid rgb(34 211 238 / 0.7); border-radius: 4px; color: #050816; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-paso input:checked + .ds-casilla { background: #22D3EE; border-color: #22D3EE; } .ds-paso input:focus-visible + .ds-casilla { outline: 2px solid #22D3EE; outline-offset: 2px; } .ds-num { width: 1rem; flex-shrink: 0; font-weight: 600; font-variant-numeric: tabular-nums; color: #22D3EE; } .ds-texto { color: rgb(var(--tinta, 236 238 244)); } .ds-paso input:checked ~ .ds-texto { color: rgb(var(--tinta-tenue, 138 144 166)); text-decoration: line-through; text-decoration-color: rgb(var(--tinta-tenue, 138 144 166) / 0.6); } .ds-aviso { border: 1px solid rgb(var(--linea, 34 52 74) / 0.7); border-radius: 6px; padding: 0.75rem 1rem; } .ds-aviso-atencion { border-color: rgb(251 191 36 / 0.55); background: rgb(251 191 36 / 0.08); } .ds-rotulo { margin: 0; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgb(var(--tinta-tenue, 138 144 166)); } .ds-aviso-atencion .ds-rotulo { color: #FBBF24; } .ds-aviso p { margin: 0.375rem 0 0; font-size: 0.9rem; line-height: 1.625; color: rgb(var(--tinta, 236 238 244)); }"
+    },
+    {
+      "name": "Interruptor",
+      "kind": "input",
+      "refersTo": "interruptor",
+      "description": "Ajuste binario del perfil (texto grande, alto contraste, movimiento reducido) con etiqueta a la izquierda.",
+      "html": "<button class='ds-interruptor' role='switch' aria-checked='true'>Movimiento reducido<span class='ds-pista' aria-hidden='true'><span class='ds-perilla'></span></span></button>",
+      "css": ".ds-interruptor { display: flex; width: 18rem; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0.25rem; font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.88rem; letter-spacing: -0.012em; color: rgb(var(--tinta, 236 238 244)); background: none; border: 0; border-radius: 6px; cursor: pointer; text-align: left; } .ds-pista { position: relative; width: 2.25rem; height: 1.25rem; flex-shrink: 0; border-radius: 9999px; border: 1px solid rgb(var(--linea, 34 52 74)); background: rgb(255 255 255 / 0.05); transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), border-color 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-perilla { position: absolute; top: 0.125rem; left: 0; width: 0.875rem; height: 0.875rem; border-radius: 9999px; background: rgb(var(--tinta-tenue, 138 144 166)); transform: translateX(0.125rem); transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-interruptor[aria-checked='true'] .ds-pista { border-color: #22D3EE; background: rgb(34 211 238 / 0.3); } .ds-interruptor[aria-checked='true'] .ds-perilla { background: #22D3EE; transform: translateX(1.05rem); } .ds-interruptor:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }"
+    },
+    {
+      "name": "Campo de selección",
+      "kind": "input",
+      "refersTo": "campo-select",
+      "description": "Select nativo del perfil (entorno) sobre el vacío profundo con filete pizarra.",
+      "html": "<select class='ds-select' aria-label='Entorno'><option>Base marciana</option><option>Estación orbital</option><option>Base lunar</option></select>",
+      "css": ".ds-select { font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.9rem; color: rgb(var(--tinta, 236 238 244)); background: #050816; border: 1px solid rgb(var(--linea, 34 52 74)); border-radius: 6px; padding: 0.5rem 0.75rem; color-scheme: dark; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-select:hover { border-color: rgb(var(--tinta-tenue, 138 144 166)); } .ds-select:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }"
+    },
+    {
+      "name": "Etiqueta de zona",
+      "kind": "custom",
+      "refersTo": "etiqueta-zona",
+      "description": "Píldora flotante sobre el cuerpo 3D para zonas en alerta: borde del color del estado, ícono, nombre y estado.",
+      "html": "<button class='ds-etiqueta-zona'><svg width='14' height='14' viewBox='0 0 16 16' aria-hidden='true'><path d='M8 1.2l7 13H1z' fill='#FBBF24'/><path d='M8 5.5v4.2M8 11.4v1.3' stroke='#050816' stroke-width='1.8'/></svg><span>Cerebro</span><span class='ds-punto'>·</span><span class='ds-estado-zona'>Atención</span></button>",
+      "css": ".ds-etiqueta-zona { display: inline-flex; align-items: center; gap: 0.375rem; white-space: nowrap; font-family: Biryani, system-ui, 'Segoe UI', sans-serif; font-size: 0.75rem; color: rgb(var(--tinta, 236 238 244)); background: rgb(5 8 22 / 0.8); backdrop-filter: blur(8px); border: 1px solid #FBBF24; border-radius: 9999px; padding: 0.25rem 0.625rem; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-etiqueta-zona:hover { background: #0B1026; } .ds-etiqueta-zona:focus-visible { outline: 2px solid #22D3EE; } .ds-punto { color: rgb(var(--tinta-tenue, 138 144 166)); } .ds-estado-zona { color: #FBBF24; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Consola de a bordo",
+    "overview": "La interfaz 2D de AYNI es la consola que rodea un holograma médico. El protagonista es el cuerpo anatómico 3D, luminoso y semitransparente sobre un vacío azul noche; la capa 2D no compite con él: son paneles de vidrio oscuro tintado, con filetes finos color pizarra, que se apoyan en los bordes de la pantalla y dejan el centro al cuerpo. Se lee como instrumentación de nave, no como panel de métricas: tablas compactas, cifras tabulares, procedimientos numerados que se marcan al hacerlos y un bloque de precaución para el médico de vuelo.\n\nEl color está racionado. Todo es tinta clara sobre navy salvo dos voces: el cian, que significa \"seleccionado / acción / foco\", y la paleta de estado (verde, ámbar, coral, pizarra), que solo aparece donde hay un estado que comunicar y siempre con forma de ícono y palabra. La densidad es alta pero respirada: escala tipográfica pequeña y precisa (base de 14 a 17 px según el ancho), una sola familia, Biryani, y jerarquía construida con peso y tono de tinta más que con tamaño.\n\nLa calma es parte del sistema: sin sombras en reposo, sin gradientes en la UI, transiciones cortas de color y un modo de movimiento reducido que las anula. Los ajustes de texto grande y alto contraste reescriben los mismos tokens desde la raíz, de modo que cualquier superficie nueva que use los tokens los hereda gratis.",
+    "keyCharacteristics": [
+      "Fondo espacial en degradado vertical de `fondo-medio` a `fondo-profundo`; el cuerpo 3D ocupa el lienzo completo detrás de la UI.",
+      "Paneles translúcidos (`superficie` al 88 %) con filete `linea` al 70 % y esquinas de 8 px; planos, sin sombra.",
+      "Cian `acento` reservado a selección, foco, acción principal, enlaces y numeración de pasos.",
+      "Paleta de estado fija, siempre acompañada de `IconoEstado` (forma distinta por estado) y su etiqueta.",
+      "Una sola familia (Biryani 400/600/700), cifras tabulares en todo dato.",
+      "Tamaños en `rem` sobre una raíz fluida; texto grande y alto contraste como clases en `:root`."
+    ],
+    "rules": [
+      { "name": "La Regla del Color con Significado", "body": "Los colores de estado solo aparecen donde hay un estado, y siempre con su ícono de forma propia y su palabra. Nunca como acento decorativo, nunca solos.", "section": "colors" },
+      { "name": "La Regla del Cian es Selección", "body": "El cian significa \"elegido, enfocado o la acción principal\". Si algo es cian y no se puede elegir ni accionar, sobra.", "section": "colors" },
+      { "name": "La Regla del Velo, no del Bloque", "body": "Lo activo se marca con un velo translúcido del color (10–25 %) y un borde más intenso, no con relleno sólido. Las únicas superficies sólidas de color son la casilla de paso hecho (cian) y la insignia de alertas (coral).", "section": "colors" },
+      { "name": "La Regla de la Cifra Tabular", "body": "Todo número que se compara (valores, rangos, días, conteos, numeración de filas y pasos) lleva cifras tabulares.", "section": "typography" },
+      { "name": "La Regla del Rótulo como Título", "body": "El rótulo en mayúsculas es el título de su sección, nunca un antetítulo apilado sobre otro encabezado.", "section": "typography" },
+      { "name": "La Regla de los Tres Pesos", "body": "Solo existen 400, 600 y 700 porque son los únicos que se cargan. 700 es exclusivo de la marca y de la insignia numérica.", "section": "typography" },
+      { "name": "La Regla del Vidrio sobre el Espacio", "body": "Un panel en reposo es vidrio oscuro con filete, nunca una tarjeta con sombra. La sombra se gana flotando encima de otra interfaz.", "section": "elevation" },
+      { "name": "La Regla de los Dos Radios", "body": "8 px contiene, 6 px se pulsa. La píldora solo para avatares, insignias, interruptores y etiquetas sobre el cuerpo.", "section": "shapes" }
+    ],
+    "dos": [
+      "**Do** usar los tokens `tinta`, `tinta-suave`, `tinta-tenue`, `linea` y `superficie` (vía variables CSS) para todo texto, filete y superficie, para que alto contraste funcione sin trabajo extra.",
+      "**Do** acompañar cada color de estado con `IconoEstado` y la palabra del estado, leídos de `src/config`.",
+      "**Do** marcar lo activo con un velo cian (10–25 %) y un borde cian (45–70 %), con texto en `tinta`.",
+      "**Do** contener en `.panel` (8 px, `superficie` al 88 %, filete `linea` al 70 %) y titular secciones internas con `.rotulo`.",
+      "**Do** expresar tamaños en `rem` y números con cifras tabulares.",
+      "**Do** limitar las transiciones a color, opacidad y desplazamiento corto (150–200 ms) y dejar que el modo de movimiento reducido las anule.",
+      "**Do** mantener visibles la etiqueta \"Datos sintéticos\" en la barra y \"No es un diagnóstico médico\" en el pie."
+    ],
+    "donts": [
+      "**Don't** usar la escala gris o slate de Tailwind ni blancos o negros literales para texto y filetes; rompen el modo alto contraste.",
+      "**Don't** rellenar botones con cian sólido ni pintar fondos de panel con colores de estado; el único tinte de estado sobre superficie es el bloque de aviso (8–10 %).",
+      "**Don't** escribir texto en `estado-sinDato`; su contraste sobre el fondo no llega a AA en tamaños pequeños. El texto \"Sin dato\" va en `tinta-tenue`.",
+      "**Don't** poner sombra a un panel en reposo; la sombra es solo para menús y el cajón del perfil.",
+      "**Don't** usar pesos fuera de 400, 600 y 700 (no se cargan) ni una segunda familia tipográfica.",
+      "**Don't** usar el rótulo en mayúsculas como antetítulo encima de otro encabezado.",
+      "**Don't** usar el cian para decorar: si es cian, se puede elegir, accionar o está enfocado."
+    ]
+  }
+}

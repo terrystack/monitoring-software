@@ -1,0 +1,469 @@
+{
+  "fuentes": {
+    "esqueleto": { "archivo": "zanatomy/skeletal.glb", "credito": "zanatomy" },
+    "visceras": { "archivo": "zanatomy/visceral.glb", "credito": "zanatomy" },
+    "nervioso": { "archivo": "zanatomy/nervous.glb", "credito": "zanatomy" },
+    "cardiovascular": { "archivo": "zanatomy/cardiovascular.glb", "credito": "zanatomy" },
+    "muscular": { "archivo": "zanatomy/muscular.glb", "credito": "zanatomy" },
+    "bp3d": { "carpeta": "bodyparts3d", "credito": "bodyparts3d" },
+    "piel": { "archivo": "piel/innerscene.glb", "credito": "makehuman" }
+  },
+  "creditos": {
+    "zanatomy": {
+      "texto": "Z-Anatomy - The open source atlas of anatomy - CC-BY-SA 4.0 (https://github.com/Z-Anatomy/Models-of-human-anatomy), modelos convertidos por el proyecto 3D Anatomy (https://github.com/nqwrc/3d-anatomy)",
+      "licencia": "CC BY-SA 4.0",
+      "enlace": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+      "urlLicencia": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "bodyparts3d": {
+      "texto": "BodyParts3D - The Database Center for Life Science - CC-BY-SA 2.1 Japan (https://dbarchive.biosciencedbc.jp/en/bodyparts3d/)",
+      "licencia": "CC BY-SA 2.1 JP",
+      "enlace": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/",
+      "urlLicencia": "https://creativecommons.org/licenses/by-sa/2.1/jp/"
+    },
+    "makehuman": {
+      "texto": "Cuerpo base de MakeHuman (CC0), adaptado por Innerscene (CC0)",
+      "licencia": "CC0 1.0",
+      "enlace": "https://innerscene.com",
+      "urlLicencia": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  "excluir": {
+    "nervioso": ["cochle", "vestibul", "semicircular", "labyrinth", "utricle", "saccule", "spiral"],
+    "esqueleto": ["^(Incus|Malleus|Stapes)\\."],
+    "visceras": ["kidney", "renal pelvis", "pleura"],
+    "cardiovascular": ["intrarenal"],
+    "muscular": [
+      "fascia",
+      "bursa",
+      "tendon",
+      "sheath",
+      "aponeurosis",
+      "retinaculum",
+      "ligament",
+      "septum",
+      "tract"
+    ]
+  },
+  "mallas": [
+    {
+      "nombre": "hueso_craneo",
+      "fuente": "esqueleto",
+      "conservar": 0.25,
+      "incluir": [
+        "^(Frontal bone|Occipital bone|Sphenoid bone|Ethmoid bone|Vomer|Mandible|Hyoid bone)$",
+        "^(Parietal|Temporal|Zygomatic|Nasal|Lacrimal|Palatine) bone\\.[lr]$",
+        "^Maxilla\\.[lr]$",
+        "^Inferior nasal concha bone\\.[lr]$",
+        "(incisor|canine|premolar|molar tooth)"
+      ]
+    },
+    {
+      "nombre": "hueso_columna",
+      "fuente": "esqueleto",
+      "conservar": 0.4,
+      "incluir": ["^(Atlas \\(C1\\)|Axis \\(C2\\)|Vertebra [CTL]\\d+|Sacrum|Coccyx)$"]
+    },
+    {
+      "nombre": "hueso_costillas_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.22,
+      "incluir": [
+        "^(First|Second|Third|Fourth|Fifth|Sixth|Seventh|Eighth|Ninth|Tenth|Eleventh|Twelfth) rib\\.{l}$",
+        "^Costal cartilage of .* rib\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "hueso_esternon",
+      "fuente": "esqueleto",
+      "conservar": 0.5,
+      "incluir": ["^(Body of sternum|Manubrium of sternum|Xiphoid process)$"]
+    },
+    {
+      "nombre": "hueso_clavicula_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.5,
+      "incluir": ["^Clavicle\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_escapula_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.12,
+      "incluir": ["^Scapula\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_pelvis",
+      "fuente": "esqueleto",
+      "conservar": 0.8,
+      "incluir": ["^Hip bone\\.[lr]$"]
+    },
+    {
+      "nombre": "hueso_humero_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.5,
+      "incluir": ["^Humerus\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_radio_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.8,
+      "incluir": ["^Radius\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_cubito_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.8,
+      "incluir": ["^Ulna\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_mano_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.6,
+      "incluir": [
+        "(metacarpal bone|finger of hand|^Capitate|^Hamate|^Lunate|^Pisiform|^Scaphoid|^Trapezium|^Trapezoid|^Triquetrum).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "hueso_femur_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.5,
+      "incluir": ["^Femur\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_rotula_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 1,
+      "incluir": ["^Patella\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_tibia_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.6,
+      "incluir": ["^Tibia\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_perone_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.6,
+      "incluir": ["^Fibula\\.{l}$"]
+    },
+    {
+      "nombre": "hueso_pie_{lado}",
+      "fuente": "esqueleto",
+      "conservar": 0.6,
+      "incluir": [
+        "(metatarsal bone|finger of foot|Sesamoid bones of foot|^Calcaneus|^Cuboid|cuneiform|^Navicular|^Talus).*\\.{l}$"
+      ]
+    },
+
+    {
+      "nombre": "organo_pulmon_{lado}",
+      "fuente": "visceras",
+      "conservar": 1,
+      "incluir": ["^(Superior|Inferior|Middle) lobe of {lado_en} lung$"]
+    },
+    {
+      "nombre": "organo_via_aerea",
+      "fuente": "visceras",
+      "conservar": 0.3,
+      "incluir": ["^Trachea$", "bronch"]
+    },
+    {
+      "nombre": "organo_higado",
+      "fuente": "visceras",
+      "conservar": 0.6,
+      "incluir": ["^Liver$", "^Gallbladder$"]
+    },
+    {
+      "nombre": "organo_estomago",
+      "fuente": "visceras",
+      "conservar": 0.6,
+      "incluir": ["^Stomach$"]
+    },
+    {
+      "nombre": "organo_pancreas",
+      "fuente": "visceras",
+      "conservar": 0.7,
+      "incluir": ["^Pancreas$"]
+    },
+    {
+      "nombre": "organo_intestino",
+      "fuente": "visceras",
+      "conservar": 0.35,
+      "incluir": [
+        "^(Oesophagus|Duodenum|Jejunum|Ascending colon|Transverse colon|Descending colon|Sigmoid colon|Vermiform appendix)$"
+      ]
+    },
+    {
+      "nombre": "organo_rinon_izq",
+      "fuente": "bp3d",
+      "conservar": 0.8,
+      "archivos": ["FJ3145_BP21596_FMA7205_Left kidney.obj"]
+    },
+    {
+      "nombre": "organo_rinon_der",
+      "fuente": "bp3d",
+      "conservar": 0.8,
+      "archivos": ["FJ3147_BP23801_FMA7204_Right kidney.obj"]
+    },
+
+    {
+      "nombre": "nervio_cerebro",
+      "fuente": "bp3d",
+      "conservar": 0.25,
+      "archivos": [
+        "FJ1732_BP21657_FMA72670_Left angular gyrus.obj",
+        "FJ1733_BP23987_FMA72669_Right angular gyrus.obj",
+        "FJ1744_BP22402_FMA72658_Left inferior frontal gyrus.obj",
+        "FJ1745_BP22397_FMA72657_Right inferior frontal gyrus.obj",
+        "FJ1746_BP22696_FMA72688_Left inferior temporal gyrus.obj",
+        "FJ1747_BP22176_FMA72687_Right inferior temporal gyrus.obj",
+        "FJ1748_BP23978_FMA72978_Left insula.obj",
+        "FJ1749_BP21973_FMA72977_Right insula.obj",
+        "FJ1769_BP23201_FMA62004_Medulla oblongata.obj",
+        "FJ1775_BP22028_FMA67943_Pons.obj",
+        "FJ1781_BP22033_FMA67944_Cerebellum.obj",
+        "FJ1787_BP22367_FMA72656_Left middle frontal gyrus.obj",
+        "FJ1788_BP20959_FMA72655_Right middle frontal gyrus.obj",
+        "FJ1789_BP22697_FMA72686_Left middle temporal gyrus.obj",
+        "FJ1790_BP22182_FMA72685_Right middle temporal gyrus.obj",
+        "FJ1797_BP22179_FMA72666_Left postcentral gyrus.obj",
+        "FJ1798_BP22140_FMA72665_Right postcentral gyrus.obj",
+        "FJ1800_BP22183_FMA72662_Left precentral gyrus.obj",
+        "FJ1801_BP22215_FMA72661_Right precentral gyrus.obj",
+        "FJ1833_BP22376_FMA72654_Left superior frontal gyrus.obj",
+        "FJ1834_BP23996_FMA72653_Right superior frontal gyrus.obj",
+        "FJ1837_BP20634_FMA72801_Anterior part of left superior temporal gyrus.obj",
+        "FJ1838_BP21881_FMA72800_Anterior part of right superior temporal gyrus.obj",
+        "FJ1839_BP21142_FMA72805_Posterior part of left superior temporal gyrus.obj",
+        "FJ1840_BP21069_FMA72804_Posterior part of right superior temporal gyrus.obj",
+        "FJ1841_BP22180_FMA72668_Left supramarginal gyrus.obj",
+        "FJ1842_BP22255_FMA72667_Right supramarginal gyrus.obj",
+        "FJ7474M_BP29928_FMA72677_Right lateral occipital gyrus.obj",
+        "FJ7474_BP29927_FMA72678_Left lateral occipital gyrus.obj",
+        "FJ7478M_BP29921_FMA72675_Right superior occipital gyrus.obj",
+        "FJ7478_BP29923_FMA72676_Left superior occipital gyrus.obj"
+      ]
+    },
+    {
+      "nombre": "nervio_medula",
+      "fuente": "nervioso",
+      "conservar": 0.3,
+      "incluir": ["^White matter of spinal cord$", "horn of spinal cord$"]
+    },
+    {
+      "nombre": "nervio_periferico_brazo_{lado}",
+      "fuente": "nervioso",
+      "conservar": 0.12,
+      "incluir": [
+        "\\b(brachial plexus|median nerve|ulnar nerve|radial nerve|musculocutaneous nerve|axillary nerve|interosseous nerve|digital nerve.*hand|nerves? of hand|cutaneous nerve of (arm|forearm)|suprascapular nerve|thoracodorsal nerve|long thoracic nerve|pectoral nerve|subscapular nerve|cord of brachial).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "nervio_periferico_pierna_{lado}",
+      "fuente": "nervioso",
+      "conservar": 0.12,
+      "incluir": [
+        "(lumbar plexus|sacral plexus|sciatic|femoral nerve|tibial nerve|fibular nerve|peroneal|obturator nerve|saphenous nerve|plantar nerve|sural|gluteal nerve|cutaneous nerve of thigh|genitofemoral|ilioinguinal|iliohypogastric|pudendal|digital nerve.*foot).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "nervio_periferico_craneal",
+      "fuente": "nervioso",
+      "conservar": 0.06,
+      "incluir": [
+        "nerve \\((I|II|III|IV|V|VI|VII|IX|X|XI|XII)\\)",
+        "(ophthalmic|maxillary|mandibular) nerve"
+      ]
+    },
+    {
+      "nombre": "nervio_periferico_tronco",
+      "fuente": "nervioso",
+      "conservar": 0.07,
+      "incluir": [
+        "(intercostal|thoracic nerve|spinal nerve|ramus|spinal ganglion|sympathetic|splanchnic|phrenic|vagus|lumbar nerve|sacral nerve|cervical plexus|cervical nerve)"
+      ]
+    },
+
+    {
+      "nombre": "organo_corazon",
+      "fuente": "cardiovascular",
+      "conservar": 0.12,
+      "incluir": [
+        "(atrium|ventricle|papillary muscle|leaflet|valve|coronary|of heart|interventricular|cardiac vein|chordae|trabecul|auricle)",
+        "^(Pulmonary trunk|Bifurcation of pulmonary trunk)$"
+      ]
+    },
+    {
+      "nombre": "vaso_aorta",
+      "fuente": "cardiovascular",
+      "conservar": 0.6,
+      "flujo": "arteria",
+      "incluir": ["aorta", "aortic arch", "^Brachiocephalic trunk$"]
+    },
+    {
+      "nombre": "vaso_vena_cava",
+      "fuente": "cardiovascular",
+      "conservar": 0.6,
+      "flujo": "vena",
+      "incluir": ["vena cava"]
+    },
+    {
+      "nombre": "vaso_arteria_brazo_{lado}",
+      "fuente": "cardiovascular",
+      "conservar": 0.09,
+      "flujo": "arteria",
+      "incluir": [
+        "^{Lado_en} subclavian artery$",
+        "\\b(subclavian artery|axillary artery|brachial artery|radial artery|ulnar artery|interosseous artery|palmar|digital arter.*hand|thoracoacromial|circumflex humeral|subscapular artery|circumflex scapular|collateral artery|recurrent artery|carpal|metacarpal arter|princeps pollicis).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "vaso_vena_brazo_{lado}",
+      "fuente": "cardiovascular",
+      "conservar": 0.15,
+      "flujo": "vena",
+      "incluir": [
+        "^{Lado_en} (subclavian|brachiocephalic) vein$",
+        "\\b(subclavian vein|axillary vein|brachial vein|basilic|cephalic|median cubital|radial vein|ulnar vein|palmar|digital vein.*hand|metacarpal vein|venous network of hand|brachiocephalic vein).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "vaso_arteria_pierna_{lado}",
+      "fuente": "cardiovascular",
+      "conservar": 0.09,
+      "flujo": "arteria",
+      "incluir": [
+        "(iliac artery|femoral artery|circumflex femoral artery|popliteal artery|tibial artery|fibular artery|peroneal artery|plantar arter|dorsalis pedis|dorsal artery of foot|genicular artery|sural arter|gluteal artery|obturator artery|metatarsal arter|digital arter.*foot|arcuate artery|tarsal arter|malleolar|calcaneal).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "vaso_vena_pierna_{lado}",
+      "fuente": "cardiovascular",
+      "conservar": 0.09,
+      "flujo": "vena",
+      "incluir": [
+        "(iliac vein|femoral vein|saphenous|popliteal vein|tibial vein|fibular vein|plantar vein|venous arch|metatarsal vein|digital vein.*foot|gluteal vein|obturator vein|circumflex femoral veins?|genicular vein|sural vein).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "vaso_arteria_cabeza",
+      "fuente": "cardiovascular",
+      "conservar": 0.05,
+      "flujo": "arteria",
+      "incluir": [
+        "\\b(carotid|cerebral arter|cerebral artery|vertebral artery|basilar|facial artery|temporal artery|maxillary artery|ophthalmic artery|lingual artery|occipital artery|thyroid artery|labial artery|nasal artery|meningeal|auricular artery|communicating artery|cerebellar artery|pontine|supratrochlear|supraorbital|infraorbital|sphenopalatine|palatine artery|alveolar artery|mental artery|buccal artery|masseteric|pharyngeal artery|striate branches|temporal branch|branch to angular gyrus|temporo-occipital branch|artery of pterygoid canal)"
+      ]
+    },
+    {
+      "nombre": "vaso_vena_cabeza",
+      "fuente": "cardiovascular",
+      "conservar": 0.12,
+      "flujo": "vena",
+      "incluir": [
+        "^(?=.*\\b(vein|veins|sinus|plexus)\\b).*\\b(jugular|facial vein|retromandibular|cerebral vein|dural sinus|sagittal sinus|transverse sinus|sigmoid sinus|cavernous sinus|petrosal sinus|straight sinus|emissary|ophthalmic vein|pterygoid|thyroid vein|vertebral vein|labial vein|lingual vein|temporal vein|occipital vein|diploic|maxillary vein)"
+      ]
+    },
+    {
+      "nombre": "vaso_arteria_tronco",
+      "fuente": "cardiovascular",
+      "conservar": 0.045,
+      "incluir": ["(artery|arteries|arterial|trunk)"]
+    },
+    {
+      "nombre": "vaso_vena_tronco",
+      "fuente": "cardiovascular",
+      "conservar": 0.07,
+      "incluir": ["(vein|veins|venous|sinus)"]
+    },
+
+    {
+      "nombre": "musculo_cuadriceps_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": [
+        "^(Rectus femoris|Vastus intermedius|Vastus lateralis|Vastus medialis) muscle\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "musculo_gemelo_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": [
+        "^(Lateral head of gastrocnemius|Medial head of gastrocnemius|Soleus muscle)\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "musculo_gluteo_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": ["^Gluteus (maximus|medius|minimus) muscle\\.{l}$"]
+    },
+    {
+      "nombre": "musculo_deltoides_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": ["deltoid muscle\\.{l}$"]
+    },
+    {
+      "nombre": "musculo_biceps_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": ["^((Long|Short) head of biceps brachii|Brachialis muscle)\\.{l}$"]
+    },
+    {
+      "nombre": "musculo_dorsal_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": ["^Latissimus dorsi muscle\\.{l}$"]
+    },
+    {
+      "nombre": "musculo_abdominal",
+      "fuente": "muscular",
+      "conservar": 0.12,
+      "incluir": [
+        "^(Rectus abdominis|External abdominal oblique|Internal abdominal oblique|Transversus abdominis) muscle\\.[lr]$"
+      ]
+    },
+    {
+      "nombre": "musculo_pectoral_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.3,
+      "incluir": ["pectoralis (major|minor).*\\.{l}$"]
+    },
+    {
+      "nombre": "musculo_pierna_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.15,
+      "incluir": [
+        "(sartorius|adductor (brevis|longus|magnus|minimus)|gracilis|pectineus|biceps femoris|semimembranosus|semitendinosus|tensor fasciae latae|tibialis|fibularis|peroneus|extensor (digitorum|hallucis) (longus|brevis)|flexor (digitorum|hallucis) (longus|brevis)|popliteus|plantaris|iliacus|psoas|piriformis|obturator|gemellus|quadratus femoris|of foot|hallucis).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "musculo_brazo_{lado}",
+      "fuente": "muscular",
+      "conservar": 0.15,
+      "incluir": [
+        "(triceps|coracobrachialis|brachioradialis|pronator|supinator|flexor carpi|flexor digitorum (superficialis|profundus)|flexor pollicis|extensor carpi|extensor digitorum muscle|extensor digiti minimi|extensor pollicis|extensor indicis|abductor pollicis|palmaris|anconeus|opponens|adductor pollicis|of hand|teres|infraspinatus|supraspinatus|subscapularis).*\\.{l}$"
+      ]
+    },
+    {
+      "nombre": "musculo_tronco",
+      "fuente": "muscular",
+      "conservar": 0.12,
+      "incluir": [
+        "(trapezius|rhomboid|serratus|intercostal|erector|spinalis|longissimus|iliocostalis|multifidus|rotatores|semispinalis|splenius|levator scapulae|quadratus lumborum|diaphragm|pyramidalis|transversus thoracis|subcostal|levatores costarum|interspinales|intertransvers|sternocleidomastoid|scalene|platysma)"
+      ]
+    },
+    {
+      "nombre": "musculo_cabeza",
+      "fuente": "muscular",
+      "conservar": 0.15,
+      "incluir": [
+        "(masseter|temporalis|pterygoid|orbicularis|zygomaticus|buccinator|occipitofrontalis|frontal belly|occipital belly|nasalis|mentalis|risorius|depressor|levator labii|corrugator|procerus|digastric|stylohyoid|mylohyoid|geniohyoid|sternohyoid|omohyoid|thyrohyoid|sternothyroid)"
+      ]
+    },
+
+    { "nombre": "piel_cuerpo", "fuente": "piel", "conservar": 0.55 }
+  ]
+}

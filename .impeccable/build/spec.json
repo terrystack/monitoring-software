@@ -1,0 +1,1643 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-11-11T06:30:23.040Z",
+  "comp": ".impeccable/mocks/decision/procedimiento.jpg",
+  "warnings": [
+    "region marca: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region pestanas: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region identidad: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region chip-sinteticos: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region campana: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region avatar: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region barra-borde: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region panel-aptitud: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region panel-aptitud: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region titulo-aptitud: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region filas-aptitud: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region panel-tablero: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region panel-tablero: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region cabecera-tablero: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region filas-tablero: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region cuerpo-3d: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region etiqueta-zona: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region tarjeta: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region tarjeta: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region titulo-tarjeta: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region que-cambio: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region pasos: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region precaucion: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region por-que: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region fuente: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region botones: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region pie: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)"
+  ],
+  "uncoveredInkCells": [
+    "J0"
+  ],
+  "compSize": {
+    "width": 1280,
+    "height": 720
+  },
+  "aspect": 1.7778,
+  "orientation": "landscape",
+  "palette": [
+    {
+      "hex": "#080918",
+      "coverage": 0.902
+    },
+    {
+      "hex": "#0a3746",
+      "coverage": 0.0527
+    },
+    {
+      "hex": "#245968",
+      "coverage": 0.0197
+    },
+    {
+      "hex": "#5b6469",
+      "coverage": 0.0172
+    },
+    {
+      "hex": "#e3e3e7",
+      "coverage": 0.0084
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.0278,
+      "strength": 0.4398
+    },
+    {
+      "y": 0.5694,
+      "strength": 0.2124
+    }
+  ],
+  "regions": [
+    {
+      "id": "marca",
+      "kind": "text",
+      "note": "AYNI wordmark, tracked uppercase",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0109,
+        "y": 0.0139,
+        "w": 0.05,
+        "h": 0.0417
+      },
+      "px": {
+        "x": 14,
+        "y": 10,
+        "w": 64,
+        "h": 30
+      },
+      "aspect": 2.1333,
+      "palette": [
+        {
+          "hex": "#090909",
+          "coverage": 0.8265
+        },
+        {
+          "hex": "#f5f4f5",
+          "coverage": 0.1096
+        },
+        {
+          "hex": "#bdbdc6",
+          "coverage": 0.0411
+        },
+        {
+          "hex": "#888890",
+          "coverage": 0.0183
+        },
+        {
+          "hex": "#282838",
+          "coverage": 0.0046
+        }
+      ],
+      "detail": {
+        "energy": 16.9768
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 14,
+          "inkIsDark": false,
+          "allCaps": true,
+          "advance": 0.4283,
+          "advTall": 0.4283,
+          "advX": null,
+          "gap": 0.3391,
+          "xRatio": null,
+          "stemW": 0.2158,
+          "contrast": 0.8956,
+          "serif": 0.4042,
+          "densTall": 0.5617,
+          "densX": null,
+          "weight": 0.5617
+        },
+        "widthClass": "compressed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "pestanas",
+      "kind": "control",
+      "note": "three tabs Cuerpo 3D (active, cyan underline), Evolución y predicción, Medir y dispositivos",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0781,
+        "y": 0.0111,
+        "w": 0.3047,
+        "h": 0.0583
+      },
+      "px": {
+        "x": 100,
+        "y": 8,
+        "w": 390,
+        "h": 42
+      },
+      "aspect": 9.2857,
+      "palette": [
+        {
+          "hex": "#080810",
+          "coverage": 0.9095
+        },
+        {
+          "hex": "#6e6f72",
+          "coverage": 0.0279
+        },
+        {
+          "hex": "#35363b",
+          "coverage": 0.0251
+        },
+        {
+          "hex": "#c8c8cd",
+          "coverage": 0.0205
+        },
+        {
+          "hex": "#6ce2e6",
+          "coverage": 0.0171
+        }
+      ],
+      "detail": {
+        "energy": 33.2722
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "identidad",
+      "kind": "text",
+      "note": "crew name, mission day and environment in one row",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6188,
+        "y": 0.0167,
+        "w": 0.1938,
+        "h": 0.0361
+      },
+      "px": {
+        "x": 792,
+        "y": 12,
+        "w": 248,
+        "h": 26
+      },
+      "aspect": 9.5385,
+      "palette": [
+        {
+          "hex": "#080812",
+          "coverage": 0.8763
+        },
+        {
+          "hex": "#b8b8be",
+          "coverage": 0.0417
+        },
+        {
+          "hex": "#e6e8e9",
+          "coverage": 0.0376
+        },
+        {
+          "hex": "#7c7c7f",
+          "coverage": 0.0296
+        },
+        {
+          "hex": "#282b32",
+          "coverage": 0.0148
+        }
+      ],
+      "detail": {
+        "energy": 36.6832
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 14,
+          "capHeightPx": 9.7,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.8459,
+          "advTall": 0.8459,
+          "advX": 0.7768,
+          "gap": 0.0691,
+          "xRatio": 0.7439,
+          "stemW": 0.2157,
+          "contrast": 1.1389,
+          "serif": 0.1633,
+          "densTall": 0.5261,
+          "densX": 0.6124,
+          "weight": 0.5261
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "chip-sinteticos",
+      "kind": "control",
+      "note": "Datos sintéticos chip, cyan text, outlined",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.8172,
+        "y": 0.0125,
+        "w": 0.0844,
+        "h": 0.0417
+      },
+      "px": {
+        "x": 1046,
+        "y": 9,
+        "w": 108,
+        "h": 30
+      },
+      "aspect": 3.6,
+      "palette": [
+        {
+          "hex": "#080912",
+          "coverage": 0.7688
+        },
+        {
+          "hex": "#132532",
+          "coverage": 0.1393
+        },
+        {
+          "hex": "#51969c",
+          "coverage": 0.0418
+        },
+        {
+          "hex": "#3a7580",
+          "coverage": 0.0279
+        },
+        {
+          "hex": "#1c4e58",
+          "coverage": 0.0223
+        }
+      ],
+      "detail": {
+        "energy": 16.556
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "campana",
+      "kind": "control",
+      "note": "alerts bell with red count badge",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.9156,
+        "y": 0.0069,
+        "w": 0.0313,
+        "h": 0.05
+      },
+      "px": {
+        "x": 1172,
+        "y": 5,
+        "w": 40,
+        "h": 36
+      },
+      "aspect": 1.1111,
+      "palette": [
+        {
+          "hex": "#090809",
+          "coverage": 0.8224
+        },
+        {
+          "hex": "#f22b35",
+          "coverage": 0.0658
+        },
+        {
+          "hex": "#434346",
+          "coverage": 0.0461
+        },
+        {
+          "hex": "#d5283d",
+          "coverage": 0.0395
+        },
+        {
+          "hex": "#a42c3c",
+          "coverage": 0.0263
+        }
+      ],
+      "detail": {
+        "energy": 7.9939
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "avatar",
+      "kind": "control",
+      "note": "round crew avatar button that opens the profile panel",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.9531,
+        "y": 0.0042,
+        "w": 0.0359,
+        "h": 0.0583
+      },
+      "px": {
+        "x": 1220,
+        "y": 3,
+        "w": 46,
+        "h": 42
+      },
+      "aspect": 1.0952,
+      "palette": [
+        {
+          "hex": "#08080b",
+          "coverage": 0.7407
+        },
+        {
+          "hex": "#f0f0f2",
+          "coverage": 0.0787
+        },
+        {
+          "hex": "#1b2932",
+          "coverage": 0.0648
+        },
+        {
+          "hex": "#7c8287",
+          "coverage": 0.0602
+        },
+        {
+          "hex": "#41575c",
+          "coverage": 0.0556
+        }
+      ],
+      "detail": {
+        "energy": 12.3768
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "barra-borde",
+      "kind": "chrome",
+      "note": "hairline under the top bar",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0,
+        "y": 0.0639,
+        "w": 1,
+        "h": 0.0056
+      },
+      "px": {
+        "x": 0,
+        "y": 46,
+        "w": 1280,
+        "h": 4
+      },
+      "aspect": 320,
+      "palette": [
+        {
+          "hex": "#080c16",
+          "coverage": 0.9403
+        },
+        {
+          "hex": "#147677",
+          "coverage": 0.0304
+        },
+        {
+          "hex": "#082829",
+          "coverage": 0.0293
+        }
+      ],
+      "detail": {
+        "energy": 9.6107
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": true
+      }
+    },
+    {
+      "id": "panel-aptitud",
+      "kind": "chrome",
+      "note": "dark tinted panel holding Aptitud del día",
+      "grid": null,
+      "codeDrawn": true,
+      "container": true,
+      "box": {
+        "x": 0.0078,
+        "y": 0.0861,
+        "w": 0.2734,
+        "h": 0.2472
+      },
+      "px": {
+        "x": 10,
+        "y": 62,
+        "w": 350,
+        "h": 178
+      },
+      "aspect": 1.9663,
+      "palette": [
+        {
+          "hex": "#090a18",
+          "coverage": 0.9641
+        },
+        {
+          "hex": "#eaecf0",
+          "coverage": 0.0122
+        },
+        {
+          "hex": "#464851",
+          "coverage": 0.0083
+        },
+        {
+          "hex": "#7b7b83",
+          "coverage": 0.0081
+        },
+        {
+          "hex": "#bcbcc1",
+          "coverage": 0.0073
+        }
+      ],
+      "detail": {
+        "energy": 19.4124
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": true
+      }
+    },
+    {
+      "id": "titulo-aptitud",
+      "kind": "text",
+      "note": "panel heading Aptitud del día",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0172,
+        "y": 0.0972,
+        "w": 0.0938,
+        "h": 0.0306
+      },
+      "px": {
+        "x": 22,
+        "y": 70,
+        "w": 120,
+        "h": 22
+      },
+      "aspect": 5.4545,
+      "palette": [
+        {
+          "hex": "#080813",
+          "coverage": 0.822
+        },
+        {
+          "hex": "#edeeef",
+          "coverage": 0.0712
+        },
+        {
+          "hex": "#737378",
+          "coverage": 0.0485
+        },
+        {
+          "hex": "#48484d",
+          "coverage": 0.0291
+        },
+        {
+          "hex": "#adb1ba",
+          "coverage": 0.0291
+        }
+      ],
+      "detail": {
+        "energy": 32.9694
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 9,
+          "capHeightPx": 10.7,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.6218,
+          "advTall": 0.6218,
+          "advX": 0.6218,
+          "gap": 0.0466,
+          "xRatio": 0.6733,
+          "stemW": 0.1935,
+          "contrast": 1.1013,
+          "serif": null,
+          "densTall": 0.5432,
+          "densX": 0.6464,
+          "weight": 0.5432
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "filas-aptitud",
+      "kind": "text",
+      "note": "compact rows with state icon and short value",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0172,
+        "y": 0.1361,
+        "w": 0.2578,
+        "h": 0.1889
+      },
+      "px": {
+        "x": 22,
+        "y": 98,
+        "w": 330,
+        "h": 136
+      },
+      "aspect": 2.4265,
+      "palette": [
+        {
+          "hex": "#090a19",
+          "coverage": 0.9561
+        },
+        {
+          "hex": "#e5e6eb",
+          "coverage": 0.0164
+        },
+        {
+          "hex": "#464952",
+          "coverage": 0.0105
+        },
+        {
+          "hex": "#7f7f88",
+          "coverage": 0.0097
+        },
+        {
+          "hex": "#b3b4b8",
+          "coverage": 0.0073
+        }
+      ],
+      "detail": {
+        "energy": 21.5064
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 5,
+          "glyphs": 57,
+          "capHeightPx": 9.2,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.7331,
+          "advTall": 0.7495,
+          "advX": 0.711,
+          "gap": 0.0366,
+          "xRatio": 0.688,
+          "stemW": 0.2154,
+          "contrast": 1.1653,
+          "serif": 0.3444,
+          "densTall": 0.5764,
+          "densX": 0.6331,
+          "weight": 0.5764
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "panel-tablero",
+      "kind": "chrome",
+      "note": "dark tinted panel holding the zone status table",
+      "grid": null,
+      "codeDrawn": true,
+      "container": true,
+      "box": {
+        "x": 0.0078,
+        "y": 0.3472,
+        "w": 0.2734,
+        "h": 0.5444
+      },
+      "px": {
+        "x": 10,
+        "y": 250,
+        "w": 350,
+        "h": 392
+      },
+      "aspect": 0.8929,
+      "palette": [
+        {
+          "hex": "#080a19",
+          "coverage": 0.9692
+        },
+        {
+          "hex": "#e8e8ed",
+          "coverage": 0.0096
+        },
+        {
+          "hex": "#484953",
+          "coverage": 0.0082
+        },
+        {
+          "hex": "#74757e",
+          "coverage": 0.0074
+        },
+        {
+          "hex": "#c0c0c8",
+          "coverage": 0.0056
+        }
+      ],
+      "detail": {
+        "energy": 18.269
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": false
+      }
+    },
+    {
+      "id": "cabecera-tablero",
+      "kind": "text",
+      "note": "table header Zona, Estado, Valor, Tu normal",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0172,
+        "y": 0.3583,
+        "w": 0.2578,
+        "h": 0.0306
+      },
+      "px": {
+        "x": 22,
+        "y": 258,
+        "w": 330,
+        "h": 22
+      },
+      "aspect": 15,
+      "palette": [
+        {
+          "hex": "#080817",
+          "coverage": 0.9283
+        },
+        {
+          "hex": "#6b6c77",
+          "coverage": 0.022
+        },
+        {
+          "hex": "#c5c5d0",
+          "coverage": 0.0197
+        },
+        {
+          "hex": "#e9e9ec",
+          "coverage": 0.0185
+        },
+        {
+          "hex": "#303040",
+          "coverage": 0.0116
+        }
+      ],
+      "detail": {
+        "energy": 35.3124
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 11,
+          "capHeightPx": 9.3,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 1.2144,
+          "advTall": 1.2144,
+          "advX": 0.9465,
+          "gap": 0.0357,
+          "xRatio": 0.6965,
+          "stemW": 0.2216,
+          "contrast": 1.171,
+          "serif": null,
+          "densTall": 0.5586,
+          "densX": 0.6413,
+          "weight": 0.5586
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "filas-tablero",
+      "kind": "text",
+      "note": "11 numbered zone rows with state icon, value and personal normal",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0172,
+        "y": 0.3958,
+        "w": 0.2578,
+        "h": 0.4861
+      },
+      "px": {
+        "x": 22,
+        "y": 285,
+        "w": 330,
+        "h": 350
+      },
+      "aspect": 0.9429,
+      "palette": [
+        {
+          "hex": "#080a19",
+          "coverage": 0.9634
+        },
+        {
+          "hex": "#464750",
+          "coverage": 0.0095
+        },
+        {
+          "hex": "#e9e9ee",
+          "coverage": 0.0095
+        },
+        {
+          "hex": "#81818a",
+          "coverage": 0.0094
+        },
+        {
+          "hex": "#b9b9c1",
+          "coverage": 0.0083
+        }
+      ],
+      "detail": {
+        "energy": 19.5887
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 11,
+          "glyphs": 105,
+          "capHeightPx": 10.4,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.7135,
+          "advTall": 0.7132,
+          "advX": 1.3682,
+          "gap": 0.0322,
+          "xRatio": 0.6254,
+          "stemW": 0.205,
+          "contrast": 1.1026,
+          "serif": 0.338,
+          "densTall": 0.5581,
+          "densX": 0.6278,
+          "weight": 0.5581
+        },
+        "widthClass": "wide",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "cuerpo-3d",
+      "kind": "chrome",
+      "note": "live WebGL anatomical body canvas rendered by the app at runtime, holographic skin, amber heart",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.3672,
+        "y": 0.0778,
+        "w": 0.2734,
+        "h": 0.8889
+      },
+      "px": {
+        "x": 470,
+        "y": 56,
+        "w": 350,
+        "h": 640
+      },
+      "aspect": 0.5469,
+      "palette": [
+        {
+          "hex": "#080b1b",
+          "coverage": 0.6697
+        },
+        {
+          "hex": "#0c3e4e",
+          "coverage": 0.184
+        },
+        {
+          "hex": "#3a616b",
+          "coverage": 0.0895
+        },
+        {
+          "hex": "#626369",
+          "coverage": 0.0347
+        },
+        {
+          "hex": "#2a5d7d",
+          "coverage": 0.0221
+        }
+      ],
+      "detail": {
+        "energy": 14.9425
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "flags": [
+        {
+          "id": "painted-pixels",
+          "message": "Looks painted: 48 colours beyond its two main tones and soft shading across 54% of it. Drawn in code, this becomes a flat copy."
+        }
+      ]
+    },
+    {
+      "id": "etiqueta-zona",
+      "kind": "text",
+      "note": "floating label Corazón · Atención with warning icon, amber outline",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.4,
+        "y": 0.3194,
+        "w": 0.0625,
+        "h": 0.0208
+      },
+      "px": {
+        "x": 512,
+        "y": 230,
+        "w": 80,
+        "h": 15
+      },
+      "aspect": 5.3333,
+      "palette": [
+        {
+          "hex": "#0d1019",
+          "coverage": 0.6018
+        },
+        {
+          "hex": "#162b34",
+          "coverage": 0.2212
+        },
+        {
+          "hex": "#262f1d",
+          "coverage": 0.0796
+        },
+        {
+          "hex": "#414146",
+          "coverage": 0.0619
+        },
+        {
+          "hex": "#0c1838",
+          "coverage": 0.0354
+        }
+      ],
+      "detail": {
+        "energy": 23.1341
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 7.1,
+          "inkIsDark": false,
+          "allCaps": true,
+          "advance": null,
+          "advTall": null,
+          "advX": null,
+          "gap": 0.0353,
+          "xRatio": null,
+          "stemW": 0.242,
+          "contrast": 0.9971,
+          "serif": null,
+          "densTall": null,
+          "densX": null,
+          "weight": null
+        },
+        "widthClass": "normal",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "tarjeta",
+      "kind": "chrome",
+      "note": "action card panel, dark tinted, thin border",
+      "grid": null,
+      "codeDrawn": true,
+      "container": true,
+      "box": {
+        "x": 0.6797,
+        "y": 0.1861,
+        "w": 0.3094,
+        "h": 0.6583
+      },
+      "px": {
+        "x": 870,
+        "y": 134,
+        "w": 396,
+        "h": 474
+      },
+      "aspect": 0.8354,
+      "palette": [
+        {
+          "hex": "#090917",
+          "coverage": 0.9308
+        },
+        {
+          "hex": "#082839",
+          "coverage": 0.0306
+        },
+        {
+          "hex": "#ececf0",
+          "coverage": 0.0176
+        },
+        {
+          "hex": "#b1b1b6",
+          "coverage": 0.0135
+        },
+        {
+          "hex": "#57575c",
+          "coverage": 0.0075
+        }
+      ],
+      "detail": {
+        "energy": 21.7298
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": true,
+        "rules": false
+      }
+    },
+    {
+      "id": "titulo-tarjeta",
+      "kind": "text",
+      "note": "Corazón · Atención heading with amber warning icon",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.2083,
+        "w": 0.1563,
+        "h": 0.0417
+      },
+      "px": {
+        "x": 892,
+        "y": 150,
+        "w": 200,
+        "h": 30
+      },
+      "aspect": 6.6667,
+      "palette": [
+        {
+          "hex": "#080816",
+          "coverage": 0.8333
+        },
+        {
+          "hex": "#f5f5f6",
+          "coverage": 0.0857
+        },
+        {
+          "hex": "#222427",
+          "coverage": 0.0421
+        },
+        {
+          "hex": "#828287",
+          "coverage": 0.0202
+        },
+        {
+          "hex": "#bdbdc3",
+          "coverage": 0.0187
+        }
+      ],
+      "detail": {
+        "energy": 48.0045
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 15,
+          "capHeightPx": 14.1,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.6376,
+          "advTall": 0.7084,
+          "advX": 0.6199,
+          "gap": 0.0708,
+          "xRatio": 0.6674,
+          "stemW": 0.1934,
+          "contrast": 1.1689,
+          "serif": 0.3425,
+          "densTall": 0.4742,
+          "densX": 0.6117,
+          "weight": 0.4742
+        },
+        "widthClass": "normal",
+        "weightClass": "regular",
+        "chosen": {
+          "family": "Biryani",
+          "weight": 700,
+          "fontSizePx": 17,
+          "source": "index",
+          "fp": {
+            "lines": 1,
+            "glyphs": 16,
+            "capHeightPx": 14,
+            "inkIsDark": true,
+            "allCaps": false,
+            "advance": 0.6417,
+            "advTall": 0.6951,
+            "advX": 0.606,
+            "gap": 0.1426,
+            "xRatio": 0.6997,
+            "stemW": 0.1918,
+            "contrast": 1.1709,
+            "serif": 0.7887,
+            "densTall": 0.4858,
+            "densX": 0.6305,
+            "weight": 0.4858
+          },
+          "stamp": "a5b5446130ed"
+        }
+      }
+    },
+    {
+      "id": "que-cambio",
+      "kind": "text",
+      "note": "what changed sentence with value, personal normal and onset day",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.2583,
+        "w": 0.2578,
+        "h": 0.0667
+      },
+      "px": {
+        "x": 892,
+        "y": 186,
+        "w": 330,
+        "h": 48
+      },
+      "aspect": 6.875,
+      "palette": [
+        {
+          "hex": "#080816",
+          "coverage": 0.8813
+        },
+        {
+          "hex": "#c6c7cd",
+          "coverage": 0.0402
+        },
+        {
+          "hex": "#eff0f4",
+          "coverage": 0.0274
+        },
+        {
+          "hex": "#2d2f33",
+          "coverage": 0.0268
+        },
+        {
+          "hex": "#585a5e",
+          "coverage": 0.0244
+        }
+      ],
+      "detail": {
+        "energy": 49.4385
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 45,
+          "capHeightPx": 11.1,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.6013,
+          "advTall": 0.5729,
+          "advX": 0.6022,
+          "gap": 0.0601,
+          "xRatio": 0.7392,
+          "stemW": 0.1842,
+          "contrast": 1.044,
+          "serif": null,
+          "densTall": 0.5316,
+          "densX": 0.5921,
+          "weight": 0.5316
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "pasos",
+      "kind": "control",
+      "note": "three numbered steps with checkboxes, first checked",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.3403,
+        "w": 0.1797,
+        "h": 0.1333
+      },
+      "px": {
+        "x": 892,
+        "y": 245,
+        "w": 230,
+        "h": 96
+      },
+      "aspect": 2.3958,
+      "palette": [
+        {
+          "hex": "#080817",
+          "coverage": 0.8935
+        },
+        {
+          "hex": "#e8e9ed",
+          "coverage": 0.0549
+        },
+        {
+          "hex": "#bbbbc0",
+          "coverage": 0.0247
+        },
+        {
+          "hex": "#2f333c",
+          "coverage": 0.0147
+        },
+        {
+          "hex": "#646469",
+          "coverage": 0.0122
+        }
+      ],
+      "detail": {
+        "energy": 31.6894
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "precaucion",
+      "kind": "text",
+      "note": "PRECAUCIÓN block, amber-tinted border, when to call the flight surgeon",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.4972,
+        "w": 0.2719,
+        "h": 0.1278
+      },
+      "px": {
+        "x": 892,
+        "y": 358,
+        "w": 348,
+        "h": 92
+      },
+      "aspect": 3.7826,
+      "palette": [
+        {
+          "hex": "#0e0d16",
+          "coverage": 0.8733
+        },
+        {
+          "hex": "#e6e6e7",
+          "coverage": 0.0405
+        },
+        {
+          "hex": "#191e0e",
+          "coverage": 0.0377
+        },
+        {
+          "hex": "#a4a5a6",
+          "coverage": 0.0249
+        },
+        {
+          "hex": "#4c4d50",
+          "coverage": 0.0235
+        }
+      ],
+      "detail": {
+        "energy": 35.3842
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 56,
+          "capHeightPx": 11.4,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.5873,
+          "advTall": 0.644,
+          "advX": 0.5873,
+          "gap": 0.0587,
+          "xRatio": 0.7186,
+          "stemW": 0.1812,
+          "contrast": 1.0481,
+          "serif": null,
+          "densTall": 0.5426,
+          "densX": 0.5766,
+          "weight": 0.5426
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "por-que",
+      "kind": "text",
+      "note": "Por qué pasa en el espacio line",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.6431,
+        "w": 0.1328,
+        "h": 0.0333
+      },
+      "px": {
+        "x": 892,
+        "y": 463,
+        "w": 170,
+        "h": 24
+      },
+      "aspect": 7.0833,
+      "palette": [
+        {
+          "hex": "#080816",
+          "coverage": 0.8059
+        },
+        {
+          "hex": "#6f7075",
+          "coverage": 0.0609
+        },
+        {
+          "hex": "#36373d",
+          "coverage": 0.0542
+        },
+        {
+          "hex": "#c9cad0",
+          "coverage": 0.0474
+        },
+        {
+          "hex": "#f1f2f3",
+          "coverage": 0.0316
+        }
+      ],
+      "detail": {
+        "energy": 45.4871
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 17,
+          "capHeightPx": 11,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.6038,
+          "advTall": 0.4076,
+          "advX": 0.6038,
+          "gap": 0.0604,
+          "xRatio": 0.7177,
+          "stemW": 0.1843,
+          "contrast": 1.0253,
+          "serif": 0.622,
+          "densTall": 0.5843,
+          "densX": 0.5847,
+          "weight": 0.5843
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "fuente",
+      "kind": "text",
+      "note": "Fuente: NASA HRP cyan link",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.6819,
+        "w": 0.0938,
+        "h": 0.0278
+      },
+      "px": {
+        "x": 892,
+        "y": 491,
+        "w": 120,
+        "h": 20
+      },
+      "aspect": 6,
+      "palette": [
+        {
+          "hex": "#080a18",
+          "coverage": 0.7443
+        },
+        {
+          "hex": "#6bbdc9",
+          "coverage": 0.0916
+        },
+        {
+          "hex": "#164551",
+          "coverage": 0.0687
+        },
+        {
+          "hex": "#2e6e78",
+          "coverage": 0.0534
+        },
+        {
+          "hex": "#081535",
+          "coverage": 0.042
+        }
+      ],
+      "detail": {
+        "energy": 32.8988
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 9,
+          "capHeightPx": 10.5,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.6652,
+          "advTall": 0.689,
+          "advX": 0.3801,
+          "gap": 0.095,
+          "xRatio": 0.6946,
+          "stemW": 0.1957,
+          "contrast": 0.9965,
+          "serif": null,
+          "densTall": 0.5646,
+          "densX": 0.4848,
+          "weight": 0.5646
+        },
+        "widthClass": "compressed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "botones",
+      "kind": "control",
+      "note": "two buttons Ver evolución (outline) and Medir ahora (filled teal)",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6969,
+        "y": 0.75,
+        "w": 0.2719,
+        "h": 0.0639
+      },
+      "px": {
+        "x": 892,
+        "y": 540,
+        "w": 348,
+        "h": 46
+      },
+      "aspect": 7.5652,
+      "palette": [
+        {
+          "hex": "#080918",
+          "coverage": 0.5628
+        },
+        {
+          "hex": "#082837",
+          "coverage": 0.3867
+        },
+        {
+          "hex": "#e5ecf0",
+          "coverage": 0.028
+        },
+        {
+          "hex": "#aab2ba",
+          "coverage": 0.0159
+        },
+        {
+          "hex": "#2c3738",
+          "coverage": 0.0066
+        }
+      ],
+      "detail": {
+        "energy": 25.4179
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      }
+    },
+    {
+      "id": "pie",
+      "kind": "text",
+      "note": "No es un diagnóstico médico footer",
+      "grid": null,
+      "codeDrawn": true,
+      "box": {
+        "x": 0.0094,
+        "y": 0.9528,
+        "w": 0.1172,
+        "h": 0.025
+      },
+      "px": {
+        "x": 12,
+        "y": 686,
+        "w": 150,
+        "h": 18
+      },
+      "aspect": 8.3333,
+      "palette": [
+        {
+          "hex": "#08090f",
+          "coverage": 0.802
+        },
+        {
+          "hex": "#404252",
+          "coverage": 0.1141
+        },
+        {
+          "hex": "#727582",
+          "coverage": 0.0638
+        },
+        {
+          "hex": "#283538",
+          "coverage": 0.0168
+        },
+        {
+          "hex": "#080828",
+          "coverage": 0.0034
+        }
+      ],
+      "detail": {
+        "energy": 26.2378
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "surface": {
+        "flat": false,
+        "rules": false
+      },
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 14,
+          "capHeightPx": 8.7,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 0.6874,
+          "advTall": 0.8402,
+          "advX": 0.6492,
+          "gap": 0.0382,
+          "xRatio": 0.7116,
+          "stemW": 0.2062,
+          "contrast": 1.0507,
+          "serif": 0.5163,
+          "densTall": 0.576,
+          "densX": 0.6225,
+          "weight": 0.576
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    }
+  ],
+  "compSha256": "c7416febc1b69344baaf1dab8ac7cf9a7f47e2a2a01843cb6cbc37ef393c081e",
+  "regionsSource": {
+    "path": ".impeccable/build/regions.json",
+    "sha256": "ca834a8451f47dd22eec0a8772e4b6500653140e4a5f7d36c1a08b8c825012d7"
+  }
+}

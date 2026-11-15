@@ -1,0 +1,547 @@
+[
+  {
+    "id": "pulso_reposo",
+    "nombre": "Pulso en reposo",
+    "unidad": "lpm",
+    "zonas": ["corazon"],
+    "validacion": { "min": 30, "max": 220 },
+    "direccionRiesgo": "ambas",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": ["ejercicio"],
+    "reglas": [{ "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 }],
+    "textos": {
+      "queEs": "Cuántas veces late tu corazón por minuto en reposo.",
+      "queSignifica": "Un pulso en reposo por encima de tu normal puede indicar fatiga, deshidratación o estrés.",
+      "porQueEspacio": "La microgravedad desplaza líquidos hacia el tórax y cambia el trabajo del corazón."
+    },
+    "acciones": [
+      "Descansa 10 minutos y repite la medición.",
+      "Bebe agua.",
+      "Revisa tus horas de sueño."
+    ],
+    "avisoMedico": "Si sigue fuera de tu normal por 48 h o tienes mareo o dolor en el pecho.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_muneca",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 64,
+      "desv": 4,
+      "frecuencia": "tres_veces_dia",
+      "decimales": 0,
+      "cicloDiario": 3
+    }
+  },
+  {
+    "id": "hrv",
+    "nombre": "Variabilidad cardíaca",
+    "unidad": "ms",
+    "zonas": ["corazon"],
+    "validacion": { "min": 5, "max": 250 },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": ["ejercicio"],
+    "reglas": [{ "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 }],
+    "textos": {
+      "queEs": "Cuánto varía el tiempo entre un latido y el siguiente.",
+      "queSignifica": "Una variabilidad más baja que tu normal suele acompañar al cansancio o al estrés acumulado.",
+      "porQueEspacio": "El horario de la misión, el ruido y el aislamiento cambian el equilibrio entre descanso y alerta."
+    },
+    "acciones": [
+      "Haz 5 minutos de respiración lenta.",
+      "Reduce la carga intensa de hoy.",
+      "Repite la medición mañana al despertar."
+    ],
+    "avisoMedico": "Si sigue por debajo de tu normal 3 días seguidos o se acompaña de palpitaciones.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_muneca",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 55, "desv": 8, "frecuencia": "tres_veces_dia", "decimales": 0 }
+  },
+  {
+    "id": "presion_sistolica",
+    "nombre": "Presión sistólica",
+    "unidad": "mmHg",
+    "zonas": ["vascular"],
+    "validacion": { "min": 60, "max": 250 },
+    "direccionRiesgo": "ambas",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": ["ejercicio"],
+    "reglas": [
+      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
+      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 140, "rojo": 160 }
+    ],
+    "textos": {
+      "queEs": "La presión de la sangre en tus arterias cuando el corazón late.",
+      "queSignifica": "Un cambio frente a tu normal indica que tu circulación se está adaptando a la gravedad o al esfuerzo.",
+      "porQueEspacio": "Sin gravedad, la sangre se redistribuye y el cuerpo ajusta la presión; al volver a la gravedad puede bajar al ponerte de pie."
+    },
+    "acciones": [
+      "Siéntate 5 minutos y repite la medición.",
+      "Bebe agua.",
+      "Levántate despacio si notas mareo."
+    ],
+    "avisoMedico": "Si sigue fuera de tu normal 2 mediciones seguidas o tienes mareo, visión borrosa o dolor de cabeza fuerte.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_brazo",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 116, "desv": 6, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "presion_diastolica",
+    "nombre": "Presión diastólica",
+    "unidad": "mmHg",
+    "zonas": ["vascular"],
+    "validacion": { "min": 30, "max": 150 },
+    "direccionRiesgo": "ambas",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": ["ejercicio"],
+    "reglas": [
+      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
+      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 90, "rojo": 100 }
+    ],
+    "textos": {
+      "queEs": "La presión de la sangre en tus arterias entre un latido y otro.",
+      "queSignifica": "Un cambio frente a tu normal indica que tu circulación se está adaptando.",
+      "porQueEspacio": "La redistribución de líquidos en microgravedad cambia el tono de los vasos sanguíneos."
+    },
+    "acciones": ["Siéntate 5 minutos y repite la medición.", "Bebe agua."],
+    "avisoMedico": "Si sigue fuera de tu normal 2 mediciones seguidas o tienes dolor de cabeza fuerte.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_brazo",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 75, "desv": 4, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "spo2",
+    "nombre": "Saturación de oxígeno",
+    "unidad": "%",
+    "zonas": ["pulmones"],
+    "validacion": { "min": 70, "max": 100 },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "min",
+    "contextosIgnorados": [],
+    "reglas": [
+      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
+      { "tipo": "limite_fijo", "comparador": "<", "ambar": 95, "rojo": 92 }
+    ],
+    "textos": {
+      "queEs": "Qué porcentaje de tu sangre lleva oxígeno.",
+      "queSignifica": "Un valor más bajo que tu normal indica que llega menos oxígeno a la sangre.",
+      "porQueEspacio": "La atmósfera de la nave y los cambios de presión de cabina influyen en la oxigenación."
+    },
+    "acciones": [
+      "Respira hondo y lento durante 2 minutos y repite la medición.",
+      "Comprueba que el sensor esté bien colocado.",
+      "Avisa a la tripulación si la cabina tiene alarmas de aire."
+    ],
+    "avisoMedico": "Si baja de 92 %, o tienes falta de aire, labios azulados o confusión.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_muneca",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 98, "desv": 0.7, "frecuencia": "tres_veces_dia", "decimales": 0 }
+  },
+  {
+    "id": "temperatura",
+    "nombre": "Temperatura corporal",
+    "unidad": "°C",
+    "zonas": ["piel_inmune"],
+    "validacion": { "min": 34, "max": 42 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": ["ejercicio"],
+    "reglas": [
+      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
+      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 37.8, "rojo": 38.5 }
+    ],
+    "textos": {
+      "queEs": "La temperatura interna de tu cuerpo.",
+      "queSignifica": "Una temperatura por encima de tu normal puede reflejar que tu cuerpo responde a algo.",
+      "porQueEspacio": "En misión el sistema inmune cambia y algunos virus latentes pueden reactivarse."
+    },
+    "acciones": [
+      "Descansa y bebe agua.",
+      "Repite la medición en 1 hora.",
+      "Anota si tienes otros síntomas."
+    ],
+    "avisoMedico": "Si llega a 38,5 °C o se mantiene alta más de 24 h.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_frente",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 36.7,
+      "desv": 0.2,
+      "frecuencia": "tres_veces_dia",
+      "decimales": 1,
+      "cicloDiario": 0.2
+    }
+  },
+  {
+    "id": "glucosa",
+    "nombre": "Glucosa en sangre",
+    "unidad": "mg/dL",
+    "zonas": ["metabolismo"],
+    "validacion": { "min": 40, "max": 500 },
+    "direccionRiesgo": "ambas",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      { "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 },
+      { "tipo": "limite_fijo", "comparador": ">=", "ambar": 180, "rojo": 250 }
+    ],
+    "textos": {
+      "queEs": "La cantidad de azúcar que circula en tu sangre.",
+      "queSignifica": "Un valor fuera de tu normal indica un cambio en cómo usas la energía de los alimentos.",
+      "porQueEspacio": "La inactividad relativa y la dieta de misión cambian la forma en que el cuerpo usa la glucosa."
+    },
+    "acciones": [
+      "Revisa qué y cuándo comiste.",
+      "Repite la medición 2 horas después de comer.",
+      "Mantén tu rutina de ejercicio."
+    ],
+    "avisoMedico": "Si supera 250 mg/dL, o tienes sed intensa, mareo o confusión.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_brazo",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 98, "desv": 10, "frecuencia": "tres_veces_dia", "decimales": 0 }
+  },
+  {
+    "id": "sueno_horas",
+    "nombre": "Horas de sueño",
+    "unidad": "h",
+    "zonas": ["cerebro"],
+    "validacion": { "min": 0, "max": 16 },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "suma",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "tendencia",
+        "comparador": "<",
+        "umbral": 6,
+        "diasConsecutivos": 3,
+        "estado": "atencion"
+      },
+      {
+        "tipo": "tendencia",
+        "comparador": "<",
+        "umbral": 5,
+        "diasConsecutivos": 3,
+        "estado": "critico"
+      }
+    ],
+    "textos": {
+      "queEs": "Cuántas horas dormiste anoche.",
+      "queSignifica": "Dormir poco varias noches seguidas reduce la atención y el ánimo.",
+      "porQueEspacio": "La luz artificial, el ruido y los turnos alteran el reloj interno en misión."
+    },
+    "acciones": [
+      "Programa 8 horas de sueño esta noche.",
+      "Evita pantallas 30 minutos antes de dormir.",
+      "Usa antifaz y tapones si hay luz o ruido."
+    ],
+    "avisoMedico": "Si duermes menos de 5 horas 3 noches seguidas o notas confusión.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_muneca",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 7.2, "desv": 0.5, "frecuencia": "diaria", "decimales": 1 }
+  },
+  {
+    "id": "animo",
+    "nombre": "Estado de ánimo",
+    "unidad": "escala_1_5",
+    "zonas": ["cerebro"],
+    "validacion": { "min": 1, "max": 5 },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "tendencia",
+        "comparador": "<=",
+        "umbral": 2,
+        "diasConsecutivos": 3,
+        "estado": "atencion"
+      },
+      {
+        "tipo": "tendencia",
+        "comparador": "<=",
+        "umbral": 1,
+        "diasConsecutivos": 2,
+        "estado": "critico"
+      }
+    ],
+    "textos": {
+      "queEs": "Cómo te sientes hoy, de 1 (muy mal) a 5 (muy bien).",
+      "queSignifica": "Varios días con ánimo bajo merecen atención y apoyo.",
+      "porQueEspacio": "El aislamiento, la distancia de casa y la rutina cerrada afectan el ánimo en misiones largas."
+    },
+    "acciones": [
+      "Habla con alguien de la tripulación.",
+      "Programa una llamada o mensaje a casa.",
+      "Dedica 20 minutos a algo que disfrutes."
+    ],
+    "avisoMedico": "Si el ánimo sigue bajo 3 días o tienes pensamientos que te preocupan.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": { "media": 4, "desv": 0.5, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "tiempo_reaccion",
+    "nombre": "Tiempo de reacción",
+    "unidad": "ms",
+    "zonas": ["nervios"],
+    "validacion": { "min": 100, "max": 1500 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "linea_base", "ventanaDias": 14, "minDias": 5, "zAmbar": 2, "zRojo": 3 }],
+    "textos": {
+      "queEs": "Cuánto tardas en responder a una señal en la prueba de 60 segundos.",
+      "queSignifica": "Un tiempo más lento que tu normal suele reflejar cansancio o falta de sueño.",
+      "porQueEspacio": "La fatiga, el CO₂ y el sueño irregular afectan la atención en misión."
+    },
+    "acciones": [
+      "Descansa 15 minutos y repite la prueba.",
+      "Evita tareas de precisión hasta repetirla.",
+      "Revisa tus horas de sueño."
+    ],
+    "avisoMedico": "Si sigue más lento que tu normal 2 pruebas seguidas o notas confusión.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": { "media": 280, "desv": 20, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "masa_corporal",
+    "nombre": "Masa corporal",
+    "unidad": "kg",
+    "zonas": ["metabolismo"],
+    "validacion": { "min": 30, "max": 200 },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "ultimo",
+    "contextosIgnorados": [],
+    "reglas": [
+      { "tipo": "porcentaje_cambio", "referencia": "inicio", "ambarPct": 5, "rojoPct": 10 }
+    ],
+    "textos": {
+      "queEs": "Tu masa corporal medida en el dispositivo de la nave.",
+      "queSignifica": "Perder masa de forma sostenida indica que comes menos de lo que gastas.",
+      "porQueEspacio": "En misión el apetito suele bajar y el ejercicio diario aumenta el gasto de energía."
+    },
+    "acciones": [
+      "Completa todas tus comidas del día.",
+      "Añade un refrigerio entre comidas.",
+      "Registra lo que comes durante 3 días."
+    ],
+    "avisoMedico": "Si has perdido más del 5 % desde el inicio de la misión.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "manual",
+    "entrada": "ambos",
+    "sintetico": { "media": 72, "desv": 0.3, "frecuencia": "diaria", "decimales": 1 }
+  },
+  {
+    "id": "ejercicio_min",
+    "nombre": "Ejercicio de resistencia",
+    "unidad": "min",
+    "zonas": ["musculos", "huesos"],
+    "validacion": { "min": 0, "max": 300 },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "suma",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "meta_diaria", "meta": 90, "diasAmbar": 2, "diasRojo": 4 }],
+    "textos": {
+      "queEs": "Minutos de ejercicio de resistencia que hiciste hoy.",
+      "queSignifica": "No llegar a la meta varios días seguidos acelera la pérdida de hueso y músculo.",
+      "porQueEspacio": "Sin carga de gravedad, huesos y músculos se debilitan; el ejercicio diario los protege."
+    },
+    "acciones": [
+      "Completa tu sesión de ejercicio de hoy.",
+      "Divide el ejercicio en dos bloques si te cuesta.",
+      "Prioriza los ejercicios con carga."
+    ],
+    "avisoMedico": "Si no puedes hacer ejercicio por dolor o mareo.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "generico_muneca",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 105, "desv": 10, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "co2_cabina",
+    "nombre": "CO₂ de cabina (1 h)",
+    "unidad": "mmHg",
+    "zonas": ["pulmones"],
+    "validacion": { "min": 0, "max": 20 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": [],
+    "reglas": [
+      { "tipo": "limite_fijo", "comparador": ">", "ambar": 3, "rojo": 4.5, "ventanaHoras": 1 }
+    ],
+    "textos": {
+      "queEs": "La concentración de dióxido de carbono en el aire de la cabina.",
+      "queSignifica": "Un CO₂ alto en la cabina puede causar dolor de cabeza y bajar la concentración.",
+      "porQueEspacio": "En una nave cerrada el CO₂ se acumula si los sistemas de remoción no dan abasto."
+    },
+    "acciones": [
+      "Avisa a la tripulación para revisar la remoción de CO₂.",
+      "Ve a un módulo con mejor ventilación.",
+      "Evita el ejercicio intenso hasta que baje."
+    ],
+    "avisoMedico": "Si tienes dolor de cabeza, mareo o dificultad para concentrarte con CO₂ alto.",
+    "fuente": "https://www.nasa.gov/ochmo-tb-004-carbon-dioxide-2/",
+    "fuenteNombre": "NASA OCHMO",
+    "dispositivo": "manual",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 2.2, "desv": 0.3, "frecuencia": "cada_hora", "decimales": 1 }
+  },
+  {
+    "id": "dosis_radiacion",
+    "nombre": "Dosis acumulada",
+    "unidad": "mSv",
+    "zonas": ["todo_cuerpo"],
+    "validacion": { "min": 0, "max": 2000 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "ultimo",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "presupuesto", "limite": 600, "ambarPct": 80, "rojoPct": 100 }],
+    "textos": {
+      "queEs": "La radiación total que has recibido durante tu carrera.",
+      "queSignifica": "Cuanto más cerca del límite de carrera, más importa protegerte en cada evento solar.",
+      "porQueEspacio": "Fuera de la Tierra no hay campo magnético ni atmósfera gruesa que frenen la radiación."
+    },
+    "acciones": [
+      "Sigue el plan de refugio si hay alerta solar.",
+      "Lleva siempre puesto tu dosímetro.",
+      "Reduce el tiempo fuera de las zonas blindadas."
+    ],
+    "avisoMedico": "Si te acercas al 80 % de tu presupuesto o tienes náuseas tras un evento solar.",
+    "fuente": "https://www.nasa.gov/ochmo/human-spaceflight-and-aviation-standards",
+    "fuenteNombre": "NASA OCHMO",
+    "dispositivo": "generico_pecho",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 0.4,
+      "desv": 0.05,
+      "frecuencia": "diaria",
+      "decimales": 2,
+      "acumulado": true
+    }
+  },
+  {
+    "id": "tasa_dosis_dia",
+    "nombre": "Dosis del día",
+    "unidad": "mSv",
+    "zonas": ["todo_cuerpo"],
+    "validacion": { "min": 0, "max": 1000 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "suma",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 2, "rojo": 10 }],
+    "textos": {
+      "queEs": "La radiación que recibiste hoy.",
+      "queSignifica": "Una dosis diaria alta suele deberse a un evento de partículas solares.",
+      "porQueEspacio": "Las tormentas solares pueden multiplicar en horas la dosis de varios días."
+    },
+    "acciones": [
+      "Ve al refugio blindado y sigue el protocolo de evento solar.",
+      "Lleva tu dosímetro puesto.",
+      "Bebe agua y descansa."
+    ],
+    "avisoMedico": "Si la dosis del día supera el límite o tienes náuseas, vómito o fatiga intensa.",
+    "fuente": "https://www.nasa.gov/ochmo/human-spaceflight-and-aviation-standards",
+    "fuenteNombre": "NASA OCHMO",
+    "dispositivo": "generico_pecho",
+    "entrada": "dispositivo",
+    "sintetico": { "media": 0.4, "desv": 0.05, "frecuencia": "diaria", "decimales": 2 }
+  },
+  {
+    "id": "cefalea",
+    "nombre": "Dolor de cabeza",
+    "unidad": "escala_0_3",
+    "zonas": ["cerebro"],
+    "validacion": { "min": 0, "max": 3 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 1, "rojo": 3 }],
+    "textos": {
+      "queEs": "Cuánto te duele la cabeza, de 0 (nada) a 3 (mucho).",
+      "queSignifica": "El dolor de cabeza puede deberse al ambiente de la cabina, al sueño o a la hidratación.",
+      "porQueEspacio": "En microgravedad los líquidos suben a la cabeza y el CO₂ de cabina puede sumar molestias."
+    },
+    "acciones": [
+      "Revisa el CO₂ de la cabina.",
+      "Bebe agua y descansa 20 minutos.",
+      "Reduce pantallas y luz intensa."
+    ],
+    "avisoMedico": "Si el dolor es intenso, aparece de golpe o viene con visión borrosa o confusión.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": { "media": 0, "desv": 0, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "mareo",
+    "nombre": "Mareo",
+    "unidad": "escala_0_3",
+    "zonas": ["vascular", "nervios"],
+    "validacion": { "min": 0, "max": 3 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 1, "rojo": 3 }],
+    "textos": {
+      "queEs": "Cuánto mareo sientes, de 0 (nada) a 3 (mucho).",
+      "queSignifica": "El mareo suele aparecer cuando cambia la gravedad o la presión arterial.",
+      "porQueEspacio": "El oído interno y la circulación se adaptan al pasar de microgravedad a gravedad."
+    },
+    "acciones": ["Siéntate o túmbate hasta que pase.", "Levántate despacio.", "Bebe agua."],
+    "avisoMedico": "Si el mareo es fuerte, no mejora en reposo o te desmayas.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": { "media": 0, "desv": 0, "frecuencia": "diaria", "decimales": 0 }
+  },
+  {
+    "id": "lesion_piel",
+    "nombre": "Lesión en la piel",
+    "unidad": "escala_0_3",
+    "zonas": ["piel_inmune"],
+    "validacion": { "min": 0, "max": 3 },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [{ "tipo": "limite_fijo", "comparador": ">=", "ambar": 1, "rojo": 3 }],
+    "textos": {
+      "queEs": "Si tienes irritación, sarpullido o heridas en la piel, de 0 (nada) a 3 (mucho).",
+      "queSignifica": "Los cambios en la piel pueden reflejar irritación o una respuesta del sistema inmune.",
+      "porQueEspacio": "La piel se seca y cicatriza más lento en misión; el sistema inmune también cambia."
+    },
+    "acciones": [
+      "Limpia y seca la zona.",
+      "Usa la crema hidratante del botiquín.",
+      "Fotografía la zona para comparar mañana."
+    ],
+    "avisoMedico": "Si la lesión crece, supura, duele mucho o aparece fiebre.",
+    "fuente": "https://www.nasa.gov/hrp/hazards",
+    "fuenteNombre": "NASA HRP",
+    "dispositivo": "manual",
+    "entrada": "manual",
+    "sintetico": { "media": 0, "desv": 0, "frecuencia": "diaria", "decimales": 0 }
+  }
+]

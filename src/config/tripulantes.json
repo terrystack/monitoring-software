@@ -1,0 +1,29 @@
+{
+  "generador": { "semilla": 106, "fechaInicio": "2026-10-16", "dias": 30 },
+  "tripulantes": [
+    {
+      "id": "A01",
+      "nombre": "Cmdte. Rosa",
+      "rol": "Comandante",
+      "diaMisionInicial": 113,
+      "entorno": "base_marciana",
+      "desviosPersonales": { "pulso_reposo": -4, "hrv": 6 }
+    },
+    {
+      "id": "A02",
+      "nombre": "Ing. Kenji",
+      "rol": "Ingeniero de vuelo",
+      "diaMisionInicial": 113,
+      "entorno": "base_marciana",
+      "desviosPersonales": { "presion_sistolica": 6, "glucosa": 8 }
+    },
+    {
+      "id": "A03",
+      "nombre": "Dra. Amara",
+      "rol": "Oficial médica",
+      "diaMisionInicial": 113,
+      "entorno": "base_marciana",
+      "desviosPersonales": { "sueno_horas": -0.3, "tiempo_reaccion": -15 }
+    }
+  ]
+}

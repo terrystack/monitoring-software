@@ -1,0 +1,79 @@
+[
+  {
+    "id": "cerebro",
+    "nombre": "Cerebro",
+    "capa": "nervioso",
+    "mallas": ["nervio_cerebro"],
+    "funcion": "Controla sueño, ánimo y atención."
+  },
+  {
+    "id": "nervios",
+    "nombre": "Nervios",
+    "capa": "nervioso",
+    "mallas": ["nervio_medula", "nervio_periferico_*"],
+    "funcion": "Lleva las señales entre el cerebro y el cuerpo."
+  },
+  {
+    "id": "corazon",
+    "nombre": "Corazón",
+    "capa": "organos",
+    "mallas": ["organo_corazon"],
+    "funcion": "Bombea la sangre a todo el cuerpo."
+  },
+  {
+    "id": "pulmones",
+    "nombre": "Pulmones",
+    "capa": "organos",
+    "mallas": ["organo_pulmon_izq", "organo_pulmon_der", "organo_via_aerea"],
+    "funcion": "Llevan oxígeno a la sangre."
+  },
+  {
+    "id": "metabolismo",
+    "nombre": "Metabolismo",
+    "capa": "organos",
+    "mallas": ["organo_higado", "organo_pancreas", "organo_estomago", "organo_intestino"],
+    "funcion": "Convierte el alimento en energía y regula la glucosa."
+  },
+  {
+    "id": "rinones",
+    "nombre": "Riñones",
+    "capa": "organos",
+    "mallas": ["organo_rinon_izq", "organo_rinon_der"],
+    "funcion": "Filtran la sangre (riesgo de cálculos en el espacio)."
+  },
+  {
+    "id": "vascular",
+    "nombre": "Sistema vascular",
+    "capa": "vascular",
+    "mallas": ["vaso_aorta", "vaso_arteria_*", "vaso_vena_*"],
+    "funcion": "Transporta la sangre; cambia con la gravedad."
+  },
+  {
+    "id": "huesos",
+    "nombre": "Huesos",
+    "capa": "esqueleto",
+    "mallas": ["hueso_*"],
+    "funcion": "Sostienen el cuerpo; pierden densidad en microgravedad."
+  },
+  {
+    "id": "musculos",
+    "nombre": "Músculos",
+    "capa": "musculos",
+    "mallas": ["musculo_*"],
+    "funcion": "Mueven el cuerpo; se atrofian sin carga."
+  },
+  {
+    "id": "piel_inmune",
+    "nombre": "Piel e inmunidad",
+    "capa": "piel",
+    "mallas": ["piel_cuerpo"],
+    "funcion": "Primera barrera; refleja fiebre y cambios inmunes."
+  },
+  {
+    "id": "todo_cuerpo",
+    "nombre": "Todo el cuerpo",
+    "capa": "halo",
+    "mallas": ["halo_radiacion"],
+    "funcion": "Exposición a radiación espacial."
+  }
+]

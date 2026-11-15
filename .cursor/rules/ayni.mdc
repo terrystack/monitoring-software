@@ -1,0 +1,19 @@
+---
+description: Reglas del proyecto AYNI (NASA Space Apps 2026)
+alwaysApply: true
+---
+
+- Lee docs/AYNI_SPEC.md antes de cada tarea y respétalo.
+- Todo lo 3D sigue el estilo inmersivo de la sección 5. Aplica las skills threejs-* (cloudai-x/threejs-skills) y r3f-best-practices (emalorenzo/three-agent-skills) según el mapa de la sección 0.1.
+- Toda la interfaz 2D (layout, pestañas, paneles, tarjetas, chat) sigue la skill Impeccable.
+- Si una skill contradice esta especificación, manda la especificación; avisa del conflicto.
+- Antes de programar una fase, presenta un plan corto con los archivos a crear y espera confirmación.
+- Nombres de dominio en español sin tildes (lineaBase, tarjetaAccion); componentes en PascalCase.
+- No codifiques umbrales, textos ni indicadores en componentes: léelos de src/config.
+- El motor es puro y testeado; la UI no calcula estados.
+- La clave del modelo de lenguaje solo existe en el servidor (api/). Nunca en el cliente.
+- Nada de lenguaje de diagnóstico en la UI ni en el chat.
+- Etiqueta "Datos sintéticos" visible mientras se usen datos sintéticos.
+- Cada nueva malla 3D lleva un name estable según zonas.json.
+- Mantén la app usable sin conexión (salvo el chat) y con movimiento reducido.
+- Si cambias un contrato (CSV, JSON, tipos), actualiza este documento en el mismo commit.

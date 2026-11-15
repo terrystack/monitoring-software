@@ -1,0 +1,103 @@
+[
+  {
+    "id": "pulso_hrv_despertar",
+    "titulo": "Pulso y variabilidad al despertar",
+    "franja": "manana",
+    "hora": "07:00",
+    "indicadores": ["pulso_reposo", "hrv"],
+    "dispositivo": "generico_muneca",
+    "duracionMin": 3,
+    "puntos": 10,
+    "obligatoria": true
+  },
+  {
+    "id": "presion",
+    "titulo": "Presión arterial",
+    "franja": "manana",
+    "hora": "07:15",
+    "indicadores": ["presion_sistolica", "presion_diastolica"],
+    "dispositivo": "generico_brazo",
+    "duracionMin": 3,
+    "puntos": 10,
+    "obligatoria": true
+  },
+  {
+    "id": "sueno_anoche",
+    "titulo": "Sueño de anoche",
+    "franja": "manana",
+    "hora": "07:30",
+    "indicadores": ["sueno_horas"],
+    "dispositivo": "generico_muneca",
+    "duracionMin": 1,
+    "puntos": 5,
+    "obligatoria": true
+  },
+  {
+    "id": "glucosa_almuerzo",
+    "titulo": "Glucosa tras el almuerzo",
+    "franja": "dia",
+    "hora": "13:30",
+    "indicadores": ["glucosa"],
+    "dispositivo": "generico_brazo",
+    "duracionMin": 2,
+    "puntos": 10,
+    "obligatoria": true
+  },
+  {
+    "id": "ejercicio",
+    "titulo": "Ejercicio de resistencia",
+    "franja": "dia",
+    "hora": "16:00",
+    "indicadores": ["ejercicio_min"],
+    "dispositivo": "generico_muneca",
+    "duracionMin": 90,
+    "puntos": 20,
+    "obligatoria": true
+  },
+  {
+    "id": "temperatura",
+    "titulo": "Temperatura corporal",
+    "franja": "noche",
+    "hora": "19:00",
+    "indicadores": ["temperatura"],
+    "dispositivo": "generico_frente",
+    "duracionMin": 1,
+    "puntos": 5,
+    "obligatoria": true
+  },
+  {
+    "id": "animo_sintomas",
+    "titulo": "Ánimo y síntomas",
+    "franja": "noche",
+    "hora": "21:30",
+    "indicadores": ["animo", "cefalea", "mareo", "lesion_piel"],
+    "dispositivo": "manual",
+    "duracionMin": 2,
+    "puntos": 10,
+    "obligatoria": true
+  },
+  {
+    "id": "masa_corporal",
+    "titulo": "Masa corporal",
+    "franja": "semanal",
+    "hora": "07:45",
+    "diasSemana": [1],
+    "indicadores": ["masa_corporal"],
+    "dispositivo": "manual",
+    "duracionMin": 3,
+    "puntos": 15,
+    "obligatoria": true
+  },
+  {
+    "id": "prueba_reaccion",
+    "titulo": "Prueba de reacción",
+    "franja": "semanal",
+    "hora": "10:30",
+    "diasSemana": [3, 6],
+    "indicadores": ["tiempo_reaccion"],
+    "dispositivo": "manual",
+    "duracionMin": 1,
+    "puntos": 15,
+    "obligatoria": false
+  }
+]

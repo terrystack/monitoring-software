@@ -1,0 +1,515 @@
+{
+  "tool": "build-phase",
+  "version": 2,
+  "startedAt": "2026-11-11T06:21:23.442Z",
+  "comp": ".impeccable/mocks/decision/procedimiento.jpg",
+  "direction": "32053ed9",
+  "breakpoint": "1280x720",
+  "artifact": "src/App.tsx",
+  "phase": "hero",
+  "phases": {
+    "comps": {
+      "status": "closed",
+      "openedAt": "2026-11-11T06:21:23.442Z",
+      "closedAt": "2026-11-11T06:26:54.534Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "3 comps, 1 approved",
+        "approved": ".impeccable/mocks/decision/procedimiento.jpg",
+        "at": "2026-11-11T06:26:54.534Z"
+      },
+      "forced": null
+    },
+    "spec": {
+      "status": "closed",
+      "openedAt": "2026-11-11T06:26:54.548Z",
+      "closedAt": "2026-11-11T06:30:23.400Z",
+      "attempts": 3,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "24 regions, 0 plates, 13 text regions measured",
+        "at": "2026-11-11T06:30:23.400Z"
+      },
+      "forced": null
+    },
+    "plates": {
+      "status": "closed",
+      "openedAt": "2026-11-11T06:30:23.400Z",
+      "closedAt": "2026-11-11T06:51:49.332Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "no plates owed",
+        "at": "2026-11-11T06:51:49.312Z"
+      },
+      "forced": null
+    },
+    "hero": {
+      "status": "open",
+      "openedAt": "2026-11-11T06:51:49.332Z",
+      "closedAt": null,
+      "attempts": 4,
+      "notes": [],
+      "gate": {
+        "ok": false,
+        "reasons": [
+          "hero overall 64.0% < 72% (structure 57%, color 92%, detail 63%)",
+          "region identidad is missing (detail 0%, structure 38%): the comp shows material the build does not",
+          "region chip-sinteticos is missing (detail 0%, structure 36%): the comp shows material the build does not",
+          "region campana is missing (detail 0%, structure 40%): the comp shows material the build does not",
+          "region barra-borde is missing (detail 1%, structure 83%): the comp shows material the build does not",
+          "region cabecera-tablero is missing (detail 0%, structure 86%): the comp shows material the build does not",
+          "region botones is missing (detail 0%, structure 50%): the comp shows material the build does not",
+          "region marca (text) is contradicted (structure 32%, detail added 19%): the composition of this text region differs from the comp; re-derive it from the spec box",
+          "region avatar (control) is contradicted (structure 28%, detail added 18%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+          "region titulo-aptitud (text) is contradicted (structure 47%, detail added 28%): the composition of this text region differs from the comp; re-derive it from the spec box",
+          "region etiqueta-zona (text) is contradicted (structure 48%, detail added 16%): the composition of this text region differs from the comp; re-derive it from the spec box",
+          "region pasos (control) is contradicted (structure 49%, detail added 24%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+          "region precaucion (text) is contradicted (structure 42%, detail added 27%): the composition of this text region differs from the comp; re-derive it from the spec box",
+          "region por-que (text) is contradicted (structure 40%, detail added 26%): the composition of this text region differs from the comp; re-derive it from the spec box",
+          "region fuente (text) is contradicted (structure 32%, detail added 6%): the composition of this text region differs from the comp; re-derive it from the spec box",
+          "control pestanas drifts to 54% (structure 69%, color 67%): open .impeccable/review/diff/hero/regions/pestanas.png and compare its lettering and visible shape separately; use the measured readings and preserve the region's control classification",
+          "text titulo-tarjeta: cap height 10.1px in the build, 14.1px in the comp (-28%); set font-size so the cap height renders at 14.1px (font-match ranked Biryani 700 at 17px)",
+          "text que-cambio: letter-spacing is wider than the comp's (gap 0.182 vs 0.060 of the cap height); set letter-spacing to close it by about 1px",
+          "text precaucion: letter-spacing is wider than the comp's (gap 0.099 vs 0.059 of the cap height); set letter-spacing to close it by about 0px",
+          "text etiqueta-zona: ink is #7d7030 in the build, #414146 in the comp; use the comp's colour",
+          "the build carries ink in 7 grid cells where the comp is calm (H1, I1, C2, C5, J6, H8, J8); nothing exists on the page that the comp does not show (a kicker, an extra nav item, a divider, a second row of controls); remove it or name it in a stated decision after the hero passes"
+        ],
+        "regionReasons": {
+          "identidad": [
+            "region identidad is missing (detail 0%, structure 38%): the comp shows material the build does not"
+          ],
+          "chip-sinteticos": [
+            "region chip-sinteticos is missing (detail 0%, structure 36%): the comp shows material the build does not"
+          ],
+          "campana": [
+            "region campana is missing (detail 0%, structure 40%): the comp shows material the build does not"
+          ],
+          "barra-borde": [
+            "region barra-borde is missing (detail 1%, structure 83%): the comp shows material the build does not"
+          ],
+          "cabecera-tablero": [
+            "region cabecera-tablero is missing (detail 0%, structure 86%): the comp shows material the build does not"
+          ],
+          "botones": [
+            "region botones is missing (detail 0%, structure 50%): the comp shows material the build does not"
+          ],
+          "marca": [
+            "region marca (text) is contradicted (structure 32%, detail added 19%): the composition of this text region differs from the comp; re-derive it from the spec box"
+          ],
+          "avatar": [
+            "region avatar (control) is contradicted (structure 28%, detail added 18%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification"
+          ],
+          "titulo-aptitud": [
+            "region titulo-aptitud (text) is contradicted (structure 47%, detail added 28%): the composition of this text region differs from the comp; re-derive it from the spec box"
+          ],
+          "etiqueta-zona": [
+            "region etiqueta-zona (text) is contradicted (structure 48%, detail added 16%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "text etiqueta-zona: ink is #7d7030 in the build, #414146 in the comp; use the comp's colour"
+          ],
+          "pasos": [
+            "region pasos (control) is contradicted (structure 49%, detail added 24%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification"
+          ],
+          "precaucion": [
+            "region precaucion (text) is contradicted (structure 42%, detail added 27%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "text precaucion: letter-spacing is wider than the comp's (gap 0.099 vs 0.059 of the cap height); set letter-spacing to close it by about 0px"
+          ],
+          "por-que": [
+            "region por-que (text) is contradicted (structure 40%, detail added 26%): the composition of this text region differs from the comp; re-derive it from the spec box"
+          ],
+          "fuente": [
+            "region fuente (text) is contradicted (structure 32%, detail added 6%): the composition of this text region differs from the comp; re-derive it from the spec box"
+          ],
+          "pestanas": [
+            "control pestanas drifts to 54% (structure 69%, color 67%): open .impeccable/review/diff/hero/regions/pestanas.png and compare its lettering and visible shape separately; use the measured readings and preserve the region's control classification"
+          ],
+          "titulo-tarjeta": [
+            "text titulo-tarjeta: cap height 10.1px in the build, 14.1px in the comp (-28%); set font-size so the cap height renders at 14.1px (font-match ranked Biryani 700 at 17px)"
+          ],
+          "que-cambio": [
+            "text que-cambio: letter-spacing is wider than the comp's (gap 0.182 vs 0.060 of the cap height); set letter-spacing to close it by about 1px"
+          ]
+        },
+        "summary": "hero 64% (drift)",
+        "score": 0.6399,
+        "verdict": "drift",
+        "report": ".impeccable/review/diff/hero/report.json",
+        "sideBySide": "C:/Users/Mateo/Desktop/Participacion/Hackaton/NASA Space Apps/Health Monitoring/.impeccable/review/diff/hero/side-by-side.png",
+        "worst": [
+          "marca contradicted 29%",
+          "avatar contradicted 31%",
+          "campana missing 31%"
+        ],
+        "worstIds": [
+          "marca",
+          "avatar",
+          "campana"
+        ],
+        "worstCrops": [
+          {
+            "id": "marca",
+            "verdict": "contradicted",
+            "score": {
+              "overall": 0.292,
+              "structure": 0.3248,
+              "color": 0.4522,
+              "colorIntersection": 0.0667,
+              "paletteMatch": 0.6598,
+              "detail": 0.1106,
+              "detailRaw": 0.2044,
+              "detailAdded": 0.1875,
+              "bands": 0
+            },
+            "file": ".impeccable/review/diff/hero/regions/marca.png"
+          },
+          {
+            "id": "avatar",
+            "verdict": "contradicted",
+            "score": {
+              "overall": 0.3128,
+              "structure": 0.2759,
+              "color": 0.4526,
+              "colorIntersection": 0.234,
+              "paletteMatch": 0.5703,
+              "detail": 0.1515,
+              "detailRaw": 0.24,
+              "detailAdded": 0.1771,
+              "bands": 0.6
+            },
+            "file": ".impeccable/review/diff/hero/regions/avatar.png"
+          },
+          {
+            "id": "campana",
+            "verdict": "missing",
+            "score": {
+              "overall": 0.3136,
+              "structure": 0.4013,
+              "color": 0.38,
+              "colorIntersection": 0.0611,
+              "paletteMatch": 0.5516,
+              "detail": 0,
+              "detailRaw": 0.0904,
+              "detailAdded": 0.2188,
+              "bands": 0.4
+            },
+            "file": ".impeccable/review/diff/hero/regions/campana.png"
+          }
+        ],
+        "advisories": [
+          "(advisory, unchanged for 3+ attempts) text pestanas: letter-spacing is wider than the comp's (gap 0.065 vs 0.033 of the cap height); set letter-spacing to close it by about 0px",
+          "(advisory, unchanged for 3+ attempts) text filas-tablero: letter-spacing is wider than the comp's (gap 0.097 vs 0.032 of the cap height); set letter-spacing to close it by about 1px",
+          "(advisory, unchanged for 3+ attempts) text por-que: letter-spacing is wider than the comp's (gap 0.264 vs 0.060 of the cap height); set letter-spacing to close it by about 2px",
+          "(advisory, unchanged for 3+ attempts) text filas-tablero: 10 lines in the build, 11 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape",
+          "(advisory, unchanged for 3+ attempts) text pie: ink is #7f839c in the build, #404252 in the comp; use the comp's colour",
+          "(advisory, unchanged for 3+ attempts) control pestanas: its rule sits 15px into the box in the comp and 6px in the build (-9px), so the strip is shorter than the comp's; match the height, not only the position",
+          "(advisory, unchanged for 3+ attempts) control chip-sinteticos: its rule sits 14px into the box in the comp and 7px in the build (-7px), so the strip is shorter than the comp's; match the height, not only the position"
+        ],
+        "regionVerdicts": {
+          "marca": "contradicted",
+          "pestanas": "drift",
+          "identidad": "missing",
+          "chip-sinteticos": "missing",
+          "campana": "missing",
+          "avatar": "contradicted",
+          "barra-borde": "missing",
+          "panel-aptitud": "drift",
+          "titulo-aptitud": "contradicted",
+          "filas-aptitud": "drift",
+          "panel-tablero": "drift",
+          "cabecera-tablero": "missing",
+          "filas-tablero": "drift",
+          "cuerpo-3d": "drift",
+          "etiqueta-zona": "contradicted",
+          "tarjeta": "drift",
+          "titulo-tarjeta": "drift",
+          "que-cambio": "drift",
+          "pasos": "contradicted",
+          "precaucion": "contradicted",
+          "por-que": "contradicted",
+          "fuente": "contradicted",
+          "botones": "missing",
+          "pie": "drift"
+        },
+        "at": "2026-11-11T20:58:33.518Z"
+      },
+      "forced": null,
+      "readingsSeen": {
+        "text pestanas: letter-spacing is wider than the comp's (gap 0.097 vs 0.033 of the cap height); set letter-spacing to close it by about 1px": 1,
+        "text filas-tablero: letter-spacing is wider than the comp's (gap 0.097 vs 0.032 of the cap height); set letter-spacing to close it by about 1px": 5,
+        "text pasos: cap height 5.1px in the build, 11.8px in the comp (-57%); set font-size so the cap height renders at 11.8px": 1,
+        "text precaucion: letter-spacing is wider than the comp's (gap 0.108 vs 0.059 of the cap height); set letter-spacing to close it by about 1px": 1,
+        "text filas-tablero: 10 lines in the build, 11 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 5,
+        "text pasos: 1 line in the build, 3 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text precaucion: 1 line in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text pie: ink is #797c94 in the build, #404252 in the comp; use the comp's colour": 1,
+        "text precaucion: its first line starts 15px higher than in the comp (0px vs 15px into the region box); the spacing above it is too small": 2,
+        "control pestanas: its rule sits 15px into the box in the comp and 6px in the build (-9px), so the strip is shorter than the comp's; match the height, not only the position": 5,
+        "control chip-sinteticos: its rule sits 14px into the box in the comp and 7px in the build (-7px), so the strip is shorter than the comp's; match the height, not only the position": 5,
+        "text pestanas: letter-spacing is wider than the comp's (gap 0.065 vs 0.033 of the cap height); set letter-spacing to close it by about 0px": 4,
+        "text titulo-tarjeta: cap height 10px in the build, 14.1px in the comp (-29%); set font-size so the cap height renders at 14.1px (font-match ranked Biryani 700 at 17px)": 1,
+        "text que-cambio: letter-spacing is wider than the comp's (gap 0.198 vs 0.060 of the cap height); set letter-spacing to close it by about 2px": 1,
+        "text pasos: letter-spacing is wider than the comp's (gap 0.211 vs 0.050 of the cap height); set letter-spacing to close it by about 2px": 1,
+        "text precaucion: letter-spacing is wider than the comp's (gap 0.199 vs 0.059 of the cap height); set letter-spacing to close it by about 2px": 1,
+        "text por-que: letter-spacing is wider than the comp's (gap 0.264 vs 0.060 of the cap height); set letter-spacing to close it by about 2px": 4,
+        "text precaucion: 3 lines in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text pie: ink is #7f839c in the build, #404252 in the comp; use the comp's colour": 4,
+        "text titulo-tarjeta: cap height 10.1px in the build, 14.1px in the comp (-28%); set font-size so the cap height renders at 14.1px (font-match ranked Biryani 700 at 17px)": 3,
+        "text que-cambio: letter-spacing is wider than the comp's (gap 0.181 vs 0.060 of the cap height); set letter-spacing to close it by about 1px": 1,
+        "text pasos: letter-spacing is wider than the comp's (gap 0.099 vs 0.050 of the cap height); set letter-spacing to close it by about 1px": 1,
+        "text precaucion: letter-spacing is wider than the comp's (gap 0.099 vs 0.059 of the cap height); set letter-spacing to close it by about 0px": 2,
+        "text pasos: 4 lines in the build, 3 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text filas-tablero: letter-spacing is wider than the comp's (gap 0.099 vs 0.032 of the cap height); set letter-spacing to close it by about 1px": 1,
+        "text filas-tablero: 4 lines in the build, 11 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text filas-aptitud: ink is #a1a8b1 in the build, #e5e6eb in the comp; use the comp's colour": 1,
+        "text cabecera-tablero: ink is #f7f8f8 in the build, #6b6c77 in the comp; use the comp's colour": 1,
+        "text que-cambio: letter-spacing is wider than the comp's (gap 0.182 vs 0.060 of the cap height); set letter-spacing to close it by about 1px": 2,
+        "text precaucion: letter-spacing is wider than the comp's (gap 0.097 vs 0.059 of the cap height); set letter-spacing to close it by about 0px": 1,
+        "text etiqueta-zona: ink is #7d7030 in the build, #414146 in the comp; use the comp's colour": 1
+      },
+      "records": 2,
+      "history": [
+        {
+          "at": "2026-11-11T19:50:37.682Z",
+          "score": 0.7011,
+          "worstIds": [
+            "fuente",
+            "marca",
+            "avatar"
+          ],
+          "blockingReasons": [
+            "hero overall 70.1% < 72% (structure 59%, color 91%, detail 65%)",
+            "region chip-sinteticos is missing (detail 0%, structure 34%): the comp shows material the build does not",
+            "region campana is missing (detail 0%, structure 40%): the comp shows material the build does not",
+            "region barra-borde is missing (detail 1%, structure 83%): the comp shows material the build does not",
+            "region cabecera-tablero is missing (detail 0%, structure 86%): the comp shows material the build does not",
+            "region precaucion is missing (detail 0%, structure 31%): the comp shows material the build does not",
+            "region fuente is missing (detail 0%, structure 28%): the comp shows material the build does not",
+            "region marca (text) is contradicted (structure 32%, detail added 19%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region identidad (text) is contradicted (structure 42%, detail added 36%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region avatar (control) is contradicted (structure 28%, detail added 18%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+            "region titulo-aptitud (text) is contradicted (structure 47%, detail added 28%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region etiqueta-zona (text) is contradicted (structure 46%, detail added 18%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region titulo-tarjeta (text) is contradicted (structure 39%, detail added 57%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region pasos (control) is contradicted (structure 49%, detail added 28%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+            "region por-que (text) is contradicted (structure 32%, detail added 35%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region botones (control) is contradicted (structure 44%, detail added 35%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+            "control pestanas drifts to 54% (structure 69%, color 67%): open .impeccable/review/diff/hero/regions/pestanas.png and compare its lettering and visible shape separately; use the measured readings and preserve the region's control classification",
+            "text pestanas: letter-spacing is wider than the comp's (gap 0.065 vs 0.033 of the cap height); set letter-spacing to close it by about 0px",
+            "text filas-tablero: letter-spacing is wider than the comp's (gap 0.097 vs 0.032 of the cap height); set letter-spacing to close it by about 1px",
+            "text titulo-tarjeta: cap height 10px in the build, 14.1px in the comp (-29%); set font-size so the cap height renders at 14.1px (font-match ranked Biryani 700 at 17px)",
+            "text que-cambio: letter-spacing is wider than the comp's (gap 0.198 vs 0.060 of the cap height); set letter-spacing to close it by about 2px",
+            "text pasos: letter-spacing is wider than the comp's (gap 0.211 vs 0.050 of the cap height); set letter-spacing to close it by about 2px",
+            "text precaucion: letter-spacing is wider than the comp's (gap 0.199 vs 0.059 of the cap height); set letter-spacing to close it by about 2px",
+            "text por-que: letter-spacing is wider than the comp's (gap 0.264 vs 0.060 of the cap height); set letter-spacing to close it by about 2px",
+            "text filas-tablero: 10 lines in the build, 11 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape",
+            "the build carries ink in 7 grid cells where the comp is calm (H1, C2, C5, J6, H8, H9, J9); nothing exists on the page that the comp does not show (a kicker, an extra nav item, a divider, a second row of controls); remove it or name it in a stated decision after the hero passes"
+          ],
+          "regionVerdicts": {
+            "marca": "contradicted",
+            "pestanas": "drift",
+            "identidad": "contradicted",
+            "chip-sinteticos": "missing",
+            "campana": "missing",
+            "avatar": "contradicted",
+            "barra-borde": "missing",
+            "panel-aptitud": "drift",
+            "titulo-aptitud": "contradicted",
+            "filas-aptitud": "drift",
+            "panel-tablero": "drift",
+            "cabecera-tablero": "missing",
+            "filas-tablero": "drift",
+            "cuerpo-3d": "drift",
+            "etiqueta-zona": "contradicted",
+            "tarjeta": "drift",
+            "titulo-tarjeta": "contradicted",
+            "que-cambio": "drift",
+            "pasos": "contradicted",
+            "precaucion": "missing",
+            "por-que": "contradicted",
+            "fuente": "missing",
+            "botones": "contradicted",
+            "pie": "drift"
+          },
+          "artifactHash": "b95d4605e534"
+        },
+        {
+          "at": "2026-11-11T19:51:42.385Z",
+          "score": 0.7061,
+          "worstIds": [
+            "fuente",
+            "marca",
+            "avatar"
+          ],
+          "blockingReasons": [
+            "hero overall 70.6% < 72% (structure 59%, color 91%, detail 63%)",
+            "region identidad is missing (detail 0%, structure 38%): the comp shows material the build does not",
+            "region chip-sinteticos is missing (detail 0%, structure 36%): the comp shows material the build does not",
+            "region campana is missing (detail 0%, structure 40%): the comp shows material the build does not",
+            "region barra-borde is missing (detail 1%, structure 83%): the comp shows material the build does not",
+            "region cabecera-tablero is missing (detail 0%, structure 86%): the comp shows material the build does not",
+            "region fuente is missing (detail 9%, structure 26%): the comp shows material the build does not",
+            "region marca (text) is contradicted (structure 32%, detail added 19%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region avatar (control) is contradicted (structure 28%, detail added 18%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+            "region titulo-aptitud (text) is contradicted (structure 47%, detail added 28%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region etiqueta-zona (text) is contradicted (structure 46%, detail added 18%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region pasos (control) is contradicted (structure 49%, detail added 28%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+            "region precaucion (text) is contradicted (structure 40%, detail added 34%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region por-que (text) is contradicted (structure 38%, detail added 16%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region botones (control) is contradicted (structure 45%, detail added 42%): this control differs from the comp: inspect its lettering and visible shape separately against the crop and the measured readings; preserve the region's control classification",
+            "control pestanas drifts to 54% (structure 69%, color 67%): open .impeccable/review/diff/hero/regions/pestanas.png and compare its lettering and visible shape separately; use the measured readings and preserve the region's control classification",
+            "text pestanas: letter-spacing is wider than the comp's (gap 0.065 vs 0.033 of the cap height); set letter-spacing to close it by about 0px",
+            "text filas-tablero: letter-spacing is wider than the comp's (gap 0.097 vs 0.032 of the cap height); set letter-spacing to close it by about 1px",
+            "text titulo-tarjeta: cap height 10.1px in the build, 14.1px in the comp (-28%); set font-size so the cap height renders at 14.1px (font-match ranked Biryani 700 at 17px)",
+            "text que-cambio: letter-spacing is wider than the comp's (gap 0.181 vs 0.060 of the cap height); set letter-spacing to close it by about 1px",
+            "text pasos: letter-spacing is wider than the comp's (gap 0.099 vs 0.050 of the cap height); set letter-spacing to close it by about 1px",
+            "text precaucion: letter-spacing is wider than the comp's (gap 0.099 vs 0.059 of the cap height); set letter-spacing to close it by about 0px",
+            "text por-que: letter-spacing is wider than the comp's (gap 0.264 vs 0.060 of the cap height); set letter-spacing to close it by about 2px",
+            "text filas-tablero: 10 lines in the build, 11 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape",
+            "the build carries ink in 6 grid cells where the comp is calm (H1, I1, C2, C5, J6, H8); nothing exists on the page that the comp does not show (a kicker, an extra nav item, a divider, a second row of controls); remove it or name it in a stated decision after the hero passes"
+          ],
+          "regionVerdicts": {
+            "marca": "contradicted",
+            "pestanas": "drift",
+            "identidad": "missing",
+            "chip-sinteticos": "missing",
+            "campana": "missing",
+            "avatar": "contradicted",
+            "barra-borde": "missing",
+            "panel-aptitud": "drift",
+            "titulo-aptitud": "contradicted",
+            "filas-aptitud": "drift",
+            "panel-tablero": "drift",
+            "cabecera-tablero": "missing",
+            "filas-tablero": "drift",
+            "cuerpo-3d": "drift",
+            "etiqueta-zona": "contradicted",
+            "tarjeta": "drift",
+            "titulo-tarjeta": "drift",
+            "que-cambio": "drift",
+            "pasos": "contradicted",
+            "precaucion": "contradicted",
+            "por-que": "contradicted",
+            "fuente": "missing",
+            "botones": "contradicted",
+            "pie": "drift"
+          },
+          "artifactHash": "b95d4605e534"
+        },
+        {
+          "at": "2026-11-11T20:30:54.063Z",
+          "score": 0.1822,
+          "worstIds": [
+            "avatar",
+            "campana",
+            "marca"
+          ],
+          "blockingReasons": [
+            "hero overall 18.2% < 72% (structure 29%, color 24%, detail 8%)",
+            "the palette is not the comp's (color intersection 1%): comp #080918 #0a3746 #245968 vs build #282828 #f8f8f8 #0878d8. Use the spec's sampled palette values, not a rendition of them.",
+            "region marca is missing (detail 3%, structure 11%): the comp shows material the build does not",
+            "region pestanas is missing (detail 0%, structure 21%): the comp shows material the build does not",
+            "region identidad is missing (detail 0%, structure 20%): the comp shows material the build does not",
+            "region chip-sinteticos is missing (detail 0%, structure 22%): the comp shows material the build does not",
+            "region campana is missing (detail 0%, structure 20%): the comp shows material the build does not",
+            "region avatar is missing (detail 0%, structure 15%): the comp shows material the build does not",
+            "region barra-borde is missing (detail 8%, structure 46%): the comp shows material the build does not",
+            "region panel-aptitud is missing (detail 7%, structure 30%): the comp shows material the build does not",
+            "region titulo-aptitud is missing (detail 0%, structure 16%): the comp shows material the build does not",
+            "region filas-aptitud is missing (detail 2%, structure 33%): the comp shows material the build does not",
+            "region cabecera-tablero is missing (detail 0%, structure 33%): the comp shows material the build does not",
+            "region cuerpo-3d is missing (detail 15%, structure 39%): the comp shows material the build does not",
+            "region etiqueta-zona is missing (detail 0%, structure 40%): the comp shows material the build does not",
+            "region tarjeta is missing (detail 0%, structure 30%): the comp shows material the build does not",
+            "region titulo-tarjeta is missing (detail 0%, structure 20%): the comp shows material the build does not",
+            "region que-cambio is missing (detail 0%, structure 25%): the comp shows material the build does not",
+            "region pasos is missing (detail 0%, structure 24%): the comp shows material the build does not",
+            "region precaucion is missing (detail 0%, structure 41%): the comp shows material the build does not",
+            "region por-que is missing (detail 0%, structure 23%): the comp shows material the build does not",
+            "region fuente is missing (detail 0%, structure 24%): the comp shows material the build does not",
+            "region botones is missing (detail 0%, structure 50%): the comp shows material the build does not",
+            "region filas-tablero (text) is contradicted (structure 35%, detail added 15%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "region pie (text) is contradicted (structure 18%, detail added 9%): the composition of this text region differs from the comp; re-derive it from the spec box",
+            "text filas-tablero: letter-spacing is wider than the comp's (gap 0.099 vs 0.032 of the cap height); set letter-spacing to close it by about 1px",
+            "text filas-tablero: 4 lines in the build, 11 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape",
+            "text filas-aptitud: ink is #a1a8b1 in the build, #e5e6eb in the comp; use the comp's colour",
+            "text cabecera-tablero: ink is #f7f8f8 in the build, #6b6c77 in the comp; use the comp's colour",
+            "the build carries ink in 13 grid cells where the comp is calm (C2, D3, D4, C5, D5, A9, B9, C9, D9, G9, H9, I9, ...); nothing exists on the page that the comp does not show (a kicker, an extra nav item, a divider, a second row of controls); remove it or name it in a stated decision after the hero passes"
+          ],
+          "regionVerdicts": {
+            "marca": "missing",
+            "pestanas": "missing",
+            "identidad": "missing",
+            "chip-sinteticos": "missing",
+            "campana": "missing",
+            "avatar": "missing",
+            "barra-borde": "missing",
+            "panel-aptitud": "missing",
+            "titulo-aptitud": "missing",
+            "filas-aptitud": "missing",
+            "panel-tablero": "contradicted",
+            "cabecera-tablero": "missing",
+            "filas-tablero": "contradicted",
+            "cuerpo-3d": "missing",
+            "etiqueta-zona": "missing",
+            "tarjeta": "missing",
+            "titulo-tarjeta": "missing",
+            "que-cambio": "missing",
+            "pasos": "missing",
+            "precaucion": "missing",
+            "por-que": "missing",
+            "fuente": "missing",
+            "botones": "missing",
+            "pie": "contradicted"
+          },
+          "artifactHash": "b95d4605e534"
+        }
+      ]
+    },
+    "sections": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "motion": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "responsive": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "review": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    }
+  },
+  "finish": null,
+  "decisionComp": ".impeccable/mocks/decision/procedimiento.jpg",
+  "plates": {}
+}

@@ -1,0 +1,43 @@
+{
+  "title": "AYNI · estructura de la pantalla principal",
+  "question": "Tres maneras de organizar la pestaña Cuerpo 3D con su barra superior, resumen y tarjeta de acción. La paleta y el cuerpo 3D no cambian; elige la composición.",
+  "options": [
+    {
+      "id": "riel-orbital",
+      "label": "Riel orbital",
+      "kicker": "THE ROLL",
+      "lineage": "Navegación en riel lateral + anillo de estado por zonas",
+      "thesis": "El estado general es un anillo de 11 segmentos, uno por zona, que apunta al cuerpo.",
+      "palette": ["#050816", "#0B1026", "#22D3EE", "#34D399", "#FBBF24", "#F87171"],
+      "materials": ["riel vertical de navegación", "anillo segmentado de estado", "cristal oscuro tintado"],
+      "viewport": "Riel izquierdo con Cuerpo 3D, Evolución, Medir y Chat; barra fina con tripulante, Día 142, entorno, Datos sintéticos, campana y avatar; columna de resumen con el anillo, motivo escrito, aptitud del día y zonas en atención; cuerpo 3D al centro; tarjeta de acción a la derecha.",
+      "risk": "El anillo debe leerse sin color: cada segmento necesita ícono y texto al pasar o enfocar.",
+      "comp": ".impeccable/mocks/decision/riel-orbital.jpg"
+    },
+    {
+      "id": "linea-de-mision",
+      "label": "Línea de misión",
+      "lineage": "Línea de tiempo de la misión bajo el cuerpo",
+      "thesis": "Una franja de días de misión bajo el cuerpo marca cuándo empezó cada cambio y deja viajar en el tiempo.",
+      "palette": ["#050816", "#0B1026", "#22D3EE", "#34D399", "#FBBF24", "#F87171"],
+      "materials": ["franja temporal con marcas por zona", "pestañas en la barra superior", "paneles de cristal oscuro"],
+      "viewport": "Barra superior con logo, tres pestañas, tripulante, Día 142, entorno, Datos sintéticos, campana y avatar; resumen a la izquierda; cuerpo 3D al centro; tarjeta a la derecha; abajo, a todo el ancho, la franja de días 128–142 con marcas ámbar y rojas donde empezaron los cambios.",
+      "risk": "La franja compite con el cuerpo por la parte baja de la pantalla en laptops de poca altura.",
+      "comp": ".impeccable/mocks/decision/linea-de-mision.jpg"
+    },
+    {
+      "id": "procedimiento",
+      "label": "Procedimiento de a bordo",
+      "lineage": "Procedimientos de vuelo con pasos y bloque de precaución",
+      "thesis": "La tarjeta de acción se lee y se ejecuta como un procedimiento de a bordo: pasos que se marcan y un bloque de precaución para el médico.",
+      "palette": ["#050816", "#0B1026", "#22D3EE", "#34D399", "#FBBF24", "#F87171"],
+      "materials": ["tabla de estado densa", "pasos numerados con casillas", "bloque de precaución"],
+      "viewport": "Barra superior con pestañas; a la izquierda, un tablero compacto con zona, estado y valor frente a tu normal; cuerpo 3D al centro; a la derecha, la tarjeta del corazón como procedimiento: qué cambió, pasos 1–3 con casillas, bloque de precaución con cuándo avisar al médico de vuelo y fuente.",
+      "risk": "La densidad del tablero puede sentirse técnica si la tipografía no respira.",
+      "comp": ".impeccable/mocks/decision/procedimiento.jpg"
+    }
+  ],
+  "reroll": true,
+  "buildPath": { "value": "comp", "toggle": true },
+  "steer": true
+}

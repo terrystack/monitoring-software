@@ -1,0 +1,28 @@
+{
+  "regions": [
+    { "id": "marca", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 14, "y": 10, "w": 64, "h": 30 }, "note": "AYNI wordmark, tracked uppercase" },
+    { "id": "pestanas", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 100, "y": 8, "w": 390, "h": 42 }, "note": "three tabs Cuerpo 3D (active, cyan underline), Evolución y predicción, Medir y dispositivos" },
+    { "id": "identidad", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 792, "y": 12, "w": 248, "h": 26 }, "note": "crew name, mission day and environment in one row" },
+    { "id": "chip-sinteticos", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 1046, "y": 9, "w": 108, "h": 30 }, "note": "Datos sintéticos chip, cyan text, outlined" },
+    { "id": "campana", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 1172, "y": 5, "w": 40, "h": 36 }, "note": "alerts bell with red count badge" },
+    { "id": "avatar", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 1220, "y": 3, "w": 46, "h": 42 }, "note": "round crew avatar button that opens the profile panel" },
+    { "id": "barra-borde", "kind": "chrome", "codeDrawn": true, "pixelBox": { "x": 0, "y": 46, "w": 1280, "h": 4 }, "note": "hairline under the top bar" },
+    { "id": "panel-aptitud", "kind": "chrome", "codeDrawn": true, "container": true, "pixelBox": { "x": 10, "y": 62, "w": 350, "h": 178 }, "note": "dark tinted panel holding Aptitud del día" },
+    { "id": "titulo-aptitud", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 22, "y": 70, "w": 120, "h": 22 }, "note": "panel heading Aptitud del día" },
+    { "id": "filas-aptitud", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 22, "y": 98, "w": 330, "h": 136 }, "note": "compact rows with state icon and short value" },
+    { "id": "panel-tablero", "kind": "chrome", "codeDrawn": true, "container": true, "pixelBox": { "x": 10, "y": 250, "w": 350, "h": 392 }, "note": "dark tinted panel holding the zone status table" },
+    { "id": "cabecera-tablero", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 22, "y": 258, "w": 330, "h": 22 }, "note": "table header Zona, Estado, Valor, Tu normal" },
+    { "id": "filas-tablero", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 22, "y": 285, "w": 330, "h": 350 }, "note": "11 numbered zone rows with state icon, value and personal normal" },
+    { "id": "cuerpo-3d", "kind": "chrome", "codeDrawn": true, "pixelBox": { "x": 470, "y": 56, "w": 350, "h": 640 }, "note": "live WebGL anatomical body canvas rendered by the app at runtime, holographic skin, amber heart" },
+    { "id": "etiqueta-zona", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 512, "y": 230, "w": 80, "h": 15 }, "note": "floating label Corazón · Atención with warning icon, amber outline" },
+    { "id": "tarjeta", "kind": "chrome", "codeDrawn": true, "container": true, "pixelBox": { "x": 870, "y": 134, "w": 396, "h": 474 }, "note": "action card panel, dark tinted, thin border" },
+    { "id": "titulo-tarjeta", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 892, "y": 150, "w": 200, "h": 30 }, "note": "Corazón · Atención heading with amber warning icon" },
+    { "id": "que-cambio", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 892, "y": 186, "w": 330, "h": 48 }, "note": "what changed sentence with value, personal normal and onset day" },
+    { "id": "pasos", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 892, "y": 245, "w": 230, "h": 96 }, "note": "three numbered steps with checkboxes, first checked" },
+    { "id": "precaucion", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 892, "y": 358, "w": 348, "h": 92 }, "note": "PRECAUCIÓN block, amber-tinted border, when to call the flight surgeon" },
+    { "id": "por-que", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 892, "y": 463, "w": 170, "h": 24 }, "note": "Por qué pasa en el espacio line" },
+    { "id": "fuente", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 892, "y": 491, "w": 120, "h": 20 }, "note": "Fuente: NASA HRP cyan link" },
+    { "id": "botones", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 892, "y": 540, "w": 348, "h": 46 }, "note": "two buttons Ver evolución (outline) and Medir ahora (filled teal)" },
+    { "id": "pie", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 12, "y": 686, "w": 150, "h": 18 }, "note": "No es un diagnóstico médico footer" }
+  ]
+}

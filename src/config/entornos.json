@@ -1,0 +1,62 @@
+[
+  {
+    "id": "nave_transito",
+    "nombre": "Nave en tránsito",
+    "gravedad": 0,
+    "retrasoComMin": [4, 24],
+    "riesgosDestacados": [
+      "Radiación espacial sin la protección de un planeta",
+      "Microgravedad: pérdida de hueso y músculo",
+      "Aislamiento y espacio reducido"
+    ],
+    "ajustes": {}
+  },
+  {
+    "id": "estacion",
+    "nombre": "Estación orbital",
+    "gravedad": 0,
+    "retrasoComMin": [0, 1],
+    "riesgosDestacados": [
+      "Microgravedad: desplazamiento de líquidos hacia la cabeza",
+      "CO₂ de cabina",
+      "Alteración del sueño por los ciclos de luz"
+    ],
+    "ajustes": {}
+  },
+  {
+    "id": "rover",
+    "nombre": "Rover de superficie",
+    "gravedad": 0.38,
+    "retrasoComMin": [4, 24],
+    "riesgosDestacados": [
+      "Cabina pequeña: CO₂ y temperatura",
+      "Vibración y fatiga en trayectos largos",
+      "Exposición a radiación en superficie"
+    ],
+    "ajustes": {}
+  },
+  {
+    "id": "base_lunar",
+    "nombre": "Base lunar",
+    "gravedad": 0.166,
+    "retrasoComMin": [0.02, 0.05],
+    "riesgosDestacados": [
+      "Polvo lunar en piel y vías respiratorias",
+      "Radiación en superficie",
+      "Gravedad parcial: carga reducida sobre huesos y músculos"
+    ],
+    "ajustes": {}
+  },
+  {
+    "id": "base_marciana",
+    "nombre": "Base marciana",
+    "gravedad": 0.38,
+    "retrasoComMin": [4, 24],
+    "riesgosDestacados": [
+      "Retraso de comunicación con la Tierra",
+      "Radiación acumulada durante la misión",
+      "Adaptación a gravedad parcial tras el viaje"
+    ],
+    "ajustes": {}
+  }
+]
