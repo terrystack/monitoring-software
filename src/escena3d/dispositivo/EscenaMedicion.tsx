@@ -18,7 +18,7 @@ import { modeloDe, posicionSensor, puntosDe, type Modelo } from './modelos';
 import { VISTA_OXIMETRO } from './oximetro/geometria';
 import { Oximetro } from './oximetro/Oximetro';
 import { VISTA_PUMA } from './puma/geometria';
-import { Puma } from './puma/Puma';
+import { Puma, type FasePuma } from './puma/Puma';
 import { Sensor } from './Sensor';
 
 interface Props {
@@ -51,6 +51,13 @@ const ENTRADA: Record<Modelo, [number, number, number]> = {
   puma: [0, 0.02, 0.22],
   oximetro: [0, 0, 0],
 };
+
+/** Solo en desarrollo: `?fasePuma=blockout|estructura` para revisar el modelado por pasadas. */
+function fasePuma(): FasePuma {
+  if (!import.meta.env.DEV) return 'completo';
+  const f = new URLSearchParams(window.location.search).get('fasePuma');
+  return f === 'blockout' || f === 'estructura' ? f : 'completo';
+}
 
 const suave = (t: number) => 1 - (1 - Math.min(1, Math.max(0, t))) ** 3;
 
@@ -153,7 +160,7 @@ function DispositivoModelo({
   reducido: boolean;
 }) {
   const motor = useAyni((s) => s.motor);
-  if (modelo === 'puma') return <Puma torso={torso} variante={variante} />;
+  if (modelo === 'puma') return <Puma torso={torso} variante={variante} fase={fasePuma()} />;
   if (modelo === 'oximetro') {
     const valor = (id: string) => motor?.indicadores[id]?.valor ?? null;
     const spo2 = valor('spo2');

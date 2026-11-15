@@ -155,35 +155,38 @@
       "inspiradoEn": "PUMA, Portable Unit for Metabolic Analysis (NASA Glenn)",
       "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
       "mide": [
-        "O₂ exhalado (fluorescencia por fibra óptica)",
-        "CO₂ exhalado (infrarrojo)",
-        "Flujo de aire (ultrasonido)",
+        "O₂ y CO₂ del aliento (sensores laterales)",
+        "Flujo de aire (cámara ultrasónica)",
         "Presión y temperatura del gas",
         "VO₂, VCO₂ y ventilación minuto"
       ],
       "peso": "Menos de 0,9 kg en total",
-      "autonomia": "Batería de 7,2 V en el módulo de cintura"
+      "autonomia": "Umbilical a la unidad de datos y energía"
     },
     "partes": {
       "mascara": "Máscara oronasal",
-      "sello": "Sello de silicona",
-      "manifold": "Manifold",
-      "canal_izq": "Canal izquierdo",
-      "sensor_o2": "Sensor de O₂ (fluorescencia)",
-      "sensor_co2": "Sensor de CO₂ (infrarrojo)",
-      "canal_der": "Canal derecho",
-      "sensor_flujo": "Flujo ultrasónico",
+      "sello": "Sello perimetral",
+      "puerto": "Puerto de exhalación",
+      "manifold": "Barra en T",
+      "manguera_izq": "Manguera corrugada izquierda",
+      "manguera_der": "Manguera corrugada derecha",
+      "camara_flujo": "Cámara de flujo ultrasónico",
+      "sensor_o2": "Sensor de O₂",
+      "sensor_co2": "Sensor de CO₂",
+      "lineas_muestra": "Líneas de muestra",
+      "bloque_trasero": "Bloque de montaje y módulo trasero",
+      "carcasa_der": "Carcasa de bomba y electrónica",
+      "disipador": "Disipador",
+      "placas": "Placas craneales y montantes",
       "arnes": "Arnés de cabeza",
-      "cable": "Cable y fibra óptica",
-      "cinturon": "Cinturón",
-      "caja_electronica": "Caja electrónica",
-      "bateria": "Batería 7,2 V"
+      "linea_laton": "Línea de latón",
+      "umbilical": "Umbilical trenzado"
     },
     "sensores": [
       {
         "id": "o2",
         "nombre": "Sensor de O₂",
-        "donde": "Canal izquierdo, junto a la máscara",
+        "donde": "Primer sensor negro bajo la cámara de flujo izquierda",
         "indicadores": ["vo2"],
         "posicion": {
           "tipo": "pieza",
@@ -193,7 +196,7 @@
       {
         "id": "co2_aliento",
         "nombre": "Sensor de CO₂ del aliento",
-        "donde": "Canal izquierdo, después del O₂",
+        "donde": "Segundo sensor negro bajo la cámara de flujo izquierda",
         "indicadores": ["vco2"],
         "posicion": {
           "tipo": "pieza",
@@ -202,8 +205,8 @@
       },
       {
         "id": "flujo",
-        "nombre": "Flujo ultrasónico",
-        "donde": "Canal derecho",
+        "nombre": "Cámara de flujo ultrasónico",
+        "donde": "Tubo ahumado del lado izquierdo, a la altura del mentón",
         "indicadores": ["ventilacion_minuto"],
         "posicion": {
           "tipo": "pieza",
@@ -212,8 +215,8 @@
       },
       {
         "id": "electronica",
-        "nombre": "Caja electrónica",
-        "donde": "Cadera derecha, en el cinturón",
+        "nombre": "Carcasa de bomba y electrónica",
+        "donde": "Lado derecho de la cara, con disipador",
         "indicadores": ["cociente_respiratorio"],
         "posicion": {
           "tipo": "pieza",
@@ -242,11 +245,11 @@
         "error": "Correas de arriba muy tensas: la máscara se levanta por abajo."
       },
       {
-        "texto": "Engancha el módulo en la cadera derecha y conecta el cable.",
+        "texto": "Conecta el umbilical a la cadera izquierda y pásalo por la espalda.",
         "animacion": "ajustar",
         "duracionMs": 2200,
         "sensor": "electronica",
-        "error": "Cable tirante: arrastra la máscara al pedalear."
+        "error": "Umbilical tirante: arrastra la máscara al pedalear."
       },
       {
         "texto": "Exhala fuerte: no debe salir aire por los bordes.",

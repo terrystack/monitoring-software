@@ -104,3 +104,38 @@ export function useGeometrias<T extends Record<string, THREE.BufferGeometry>>(
   useEffect(() => () => Object.values(g).forEach((x) => x.dispose()), [g]);
   return g;
 }
+
+/**
+ * Tubo con radio variable a lo largo de la curva (mangueras corrugadas, cámaras con anillos).
+ * `radio(t)` recibe la posición 0–1 a lo largo de la curva.
+ */
+export function tuboVariable(
+  puntos: THREE.Vector3[],
+  radio: (t: number) => number,
+  segmentos = 96,
+  radiales = 16,
+): THREE.BufferGeometry {
+  const curva = new THREE.CatmullRomCurve3(puntos, false, 'centripetal');
+  const marcos = curva.computeFrenetFrames(segmentos, false);
+  return superficie(
+    (u, v) => {
+      const i = Math.round(v * segmentos);
+      const p = curva.getPointAt(v);
+      const a = u * Math.PI * 2;
+      const r = radio(v);
+      return p
+        .clone()
+        .addScaledVector(marcos.normals[i], Math.cos(a) * r)
+        .addScaledVector(marcos.binormals[i], Math.sin(a) * r);
+    },
+    radiales,
+    segmentos,
+    { cerradaU: true },
+  );
+}
+
+/** Radio de una manguera corrugada: `ondas` crestas a lo largo, `amplitud` relativa. */
+export const corrugado =
+  (r: number, ondas: number, amplitud = 0.12) =>
+  (t: number) =>
+    r * (1 + amplitud * Math.max(0, Math.sin(t * ondas * Math.PI * 2)));

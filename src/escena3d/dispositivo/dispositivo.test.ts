@@ -19,7 +19,7 @@ import {
   puntoSuperficie,
   seccionEn,
 } from './medidas';
-import { geometriaPuma } from './puma/geometria';
+import { CAMARA, CARCASA, MASCARA, PUERTO, puntoMascara, rutaUmbilical, T } from './puma/geometria';
 
 const resultado = cargarConfig();
 if (!resultado.ok) throw new Error('config inválida');
@@ -102,17 +102,28 @@ describe('medidas del cuerpo', () => {
 });
 
 describe('geometría de PUMA', () => {
-  const g = geometriaPuma(PERFIL_TORSO);
-  it('la máscara queda delante de la nariz y los canales bajan hacia los lados', () => {
-    expect(g.vertice.z).toBeGreaterThan(CARA.nariz.z + 0.005);
-    expect(g.izq.hasta.x).toBeGreaterThan(g.izq.desde.x);
-    expect(g.der.hasta.x).toBeLessThan(g.der.desde.x);
-    expect(g.izq.hasta.y).toBeLessThan(g.izq.desde.y);
+  it('la máscara cubre del puente nasal al mentón y queda delante de la nariz', () => {
+    const vertice = puntoMascara(0, 0);
+    expect(vertice.z).toBeGreaterThan(CARA.nariz.z + 0.02);
+    expect(MASCARA.cy + MASCARA.ay).toBeGreaterThan(CARA.nariz.y + 0.04);
+    expect(MASCARA.cy - MASCARA.ay).toBeLessThan(CARA.menton.y);
   });
-  it('la caja electrónica va en la cadera derecha', () => {
-    expect(g.caja.x).toBeLessThan(-0.1);
-    expect(g.caja.y).toBeGreaterThan(0.95);
-    expect(g.caja.y).toBeLessThan(1.05);
+  it('la barra en T está bajo el mentón, delante del puerto y más ancha que la cara', () => {
+    expect(T.barra[2].y).toBeLessThan(PUERTO.centro.y);
+    expect(T.barra[2].z).toBeGreaterThan(PUERTO.centro.z);
+    expect(T.barra[4].x - T.barra[0].x).toBeGreaterThan(0.14);
+  });
+  it('lados asimétricos: cámara de flujo a la izquierda (+X), carcasa a la derecha (−X)', () => {
+    expect(CAMARA.hasta.x).toBeGreaterThan(0.1);
+    expect(CAMARA.hasta.z).toBeLessThan(CAMARA.desde.z);
+    expect(CARCASA.centro.x).toBeLessThan(-0.1);
+  });
+  it('el umbilical baja por la espalda hasta la cadera izquierda', () => {
+    const ruta = rutaUmbilical(PERFIL_TORSO);
+    const fin = ruta[ruta.length - 1];
+    expect(fin.y).toBeLessThan(1.0);
+    expect(fin.x).toBeGreaterThan(0.1);
+    expect(Math.min(...ruta.map((p) => p.z))).toBeLessThan(-0.08);
   });
 });
 

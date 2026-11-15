@@ -898,7 +898,7 @@
         "Pick the mask size and check the silicone seal.",
         "Put the mask on covering nose and mouth.",
         "Tighten the lower straps first, then the upper ones.",
-        "Clip the module on your right hip and connect the cable.",
+        "Connect the umbilical at the left hip and run it down your back.",
         "Breathe out hard: no air should escape at the edges.",
         "Start pedalling: AYNI shows your VO₂ and ventilation live."
       ],
@@ -907,52 +907,55 @@
         "Broken seal or wrong size: cabin air gets in and VO₂ reads low.",
         "Mask on the tip of the nose: leak at the top.",
         "Upper straps too tight: the mask lifts at the bottom.",
-        "Tight cable: it pulls the mask while pedalling.",
+        "Tight umbilical: it pulls the mask while pedalling.",
         "Seal leak: CO₂ reads diluted.",
         ""
       ],
       "sensores": {
         "o2": {
           "nombre": "O₂ sensor",
-          "donde": "Left channel, next to the mask"
+          "donde": "First black sensor under the left flow chamber"
         },
         "co2_aliento": {
           "nombre": "Breath CO₂ sensor",
-          "donde": "Left channel, after the O₂ sensor"
+          "donde": "Second black sensor under the left flow chamber"
         },
         "flujo": {
-          "nombre": "Ultrasonic flow",
-          "donde": "Right channel"
+          "nombre": "Ultrasonic flow chamber",
+          "donde": "Smoked tube on the left side, at chin height"
         },
         "electronica": {
-          "nombre": "Electronics box",
-          "donde": "Right hip, on the belt"
+          "nombre": "Pump and electronics housing",
+          "donde": "Right side of the face, with heat sink"
         }
       },
       "ficha": {
         "inspiradoEn": "PUMA, Portable Unit for Metabolic Analysis (NASA Glenn)",
         "mide": [
-          "Exhaled O₂ (fluorescence on optical fibre)",
-          "Exhaled CO₂ (infrared)",
-          "Air flow (ultrasound)",
+          "Breath O₂ and CO₂ (side sensors)",
+          "Air flow (ultrasonic chamber)",
           "Gas pressure and temperature",
           "VO₂, VCO₂ and minute ventilation"
         ]
       },
       "partes": {
         "mascara": "Oronasal mask",
-        "sello": "Silicone seal",
-        "manifold": "Manifold",
-        "canal_izq": "Left channel",
-        "sensor_o2": "O₂ sensor (fluorescence)",
-        "sensor_co2": "CO₂ sensor (infrared)",
-        "canal_der": "Right channel",
-        "sensor_flujo": "Ultrasonic flow",
+        "sello": "Perimeter seal",
+        "puerto": "Exhalation port",
+        "manifold": "T manifold",
+        "manguera_izq": "Left corrugated hose",
+        "manguera_der": "Right corrugated hose",
+        "camara_flujo": "Ultrasonic flow chamber",
+        "sensor_o2": "O₂ sensor",
+        "sensor_co2": "CO₂ sensor",
+        "lineas_muestra": "Sample lines",
+        "bloque_trasero": "Mount block and rear module",
+        "carcasa_der": "Pump and electronics housing",
+        "disipador": "Heat sink",
+        "placas": "Cranial plates and struts",
         "arnes": "Head harness",
-        "cable": "Cable and optical fibre",
-        "cinturon": "Belt",
-        "caja_electronica": "Electronics box",
-        "bateria": "7.2 V battery"
+        "linea_laton": "Brass line",
+        "umbilical": "Braided umbilical"
       }
     },
     "oximetro": {
