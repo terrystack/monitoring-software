@@ -158,7 +158,7 @@ Todos los textos nuevos van en `src/config/escena.json → textos` **y** en `idi
 ```json
 "pestanaMonitoreo": "Monitoreo y predicción",
 "pestanaMedicion": "Medición",
-"pestanaAgente": "Agente AYNI",
+"pestanaAgente": "Agente HANAN PACHA",
 "hoy": "Hoy",
 "puntajeDe": "de 100",
 "estadoGeneral": "Estado general {puntaje} de 100",
@@ -188,7 +188,7 @@ Todos los textos nuevos van en `src/config/escena.json → textos` **y** en `idi
 "guardar": "Guardar",
 "medicionGuardada": "Guardado. El cuerpo 3D y tus gráficos ya se actualizaron.",
 "animoHoy": "Ánimo de hoy",
-"agenteBienvenida": "Soy AYNI. Te explico tus datos a bordo y te digo cuándo avisar al médico de vuelo. No diagnostico.",
+"agenteBienvenida": "Soy HANAN PACHA. Te explico tus datos a bordo y te digo cuándo avisar al médico de vuelo. No diagnostico.",
 "escribeTuPregunta": "Pregunta sobre un indicador, una medición o un riesgo",
 "enviar": "Enviar",
 "adjuntarImagen": "Adjuntar imagen",
@@ -197,7 +197,7 @@ Todos los textos nuevos van en `src/config/escena.json → textos` **y** en `idi
 "detenerVoz": "Detener voz",
 "modoSinConexion": "Sin conexión con el modelo: respondo con las reglas a bordo.",
 "lienzoVacio": "Aquí aparecerán el cuerpo, gráficos o la guía que usemos para explicar tu consulta.",
-"preguntarAyni": "Preguntar a AYNI"
+"preguntarAyni": "Preguntar a HANAN PACHA"
 ```
 
 Las preguntas sugeridas del agente van en una lista nueva `escena.preguntasSugeridas: string[]` (añádela al esquema y a la traducción):
@@ -358,7 +358,7 @@ Props: `{ indicadorId, dias, compacto?, conPrediccion? = true, alto? }`. Series:
 
 ---
 
-## 7. Pestaña 3 · Medición (chaleco AYNI)
+## 7. Pestaña 3 · Medición (chaleco HANAN PACHA)
 
 ### 7.1 Configuración: nuevo dispositivo `chaleco_ayni`
 
@@ -374,7 +374,7 @@ Añade a `dispositivos.json`:
 ```json
 {
   "id": "chaleco_ayni",
-  "nombre": "Chaleco biométrico AYNI",
+  "nombre": "Chaleco biométrico HANAN PACHA",
   "modelo": "procedural:chaleco",
   "anclaje": "pecho",
   "indicadores": ["pulso_reposo", "hrv", "spo2", "temperatura", "co2_cabina", "dosis_radiacion", "tasa_dosis_dia", "sueno_horas", "ejercicio_min", "presion_sistolica", "presion_diastolica", "glucosa"],
@@ -450,7 +450,7 @@ De `rutina.json`. Estado de cada tarea en el día seleccionado: **hecha** si hay
 
 ---
 
-## 8. Pestaña 4 · Agente AYNI (chat multimodal + voz + lienzo)
+## 8. Pestaña 4 · Agente HANAN PACHA (chat multimodal + voz + lienzo)
 
 ### 8.1 Layout 50/50
 
@@ -464,7 +464,7 @@ De `rutina.json`. Estado de cada tarea en el día seleccionado: **hecha** si hay
 - Mensajes con burbujas; cada respuesta del agente tiene botón ▶ para leerla y chips "Mostrado en el lienzo: corazón / pulso 14 días" que, al pulsarlos, vuelven a poner esa vista.
 - Respuestas rápidas (`respuestasRapidas`, máx. 3) como botones.
 - Entrada: texto, **adjuntar imagen** (botón clip; también pegar del portapapeles y arrastrar), **dictar** (micrófono, si el navegador lo soporta) y enviar. Vista previa de la imagen con ✕.
-- Indicador "AYNI está pensando…" y bloqueo de doble envío. Errores en `role="alert"`.
+- Indicador "HANAN PACHA está pensando…" y bloqueo de doble envío. Errores en `role="alert"`.
 - `aria-live="polite"` en la lista de mensajes.
 
 ### 8.3 Imagen (`chat/imagen.ts`)
@@ -590,7 +590,7 @@ Inspirado en `assistant.ts` de Marisol, pero sobre **nuestro** contexto:
 ### 8.10 System prompt (`api/_instrucciones.ts`)
 
 ```
-Eres AYNI, asistente de acompañamiento de salud a bordo para astronautas en misiones
+Eres HANAN PACHA, asistente de acompañamiento de salud a bordo para astronautas en misiones
 de larga duración. Guías y apoyas; no reemplazas al médico de vuelo.
 
 DATOS PERMITIDOS
@@ -650,7 +650,7 @@ type EstadoLienzo =
 
 ### 8.12 Conexiones con el resto de la app
 
-- `TarjetaAccion` (pestaña 1): botón **"Preguntar a AYNI"** → pestaña 4 con la pregunta prellenada "¿Qué significa lo de mi {zona} y qué hago?" y el lienzo en esa zona.
+- `TarjetaAccion` (pestaña 1): botón **"Preguntar a HANAN PACHA"** → pestaña 4 con la pregunta prellenada "¿Qué significa lo de mi {zona} y qué hago?" y el lienzo en esa zona.
 - "Ver evolución" de la tarjeta → pestaña 2 filtrada por la zona.
 - "Medir ahora" de la tarjeta → pestaña 3 con el sensor que mide los indicadores de esa zona.
 - La campana de alertas sigue abriendo la tarjeta en la pestaña 1.

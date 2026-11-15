@@ -1,5 +1,5 @@
 ---
-name: AYNI
+name: HANAN PACHA
 description: Autoevaluación de salud para astronautas; el cuerpo 3D es la interfaz y los paneles 2D son su consola de a bordo.
 colors:
   acento: "#22D3EE"
@@ -160,13 +160,13 @@ components:
     padding: "0.25rem 0.625rem"
 ---
 
-# Design System: AYNI
+# Design System: HANAN PACHA
 
 ## Overview
 
 **Creative North Star: "Consola de a bordo"**
 
-La interfaz 2D de AYNI es la consola que rodea un holograma médico. El protagonista es el cuerpo anatómico 3D, luminoso y semitransparente sobre un vacío azul noche; la capa 2D no compite con él: son paneles de vidrio oscuro tintado, con filetes finos color pizarra, que se apoyan en los bordes de la pantalla y dejan el centro al cuerpo. Se lee como instrumentación de nave, no como panel de métricas: tablas compactas, cifras tabulares, procedimientos numerados que se marcan al hacerlos y un bloque de precaución para el médico de vuelo.
+La interfaz 2D de HANAN PACHA es la consola que rodea un holograma médico. El protagonista es el cuerpo anatómico 3D, luminoso y semitransparente sobre un vacío azul noche; la capa 2D no compite con él: son paneles de vidrio oscuro tintado, con filetes finos color pizarra, que se apoyan en los bordes de la pantalla y dejan el centro al cuerpo. Se lee como instrumentación de nave, no como panel de métricas: tablas compactas, cifras tabulares, procedimientos numerados que se marcan al hacerlos y un bloque de precaución para el médico de vuelo.
 
 El color está racionado. Todo es tinta clara sobre navy salvo dos voces: el cian, que significa "seleccionado / acción / foco", y la paleta de estado (verde, ámbar, coral, pizarra), que solo aparece donde hay un estado que comunicar y siempre con forma de ícono y palabra. La densidad es alta pero respirada: escala tipográfica pequeña y precisa (base de 14 a 17 px según el ancho), una sola familia, Biryani, y jerarquía construida con peso y tono de tinta más que con tamaño.
 
@@ -224,7 +224,7 @@ Paleta de estado semántica; valores fijados por la especificación y leídos de
 La raíz es fluida: `font-size: clamp(14px, 0.47vw + 8px, 17px)` (14 px en una laptop de 1280, 17 px en 1920). Con texto grande pasa a `clamp(16px, 0.55vw + 9.5px, 20px)`. Todos los tamaños de la UI se expresan en `rem` para que ambos ajustes escalen la interfaz entera.
 
 ### Hierarchy
-- **Wordmark** (700, 1.05rem, tracking 0.32em): solo la marca "AYNI" en la barra superior.
+- **Wordmark** (700, 1.05rem, tracking 0.32em): solo la marca "HANAN PACHA" en la barra superior.
 - **Headline** (600, 1.5rem, interlineado 1.25): título de la tarjeta de acción (zona · estado). La pestaña "próximamente" usa 1.6rem y créditos 1.875rem; son las únicas variantes.
 - **Title** (600, 0.92rem): título de panel ("Aptitud del día"). El nombre del perfil sube a 1.1rem. Los títulos de apartado de la tarjeta usan 0.86rem/600 en `tinta-suave`.
 - **Body** (400, 0.9rem, interlineado 1.625): texto de procedimiento, "qué cambió", aviso médico, pasos. Texto secundario a 0.86rem en `tinta-suave`. Ancho máximo cómodo de 30ch en el estado vacío de la tarjeta; `max-w-prose` en páginas de lectura.

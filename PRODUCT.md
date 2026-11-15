@@ -13,7 +13,7 @@ web
 
 ## Product Purpose
 
-AYNI (quechua: *reciprocidad*) permite al astronauta **medir, entender y actuar** sobre su salud. El éxito es que, en segundos, sepa qué zona de su cuerpo se aparta de su normal, por qué pasa en el espacio, qué hacer ahora y cuándo avisar al médico de vuelo.
+HANAN PACHA (quechua: *reciprocidad*) permite al astronauta **medir, entender y actuar** sobre su salud. El éxito es que, en segundos, sepa qué zona de su cuerpo se aparta de su normal, por qué pasa en el espacio, qué hacer ahora y cuándo avisar al médico de vuelo.
 
 ## Positioning
 
@@ -21,7 +21,7 @@ El cuerpo es la interfaz: cada indicador vive en una zona de un cuerpo anatómic
 
 ## Operating Context
 
-- Tres pestañas: **Cuerpo 3D** (inicio), **Evolución y predicción**, **Medir y dispositivos**; un **chat AYNI** lateral; barra superior con tripulante, día de misión, entorno, etiqueta de datos sintéticos, alertas y un panel de perfil (tripulante, entorno, accesibilidad, modo demo).
+- Tres pestañas: **Cuerpo 3D** (inicio), **Evolución y predicción**, **Medir y dispositivos**; un **chat HANAN PACHA** lateral; barra superior con tripulante, día de misión, entorno, etiqueta de datos sintéticos, alertas y un panel de perfil (tripulante, entorno, accesibilidad, modo demo).
 - Uso a bordo: rutina diaria de mediciones con dispositivos genéricos (muñeca, brazo, frente) y registros manuales (ánimo, síntomas, prueba de reacción).
 - Demo: el modo demo elige escenario (p. ej., fatiga) y salta de día para mostrar cómo cambia el cuerpo.
 - Pantalla principal: laptop o escritorio, proyectada; el móvil debe funcionar pero no es el escenario principal.
@@ -37,7 +37,7 @@ El cuerpo es la interfaz: cada indicador vive en una zona de un cuerpo anatómic
 
 ## Brand Commitments
 
-- Nombre **AYNI**.
+- Nombre **HANAN PACHA**.
 - Dirección 3D fijada por la especificación: "holograma médico a bordo" (fondo espacial oscuro, cuerpo anatómico semitransparente con bordes luminosos, capas). La paleta de estado es fija y siempre va con ícono y texto: Normal `#34D399`, Atención `#FBBF24`, Crítico `#F87171`, Sin dato `#64748B`; acento cian `#22D3EE`; fondo `#050816` → `#0B1026`.
 - Voz calmada, cercana y simple; nunca lenguaje de diagnóstico.
 

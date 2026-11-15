@@ -14,7 +14,7 @@ export class LimiteError extends Component<Props, { fallo: boolean }> {
   }
 
   componentDidCatch(error: unknown) {
-    console.warn('AYNI: no se pudo cargar el cuerpo anatómico; se usa el procedural.', error);
+    console.warn('HANAN PACHA: no se pudo cargar el cuerpo anatómico; se usa el procedural.', error);
   }
 
   render() {

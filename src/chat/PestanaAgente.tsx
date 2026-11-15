@@ -12,7 +12,7 @@ interface Props {
   seleccion: Seleccion;
 }
 
-/** Pestaña 4 · Agente AYNI: chat a la izquierda y lienzo a la derecha (AYNI_FUSION.md §8). */
+/** Pestaña 4 · Agente HANAN PACHA: chat a la izquierda y lienzo a la derecha (AYNI_FUSION.md §8). */
 export function PestanaAgente({ config, seleccion }: Props) {
   const motor = useAyni((s) => s.motor);
   const [lienzoVisible, setLienzoVisible] = useState(true);

@@ -1,41 +1,23 @@
 [
   {
-    "id": "puma",
-    "nombre": "PUMA · análisis metabólico",
-    "modelo": "procedural:puma",
-    "anclaje": "frente",
-    "indicadores": ["vo2", "vco2", "ventilacion_minuto", "cociente_respiratorio"],
-    "ficha": {
-      "inspiradoEn": "PUMA, Portable Unit for Metabolic Analysis (NASA Glenn)",
-      "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
-      "mide": [
-        "O₂ y CO₂ del aliento (sensores laterales)",
-        "Flujo de aire (cámara ultrasónica)",
-        "Presión y temperatura del gas",
-        "VO₂, VCO₂ y ventilación minuto"
-      ],
-      "peso": "Menos de 0,9 kg en total",
-      "autonomia": "Umbilical a la unidad de datos y energía"
-    },
-    "partes": {
-      "mascara": "Máscara oronasal",
-      "sello": "Sello perimetral",
-      "puerto": "Puerto de exhalación",
-      "manifold": "Barra en T",
-      "manguera_izq": "Manguera corrugada izquierda",
-      "manguera_der": "Manguera corrugada derecha",
-      "camara_flujo": "Cámara de flujo ultrasónico",
-      "sensor_o2": "Sensor de O₂",
-      "sensor_co2": "Sensor de CO₂",
-      "lineas_muestra": "Líneas de muestra",
-      "bloque_trasero": "Bloque de montaje y módulo trasero",
-      "carcasa_der": "Carcasa de bomba y electrónica",
-      "disipador": "Disipador",
-      "placas": "Placas craneales y montantes",
-      "arnes": "Arnés de cabeza",
-      "linea_laton": "Línea de latón",
-      "umbilical": "Umbilical trenzado"
-    },
+    "id": "chaleco_ayni",
+    "nombre": "Chaleco biométrico HANAN PACHA",
+    "modelo": "procedural:chaleco",
+    "anclaje": "pecho",
+    "indicadores": [
+      "pulso_reposo",
+      "hrv",
+      "spo2",
+      "temperatura",
+      "co2_cabina",
+      "dosis_radiacion",
+      "tasa_dosis_dia",
+      "sueno_horas",
+      "ejercicio_min",
+      "presion_sistolica",
+      "presion_diastolica",
+      "glucosa"
+    ],
     "sensores": [
       {
         "id": "o2",

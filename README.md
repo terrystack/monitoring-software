@@ -1,10 +1,10 @@
-# AYNI · Salud del astronauta
+# HANAN PACHA · Salud del astronauta
 
 Plataforma web de autoevaluación de salud para astronautas. Compara cada medición con **tu normal** (tu propia línea base de 14 días), muestra en un cuerpo 3D qué zona cambió y dice qué hacer y cuándo avisar al médico de vuelo.
 
 NASA Space Apps Challenge 2026 · Reto [_Create Health Monitoring Software for Astronauts on Space Missions_](https://www.spaceappschallenge.org/2026/challenges/create-health-monitoring-software-for-astronauts-on-space-missions/).
 
-> **AYNI no es un dispositivo médico ni da diagnósticos.** Es una herramienta de autoevaluación y apoyo a la decisión; ante cualquier duda, manda el médico de vuelo.
+> **HANAN PACHA no es un dispositivo médico ni da diagnósticos.** Es una herramienta de autoevaluación y apoyo a la decisión; ante cualquier duda, manda el médico de vuelo.
 
 Demo: https://ayni-vert.vercel.app
 
@@ -14,8 +14,8 @@ Demo: https://ayni-vert.vercel.app
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Cuerpo 3D**              | Cuerpo anatómico por capas (piel, músculos, esqueleto, órganos, nervios, vasos), rotable y clicable. Cada zona se colorea según sus indicadores. Al tocar una zona se abre la tarjeta de acción: qué cambió, qué hacer ahora, cuándo avisar al médico. |
 | **Monitoreo y predicción** | Estado general del día, presupuesto de radiación, gráficos por indicador con la banda de tu normal (media ± 2σ) y una predicción simple a 7 días; comparación de dos indicadores; deslizador para moverse por los días.                                |
-| **Medición**               | Chaleco biométrico AYNI en 3D sobre el mismo cuerpo, con 8 sensores que muestran su estado y valor, guía de colocación paso a paso con errores comunes, agenda del día y registro manual (mediciones y ánimo).                                         |
-| **Agente AYNI**            | Chat con texto, imagen y voz, a la izquierda; a la derecha, un lienzo que el agente controla (zona 3D, gráfico, comparación, guía del chaleco o resumen). Usa solo los datos de AYNI; sin clave o sin red responde un respaldo local por reglas.       |
+| **Medición**               | Chaleco biométrico HANAN PACHA en 3D sobre el mismo cuerpo, con 8 sensores que muestran su estado y valor, guía de colocación paso a paso con errores comunes, agenda del día y registro manual (mediciones y ánimo).                                         |
+| **Agente HANAN PACHA**            | Chat con texto, imagen y voz, a la izquierda; a la derecha, un lienzo que el agente controla (zona 3D, gráfico, comparación, guía del chaleco o resumen). Usa solo los datos de HANAN PACHA; sin clave o sin red responde un respaldo local por reglas.       |
 
 ## Cómo correrlo
 

@@ -1,7 +1,7 @@
 import type { ContextoAgente } from '../src/chat/contrato.js';
 
-/** System prompt del Agente AYNI (AYNI_FUSION.md §8.10). */
-const INSTRUCCIONES = `Eres AYNI, asistente de acompañamiento de salud a bordo para astronautas en misiones
+/** System prompt del Agente HANAN PACHA (HANAN PACHA_FUSION.md §8.10). */
+const INSTRUCCIONES = `Eres HANAN PACHA, asistente de acompañamiento de salud a bordo para astronautas en misiones
 de larga duración. Guías y apoyas; no reemplazas al médico de vuelo.
 
 DATOS PERMITIDOS

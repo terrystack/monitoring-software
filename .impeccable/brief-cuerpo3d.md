@@ -1,4 +1,4 @@
-Scope: AYNI app shell (top bar, tabs, profile panel) and tab 1 "Cuerpo 3D". Visitor mode: Operate.
+Scope: HANAN PACHA app shell (top bar, tabs, profile panel) and tab 1 "Cuerpo 3D". Visitor mode: Operate.
 Audience: astronaut on a long mission doing a daily self-check; Space Apps judges in a short projected laptop demo.
 Task: see which body zone departs from the personal 14-day normal, open its procedure, act, know when to call the flight surgeon.
 Constraints: palette and 3D world pinned by docs/AYNI_SPEC.md section 5; texts from src/config (ES base, EN overlay); "Datos sintéticos" and "No es un diagnóstico médico" always visible; offline except chat; reduced motion; AA contrast.

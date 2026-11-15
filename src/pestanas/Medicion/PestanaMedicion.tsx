@@ -17,7 +17,7 @@ interface Props {
   seleccion: Seleccion;
 }
 
-/** Pestaña 3 · Medición: PUMA, arnés ECG, diadema EEG y pulsioxímetro (AYNI_DISPOSITIVOS_3D.md). */
+/** Pestaña 3 · Medición con el chaleco HANAN PACHA (AYNI_FUSION.md §7.2). */
 export function PestanaMedicion({ config, seleccion }: Props) {
   const { textos } = config.escena;
   const activo = useAyni((s) => s.dispositivoActivo);

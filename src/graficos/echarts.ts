@@ -9,7 +9,7 @@ import {
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 
-// Registro modular: solo lo que usan los gráficos de AYNI, para un bundle más liviano.
+// Registro modular: solo lo que usan los gráficos de HANAN PACHA, para un bundle más liviano.
 echarts.use([
   LineChart,
   ScatterChart,

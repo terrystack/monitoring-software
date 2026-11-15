@@ -13,7 +13,7 @@ interface Props {
   seleccion: Seleccion;
 }
 
-/** Conversación con el Agente AYNI: bienvenida, sugerencias, mensajes y entrada. */
+/** Conversación con el Agente HANAN PACHA: bienvenida, sugerencias, mensajes y entrada. */
 export function PanelChat({ config, seleccion }: Props) {
   const chat = useAyni((s) => s.chat);
   const vozActiva = useAyni((s) => s.vozActiva);

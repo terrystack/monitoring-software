@@ -35,7 +35,7 @@
       "fuente": "Source",
       "creditos": "Credits",
       "tituloCreditos": "Credits and licenses",
-      "introCreditos": "AYNI's 3D body combines these open models. For AYNI we aligned them with each other, simplified them, changed the pose of the skin and grouped the structures into health zones.",
+      "introCreditos": "HANAN PACHA's 3D body combines these open models. For HANAN PACHA we aligned them with each other, simplified them, changed the pose of the skin and grouped the structures into health zones.",
       "licenciaDerivada": "The resulting model (modelos/cuerpo.glb) is shared under the same CC BY-SA 4.0 license.",
       "verLicencia": "View license",
       "verFuente": "View source",
@@ -74,7 +74,7 @@
       "diaSiguiente": "Next day",
       "pestanaMonitoreo": "Monitoring & forecast",
       "pestanaMedicion": "Measurement",
-      "pestanaAgente": "AYNI Agent",
+      "pestanaAgente": "HANAN PACHA Agent",
       "pestanaEvaluaciones": "Assessments",
       "hoy": "Today",
       "puntajeDe": "of 100",
@@ -105,7 +105,7 @@
       "guardar": "Save",
       "medicionGuardada": "Saved. The 3D body and your charts are already updated.",
       "animoHoy": "Today's mood",
-      "agenteBienvenida": "I am AYNI. I explain your data on board and tell you when to call the flight surgeon. I do not diagnose.",
+      "agenteBienvenida": "I am HANAN PACHA. I explain your data on board and tell you when to call the flight surgeon. I do not diagnose.",
       "escribeTuPregunta": "Ask about an indicator, a measurement or a risk",
       "enviar": "Send",
       "adjuntarImagen": "Attach image",
@@ -116,14 +116,14 @@
       "detenerVoz": "Stop voice",
       "modoSinConexion": "No connection to the model: answering with the on-board rules.",
       "lienzoVacio": "The body, charts or the guide we use to explain your question will appear here.",
-      "preguntarAyni": "Ask AYNI",
+      "preguntarAyni": "Ask HANAN PACHA",
       "modeloV1": "14-day linear regression",
       "siSigueAsi": "If this continues, {nombre} could leave your normal in {n} days.",
       "verEnElCuerpo": "See on the body",
       "diaDeTotal": "Day {dia} of {total}",
       "sinMedicionesRango": "No measurements in this range.",
       "siSigueAsiManana": "If this continues, {nombre} could leave your normal tomorrow.",
-      "pensando": "AYNI is thinking…",
+      "pensando": "HANAN PACHA is thinking…",
       "mostradoEnLienzo": "Shown on the canvas",
       "abrirEnPestana": "Open in its tab",
       "quitarImagen": "Remove image",
@@ -135,7 +135,7 @@
       "preguntaZona": "What does my {zona} result mean and what do I do?",
       "imagenNoValida": "I could not use that image: it must be a JPG, PNG or WebP under 4 MB.",
       "resumenHoy": "Today's summary",
-      "conversacion": "Conversation with AYNI",
+      "conversacion": "Conversation with HANAN PACHA",
       "lienzo": "Canvas",
       "franjaManana": "Morning",
       "franjaDia": "Day",
@@ -1084,6 +1084,60 @@
       "erroresComunes": [
         "Dosimeter kept in a pocket or drawer: it does not record your real exposure."
       ]
+    },
+    "chaleco_ayni": {
+      "nombre": "HANAN PACHA biometric vest",
+      "pasos": [
+        "Moisten the electrodes: a drop of water on each ECG electrode improves skin contact.",
+        "Put the vest on snugly: close to the body without restricting breathing, with the band at sternum level.",
+        "Clip the oximeter on your index finger, clean and warm. Wait for the light to settle.",
+        "Keep the dosimeter in the chest pocket, also while you sleep.",
+        "Stay still for 60 seconds: the first resting reading sets your value for the day.",
+        "Done. Watch your heart update on the 3D body."
+      ],
+      "erroresComunes": ["Loose vest: the sensors move and read noise."],
+      "erroresPasos": [
+        "Dry electrodes: the pulse signal gets lost.",
+        "Loose vest: the sensors move and read noise.",
+        "Cold finger or dark nail polish: SpO₂ reads low without being low.",
+        "Dosimeter away from the body: the recorded dose is not yours.",
+        "Measuring right after exercise: a high pulse triggers a false alert.",
+        ""
+      ],
+      "sensores": {
+        "ecg": {
+          "nombre": "ECG electrodes",
+          "donde": "Chest, below the left collarbone and over the ribs"
+        },
+        "respiracion": {
+          "nombre": "Breathing band",
+          "donde": "Around the chest, at sternum level"
+        },
+        "oximetro": {
+          "nombre": "Oximeter",
+          "donde": "Clip on the index finger"
+        },
+        "temperatura": {
+          "nombre": "Skin temperature sensor",
+          "donde": "Left side, below the armpit"
+        },
+        "co2": {
+          "nombre": "Cabin CO₂ sensor",
+          "donde": "Right shoulder, near the mouth"
+        },
+        "dosimetro": {
+          "nombre": "Personal dosimeter",
+          "donde": "Chest pocket, right side"
+        },
+        "pulsera": {
+          "nombre": "Activity and sleep band",
+          "donde": "Left wrist"
+        },
+        "brazalete": {
+          "nombre": "Blood pressure and glucose cuff",
+          "donde": "Left arm, at heart level"
+        }
+      }
     }
   },
   "rutina": {

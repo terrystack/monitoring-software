@@ -30,7 +30,7 @@ const PESTANA_DE: Record<EstadoLienzo['tipo'], Pestana | null> = {
 
 const iguales = (a: EstadoLienzo, b: EstadoLienzo) => JSON.stringify(a) === JSON.stringify(b);
 
-/** Lienzo del agente (AYNI_FUSION.md §8.11): lo que AYNI usa para explicar cada respuesta. */
+/** Lienzo del agente (AYNI_FUSION.md §8.11): lo que HANAN PACHA usa para explicar cada respuesta. */
 export function Lienzo({ config, seleccion }: Props) {
   const lienzo = useAyni((s) => s.lienzo);
   const { setLienzo } = useAyni.getState();

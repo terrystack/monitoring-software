@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-11T20:51:00Z",
-  "title": "Design System: AYNI",
+  "title": "Design System: HANAN PACHA",
   "extensions": {
     "colorMeta": {
       "acento": {
@@ -115,7 +115,7 @@
       }
     },
     "typographyMeta": {
-      "wordmark": { "displayName": "Marca", "purpose": "Solo la palabra AYNI en la barra superior." },
+      "wordmark": { "displayName": "Marca", "purpose": "Solo la palabra HANAN PACHA en la barra superior." },
       "headline": { "displayName": "Titular", "purpose": "Título de la tarjeta de acción (zona · estado) y de estados vacíos de pestaña." },
       "title": { "displayName": "Título de panel", "purpose": "Encabezado de panel como \"Aptitud del día\"." },
       "body": { "displayName": "Cuerpo", "purpose": "Texto del procedimiento: qué cambió, pasos y aviso médico." },
@@ -159,7 +159,7 @@
       "kind": "nav",
       "refersTo": "segmento-activo",
       "description": "Barra de 3rem con marca espaciada y pestañas de altura completa; la activa lleva subrayado cian de 2 px.",
-      "html": "<header class='ds-barra'><span class='ds-marca'>AYNI</span><nav class='ds-pestanas' role='tablist'><button class='ds-pestana' role='tab' aria-selected='true'>Cuerpo 3D</button><button class='ds-pestana' role='tab' aria-selected='false'>Evolución y predicción</button><button class='ds-pestana' role='tab' aria-selected='false'>Medir y dispositivos</button></nav></header>",
+      "html": "<header class='ds-barra'><span class='ds-marca'>HANAN PACHA</span><nav class='ds-pestanas' role='tablist'><button class='ds-pestana' role='tab' aria-selected='true'>Cuerpo 3D</button><button class='ds-pestana' role='tab' aria-selected='false'>Evolución y predicción</button><button class='ds-pestana' role='tab' aria-selected='false'>Medir y dispositivos</button></nav></header>",
       "css": ".ds-barra { display: flex; align-items: center; gap: 1rem; height: 3rem; padding: 0 1rem; background: rgb(5 8 22 / 0.8); border-bottom: 1px solid rgb(34 211 238 / 0.25); font-family: Biryani, system-ui, 'Segoe UI', sans-serif; } .ds-marca { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.32em; color: rgb(var(--tinta, 236 238 244)); } .ds-pestanas { display: flex; align-items: stretch; gap: 0.25rem; height: 100%; margin-left: 0.75rem; } .ds-pestana { position: relative; padding: 0 0.75rem; font-family: inherit; font-size: 0.86rem; letter-spacing: -0.012em; color: rgb(var(--tinta-suave, 184 189 205)); background: none; border: 0; cursor: pointer; white-space: nowrap; transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-pestana:hover { color: rgb(var(--tinta, 236 238 244)); } .ds-pestana[aria-selected='true'] { font-weight: 600; color: rgb(var(--tinta, 236 238 244)); } .ds-pestana::after { content: ''; position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0; height: 2px; border-radius: 9999px; background: #22D3EE; opacity: 0; transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-pestana[aria-selected='true']::after { opacity: 1; } .ds-pestana:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; border-radius: 4px; }"
     },
     {
@@ -221,7 +221,7 @@
   ],
   "narrative": {
     "northStar": "Consola de a bordo",
-    "overview": "La interfaz 2D de AYNI es la consola que rodea un holograma médico. El protagonista es el cuerpo anatómico 3D, luminoso y semitransparente sobre un vacío azul noche; la capa 2D no compite con él: son paneles de vidrio oscuro tintado, con filetes finos color pizarra, que se apoyan en los bordes de la pantalla y dejan el centro al cuerpo. Se lee como instrumentación de nave, no como panel de métricas: tablas compactas, cifras tabulares, procedimientos numerados que se marcan al hacerlos y un bloque de precaución para el médico de vuelo.\n\nEl color está racionado. Todo es tinta clara sobre navy salvo dos voces: el cian, que significa \"seleccionado / acción / foco\", y la paleta de estado (verde, ámbar, coral, pizarra), que solo aparece donde hay un estado que comunicar y siempre con forma de ícono y palabra. La densidad es alta pero respirada: escala tipográfica pequeña y precisa (base de 14 a 17 px según el ancho), una sola familia, Biryani, y jerarquía construida con peso y tono de tinta más que con tamaño.\n\nLa calma es parte del sistema: sin sombras en reposo, sin gradientes en la UI, transiciones cortas de color y un modo de movimiento reducido que las anula. Los ajustes de texto grande y alto contraste reescriben los mismos tokens desde la raíz, de modo que cualquier superficie nueva que use los tokens los hereda gratis.",
+    "overview": "La interfaz 2D de HANAN PACHA es la consola que rodea un holograma médico. El protagonista es el cuerpo anatómico 3D, luminoso y semitransparente sobre un vacío azul noche; la capa 2D no compite con él: son paneles de vidrio oscuro tintado, con filetes finos color pizarra, que se apoyan en los bordes de la pantalla y dejan el centro al cuerpo. Se lee como instrumentación de nave, no como panel de métricas: tablas compactas, cifras tabulares, procedimientos numerados que se marcan al hacerlos y un bloque de precaución para el médico de vuelo.\n\nEl color está racionado. Todo es tinta clara sobre navy salvo dos voces: el cian, que significa \"seleccionado / acción / foco\", y la paleta de estado (verde, ámbar, coral, pizarra), que solo aparece donde hay un estado que comunicar y siempre con forma de ícono y palabra. La densidad es alta pero respirada: escala tipográfica pequeña y precisa (base de 14 a 17 px según el ancho), una sola familia, Biryani, y jerarquía construida con peso y tono de tinta más que con tamaño.\n\nLa calma es parte del sistema: sin sombras en reposo, sin gradientes en la UI, transiciones cortas de color y un modo de movimiento reducido que las anula. Los ajustes de texto grande y alto contraste reescriben los mismos tokens desde la raíz, de modo que cualquier superficie nueva que use los tokens los hereda gratis.",
     "keyCharacteristics": [
       "Fondo espacial en degradado vertical de `fondo-medio` a `fondo-profundo`; el cuerpo 3D ocupa el lienzo completo detrás de la UI.",
       "Paneles translúcidos (`superficie` al 88 %) con filete `linea` al 70 % y esquinas de 8 px; planos, sin sombra.",

@@ -3,7 +3,7 @@ import { esquemaEscena, esquemaEvaluaciones, esquemaFrases, type ConfigAyni } fr
 import enJson from './idiomas/en.json';
 
 /** El español es el idioma base de src/config; los demás son capas con los mismos ids. */
-export const IDIOMAS = ['es', 'en'] as const;
+export const IDIOMAS = ['en', 'es'] as const;
 export type Idioma = (typeof IDIOMAS)[number];
 
 const t = z.string().min(1);

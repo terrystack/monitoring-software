@@ -760,7 +760,7 @@ export const esquemaEscena = z
     indicadorAnimo: texto,
     /** Indicadores que se pueden registrar a mano en la pestaña Medición. */
     indicadoresRegistro: z.array(texto),
-    /** Botones iniciales del Agente AYNI. */
+    /** Botones iniciales del Agente HANAN PACHA. */
     preguntasSugeridas: z.array(texto).min(1),
     /** Indicadores del reto que encabezan Monitoreo cuando todo está normal. */
     indicadoresDestacados: z.array(texto),

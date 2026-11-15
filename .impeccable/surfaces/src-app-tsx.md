@@ -5,7 +5,7 @@ primary_target: "src/App.tsx"
 related_targets: ["src/pestanas/Cuerpo3D/PestanaCuerpo3D.tsx"]
 ---
 
-Scope: AYNI app shell (top bar, tabs, profile panel) and tab 1 "Cuerpo 3D". Visitor mode: Operate.
+Scope: HANAN PACHA app shell (top bar, tabs, profile panel) and tab 1 "Cuerpo 3D". Visitor mode: Operate.
 Audience: astronaut on a long mission doing a daily self-check; Space Apps judges in a short projected laptop demo.
 Task: see which body zone departs from the personal 14-day normal, open its procedure, act, know when to call the flight surgeon.
 Constraints: palette and 3D world pinned by docs/AYNI_SPEC.md section 5; texts from src/config (ES base, EN overlay); "Datos sintÃ©ticos" and "No es un diagnÃ³stico mÃ©dico" always visible; offline except chat; reduced motion; AA contrast.
@@ -22,6 +22,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 ## Decisión de primera vista
 
-El usuario aceptó la primera vista como dirección visual el 2026-11-11. Pregunta: "¿Aceptas esta primera vista como dirección visual de AYNI, aunque la comparación automática con la maqueta se quede en 70,6 %?". Respuesta: "Sí, la acepto; aplica las correcciones del revisor y cierra la fase". La revisión automática de primera vista de Impeccable no puede capturar esta app (WebGL, CSV y GLB cargados en tiempo de ejecución), por eso la fase hero queda abierta en state.json.
+El usuario aceptó la primera vista como dirección visual el 2026-11-11. Pregunta: "¿Aceptas esta primera vista como dirección visual de HANAN PACHA, aunque la comparación automática con la maqueta se quede en 70,6 %?". Respuesta: "Sí, la acepto; aplica las correcciones del revisor y cierra la fase". La revisión automática de primera vista de Impeccable no puede capturar esta app (WebGL, CSV y GLB cargados en tiempo de ejecución), por eso la fase hero queda abierta en state.json.
 
 Tras la revisión final (7 de 8 correcciones resueltas y 2 regresiones corregidas, commit 142e833) la comparación con la maqueta quedó en 64 %. Pregunta: "Con 7 de 8 correcciones resueltas, las 2 regresiones corregidas y la comparación con la maqueta en 64 %, ¿cómo seguimos?". Respuesta del usuario: "Cerrar la fase 4 así (aceptar el 64 %), terminar el DESIGN.md y pasar a la fase 5". Veredicto del revisor sin cambios: fix (solo queda abierta la persistencia del estado de Impeccable).

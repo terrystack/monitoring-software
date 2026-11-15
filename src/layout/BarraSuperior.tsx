@@ -24,7 +24,7 @@ export function BarraSuperior({ config, seleccion }: Props) {
   return (
     <header className="relative z-[60] flex shrink-0 flex-wrap items-center gap-x-4 border-b border-acento/25 bg-fondo-profundo/80 px-4 lg:h-12 lg:flex-nowrap">
       <span className="py-3 text-[1.05rem] font-bold tracking-[0.32em] text-tinta lg:py-0">
-        AYNI
+        Hanan Pacha
       </span>
       <div className="order-last -mx-4 h-11 w-[calc(100%+2rem)] overflow-x-auto border-t border-linea/50 px-1 lg:order-none lg:mx-0 lg:ml-3 lg:h-full lg:w-auto lg:overflow-visible lg:border-0 lg:px-0">
         <Navegacion textos={textos} />

@@ -24,7 +24,7 @@ export default function App({ resultadoConfig }: Props) {
         role="alert"
       >
         <h1 className="text-xl font-semibold text-estado-critico">
-          La configuración de AYNI no es válida
+          La configuración de HANAN PACHA no es válida
         </h1>
         <p className="text-tinta-suave">
           Corrige estos archivos de <code>src/config/</code> y recarga la página:

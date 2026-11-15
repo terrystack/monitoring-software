@@ -1,6 +1,6 @@
 {
   "regions": [
-    { "id": "marca", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 14, "y": 10, "w": 64, "h": 30 }, "note": "AYNI wordmark, tracked uppercase" },
+    { "id": "marca", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 14, "y": 10, "w": 64, "h": 30 }, "note": "HANAN PACHA wordmark, tracked uppercase" },
     { "id": "pestanas", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 100, "y": 8, "w": 390, "h": 42 }, "note": "three tabs Cuerpo 3D (active, cyan underline), Evolución y predicción, Medir y dispositivos" },
     { "id": "identidad", "kind": "text", "codeDrawn": true, "pixelBox": { "x": 792, "y": 12, "w": 248, "h": 26 }, "note": "crew name, mission day and environment in one row" },
     { "id": "chip-sinteticos", "kind": "control", "codeDrawn": true, "pixelBox": { "x": 1046, "y": 9, "w": 108, "h": 30 }, "note": "Datos sintéticos chip, cyan text, outlined" },

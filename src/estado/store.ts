@@ -129,7 +129,7 @@ export const useAyni = create<EstadoApp>()(
         movimientoReducido: false,
         textoGrande: false,
         altoContraste: false,
-        idioma: 'es',
+        idioma: "en",
         pestana: 'cuerpo3d',
         perfilAbierto: false,
         tripulanteId: null,
