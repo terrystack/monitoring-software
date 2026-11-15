@@ -225,7 +225,7 @@ function semillaDe(base: number, texto: string): number {
 }
 
 /**
- * Indicadores con `flujoPropio` (Astroskin y PUMA): cada indicador y tripulante tiene su propio
+ * Indicadores con `flujoPropio` (arnés ECG y PUMA): cada indicador y tripulante tiene su propio
  * flujo aleatorio, así añadirlos no cambia las demás lecturas ni los escenarios de demo.
  */
 function generarPropios(trip: Tripulante, config: ConfigAyni): LecturaInterna[] {

@@ -30,7 +30,7 @@ describe('generador sintético', () => {
 
   it('genera 60 lecturas por tripulante y día, más la MHCL y la prueba metabólica semanales', () => {
     // 51 del flujo principal + 6 del PVT-B (velocidad, TR y estrés, al despertar y de noche)
-    // + 3 de frecuencia respiratoria (Astroskin), + 3 subescalas de la MHCL cada domingo
+    // + 3 de frecuencia respiratoria (arnés ECG), + 3 subescalas de la MHCL cada domingo
     // + 4 de la prueba metabólica (PUMA) cada miércoles.
     const miercoles = new Set(
       lecturas

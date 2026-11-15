@@ -58,11 +58,11 @@ describe('respaldo local del agente', () => {
     expect(r.texto).toContain('Horas de sueño hoy');
   });
 
-  it('¿Cómo me pongo la camiseta Astroskin? → paso 1 de su guía', () => {
-    const r = preguntar('¿Cómo me pongo la camiseta Astroskin?');
-    expect(r.llamadas[0]).toEqual({
+  it('¿Cómo me pongo el arnés ECG? → paso 1 de su guía', () => {
+    const r = preguntar('¿Cómo me pongo el arnés ECG?');
+    expect(r.llamadas[0]).toMatchObject({
       nombre: 'mostrar_guia_dispositivo',
-      args: { dispositivo: 'astroskin', paso: 1 },
+      args: { dispositivo: 'arnes_ecg', paso: 1 },
     });
   });
 
@@ -90,11 +90,11 @@ describe('respaldo local del agente', () => {
     );
   });
 
-  it('oxímetro con un valor raro → paso del oxímetro, error común y repetir', () => {
-    const r = preguntar('El oxímetro marca 88 %, ¿está bien?');
+  it('dosímetro con un valor raro → paso del dosímetro, error común y repetir', () => {
+    const r = preguntar('El dosímetro marca 2 mSv, ¿está bien?');
     expect(r.llamadas[0]).toEqual({
       nombre: 'mostrar_guia_dispositivo',
-      args: { dispositivo: 'oximetro', paso: 2, sensor: 'pinza' },
+      args: { dispositivo: 'arnes_ecg', paso: 5, sensor: 'dosimetro' },
     });
     expect(r.texto).toContain(es.config.escena.respaldo.repetirMedicion);
   });

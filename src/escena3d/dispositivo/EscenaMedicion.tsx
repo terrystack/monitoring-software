@@ -8,15 +8,13 @@ import { useAyni } from '../../estado/store';
 import { Ambiente } from '../Ambiente';
 import { NIVELES, useMovimientoReducido } from '../calidad';
 import { Cuerpo } from '../cuerpo/Cuerpo';
-import { Astroskin } from './astroskin/Astroskin';
-import { VISTA_ASTROSKIN } from './astroskin/geometria';
+import { Arnes, type LecturasArnes } from './arnes/Arnes';
+import { VISTA_ARNES } from './arnes/geometria';
 import { ProveedorDespiece } from './despiece';
 import { dispositivoConSensores, estadoSensor, valorSensor } from './estadoSensor';
 import type { Variante } from './materiales';
 import { medirPerfil, PERFIL_CABEZA, PERFIL_TORSO, type Perfil } from './medidas';
 import { modeloDe, posicionSensor, puntosDe, type Modelo } from './modelos';
-import { VISTA_OXIMETRO } from './oximetro/geometria';
-import { Oximetro } from './oximetro/Oximetro';
 import { VISTA_PUMA } from './puma/geometria';
 import { Puma, type FasePuma } from './puma/Puma';
 import { Sensor } from './Sensor';
@@ -29,27 +27,24 @@ type Animacion = Dispositivo['pasos'][number]['animacion'];
 
 const RAPIDEZ = 5;
 /** Radio de la esfera de los sensores según el tamaño del dispositivo. */
-const RADIO_SENSOR: Record<Modelo, number> = { astroskin: 0.011, puma: 0.0065, oximetro: 0.0045 };
-/** Piel opaca donde el dispositivo se apoya en partes finas (cara, dedo). */
+const RADIO_SENSOR: Record<Modelo, number> = { puma: 0.0065, arnes: 0.0085 };
+/** Piel opaca: los dos dispositivos se apoyan sobre la piel (cara, pecho y brazo). */
 const PIEL: Record<Modelo, ModoCapa> = {
-  astroskin: 'translucida',
   puma: 'visible',
-  oximetro: 'visible',
+  arnes: 'visible',
 };
 /** La cámara deja de guiarse a los 1,6 s para que se pueda girar libremente. */
 const TIEMPO_GUIA = 1.6;
 
 const VISTAS: Record<Modelo, { posicion: THREE.Vector3; objetivo: THREE.Vector3 }> = {
-  astroskin: VISTA_ASTROSKIN,
   puma: VISTA_PUMA,
-  oximetro: VISTA_OXIMETRO,
+  arnes: VISTA_ARNES,
 };
 
 /** De dónde llega el dispositivo en el paso "colocar" (desplazamiento inicial, m). */
 const ENTRADA: Record<Modelo, [number, number, number]> = {
-  astroskin: [0, 0.38, 0],
   puma: [0, 0.02, 0.22],
-  oximetro: [0, 0, 0],
+  arnes: [0, 0.03, 0.26],
 };
 
 /** Solo en desarrollo: `?fasePuma=blockout|estructura` para revisar el modelado por pasadas. */
@@ -146,42 +141,31 @@ function DispositivoModelo({
   modelo,
   torso,
   variante,
-  animacion,
-  duracionMs,
-  repeticion,
   reducido,
 }: {
   modelo: Modelo;
   torso: Perfil;
   variante: Variante;
-  animacion: Animacion;
-  duracionMs: number;
-  repeticion: string;
   reducido: boolean;
 }) {
   const motor = useAyni((s) => s.motor);
+  const valor = (id: string) => motor?.indicadores[id]?.valor ?? null;
+  const pulso = valor('pulso_reposo');
+  const sistolica = valor('presion_sistolica');
+  const diastolica = valor('presion_diastolica');
+  const dosisDia = valor('tasa_dosis_dia');
+  const dosisTotal = valor('dosis_radiacion');
+  const lecturas = useMemo<LecturasArnes>(
+    () => ({ pulso, sistolica, diastolica, dosisDia, dosisTotal }),
+    [pulso, sistolica, diastolica, dosisDia, dosisTotal],
+  );
   if (modelo === 'puma') return <Puma torso={torso} variante={variante} fase={fasePuma()} />;
-  if (modelo === 'oximetro') {
-    const valor = (id: string) => motor?.indicadores[id]?.valor ?? null;
-    const spo2 = valor('spo2');
-    const pulso = valor('pulso_reposo');
-    return (
-      <Oximetro
-        variante={variante}
-        spo2={spo2}
-        pulso={pulso}
-        colocar={animacion === 'colocar' ? duracionMs : null}
-        repeticion={repeticion}
-        reducido={reducido}
-      />
-    );
-  }
-  return <Astroskin perfil={torso} variante={variante} />;
+  return <Arnes variante={variante} lecturas={lecturas} reducido={reducido} />;
 }
 
 /**
  * Escena de la pestaña Medición (AYNI_DISPOSITIVOS_3D.md): el cuerpo anatómico con la piel
- * translúcida y el dispositivo activo (Astroskin, PUMA u oxímetro) con sus sensores.
+ * visible y el dispositivo activo (PUMA o el arnés ECG) con sus sensores.
  * Fuerza las capas al montar y restaura las anteriores al salir.
  */
 export default function EscenaMedicion({ config }: Props) {
@@ -260,7 +244,7 @@ export default function EscenaMedicion({ config }: Props) {
             .add(
               new THREE.Vector3(destinoSensor.x * 1.6, 0.08, 1)
                 .normalize()
-                .multiplyScalar(modelo === 'astroskin' ? 0.85 : 0.5),
+                .multiplyScalar(modelo === 'arnes' ? 0.6 : 0.5),
             ),
         }
       : vistaGeneral;
@@ -291,15 +275,7 @@ export default function EscenaMedicion({ config }: Props) {
           entrada={ENTRADA[modelo]}
           reducido={reducido}
         >
-          <DispositivoModelo
-            modelo={modelo}
-            torso={torso}
-            variante="normal"
-            animacion={animacion}
-            duracionMs={pasoActual?.duracionMs ?? 2000}
-            repeticion={repeticionClave}
-            reducido={reducido}
-          />
+          <DispositivoModelo modelo={modelo} torso={torso} variante="normal" reducido={reducido} />
         </Animado>
       </ProveedorDespiece>
       {fantasma && (
@@ -308,9 +284,6 @@ export default function EscenaMedicion({ config }: Props) {
             modelo={modelo}
             torso={torso}
             variante="fantasma"
-            animacion="presentar"
-            duracionMs={1000}
-            repeticion="fantasma"
             reducido={reducido}
           />
         </group>

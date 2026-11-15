@@ -166,7 +166,7 @@
       "How am I today?",
       "Why is my heart amber?",
       "Show me my sleep over the last 2 weeks",
-      "How do I put on the Astroskin shirt?",
+      "How do I put on the ECG harness?",
       "Should I call the flight surgeon?"
     ],
     "respaldo": {
@@ -226,11 +226,11 @@
       "aviso": "When to call the flight surgeon: {aviso}",
       "indicador": "{nombre} today: {valor}; your normal: {normal}.",
       "indicadorSinNormal": "{nombre} today: {valor}.",
-      "sinValor": "I have no measurements of {nombre} yet; you can measure it with Astroskin, PUMA or the oximeter or log it.",
+      "sinValor": "I have no measurements of {nombre} yet; you can measure it with PUMA or the ECG harness or log it.",
       "prediccion": "Based on your data, it could leave your normal in {n} days.",
       "dispositivo": "{dispositivo}, step {n}: {paso}",
       "medicoNada": "No zone is outside your normal; keep your routine and report any symptoms.",
-      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with Astroskin, PUMA or the oximeter.",
+      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with PUMA or the ECG harness.",
       "noDiagnostico": "I can't diagnose diseases; I only compare your data with your normal.",
       "noMedicamento": "I don't prescribe medication or doses: the flight surgeon decides that.",
       "sinInternet": "I don't have internet; I explain with what is on board.",
@@ -636,7 +636,7 @@
     "frecuencia_respiratoria": {
       "nombre": "Respiratory rate",
       "textos": {
-        "queEs": "How many breaths you take per minute at rest, measured by the shirt's bands.",
+        "queEs": "How many breaths you take per minute at rest, measured by the harness recorder through the ECG electrodes (chest impedance).",
         "queSignifica": "Breathing faster than your normal at rest can come with high CO₂, fever or anxiety.",
         "porQueEspacio": "In microgravity the diaphragm and chest work differently, and cabin CO₂ drives breathing."
       },
@@ -828,70 +828,6 @@
     }
   },
   "dispositivos": {
-    "astroskin": {
-      "nombre": "Astroskin · biometric shirt",
-      "pasos": [
-        "Moisten the 4 textile electrodes inside the shirt.",
-        "Put the shirt on snugly, close to the skin.",
-        "Check that the bands sit at chest and navel height.",
-        "Put on the headband with the sensor in the middle of your forehead.",
-        "Insert the recorder in the side pocket and switch it on.",
-        "Stay still for 60 seconds for the first resting reading."
-      ],
-      "erroresComunes": ["Shirt too big: the bands cannot read your breathing."],
-      "erroresPasos": [
-        "Dry electrodes: the ECG loses signal.",
-        "Shirt too big: the bands cannot read your breathing.",
-        "Chest band too high: it underestimates volume.",
-        "Sensor over hair or eyebrow: unstable SpO₂.",
-        "Recorder not clipped in: nothing is recorded.",
-        "Measuring right after exercise: a high pulse gives a false alert."
-      ],
-      "sensores": {
-        "ecg": {
-          "nombre": "3-lead ECG",
-          "donde": "4 textile electrodes on the chest and below the ribs"
-        },
-        "rip": {
-          "nombre": "Breathing bands (RIP)",
-          "donde": "Around the chest and abdomen"
-        },
-        "temp_piel": {
-          "nombre": "Skin temperature",
-          "donde": "Left side, below the armpit"
-        },
-        "ppg_frente": {
-          "nombre": "Forehead PPG and SpO₂",
-          "donde": "Headband, middle of the forehead"
-        },
-        "registrador": {
-          "nombre": "Recorder",
-          "donde": "Left side pocket"
-        }
-      },
-      "ficha": {
-        "inspiradoEn": "Astroskin / Bio-Monitor (CSA · Carré Technologies), on the ISS since 2018",
-        "mide": [
-          "3-lead ECG",
-          "Breathing (2 RIP bands)",
-          "Skin temperature",
-          "Forehead SpO₂",
-          "Systolic pressure from pulse transit time",
-          "Activity and sleep"
-        ]
-      },
-      "partes": {
-        "camiseta": "Sleeveless shirt",
-        "banda_rip_torax": "Chest RIP band",
-        "banda_rip_abdomen": "Abdominal RIP band",
-        "electrodos": "4 textile ECG electrodes",
-        "temp_piel": "Temperature sensor",
-        "registrador": "Recorder (accelerometer, Bluetooth)",
-        "bolsillo": "Side pocket",
-        "banda_cabeza": "Headband",
-        "modulo_ppg": "PPG / SpO₂ module"
-      }
-    },
     "puma": {
       "nombre": "PUMA · metabolic analysis",
       "pasos": [
@@ -958,37 +894,63 @@
         "umbilical": "Braided umbilical"
       }
     },
-    "oximetro": {
-      "nombre": "Fingertip pulse oximeter",
+    "arnes_ecg": {
+      "nombre": "ECG harness · dosimeter and blood pressure",
       "pasos": [
-        "Clean, warm finger, no dark nail polish.",
-        "Open the clip and slide your index finger all the way in.",
-        "Rest your hand and do not talk for 30 seconds.",
-        "Compare with the headband SpO₂; if they differ by more than 3 points, repeat."
+        "Stick on the 4 electrodes: red and green below the right collarbone, white and black below the left.",
+        "Put on the harness: band below the chest and straps crossed on your back.",
+        "Plug the 4 leads into the central recorder and switch it on.",
+        "Place the cuff on your left arm, two fingers above the elbow, tube pointing down.",
+        "Check the dosimeter sits firmly on the band with the display facing out.",
+        "Sit still for 5 minutes: the cuff inflates and AYNI shows your blood pressure and ECG."
       ],
-      "erroresComunes": ["Finger half in: the light does not pass through the nail."],
+      "erroresComunes": ["Loose band: the recorder moves and adds noise to the ECG."],
       "erroresPasos": [
-        "Cold finger: SpO₂ reads low when it is not.",
-        "Finger half in: the light does not pass through the nail.",
-        "Moving the hand: unstable reading.",
-        ""
+        "Skin with lotion or sweat: the electrode peels off and the ECG loses signal.",
+        "Loose band: the recorder moves and adds noise to the ECG.",
+        "Leads swapped between colours: the leads read inverted.",
+        "Loose cuff or over clothing: blood pressure reads high.",
+        "Dosimeter turned towards the body: you cannot see its dose alarms.",
+        "Talking or moving the arm while it inflates: wrong reading."
       ],
       "sensores": {
-        "pinza": {
-          "nombre": "Oximeter clip",
-          "donde": "Left index finger"
+        "ecg": {
+          "nombre": "4-electrode ECG",
+          "donde": "Red and green below the right collarbone; white and black below the left"
+        },
+        "registrador": {
+          "nombre": "ECG recorder",
+          "donde": "Middle of the band, over the sternum"
+        },
+        "manguito": {
+          "nombre": "Blood pressure cuff",
+          "donde": "Left arm, at heart level"
+        },
+        "dosimetro": {
+          "nombre": "Personal dosimeter",
+          "donde": "Band, right side of the chest"
         }
       },
       "ficha": {
-        "inspiradoEn": "Clinical fingertip pulse oximeter",
-        "mide": ["SpO₂ (red and infrared light)", "Pulse rate"]
+        "inspiradoEn": "AYNI team proposal: ECG Holter, personal dosimeter (like the ISS Crew Active Dosimeter) and upper-arm blood pressure monitor in one harness",
+        "mide": [
+          "4-electrode ECG (pulse and variability)",
+          "Breathing by impedance through the same electrodes",
+          "Blood pressure (oscillometric cuff)",
+          "Daily and cumulative radiation dose"
+        ],
+        "peso": "Concept design: recorder ≈ 66 × 118 × 24 mm, dosimeter ≈ 58 × 86 × 24 mm",
+        "autonomia": "Concept design: continuous ECG during the day and blood pressure at each scheduled reading"
       },
       "partes": {
-        "carcasa_superior": "Housing with LED emitter",
-        "pantalla": "SpO₂ / pulse display",
-        "almohadilla": "Silicone pads",
-        "carcasa_inferior": "Housing with photodetector",
-        "bisagra": "Spring hinge"
+        "banda": "Mesh chest band",
+        "tirantes": "Straps crossed on the back",
+        "discos": "Contact discs",
+        "registrador": "ECG recorder (Holter)",
+        "electrodos": "4 electrodes with leads",
+        "dosimetro": "Personal dosimeter",
+        "manguito": "Blood pressure cuff",
+        "manguera": "Cuff air tube"
       }
     },
     "generico_muneca": {

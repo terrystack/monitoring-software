@@ -1,17 +1,16 @@
 import * as THREE from 'three';
 import type { Dispositivo } from '../../config/esquemas';
 import { ANCLAJES } from '../cuerpo/anclajes';
-import { puntosAstroskin } from './astroskin/geometria';
+import { puntosArnes } from './arnes/geometria';
 import type { SensorDispositivo } from './estadoSensor';
 import { puntoSuperficie, type Perfil } from './medidas';
-import { puntosOximetro } from './oximetro/geometria';
 import { puntosPuma } from './puma/geometria';
 
-export type Modelo = 'astroskin' | 'puma' | 'oximetro';
+export type Modelo = 'puma' | 'arnes';
 
 export function modeloDe(d: Dispositivo | undefined): Modelo {
   const m = d?.modelo.replace('procedural:', '');
-  return m === 'puma' || m === 'oximetro' ? m : 'astroskin';
+  return m === 'arnes' ? 'arnes' : 'puma';
 }
 
 /** Posición (mundo) de un sensor según su tipo de posición. */
@@ -34,7 +33,6 @@ export function posicionSensor(
 }
 
 export function puntosDe(modelo: Modelo, torso: Perfil) {
-  if (modelo === 'puma') return puntosPuma(torso);
-  if (modelo === 'oximetro') return puntosOximetro();
-  return puntosAstroskin(torso);
+  if (modelo === 'arnes') return puntosArnes();
+  return puntosPuma(torso);
 }

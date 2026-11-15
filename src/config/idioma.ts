@@ -63,7 +63,12 @@ export const esquemaTraduccion = z
           erroresPasos: z.array(z.string()).optional(),
           sensores: z.record(z.string(), z.object({ nombre: t, donde: t }).strict()).optional(),
           ficha: z
-            .object({ inspiradoEn: t, mide: z.array(t) })
+            .object({
+              inspiradoEn: t,
+              mide: z.array(t),
+              peso: t.optional(),
+              autonomia: t.optional(),
+            })
             .strict()
             .optional(),
           partes: z.record(z.string(), t).optional(),

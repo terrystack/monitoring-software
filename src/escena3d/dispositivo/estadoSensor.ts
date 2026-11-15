@@ -5,7 +5,7 @@ import { peorEstado } from '../../motor/reglas';
 
 export type SensorDispositivo = NonNullable<Dispositivo['sensores']>[number];
 
-/** Dispositivos con sensores y modelo 3D (Astroskin, PUMA, oxímetro). */
+/** Dispositivos con sensores y modelo 3D (PUMA y arnés ECG). */
 export function dispositivosConSensores(config: ConfigAyni): Dispositivo[] {
   return config.dispositivos.filter((d) => d.sensores?.length);
 }

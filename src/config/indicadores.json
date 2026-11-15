@@ -1041,7 +1041,7 @@
       }
     ],
     "textos": {
-      "queEs": "Cuántas veces respiras por minuto en reposo, medido por las bandas de la camiseta.",
+      "queEs": "Cuántas veces respiras por minuto en reposo, medido por el registrador del arnés a través de los electrodos del ECG (impedancia torácica).",
       "queSignifica": "Respirar más rápido que tu normal en reposo puede acompañar al CO₂ alto, la fiebre o la ansiedad.",
       "porQueEspacio": "En microgravedad el diafragma y el tórax trabajan distinto, y el CO₂ de la cabina estimula la respiración."
     },
@@ -1051,9 +1051,9 @@
       "Repite la medición en 30 minutos."
     ],
     "avisoMedico": "Si en reposo supera 24 por minuto o se acompaña de falta de aire.",
-    "fuente": "https://www.asc-csa.gc.ca/eng/sciences/bio-monitor.asp",
-    "fuenteNombre": "CSA Bio-Monitor (Astroskin)",
-    "dispositivo": "astroskin",
+    "fuente": "https://www.ti.com/lit/pdf/sbaa181",
+    "fuenteNombre": "Texas Instruments · neumografía por impedancia",
+    "dispositivo": "arnes_ecg",
     "entrada": "dispositivo",
     "sintetico": {
       "media": 14,

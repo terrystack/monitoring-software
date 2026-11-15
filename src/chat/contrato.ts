@@ -52,7 +52,7 @@ export interface ContextoAgente {
   /** Solo zonas en atención o crítico y la seleccionada; `indicadores` son ids. */
   tarjetas: Record<string, Omit<TarjetaAccion, 'indicadores'> & { indicadores: string[] }>;
   agendaHoy: { id: string; titulo: string; hora: string; estado: string }[];
-  /** Dispositivos de la pestaña Medición (Astroskin, PUMA, oxímetro). */
+  /** Dispositivos de la pestaña Medición (PUMA y arnés ECG). */
   dispositivos: {
     id: string;
     nombre: string;

@@ -219,7 +219,7 @@
     "¿Cómo estoy hoy?",
     "¿Por qué mi corazón está en ámbar?",
     "Muéstrame mi sueño de las últimas 2 semanas",
-    "¿Cómo me pongo la camiseta Astroskin?",
+    "¿Cómo me pongo el arnés ECG?",
     "¿Debo avisar al médico de vuelo?"
   ],
   "indicadoresDestacados": [
@@ -253,7 +253,9 @@
         "como me pongo",
         "colocar",
         "chaleco",
-        "camiseta",
+        "arnes",
+        "manguito",
+        "electrodos",
         "mascara",
         "dispositivo",
         "dispositivos"
@@ -301,11 +303,11 @@
     "aviso": "Cuándo avisar al médico de vuelo: {aviso}",
     "indicador": "{nombre} hoy: {valor}; tu normal: {normal}.",
     "indicadorSinNormal": "{nombre} hoy: {valor}.",
-    "sinValor": "Todavía no tengo mediciones de {nombre}; puedes medirlo con Astroskin, PUMA o el oxímetro o registrarlo.",
+    "sinValor": "Todavía no tengo mediciones de {nombre}; puedes medirlo con PUMA o el arnés ECG o registrarlo.",
     "prediccion": "Según tus datos, podría salir de tu normal en {n} días.",
     "dispositivo": "{dispositivo}, paso {n}: {paso}",
     "medicoNada": "Ninguna zona está fuera de tu normal; sigue tu rutina y avisa si aparecen síntomas.",
-    "noEntiendo": "Puedo explicarte tu estado de hoy, una zona del cuerpo, un indicador o cómo medirte con Astroskin, PUMA o el oxímetro.",
+    "noEntiendo": "Puedo explicarte tu estado de hoy, una zona del cuerpo, un indicador o cómo medirte con PUMA o el arnés ECG.",
     "noDiagnostico": "No puedo diagnosticar enfermedades; solo comparo tus datos con tu normal.",
     "noMedicamento": "No receto medicamentos ni dosis: eso lo decide el médico de vuelo.",
     "sinInternet": "No tengo internet; te explico con lo que hay a bordo.",

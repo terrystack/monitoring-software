@@ -17,7 +17,7 @@ interface Props {
   seleccion: Seleccion;
 }
 
-/** Pestaña 3 · Medición: Astroskin, PUMA y oxímetro (AYNI_DISPOSITIVOS_3D.md). */
+/** Pestaña 3 · Medición: PUMA y arnés ECG (AYNI_DISPOSITIVOS_3D.md). */
 export function PestanaMedicion({ config, seleccion }: Props) {
   const { textos } = config.escena;
   const activo = useAyni((s) => s.dispositivoActivo);

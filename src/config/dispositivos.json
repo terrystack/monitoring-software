@@ -1,151 +1,5 @@
 [
   {
-    "id": "astroskin",
-    "nombre": "Astroskin · camiseta biométrica",
-    "modelo": "procedural:astroskin",
-    "anclaje": "pecho",
-    "indicadores": [
-      "pulso_reposo",
-      "hrv",
-      "frecuencia_respiratoria",
-      "temperatura",
-      "spo2",
-      "presion_sistolica",
-      "ejercicio_min",
-      "sueno_horas"
-    ],
-    "ficha": {
-      "inspiradoEn": "Astroskin / Bio-Monitor (CSA · Carré Technologies), en la ISS desde 2018",
-      "fuente": "https://www.asc-csa.gc.ca/eng/sciences/bio-monitor.asp",
-      "mide": [
-        "ECG de 3 derivaciones",
-        "Respiración (2 bandas RIP)",
-        "Temperatura de piel",
-        "SpO₂ en la frente",
-        "Presión sistólica por tiempo de tránsito de pulso",
-        "Actividad y sueño"
-      ],
-      "peso": "Camiseta ligera + registrador con 2 pilas AA",
-      "autonomia": "48 h por carga"
-    },
-    "partes": {
-      "camiseta": "Camiseta sin mangas",
-      "banda_rip_torax": "Banda RIP torácica",
-      "banda_rip_abdomen": "Banda RIP abdominal",
-      "electrodos": "4 electrodos textiles de ECG",
-      "temp_piel": "Sensor de temperatura",
-      "registrador": "Registrador (acelerómetro, Bluetooth)",
-      "bolsillo": "Bolsillo lateral",
-      "banda_cabeza": "Banda de cabeza",
-      "modulo_ppg": "Módulo PPG / SpO₂"
-    },
-    "sensores": [
-      {
-        "id": "ecg",
-        "nombre": "ECG de 3 derivaciones",
-        "donde": "4 electrodos textiles en el pecho y bajo las costillas",
-        "indicadores": ["pulso_reposo", "hrv"],
-        "posicion": {
-          "tipo": "torso",
-          "altura": 1.4,
-          "angulo": 30
-        }
-      },
-      {
-        "id": "rip",
-        "nombre": "Bandas de respiración (RIP)",
-        "donde": "Alrededor del tórax y del abdomen",
-        "indicadores": ["frecuencia_respiratoria"],
-        "posicion": {
-          "tipo": "torso",
-          "altura": 1.27,
-          "angulo": -18
-        }
-      },
-      {
-        "id": "temp_piel",
-        "nombre": "Temperatura de piel",
-        "donde": "Costado izquierdo, bajo la axila",
-        "indicadores": ["temperatura"],
-        "posicion": {
-          "tipo": "torso",
-          "altura": 1.25,
-          "angulo": 88
-        }
-      },
-      {
-        "id": "ppg_frente",
-        "nombre": "PPG y SpO₂ en la frente",
-        "donde": "Banda de cabeza, centro de la frente",
-        "indicadores": ["spo2"],
-        "posicion": {
-          "tipo": "cabeza",
-          "altura": 1.715,
-          "angulo": 0
-        }
-      },
-      {
-        "id": "registrador",
-        "nombre": "Registrador",
-        "donde": "Bolsillo del costado izquierdo",
-        "indicadores": ["presion_sistolica", "ejercicio_min", "sueno_horas"],
-        "posicion": {
-          "tipo": "pieza",
-          "pieza": "registrador"
-        }
-      }
-    ],
-    "pasos": [
-      {
-        "texto": "Humedece los 4 electrodos textiles del interior de la camiseta.",
-        "animacion": "presentar",
-        "duracionMs": 2500,
-        "sensor": "ecg",
-        "error": "Electrodos secos: el ECG pierde señal."
-      },
-      {
-        "texto": "Ponte la camiseta ajustada, pegada a la piel.",
-        "animacion": "colocar",
-        "duracionMs": 2500,
-        "error": "Talla grande: las bandas no leen la respiración."
-      },
-      {
-        "texto": "Comprueba que las bandas queden a la altura del pecho y del ombligo.",
-        "animacion": "ajustar",
-        "duracionMs": 2200,
-        "sensor": "rip",
-        "error": "Banda del pecho demasiado alta: subestima el volumen."
-      },
-      {
-        "texto": "Colócate la banda de cabeza con el sensor en el centro de la frente.",
-        "animacion": "ajustar",
-        "duracionMs": 2200,
-        "sensor": "ppg_frente",
-        "error": "Sensor sobre el pelo o la ceja: SpO₂ inestable."
-      },
-      {
-        "texto": "Inserta el registrador en el bolsillo lateral y enciéndelo.",
-        "animacion": "ajustar",
-        "duracionMs": 2200,
-        "sensor": "registrador",
-        "error": "Registrador sin conectar al broche: no se graba nada."
-      },
-      {
-        "texto": "Quédate quieto 60 segundos para la primera lectura en reposo.",
-        "animacion": "medir",
-        "duracionMs": 4000,
-        "resaltarZona": "corazon",
-        "error": "Medir justo después de ejercicio: el pulso alto da una alerta falsa."
-      }
-    ],
-    "erroresComunes": [
-      {
-        "texto": "Talla grande: las bandas no leen la respiración.",
-        "desplazamiento": [0, -0.04, 0]
-      }
-    ]
-  },
-  {
     "id": "puma",
     "nombre": "PUMA · análisis metabólico",
     "modelo": "procedural:puma",
@@ -273,69 +127,130 @@
     ]
   },
   {
-    "id": "oximetro",
-    "nombre": "Pulsioxímetro de dedo",
-    "modelo": "procedural:oximetro",
-    "anclaje": "dedo_indice",
-    "indicadores": ["spo2", "pulso_reposo"],
+    "id": "arnes_ecg",
+    "nombre": "Arnés ECG · dosímetro y presión",
+    "modelo": "procedural:arnes",
+    "anclaje": "pecho",
+    "indicadores": [
+      "pulso_reposo",
+      "hrv",
+      "frecuencia_respiratoria",
+      "presion_sistolica",
+      "presion_diastolica",
+      "dosis_radiacion",
+      "tasa_dosis_dia"
+    ],
     "ficha": {
-      "inspiradoEn": "Pulsioxímetro de dedo de uso clínico",
-      "fuente": "https://www.fda.gov/medical-devices/safety-communications/pulse-oximeter-accuracy-and-limitations-fda-safety-communication",
-      "mide": ["SpO₂ (luz roja e infrarroja)", "Frecuencia de pulso"],
-      "peso": "≈ 58 × 33 × 32 mm, 30–60 g",
-      "autonomia": "2 pilas AAA"
+      "inspiradoEn": "Propuesta del equipo AYNI: Holter de ECG, dosímetro personal (como el Crew Active Dosimeter de la ISS) y tensiómetro de brazo en un solo arnés",
+      "fuente": "https://srag.jsc.nasa.gov/spaceradiation/how/how.cfm",
+      "mide": [
+        "ECG de 4 electrodos (pulso y variabilidad)",
+        "Respiración por impedancia con los mismos electrodos",
+        "Presión arterial (manguito oscilométrico)",
+        "Dosis de radiación del día y acumulada"
+      ],
+      "peso": "Diseño conceptual: registrador ≈ 66 × 118 × 24 mm, dosímetro ≈ 58 × 86 × 24 mm",
+      "autonomia": "Diseño conceptual: ECG continuo en el día y presión en cada medición programada"
     },
     "partes": {
-      "carcasa_superior": "Carcasa con emisor LED",
-      "pantalla": "Pantalla SpO₂ / pulso",
-      "almohadilla": "Almohadillas de silicona",
-      "carcasa_inferior": "Carcasa con fotodetector",
-      "bisagra": "Bisagra con resorte"
+      "banda": "Banda torácica de malla",
+      "tirantes": "Tirantes cruzados en la espalda",
+      "discos": "Discos de contacto",
+      "registrador": "Registrador ECG (Holter)",
+      "electrodos": "4 electrodos con cables",
+      "dosimetro": "Dosímetro personal",
+      "manguito": "Manguito de presión",
+      "manguera": "Tubo de aire del manguito"
     },
     "sensores": [
       {
-        "id": "pinza",
-        "nombre": "Pinza del oxímetro",
-        "donde": "Índice izquierdo",
-        "indicadores": ["spo2", "pulso_reposo"],
+        "id": "ecg",
+        "nombre": "ECG de 4 electrodos",
+        "donde": "Rojo y verde bajo la clavícula derecha; blanco y negro bajo la izquierda",
+        "indicadores": ["pulso_reposo", "hrv"],
         "posicion": {
           "tipo": "pieza",
-          "pieza": "pinza"
+          "pieza": "electrodos"
+        }
+      },
+      {
+        "id": "registrador",
+        "nombre": "Registrador ECG",
+        "donde": "Centro de la banda, sobre el esternón",
+        "indicadores": ["frecuencia_respiratoria"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "registrador"
+        }
+      },
+      {
+        "id": "manguito",
+        "nombre": "Manguito de presión",
+        "donde": "Brazo izquierdo, a la altura del corazón",
+        "indicadores": ["presion_sistolica", "presion_diastolica"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "manguito"
+        }
+      },
+      {
+        "id": "dosimetro",
+        "nombre": "Dosímetro personal",
+        "donde": "Banda, lado derecho del pecho",
+        "indicadores": ["dosis_radiacion", "tasa_dosis_dia"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "dosimetro"
         }
       }
     ],
     "pasos": [
       {
-        "texto": "Dedo limpio y tibio, sin esmalte oscuro.",
+        "texto": "Pega los 4 electrodos: rojo y verde bajo la clavícula derecha, blanco y negro bajo la izquierda.",
         "animacion": "presentar",
-        "duracionMs": 2000,
-        "error": "Dedo frío: la SpO₂ sale baja sin estarlo."
+        "duracionMs": 2500,
+        "sensor": "ecg",
+        "error": "Piel con crema o sudor: el electrodo se despega y el ECG pierde señal."
       },
       {
-        "texto": "Abre la pinza e introduce el índice hasta el tope.",
+        "texto": "Ponte el arnés: la banda bajo el pecho y los tirantes cruzados en la espalda.",
         "animacion": "colocar",
         "duracionMs": 2500,
-        "sensor": "pinza",
-        "error": "Dedo a medio entrar: la luz no atraviesa la uña."
+        "error": "Banda floja: el registrador se mueve y mete ruido en el ECG."
       },
       {
-        "texto": "Apoya la mano y no hables durante 30 segundos.",
+        "texto": "Conecta los 4 cables al registrador del centro y enciéndelo.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "sensor": "registrador",
+        "error": "Cables cruzados entre colores: las derivaciones salen invertidas."
+      },
+      {
+        "texto": "Coloca el manguito en el brazo izquierdo, dos dedos sobre el codo, con el tubo hacia abajo.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "sensor": "manguito",
+        "error": "Manguito flojo o sobre la ropa: la presión sale alta."
+      },
+      {
+        "texto": "Comprueba que el dosímetro quede fijo en la banda con la pantalla hacia afuera.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "sensor": "dosimetro",
+        "error": "Dosímetro girado hacia el cuerpo: no ves sus alarmas de dosis."
+      },
+      {
+        "texto": "Siéntate quieto 5 minutos: el manguito se infla y AYNI muestra tu presión y tu ECG.",
         "animacion": "medir",
-        "duracionMs": 3000,
-        "sensor": "pinza",
-        "error": "Mover la mano: lectura inestable."
-      },
-      {
-        "texto": "Compara con la SpO₂ de la banda de cabeza; si difieren más de 3 puntos, repite.",
-        "animacion": "mostrar_resultado",
-        "duracionMs": 2500,
-        "resaltarZona": "pulmones"
+        "duracionMs": 4000,
+        "resaltarZona": "corazon",
+        "error": "Hablar o mover el brazo durante el inflado: lectura errónea."
       }
     ],
     "erroresComunes": [
       {
-        "texto": "Dedo a medio entrar: la luz no atraviesa la uña.",
-        "desplazamiento": [0, -0.02, 0.01]
+        "texto": "Banda floja: el registrador se mueve y mete ruido en el ECG.",
+        "desplazamiento": [0, -0.04, 0]
       }
     ]
   },
