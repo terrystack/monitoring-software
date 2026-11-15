@@ -123,5 +123,18 @@
     "duracionMin": 5,
     "puntos": 20,
     "obligatoria": true
+  },
+  {
+    "id": "prueba_metabolica",
+    "titulo": "Prueba metabólica en cicloergómetro (PUMA)",
+    "franja": "semanal",
+    "hora": "15:00",
+    "diasSemana": [3],
+    "indicadores": ["vo2", "vco2", "ventilacion_minuto", "cociente_respiratorio"],
+    "dispositivo": "puma",
+    "duracionMin": 20,
+    "puntos": 25,
+    "obligatoria": true,
+    "contexto": "ejercicio"
   }
 ]

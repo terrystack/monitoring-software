@@ -20,8 +20,9 @@ export interface IndicadorContexto {
   cruceProbableEnDias: number | null;
   /** `queSignifica` solo viene si el indicador está en atención o crítico. */
   textos: { queEs: string; queSignifica?: string; porQueEspacio: string };
-  acciones: string[];
-  avisoMedico: string;
+  /** Acciones y aviso solo vienen si el indicador está en atención o crítico (ahorra contexto). */
+  acciones?: string[];
+  avisoMedico?: string;
   fuenteNombre: string;
 }
 
@@ -51,12 +52,14 @@ export interface ContextoAgente {
   /** Solo zonas en atención o crítico y la seleccionada; `indicadores` son ids. */
   tarjetas: Record<string, Omit<TarjetaAccion, 'indicadores'> & { indicadores: string[] }>;
   agendaHoy: { id: string; titulo: string; hora: string; estado: string }[];
-  dispositivo: {
+  /** Dispositivos de la pestaña Medición (Astroskin, PUMA, oxímetro). */
+  dispositivos: {
     id: string;
     nombre: string;
+    inspiradoEn?: string;
     pasos: { n: number; texto: string; error?: string }[];
     sensores: { id: string; nombre: string; donde: string; indicadores: string[] }[];
-  } | null;
+  }[];
   capas: string[];
   lecturasDescartadas: { indicador: string; motivo: string }[];
   limites: { radiacionCarreraMSv: number | null; co2: string };

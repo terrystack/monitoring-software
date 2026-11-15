@@ -7,7 +7,7 @@ describe('esquemas de configuración', () => {
   it('la configuración del repositorio es válida', () => {
     const r = cargarConfig();
     if (!r.ok) throw new Error(r.errores.map(formatearErrorConfig).join('\n'));
-    expect(r.config.indicadores).toHaveLength(23);
+    expect(r.config.indicadores).toHaveLength(28);
     expect(r.config.zonas).toHaveLength(11);
     expect(r.config.escenarios.map((e) => e.id)).toEqual([
       'normal',

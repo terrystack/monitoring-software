@@ -10,18 +10,21 @@ interface Props {
   config: ConfigAyni;
   paso: number;
   sensor: string | null;
+  dispositivo?: string;
 }
 
-/** Guía del chaleco en el lienzo: la escena de Medición en el paso o sensor pedido. */
-export default function GuiaLienzo({ config, paso, sensor }: Props) {
-  const disp = dispositivoConSensores(config);
+/** Guía del dispositivo en el lienzo: la escena de Medición en el paso o sensor pedido. */
+export default function GuiaLienzo({ config, paso, sensor, dispositivo }: Props) {
+  const activo = useAyni((s) => s.dispositivoActivo);
+  const disp = dispositivoConSensores(config, activo);
   const { textos } = config.escena;
 
   useEffect(() => {
     const s = useAyni.getState();
+    if (dispositivo) s.setDispositivoActivo(dispositivo);
     s.setPasoDispositivo(Math.max(0, paso - 1));
     s.setSensorSeleccionado(sensor);
-  }, [paso, sensor]);
+  }, [paso, sensor, dispositivo]);
 
   if (!disp) return null;
   const p = disp.pasos[Math.min(paso, disp.pasos.length) - 1];

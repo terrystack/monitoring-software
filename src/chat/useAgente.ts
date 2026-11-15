@@ -17,15 +17,19 @@ type DispositivoConSensores = ConfigAyni['dispositivos'][number] & {
 };
 
 export function idsValidos(config: ConfigAyni): IdsValidos {
-  const disp =
-    (config.dispositivos as DispositivoConSensores[]).find((d) => d.sensores?.length) ??
-    config.dispositivos[0];
+  const lista = (config.dispositivos as DispositivoConSensores[]).filter((d) => d.sensores?.length);
+  const dispositivos = lista.map((d) => ({
+    id: d.id,
+    sensores: (d.sensores ?? []).map((s) => s.id),
+    pasos: d.pasos.length,
+  }));
   return {
     zonas: config.zonas.map((z) => z.id),
     indicadores: config.indicadores.map((i) => i.id),
     capas: config.escena.capas.map((c) => c.id),
-    sensores: (disp as DispositivoConSensores | undefined)?.sensores?.map((s) => s.id) ?? [],
-    pasos: disp?.pasos.length ?? 1,
+    sensores: dispositivos.flatMap((d) => d.sensores),
+    pasos: Math.max(1, ...dispositivos.map((d) => d.pasos)),
+    dispositivos,
   };
 }
 

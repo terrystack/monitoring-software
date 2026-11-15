@@ -67,6 +67,7 @@ export function Lienzo({ config, seleccion }: Props) {
   const abrirEnPestana = () => {
     const s = useAyni.getState();
     if (lienzo.tipo === 'dispositivo') {
+      if (lienzo.dispositivo) s.setDispositivoActivo(lienzo.dispositivo);
       s.setPasoDispositivo(lienzo.paso - 1);
       s.setSensorSeleccionado(lienzo.sensor);
     }
@@ -188,7 +189,14 @@ function Vista({ lienzo, config, seleccion }: { lienzo: EstadoLienzo } & Props) 
         </div>
       );
     case 'dispositivo':
-      return <GuiaLienzo config={config} paso={lienzo.paso} sensor={lienzo.sensor} />;
+      return (
+        <GuiaLienzo
+          config={config}
+          paso={lienzo.paso}
+          sensor={lienzo.sensor}
+          dispositivo={lienzo.dispositivo}
+        />
+      );
     case 'resumen':
       return (
         <div className="h-full overflow-y-auto p-4">

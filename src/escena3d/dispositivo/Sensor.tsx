@@ -16,11 +16,11 @@ interface Props {
   animado: boolean;
   conEtiqueta: boolean;
   alElegir: () => void;
+  /** Radio de la esfera (m); más chico en dispositivos pequeños. */
+  radio?: number;
 }
 
-const RADIO = 0.011;
-
-/** Sensor del chaleco: esfera emisiva del color del peor estado que mide, con su valor. */
+/** Sensor de un dispositivo: esfera emisiva del color del peor estado que mide, con su valor. */
 export function Sensor({
   id,
   nombre,
@@ -32,6 +32,7 @@ export function Sensor({
   animado,
   conEtiqueta,
   alElegir,
+  radio = 0.011,
 }: Props) {
   const malla = useRef<THREE.Mesh>(null);
   const fase = useRef(Math.random() * Math.PI * 2);
@@ -62,7 +63,7 @@ export function Sensor({
         onPointerOver={() => (document.body.style.cursor = 'pointer')}
         onPointerOut={() => (document.body.style.cursor = '')}
       >
-        <sphereGeometry args={[RADIO, 20, 14]} />
+        <sphereGeometry args={[radio, 20, 14]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
@@ -72,7 +73,7 @@ export function Sensor({
       {conEtiqueta && (etiqueta || destacado) && (
         <Html
           center
-          position={[0, 0.032, 0]}
+          position={[0, radio * 2.9, 0]}
           zIndexRange={[30, 10]}
           style={{ pointerEvents: 'none' }}
         >

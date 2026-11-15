@@ -94,7 +94,7 @@
       "pendiente": "Pending",
       "hecha": "Done",
       "atrasada": "Overdue",
-      "guiaDispositivo": "How to put on the vest",
+      "guiaDispositivo": "How to put it on",
       "errorComun": "Common mistake in this step",
       "anterior": "Previous",
       "siguientePaso": "Next step",
@@ -146,7 +146,15 @@
       "mide": "Measures: {lista}",
       "sinIndicadores": "Supports the other sensors",
       "valor": "Value",
-      "indicador": "Indicator"
+      "indicador": "Indicator",
+      "dispositivos": "Devices",
+      "verPiezas": "Show parts",
+      "armar": "Assemble",
+      "inspiradoEn": "Inspired by",
+      "queMide": "What it measures",
+      "peso": "Weight",
+      "autonomia": "Battery",
+      "noEsReplica": "Conceptual representation, no brand marks."
     },
     "etiquetasAptitud": {
       "normal": "Ready",
@@ -158,7 +166,7 @@
       "How am I today?",
       "Why is my heart amber?",
       "Show me my sleep over the last 2 weeks",
-      "How do I put on the vest?",
+      "How do I put on the Astroskin shirt?",
       "Should I call the flight surgeon?"
     ],
     "respaldo": {
@@ -181,7 +189,11 @@
           "put on",
           "how do i measure",
           "how do i put",
-          "wear the"
+          "wear the",
+          "shirt",
+          "mask",
+          "device",
+          "devices"
         ],
         "medico": ["surgeon", "doctor", "call"],
         "tendencia": ["trend", "evolution", "chart", "last", "week", "forecast", "show me"],
@@ -214,11 +226,11 @@
       "aviso": "When to call the flight surgeon: {aviso}",
       "indicador": "{nombre} today: {valor}; your normal: {normal}.",
       "indicadorSinNormal": "{nombre} today: {valor}.",
-      "sinValor": "I have no measurements of {nombre} yet; you can measure it with the vest or log it.",
+      "sinValor": "I have no measurements of {nombre} yet; you can measure it with Astroskin, PUMA or the oximeter or log it.",
       "prediccion": "Based on your data, it could leave your normal in {n} days.",
       "dispositivo": "{dispositivo}, step {n}: {paso}",
       "medicoNada": "No zone is outside your normal; keep your routine and report any symptoms.",
-      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with the vest.",
+      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with Astroskin, PUMA or the oximeter.",
       "noDiagnostico": "I can't diagnose diseases; I only compare your data with your normal.",
       "noMedicamento": "I don't prescribe medication or doses: the flight surgeon decides that.",
       "sinInternet": "I don't have internet; I explain with what is on board.",
@@ -620,6 +632,76 @@
         "Photograph the area to compare tomorrow."
       ],
       "avisoMedico": "If the lesion grows, oozes, hurts a lot or a fever appears."
+    },
+    "frecuencia_respiratoria": {
+      "nombre": "Respiratory rate",
+      "textos": {
+        "queEs": "How many breaths you take per minute at rest, measured by the shirt's bands.",
+        "queSignifica": "Breathing faster than your normal at rest can come with high CO₂, fever or anxiety.",
+        "porQueEspacio": "In microgravity the diaphragm and chest work differently, and cabin CO₂ drives breathing."
+      },
+      "acciones": [
+        "Sit down and do 2 minutes of slow breathing.",
+        "Check the cabin CO₂.",
+        "Repeat the measurement in 30 minutes."
+      ],
+      "avisoMedico": "If it goes above 24 per minute at rest or comes with shortness of breath."
+    },
+    "vo2": {
+      "nombre": "Oxygen uptake (peak VO₂)",
+      "textos": {
+        "queEs": "The oxygen your body uses at peak effort in the weekly cycle ergometer test.",
+        "queSignifica": "If it drops compared with the start of the mission, you are losing aerobic capacity.",
+        "porQueEspacio": "Without gravity the heart and muscles work less; aerobic capacity falls if exercise is not enough."
+      },
+      "acciones": [
+        "Complete your cycle and treadmill sessions this week.",
+        "Raise the intensity according to your training plan.",
+        "Repeat the test next week."
+      ],
+      "avisoMedico": "If it falls more than 15% from your start or you cannot finish the test."
+    },
+    "vco2": {
+      "nombre": "CO₂ output (peak VCO₂)",
+      "textos": {
+        "queEs": "The CO₂ you breathe out at peak effort in the weekly test.",
+        "queSignifica": "Together with VO₂ it shows which fuel your body uses when working hard.",
+        "porQueEspacio": "Changes in diet, muscle and training in flight change your exercise metabolism."
+      },
+      "acciones": [
+        "Check the mask seal before the test.",
+        "Compare it with your VO₂ from the same test.",
+        "Repeat the test next week."
+      ],
+      "avisoMedico": "If it changes a lot from one week to the next without changes in your training."
+    },
+    "ventilacion_minuto": {
+      "nombre": "Minute ventilation (peak)",
+      "textos": {
+        "queEs": "The air you move per minute at peak effort, measured by the mask's flow sensor.",
+        "queSignifica": "If it rises for the same effort, your lungs are working harder for the same work.",
+        "porQueEspacio": "Cabin CO₂ and loss of fitness change how much you need to breathe when exercising."
+      },
+      "acciones": [
+        "Check the mask seal.",
+        "Check the cabin CO₂ on test day.",
+        "Repeat the test next week."
+      ],
+      "avisoMedico": "If it rises a lot for the same effort or you feel disproportionately short of breath."
+    },
+    "cociente_respiratorio": {
+      "nombre": "Respiratory exchange ratio",
+      "textos": {
+        "queEs": "The ratio between the CO₂ you breathe out and the oxygen you use at peak effort.",
+        "queSignifica": "Around 1.1 at peak is usual; very high can mean the test went too hard or the mask leaked.",
+        "porQueEspacio": "It shows the fuel of the effort and checks that the mask measurement was good."
+      },
+      "acciones": [
+        "Check the mask seal and repeat the calibration.",
+        "Follow the test protocol without skipping stages.",
+        "Repeat the test next week."
+      ],
+      "avisoMedico": "If it is high in two tests in a row with a good seal."
     }
   },
   "reglasCompuestas": {
@@ -746,6 +828,166 @@
     }
   },
   "dispositivos": {
+    "astroskin": {
+      "nombre": "Astroskin · biometric shirt",
+      "pasos": [
+        "Moisten the 4 textile electrodes inside the shirt.",
+        "Put the shirt on snugly, close to the skin.",
+        "Check that the bands sit at chest and navel height.",
+        "Put on the headband with the sensor in the middle of your forehead.",
+        "Insert the recorder in the side pocket and switch it on.",
+        "Stay still for 60 seconds for the first resting reading."
+      ],
+      "erroresComunes": ["Shirt too big: the bands cannot read your breathing."],
+      "erroresPasos": [
+        "Dry electrodes: the ECG loses signal.",
+        "Shirt too big: the bands cannot read your breathing.",
+        "Chest band too high: it underestimates volume.",
+        "Sensor over hair or eyebrow: unstable SpO₂.",
+        "Recorder not clipped in: nothing is recorded.",
+        "Measuring right after exercise: a high pulse gives a false alert."
+      ],
+      "sensores": {
+        "ecg": {
+          "nombre": "3-lead ECG",
+          "donde": "4 textile electrodes on the chest and below the ribs"
+        },
+        "rip": {
+          "nombre": "Breathing bands (RIP)",
+          "donde": "Around the chest and abdomen"
+        },
+        "temp_piel": {
+          "nombre": "Skin temperature",
+          "donde": "Left side, below the armpit"
+        },
+        "ppg_frente": {
+          "nombre": "Forehead PPG and SpO₂",
+          "donde": "Headband, middle of the forehead"
+        },
+        "registrador": {
+          "nombre": "Recorder",
+          "donde": "Left side pocket"
+        }
+      },
+      "ficha": {
+        "inspiradoEn": "Astroskin / Bio-Monitor (CSA · Carré Technologies), on the ISS since 2018",
+        "mide": [
+          "3-lead ECG",
+          "Breathing (2 RIP bands)",
+          "Skin temperature",
+          "Forehead SpO₂",
+          "Systolic pressure from pulse transit time",
+          "Activity and sleep"
+        ]
+      },
+      "partes": {
+        "camiseta": "Sleeveless shirt",
+        "banda_rip_torax": "Chest RIP band",
+        "banda_rip_abdomen": "Abdominal RIP band",
+        "electrodos": "4 textile ECG electrodes",
+        "temp_piel": "Temperature sensor",
+        "registrador": "Recorder (accelerometer, Bluetooth)",
+        "bolsillo": "Side pocket",
+        "banda_cabeza": "Headband",
+        "modulo_ppg": "PPG / SpO₂ module"
+      }
+    },
+    "puma": {
+      "nombre": "PUMA · metabolic analysis",
+      "pasos": [
+        "Pick the mask size and check the silicone seal.",
+        "Put the mask on covering nose and mouth.",
+        "Tighten the lower straps first, then the upper ones.",
+        "Clip the module on your right hip and connect the cable.",
+        "Breathe out hard: no air should escape at the edges.",
+        "Start pedalling: AYNI shows your VO₂ and ventilation live."
+      ],
+      "erroresComunes": ["Mask on the tip of the nose: leak at the top."],
+      "erroresPasos": [
+        "Broken seal or wrong size: cabin air gets in and VO₂ reads low.",
+        "Mask on the tip of the nose: leak at the top.",
+        "Upper straps too tight: the mask lifts at the bottom.",
+        "Tight cable: it pulls the mask while pedalling.",
+        "Seal leak: CO₂ reads diluted.",
+        ""
+      ],
+      "sensores": {
+        "o2": {
+          "nombre": "O₂ sensor",
+          "donde": "Left channel, next to the mask"
+        },
+        "co2_aliento": {
+          "nombre": "Breath CO₂ sensor",
+          "donde": "Left channel, after the O₂ sensor"
+        },
+        "flujo": {
+          "nombre": "Ultrasonic flow",
+          "donde": "Right channel"
+        },
+        "electronica": {
+          "nombre": "Electronics box",
+          "donde": "Right hip, on the belt"
+        }
+      },
+      "ficha": {
+        "inspiradoEn": "PUMA, Portable Unit for Metabolic Analysis (NASA Glenn)",
+        "mide": [
+          "Exhaled O₂ (fluorescence on optical fibre)",
+          "Exhaled CO₂ (infrared)",
+          "Air flow (ultrasound)",
+          "Gas pressure and temperature",
+          "VO₂, VCO₂ and minute ventilation"
+        ]
+      },
+      "partes": {
+        "mascara": "Oronasal mask",
+        "sello": "Silicone seal",
+        "manifold": "Manifold",
+        "canal_izq": "Left channel",
+        "sensor_o2": "O₂ sensor (fluorescence)",
+        "sensor_co2": "CO₂ sensor (infrared)",
+        "canal_der": "Right channel",
+        "sensor_flujo": "Ultrasonic flow",
+        "arnes": "Head harness",
+        "cable": "Cable and optical fibre",
+        "cinturon": "Belt",
+        "caja_electronica": "Electronics box",
+        "bateria": "7.2 V battery"
+      }
+    },
+    "oximetro": {
+      "nombre": "Fingertip pulse oximeter",
+      "pasos": [
+        "Clean, warm finger, no dark nail polish.",
+        "Open the clip and slide your index finger all the way in.",
+        "Rest your hand and do not talk for 30 seconds.",
+        "Compare with the headband SpO₂; if they differ by more than 3 points, repeat."
+      ],
+      "erroresComunes": ["Finger half in: the light does not pass through the nail."],
+      "erroresPasos": [
+        "Cold finger: SpO₂ reads low when it is not.",
+        "Finger half in: the light does not pass through the nail.",
+        "Moving the hand: unstable reading.",
+        ""
+      ],
+      "sensores": {
+        "pinza": {
+          "nombre": "Oximeter clip",
+          "donde": "Left index finger"
+        }
+      },
+      "ficha": {
+        "inspiradoEn": "Clinical fingertip pulse oximeter",
+        "mide": ["SpO₂ (red and infrared light)", "Pulse rate"]
+      },
+      "partes": {
+        "carcasa_superior": "Housing with LED emitter",
+        "pantalla": "SpO₂ / pulse display",
+        "almohadilla": "Silicone pads",
+        "carcasa_inferior": "Housing with photodetector",
+        "bisagra": "Spring hinge"
+      }
+    },
     "generico_muneca": {
       "nombre": "Vital signs wristband",
       "pasos": [
@@ -794,60 +1036,6 @@
       "erroresComunes": [
         "Dosimeter kept in a pocket or drawer: it does not record your real exposure."
       ]
-    },
-    "chaleco_ayni": {
-      "nombre": "AYNI biometric vest",
-      "pasos": [
-        "Moisten the electrodes: a drop of water on each ECG electrode improves skin contact.",
-        "Put the vest on snugly: close to the body without restricting breathing, with the band at sternum level.",
-        "Clip the oximeter on your index finger, clean and warm. Wait for the light to settle.",
-        "Keep the dosimeter in the chest pocket, also while you sleep.",
-        "Stay still for 60 seconds: the first resting reading sets your value for the day.",
-        "Done. Watch your heart update on the 3D body."
-      ],
-      "erroresComunes": ["Loose vest: the sensors move and read noise."],
-      "erroresPasos": [
-        "Dry electrodes: the pulse signal gets lost.",
-        "Loose vest: the sensors move and read noise.",
-        "Cold finger or dark nail polish: SpO₂ reads low without being low.",
-        "Dosimeter away from the body: the recorded dose is not yours.",
-        "Measuring right after exercise: a high pulse triggers a false alert.",
-        ""
-      ],
-      "sensores": {
-        "ecg": {
-          "nombre": "ECG electrodes",
-          "donde": "Chest, below the left collarbone and over the ribs"
-        },
-        "respiracion": {
-          "nombre": "Breathing band",
-          "donde": "Around the chest, at sternum level"
-        },
-        "oximetro": {
-          "nombre": "Oximeter",
-          "donde": "Clip on the index finger"
-        },
-        "temperatura": {
-          "nombre": "Skin temperature sensor",
-          "donde": "Left side, below the armpit"
-        },
-        "co2": {
-          "nombre": "Cabin CO₂ sensor",
-          "donde": "Right shoulder, near the mouth"
-        },
-        "dosimetro": {
-          "nombre": "Personal dosimeter",
-          "donde": "Chest pocket, right side"
-        },
-        "pulsera": {
-          "nombre": "Activity and sleep band",
-          "donde": "Left wrist"
-        },
-        "brazalete": {
-          "nombre": "Blood pressure and glucose cuff",
-          "donde": "Left arm, at heart level"
-        }
-      }
     }
   },
   "rutina": {
@@ -883,6 +1071,9 @@
     },
     "mhcl_semanal": {
       "titulo": "Mental Health Checklist (MHCL)"
+    },
+    "prueba_metabolica": {
+      "titulo": "Metabolic test on the cycle ergometer (PUMA)"
     }
   },
   "evaluaciones": {
@@ -949,10 +1140,22 @@
       "fuentePvt": "Based on Jones et al. (2022), SLEEP 45(3), and the PVT-B by Basner et al. (2011).",
       "mhclInstruccion": "During the past week, how often did you feel this way?",
       "mhclAnclas": [
-        { "valor": 0, "texto": "Never" },
-        { "valor": 3, "texto": "Rarely" },
-        { "valor": 7, "texto": "Often" },
-        { "valor": 10, "texto": "Always" }
+        {
+          "valor": 0,
+          "texto": "Never"
+        },
+        {
+          "valor": 3,
+          "texto": "Rarely"
+        },
+        {
+          "valor": 7,
+          "texto": "Often"
+        },
+        {
+          "valor": 10,
+          "texto": "Always"
+        }
       ],
       "preguntaDe": "Question {n} of {total}",
       "anterior": "Previous",

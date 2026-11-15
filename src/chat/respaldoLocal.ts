@@ -123,23 +123,42 @@ export function responderLocal(
   const indicadores = buscarIndicadores(pregunta, c, ignorar);
   const ind = indicadores[0] ?? null;
 
-  if (c.dispositivo) {
-    const pasosConfig = config.dispositivos.find((d) => d.id === c.dispositivo?.id)?.pasos ?? [];
+  if (c.dispositivos.length) {
     const deIndicadores = new Set(c.indicadores.flatMap((i) => terminos(i.nombre, ignorar)));
-    const sensor = c.dispositivo.sensores.find((s) =>
-      terminos(s.nombre, ignorar).some((t) => !deIndicadores.has(t) && pregunta.includes(t)),
-    );
-    if (sensor || contiene(pregunta, r.palabras.dispositivo)) {
+    const nuevo = (texto: string) =>
+      terminos(texto, ignorar).some((t) => !deIndicadores.has(t) && pregunta.includes(t));
+    let disp = c.dispositivos[0];
+    let sensor: (typeof disp.sensores)[number] | undefined;
+    for (const d of c.dispositivos) {
+      const s = d.sensores.find((x) => nuevo(x.nombre));
+      if (s) {
+        disp = d;
+        sensor = s;
+        break;
+      }
+    }
+    const porNombre = sensor
+      ? undefined
+      : c.dispositivos.find(
+          (d) =>
+            pregunta.includes(d.id) ||
+            terminos(d.nombre, ignorar, 4).some(
+              (t) => !deIndicadores.has(t) && pregunta.includes(t),
+            ),
+        );
+    if (porNombre) disp = porNombre;
+    if (sensor || porNombre || contiene(pregunta, r.palabras.dispositivo)) {
+      const pasosConfig = config.dispositivos.find((d) => d.id === disp.id)?.pasos ?? [];
       const i = sensor
         ? Math.max(
             0,
             pasosConfig.findIndex((p) => p.sensor === sensor.id),
           )
         : 0;
-      const paso = c.dispositivo.pasos[i];
+      const paso = disp.pasos[i];
       const partes = [
         plantilla(r.dispositivo, {
-          dispositivo: c.dispositivo.nombre,
+          dispositivo: disp.nombre,
           n: paso?.n ?? 1,
           paso: paso?.texto ?? '',
         }),
@@ -151,10 +170,12 @@ export function responderLocal(
         [
           {
             nombre: 'mostrar_guia_dispositivo',
-            args: sensor ? { paso: paso?.n ?? 1, sensor: sensor.id } : { paso: 1 },
+            args: sensor
+              ? { dispositivo: disp.id, paso: paso?.n ?? 1, sensor: sensor.id }
+              : { dispositivo: disp.id, paso: 1 },
           },
         ],
-        [c.dispositivo.id],
+        [disp.id],
       );
     }
   }
@@ -178,7 +199,8 @@ export function responderLocal(
     return respuesta(
       [
         r.animo,
-        enContexto && (enContexto.estado === 'atencion' || enContexto.estado === 'critico')
+        enContexto?.avisoMedico &&
+        (enContexto.estado === 'atencion' || enContexto.estado === 'critico')
           ? plantilla(r.aviso, { aviso: enContexto.avisoMedico })
           : '',
       ]
@@ -266,7 +288,7 @@ export function responderLocal(
     ];
     if (ind.cruceProbableEnDias !== null)
       partes.push(plantilla(r.prediccion, { n: ind.cruceProbableEnDias }));
-    if (ind.estado === 'atencion' || ind.estado === 'critico')
+    if ((ind.estado === 'atencion' || ind.estado === 'critico') && ind.avisoMedico)
       partes.push(plantilla(r.aviso, { aviso: ind.avisoMedico }));
     return respuesta(partes.join(' '), [grafico(ind)], [ind.id, ind.fuenteNombre]);
   }

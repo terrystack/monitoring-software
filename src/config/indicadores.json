@@ -1019,5 +1019,221 @@
       "frecuencia": "diaria",
       "decimales": 0
     }
+  },
+  {
+    "id": "frecuencia_respiratoria",
+    "nombre": "Frecuencia respiratoria",
+    "unidad": "rpm",
+    "zonas": ["pulmones"],
+    "validacion": {
+      "min": 4,
+      "max": 60
+    },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "promedio",
+    "contextosIgnorados": ["ejercicio"],
+    "reglas": [
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">",
+        "ambar": 20,
+        "rojo": 24
+      }
+    ],
+    "textos": {
+      "queEs": "Cuántas veces respiras por minuto en reposo, medido por las bandas de la camiseta.",
+      "queSignifica": "Respirar más rápido que tu normal en reposo puede acompañar al CO₂ alto, la fiebre o la ansiedad.",
+      "porQueEspacio": "En microgravedad el diafragma y el tórax trabajan distinto, y el CO₂ de la cabina estimula la respiración."
+    },
+    "acciones": [
+      "Siéntate y haz 2 minutos de respiración lenta.",
+      "Revisa el CO₂ de la cabina.",
+      "Repite la medición en 30 minutos."
+    ],
+    "avisoMedico": "Si en reposo supera 24 por minuto o se acompaña de falta de aire.",
+    "fuente": "https://www.asc-csa.gc.ca/eng/sciences/bio-monitor.asp",
+    "fuenteNombre": "CSA Bio-Monitor (Astroskin)",
+    "dispositivo": "astroskin",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 14,
+      "desv": 1.0,
+      "frecuencia": "tres_veces_dia",
+      "decimales": 0,
+      "flujoPropio": true
+    }
+  },
+  {
+    "id": "vo2",
+    "nombre": "Consumo de oxígeno (VO₂ pico)",
+    "unidad": "mL/kg/min",
+    "zonas": ["corazon", "musculos"],
+    "validacion": {
+      "min": 5,
+      "max": 80
+    },
+    "direccionRiesgo": "baja",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "porcentaje_cambio",
+        "referencia": "inicio",
+        "ambarPct": 8,
+        "rojoPct": 15
+      }
+    ],
+    "textos": {
+      "queEs": "El oxígeno que tu cuerpo usa en el máximo esfuerzo de la prueba semanal en el cicloergómetro.",
+      "queSignifica": "Si baja frente a tu inicio de misión, tu capacidad aeróbica se está perdiendo.",
+      "porQueEspacio": "Sin gravedad el corazón y los músculos trabajan menos; la capacidad aeróbica cae si el ejercicio no alcanza."
+    },
+    "acciones": [
+      "Cumple tus sesiones de cicloergómetro y cinta esta semana.",
+      "Sube la intensidad según tu plan de entrenamiento.",
+      "Repite la prueba la próxima semana."
+    ],
+    "avisoMedico": "Si cae más de 15 % frente a tu inicio o no puedes completar la prueba.",
+    "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
+    "fuenteNombre": "NASA Glenn PUMA",
+    "dispositivo": "puma",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 38,
+      "desv": 0.6,
+      "frecuencia": "rutina",
+      "decimales": 1,
+      "flujoPropio": true,
+      "tendenciaDiaria": -0.02
+    }
+  },
+  {
+    "id": "vco2",
+    "nombre": "Producción de CO₂ (VCO₂ pico)",
+    "unidad": "mL/kg/min",
+    "zonas": ["pulmones", "metabolismo"],
+    "validacion": {
+      "min": 5,
+      "max": 90
+    },
+    "direccionRiesgo": "ambas",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "porcentaje_cambio",
+        "referencia": "inicio",
+        "ambarPct": 15,
+        "rojoPct": 25
+      }
+    ],
+    "textos": {
+      "queEs": "El CO₂ que exhalas en el máximo esfuerzo de la prueba semanal.",
+      "queSignifica": "Junto con el VO₂ indica qué combustible usa tu cuerpo al esforzarse.",
+      "porQueEspacio": "Los cambios de dieta, músculo y entrenamiento en vuelo cambian el metabolismo del esfuerzo."
+    },
+    "acciones": [
+      "Revisa que la máscara selle bien antes de la prueba.",
+      "Compara con tu VO₂ de la misma prueba.",
+      "Repite la prueba la próxima semana."
+    ],
+    "avisoMedico": "Si cambia mucho de una semana a otra sin cambios en tu entrenamiento.",
+    "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
+    "fuenteNombre": "NASA Glenn PUMA",
+    "dispositivo": "puma",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 42,
+      "desv": 0.8,
+      "frecuencia": "rutina",
+      "decimales": 1,
+      "flujoPropio": true
+    }
+  },
+  {
+    "id": "ventilacion_minuto",
+    "nombre": "Ventilación minuto (pico)",
+    "unidad": "L/min",
+    "zonas": ["pulmones"],
+    "validacion": {
+      "min": 3,
+      "max": 200
+    },
+    "direccionRiesgo": "ambas",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "porcentaje_cambio",
+        "referencia": "inicio",
+        "ambarPct": 15,
+        "rojoPct": 25
+      }
+    ],
+    "textos": {
+      "queEs": "El aire que mueves por minuto en el máximo esfuerzo, medido por el sensor de flujo de la máscara.",
+      "queSignifica": "Si sube para el mismo esfuerzo, tus pulmones trabajan más para lo mismo.",
+      "porQueEspacio": "El CO₂ de la cabina y la pérdida de forma física cambian cuánto necesitas respirar al ejercitarte."
+    },
+    "acciones": [
+      "Revisa el sello de la máscara.",
+      "Revisa el CO₂ de la cabina el día de la prueba.",
+      "Repite la prueba la próxima semana."
+    ],
+    "avisoMedico": "Si sube mucho para el mismo esfuerzo o sientes falta de aire desproporcionada.",
+    "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
+    "fuenteNombre": "NASA Glenn PUMA",
+    "dispositivo": "puma",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 95,
+      "desv": 2.5,
+      "frecuencia": "rutina",
+      "decimales": 0,
+      "flujoPropio": true
+    }
+  },
+  {
+    "id": "cociente_respiratorio",
+    "nombre": "Cociente respiratorio",
+    "unidad": "VCO₂/VO₂",
+    "zonas": ["metabolismo"],
+    "validacion": {
+      "min": 0.6,
+      "max": 1.5
+    },
+    "direccionRiesgo": "sube",
+    "agregacionDiaria": "max",
+    "contextosIgnorados": [],
+    "reglas": [
+      {
+        "tipo": "limite_fijo",
+        "comparador": ">",
+        "ambar": 1.2,
+        "rojo": 1.35
+      }
+    ],
+    "textos": {
+      "queEs": "La relación entre el CO₂ que exhalas y el oxígeno que consumes al máximo esfuerzo.",
+      "queSignifica": "Cerca de 1,1 en el pico es lo habitual; muy alto puede indicar que la prueba se pasó de intensidad o que hay fuga.",
+      "porQueEspacio": "Permite ver el combustible del esfuerzo y validar que la medición con la máscara fue buena."
+    },
+    "acciones": [
+      "Revisa el sello de la máscara y repite la calibración.",
+      "Sigue el protocolo de la prueba sin saltarte etapas.",
+      "Repite la prueba la próxima semana."
+    ],
+    "avisoMedico": "Si sale alto en dos pruebas seguidas con buen sello.",
+    "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
+    "fuenteNombre": "NASA Glenn PUMA",
+    "dispositivo": "puma",
+    "entrada": "dispositivo",
+    "sintetico": {
+      "media": 1.1,
+      "desv": 0.03,
+      "frecuencia": "rutina",
+      "decimales": 2,
+      "flujoPropio": true
+    }
   }
 ]

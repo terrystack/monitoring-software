@@ -146,7 +146,7 @@
     "pendiente": "Pendiente",
     "hecha": "Hecha",
     "atrasada": "Atrasada",
-    "guiaDispositivo": "Cómo ponerte el chaleco",
+    "guiaDispositivo": "Cómo colocarlo",
     "errorComun": "Error común en este paso",
     "anterior": "Anterior",
     "siguientePaso": "Siguiente paso",
@@ -198,7 +198,15 @@
     "mide": "Mide: {lista}",
     "sinIndicadores": "Apoya a los demás sensores",
     "valor": "Valor",
-    "indicador": "Indicador"
+    "indicador": "Indicador",
+    "dispositivos": "Dispositivos",
+    "verPiezas": "Ver piezas",
+    "armar": "Armar",
+    "inspiradoEn": "Inspirado en",
+    "queMide": "Qué mide",
+    "peso": "Peso",
+    "autonomia": "Autonomía",
+    "noEsReplica": "Representación conceptual, sin marcas."
   },
   "etiquetasAptitud": {
     "normal": "Apto",
@@ -211,7 +219,7 @@
     "¿Cómo estoy hoy?",
     "¿Por qué mi corazón está en ámbar?",
     "Muéstrame mi sueño de las últimas 2 semanas",
-    "¿Cómo me pongo el chaleco?",
+    "¿Cómo me pongo la camiseta Astroskin?",
     "¿Debo avisar al médico de vuelo?"
   ],
   "indicadoresDestacados": [
@@ -238,13 +246,17 @@
       ],
       "estado": ["como estoy", "estado general", "resumen", "como voy"],
       "dispositivo": [
-        "chaleco",
         "medirme",
         "ponerme",
         "ponerse",
         "como me mido",
         "como me pongo",
-        "colocar"
+        "colocar",
+        "chaleco",
+        "camiseta",
+        "mascara",
+        "dispositivo",
+        "dispositivos"
       ],
       "medico": ["medico", "doctor", "avisar"],
       "tendencia": [
@@ -289,11 +301,11 @@
     "aviso": "Cuándo avisar al médico de vuelo: {aviso}",
     "indicador": "{nombre} hoy: {valor}; tu normal: {normal}.",
     "indicadorSinNormal": "{nombre} hoy: {valor}.",
-    "sinValor": "Todavía no tengo mediciones de {nombre}; puedes medirlo con el chaleco o registrarlo.",
+    "sinValor": "Todavía no tengo mediciones de {nombre}; puedes medirlo con Astroskin, PUMA o el oxímetro o registrarlo.",
     "prediccion": "Según tus datos, podría salir de tu normal en {n} días.",
     "dispositivo": "{dispositivo}, paso {n}: {paso}",
     "medicoNada": "Ninguna zona está fuera de tu normal; sigue tu rutina y avisa si aparecen síntomas.",
-    "noEntiendo": "Puedo explicarte tu estado de hoy, una zona del cuerpo, un indicador o cómo medirte con el chaleco.",
+    "noEntiendo": "Puedo explicarte tu estado de hoy, una zona del cuerpo, un indicador o cómo medirte con Astroskin, PUMA o el oxímetro.",
     "noDiagnostico": "No puedo diagnosticar enfermedades; solo comparo tus datos con tu normal.",
     "noMedicamento": "No receto medicamentos ni dosis: eso lo decide el médico de vuelo.",
     "sinInternet": "No tengo internet; te explico con lo que hay a bordo.",

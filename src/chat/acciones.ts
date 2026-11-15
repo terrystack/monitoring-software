@@ -10,6 +10,8 @@ export interface IdsValidos {
   capas: string[];
   sensores: string[];
   pasos: number;
+  /** Dispositivos con sensores: sus sensores y cuántos pasos tiene la guía. */
+  dispositivos?: { id: string; sensores: string[]; pasos: number }[];
 }
 
 export interface EfectoLlamada {
@@ -63,10 +65,32 @@ export function efectoDeLlamada(l: LlamadaVisualizacion, ids: IdsValidos): Efect
         : null;
     }
     case 'mostrar_guia_dispositivo': {
-      const r = z.object({ paso: paso.optional(), sensor: sensor.optional() }).safeParse(l.args);
-      return r.success
-        ? { lienzo: { tipo: 'dispositivo', paso: r.data.paso ?? 1, sensor: r.data.sensor ?? null } }
-        : null;
+      const lista = ids.dispositivos ?? [];
+      const r = z
+        .object({
+          dispositivo: z
+            .string()
+            .refine((v) => lista.some((d) => d.id === v))
+            .optional(),
+          paso: paso.optional(),
+          sensor: sensor.optional(),
+        })
+        .safeParse(l.args);
+      if (!r.success) return null;
+      const disp =
+        lista.find((d) => d.id === r.data.dispositivo) ??
+        lista.find((d) => r.data.sensor && d.sensores.includes(r.data.sensor)) ??
+        lista[0];
+      if (disp && r.data.sensor && !disp.sensores.includes(r.data.sensor)) return null;
+      const n = Math.min(r.data.paso ?? 1, disp?.pasos ?? ids.pasos);
+      return {
+        lienzo: {
+          tipo: 'dispositivo',
+          ...(disp ? { dispositivo: disp.id } : {}),
+          paso: n,
+          sensor: r.data.sensor ?? null,
+        },
+      };
     }
     case 'mostrar_resumen':
       return { lienzo: { tipo: 'resumen' } };

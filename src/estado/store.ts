@@ -57,6 +57,10 @@ interface EstadoApp {
   /** Guía del dispositivo (pestaña Medición y lienzo del agente). */
   pasoDispositivo: number;
   sensorSeleccionado: string | null;
+  /** Dispositivo de la pestaña Medición (id de dispositivos.json con sensores). */
+  dispositivoActivo: string | null;
+  /** Vista de despiece del dispositivo activo. */
+  despiece: boolean;
   /** Se incrementa con "Repetir paso" para relanzar la animación del paso activo. */
   repeticionPaso: number;
   /** Conversación con el Agente AYNI (no se persiste). */
@@ -91,6 +95,8 @@ interface EstadoApp {
   /** Escenario de demo: su tripulante, el entorno de ese tripulante y su día de demo. */
   elegirEscenario: (tripulanteId: string, dia: number) => void;
   alternarPaso: (clave: string) => void;
+  setDispositivoActivo: (id: string | null) => void;
+  setDespiece: (activo: boolean) => void;
   setLecturas: (lecturas: Lectura[]) => void;
   setLecturasManuales: (lecturas: Lectura[]) => void;
   setSesionesPvt: (sesiones: SesionPvtGuardada[]) => void;
@@ -138,6 +144,8 @@ export const useAyni = create<EstadoApp>()(
         zonaFiltro: null,
         pasoDispositivo: 0,
         sensorSeleccionado: null,
+        dispositivoActivo: null,
+        despiece: false,
         repeticionPaso: 0,
         chat: [],
         lienzo: { tipo: 'vacio' },
@@ -179,6 +187,18 @@ export const useAyni = create<EstadoApp>()(
         setZonaFiltro: (zonaFiltro) => set({ zonaFiltro }),
         setPasoDispositivo: (pasoDispositivo) => set({ pasoDispositivo }),
         setSensorSeleccionado: (sensorSeleccionado) => set({ sensorSeleccionado }),
+        setDispositivoActivo: (dispositivoActivo) =>
+          set((s) =>
+            s.dispositivoActivo === dispositivoActivo
+              ? {}
+              : {
+                  dispositivoActivo,
+                  pasoDispositivo: 0,
+                  sensorSeleccionado: null,
+                  despiece: false,
+                },
+          ),
+        setDespiece: (despiece) => set({ despiece }),
         repetirPaso: () => set((s) => ({ repeticionPaso: s.repeticionPaso + 1 })),
         agregarMensaje: (mensaje) => set((s) => ({ chat: [...s.chat, mensaje] })),
         limpiarChat: () => set({ chat: [] }),

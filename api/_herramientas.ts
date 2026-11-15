@@ -24,8 +24,11 @@ const enumDe = (valores: string[]) => ({ type: 'string', enum: valores });
 export function definirHerramientas(c: ContextoAgente): DefinicionHerramienta[] {
   const zonas = c.zonas.map((z) => z.id);
   const indicadores = c.indicadores.map((i) => i.id);
-  const sensores = c.dispositivo?.sensores.map((s) => s.id) ?? [];
-  const pasos = c.dispositivo?.pasos.length ?? 1;
+  const sensores = c.dispositivos.flatMap((d) => d.sensores.map((s) => s.id));
+  const pasos = Math.max(1, ...c.dispositivos.map((d) => d.pasos.length));
+  const dispositivo = c.dispositivos.length
+    ? { dispositivo: enumDe(c.dispositivos.map((d) => d.id)) }
+    : {};
   const dias = { type: 'integer', enum: [7, 14, 30] };
   const sensor = sensores.length ? { sensor: enumDe(sensores) } : {};
 
@@ -61,8 +64,13 @@ export function definirHerramientas(c: ContextoAgente): DefinicionHerramienta[] 
     },
     {
       nombre: 'consultar_dispositivo',
-      descripcion: 'Pasos, errores comunes y sensores del chaleco.',
-      parametros: objeto({ paso: { type: 'integer', minimum: 1, maximum: pasos }, ...sensor }),
+      descripcion:
+        'Pasos, errores comunes y sensores de un dispositivo (Astroskin, PUMA u oxímetro). Sin argumentos: la lista de dispositivos.',
+      parametros: objeto({
+        ...dispositivo,
+        paso: { type: 'integer', minimum: 1, maximum: pasos },
+        ...sensor,
+      }),
     },
     {
       nombre: 'mostrar_zona_3d',
@@ -93,8 +101,13 @@ export function definirHerramientas(c: ContextoAgente): DefinicionHerramienta[] 
     },
     {
       nombre: 'mostrar_guia_dispositivo',
-      descripcion: 'Muestra en el lienzo la guía del chaleco en un paso o sensor.',
-      parametros: objeto({ paso: { type: 'integer', minimum: 1, maximum: pasos }, ...sensor }),
+      descripcion:
+        'Muestra en el lienzo un dispositivo (Astroskin, PUMA u oxímetro) sobre el cuerpo, en un paso de su guía o un sensor.',
+      parametros: objeto({
+        ...dispositivo,
+        paso: { type: 'integer', minimum: 1, maximum: pasos },
+        ...sensor,
+      }),
     },
     {
       nombre: 'mostrar_resumen',
@@ -176,10 +189,22 @@ export function ejecutarLectura(
     case 'consultar_agenda':
       return c.agendaHoy;
     case 'consultar_dispositivo': {
-      if (!c.dispositivo) return { error: 'sin dispositivo' };
-      const paso = c.dispositivo.pasos.find((p) => p.n === args.paso);
-      const sensor = c.dispositivo.sensores.find((s) => s.id === args.sensor);
-      return paso || sensor ? { paso: paso ?? null, sensor: sensor ?? null } : c.dispositivo;
+      if (!c.dispositivos.length) return { error: 'sin dispositivo' };
+      const disp =
+        c.dispositivos.find((d) => d.id === args.dispositivo) ??
+        c.dispositivos.find((d) => d.sensores.some((s) => s.id === args.sensor));
+      if (!disp)
+        return c.dispositivos.map((d) => ({
+          id: d.id,
+          nombre: d.nombre,
+          inspiradoEn: d.inspiradoEn,
+          sensores: d.sensores.map((s) => s.nombre),
+        }));
+      const paso = disp.pasos.find((p) => p.n === args.paso);
+      const sensor = disp.sensores.find((s) => s.id === args.sensor);
+      return paso || sensor
+        ? { dispositivo: disp.id, paso: paso ?? null, sensor: sensor ?? null }
+        : disp;
     }
   }
 }

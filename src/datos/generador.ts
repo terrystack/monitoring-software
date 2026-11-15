@@ -121,6 +121,7 @@ function generarTripulante(
 
   for (let dia = 1; dia <= dias; dia++) {
     for (const ind of config.indicadores) {
+      if (ind.sintetico.flujoPropio) continue;
       if (ind.sintetico.frecuencia === 'rutina') {
         if (SORTEO_HEREDADO.has(ind.id)) aleatorio.gauss();
         continue;
@@ -175,7 +176,9 @@ function generarRutina(
 ): LecturaInterna[] {
   const { fechaInicio, dias } = config.tripulantes.generador;
   const lecturas: LecturaInterna[] = [];
-  const deRutina = config.indicadores.filter((i) => i.sintetico.frecuencia === 'rutina');
+  const deRutina = config.indicadores.filter(
+    (i) => i.sintetico.frecuencia === 'rutina' && !i.sintetico.flujoPropio,
+  );
   for (let dia = 1; dia <= dias; dia++) {
     const dow = diaSemanaDe(fechaInicio, dia);
     for (const ind of deRutina) {
@@ -206,6 +209,57 @@ function generarRutina(
         unidad: ind.unidad,
         valor: ajustar(derivado.calcular(l.valor), ind),
       });
+    }
+  }
+  return lecturas;
+}
+
+/** Semilla estable por indicador y tripulante (FNV-1a de 32 bits). */
+function semillaDe(base: number, texto: string): number {
+  let h = 0x811c9dc5 ^ base;
+  for (let i = 0; i < texto.length; i++) {
+    h ^= texto.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+
+/**
+ * Indicadores con `flujoPropio` (Astroskin y PUMA): cada indicador y tripulante tiene su propio
+ * flujo aleatorio, así añadirlos no cambia las demás lecturas ni los escenarios de demo.
+ */
+function generarPropios(trip: Tripulante, config: ConfigAyni): LecturaInterna[] {
+  const { fechaInicio, dias, semilla } = config.tripulantes.generador;
+  const lecturas: LecturaInterna[] = [];
+  for (const ind of config.indicadores.filter((i) => i.sintetico.flujoPropio)) {
+    const aleatorio = crearAleatorio(semillaDe(semilla, `${trip.id}/${ind.id}`));
+    for (let dia = 1; dia <= dias; dia++) {
+      const media =
+        ind.sintetico.media +
+        (trip.desviosPersonales[ind.id] ?? 0) +
+        (ind.sintetico.tendenciaDiaria ?? 0) * (dia - 1);
+      const tomas =
+        ind.sintetico.frecuencia === 'rutina'
+          ? tareasDe(ind, config)
+              .filter(
+                (t) =>
+                  t.franja !== 'semanal' ||
+                  (t.diasSemana ?? []).includes(diaSemanaDe(fechaInicio, dia)),
+              )
+              .map((t) => ({ hora: t.hora, contexto: t.contexto ?? contextoDe(ind, t.hora) }))
+          : horasDe(ind, config).map((hora) => ({ hora, contexto: contextoDe(ind, hora) }));
+      for (const { hora, contexto } of tomas) {
+        lecturas.push({
+          tripulanteId: trip.id,
+          fechaHora: fechaHoraIso(fechaInicio, dia, hora),
+          indicador: ind.id,
+          valor: ajustar(media + aleatorio.gauss() * ind.sintetico.desv, ind),
+          unidad: ind.unidad,
+          fuente: fuenteDe(ind),
+          contexto,
+          dia,
+        });
+      }
     }
   }
   return lecturas;
@@ -290,6 +344,7 @@ export function generarLecturas(config: ConfigAyni): Lectura[] {
   const base = [
     ...config.tripulantes.tripulantes.flatMap((t) => generarTripulante(t, config, aleatorio)),
     ...config.tripulantes.tripulantes.flatMap((t) => generarRutina(t, config, aleatorioRutina)),
+    ...config.tripulantes.tripulantes.flatMap((t) => generarPropios(t, config)),
   ];
   aplicarEscenarios(base, config, false);
   const acumulados = config.tripulantes.tripulantes.flatMap((t) =>

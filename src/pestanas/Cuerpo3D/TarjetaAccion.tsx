@@ -239,8 +239,10 @@ export function TarjetaAccion({ config, seleccion }: Props) {
             const indicadores = config.indicadores
               .filter((i) => i.zonas.includes(zonaId))
               .map((i) => i.id);
+            const sensor = sensorParaIndicadores(config, indicadores);
+            if (sensor) s.setDispositivoActivo(sensor.dispositivo);
             s.setPasoDispositivo(0);
-            s.setSensorSeleccionado(sensorParaIndicadores(config, indicadores)?.id ?? null);
+            s.setSensorSeleccionado(sensor?.id ?? null);
             setPestana('medicion');
           }}
           className="flex-1 whitespace-nowrap rounded-md border border-acento/60 bg-acento/15 px-3 py-2.5 text-[0.88rem] font-semibold text-tinta transition-colors hover:bg-acento/25"

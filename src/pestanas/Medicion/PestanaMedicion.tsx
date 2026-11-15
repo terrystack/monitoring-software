@@ -2,10 +2,13 @@ import { lazy, Suspense } from 'react';
 import type { ConfigAyni } from '../../config/esquemas';
 import { dispositivoConSensores } from '../../escena3d/dispositivo/estadoSensor';
 import type { Seleccion } from '../../estado/seleccion';
+import { useAyni } from '../../estado/store';
 import { AgendaDia } from './AgendaDia';
+import { FichaDispositivo } from './FichaDispositivo';
 import { GuiaPasos } from './GuiaPasos';
 import { ListaSensores } from './ListaSensores';
 import { RegistroManual } from './RegistroManual';
+import { SelectorDispositivo } from './SelectorDispositivo';
 
 const EscenaMedicion = lazy(() => import('../../escena3d/dispositivo/EscenaMedicion'));
 
@@ -14,10 +17,11 @@ interface Props {
   seleccion: Seleccion;
 }
 
-/** Pestaña 3 · Medición con el chaleco AYNI (AYNI_FUSION.md §7.2). */
+/** Pestaña 3 · Medición: Astroskin, PUMA y oxímetro (AYNI_DISPOSITIVOS_3D.md). */
 export function PestanaMedicion({ config, seleccion }: Props) {
   const { textos } = config.escena;
-  const disp = dispositivoConSensores(config);
+  const activo = useAyni((s) => s.dispositivoActivo);
+  const disp = dispositivoConSensores(config, activo);
 
   return (
     <div className="h-full overflow-y-auto overflow-x-hidden">
@@ -27,6 +31,7 @@ export function PestanaMedicion({ config, seleccion }: Props) {
           <AgendaDia config={config} seleccion={seleccion} />
         </div>
         <div className="relative order-1 h-[55vh] overflow-hidden rounded-lg border border-linea/50 lg:order-2 lg:h-auto">
+          {disp && <SelectorDispositivo config={config} activo={disp.id} />}
           <Suspense
             fallback={
               <p className="grid h-full place-items-center text-sm text-tinta-suave">
@@ -38,7 +43,8 @@ export function PestanaMedicion({ config, seleccion }: Props) {
           </Suspense>
         </div>
         <div className="order-2 flex min-h-0 flex-col gap-3 lg:order-3 lg:overflow-y-auto">
-          {disp && <GuiaPasos config={config} dispositivo={disp} />}
+          {disp && <FichaDispositivo config={config} dispositivo={disp} />}
+          {disp && <GuiaPasos key={disp.id} config={config} dispositivo={disp} />}
           {disp && <ListaSensores config={config} dispositivo={disp} />}
         </div>
         <div className="order-4 lg:col-span-3">

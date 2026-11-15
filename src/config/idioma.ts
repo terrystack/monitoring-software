@@ -62,6 +62,11 @@ export const esquemaTraduccion = z
           /** Error común de cada paso ("" si el paso no tiene). */
           erroresPasos: z.array(z.string()).optional(),
           sensores: z.record(z.string(), z.object({ nombre: t, donde: t }).strict()).optional(),
+          ficha: z
+            .object({ inspiradoEn: t, mide: z.array(t) })
+            .strict()
+            .optional(),
+          partes: z.record(z.string(), t).optional(),
         })
         .strict(),
     ),
@@ -281,6 +286,8 @@ export function traducirConfig(config: ConfigAyni, tr: Traduccion): ConfigAyni {
                   sensores: d.sensores.map((s) => ({ ...s, ...x.sensores?.[s.id] })),
                 }
               : {}),
+            ...(d.ficha && x.ficha ? { ficha: { ...d.ficha, ...x.ficha } } : {}),
+            ...(d.partes && x.partes ? { partes: { ...d.partes, ...x.partes } } : {}),
             erroresComunes: d.erroresComunes.map((e, i) => ({
               ...e,
               texto: x.erroresComunes[i] ?? e.texto,

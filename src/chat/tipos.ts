@@ -8,7 +8,7 @@ export type EstadoLienzo =
   | { tipo: 'cuerpo'; zona: string | null; capas?: IdCapa[] }
   | { tipo: 'grafico'; indicador: string; dias: DiasRango; prediccion: boolean }
   | { tipo: 'comparacion'; indicadores: [string, string]; dias: DiasRango }
-  | { tipo: 'dispositivo'; paso: number; sensor: string | null }
+  | { tipo: 'dispositivo'; dispositivo?: string; paso: number; sensor: string | null }
   | { tipo: 'resumen' };
 
 export type NombreVisualizacion =

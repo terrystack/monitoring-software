@@ -75,8 +75,9 @@ export function construirContexto(e: EntradaContexto): ContextoAgente {
         ev?.estado === 'atencion' || ev?.estado === 'critico'
           ? ind.textos
           : { queEs: ind.textos.queEs, porQueEspacio: ind.textos.porQueEspacio },
-      acciones: ind.acciones,
-      avisoMedico: ind.avisoMedico,
+      ...(ev?.estado === 'atencion' || ev?.estado === 'critico'
+        ? { acciones: ind.acciones, avisoMedico: ind.avisoMedico }
+        : {}),
       fuenteNombre: ind.fuenteNombre,
     };
   });
@@ -93,8 +94,9 @@ export function construirContexto(e: EntradaContexto): ContextoAgente {
       ]),
   );
 
-  const dispositivos = config.dispositivos as DispositivoConSensores[];
-  const disp = dispositivos.find((d) => d.sensores?.length) ?? dispositivos[0];
+  const dispositivos = (config.dispositivos as DispositivoConSensores[]).filter(
+    (d) => d.sensores?.length,
+  );
   const presupuesto = config.indicadores
     .flatMap((i) => i.reglas)
     .find((r) => r.tipo === 'presupuesto');
@@ -155,23 +157,22 @@ export function construirContexto(e: EntradaContexto): ContextoAgente {
       hora: t.tarea.hora,
       estado: t.estado,
     })),
-    dispositivo: disp
-      ? {
-          id: disp.id,
-          nombre: disp.nombre,
-          pasos: disp.pasos.map((p, i) => ({
-            n: i + 1,
-            texto: p.texto,
-            ...(p.error ? { error: p.error } : {}),
-          })),
-          sensores: (disp.sensores ?? []).map((s) => ({
-            id: s.id,
-            nombre: s.nombre,
-            donde: s.donde,
-            indicadores: s.indicadores,
-          })),
-        }
-      : null,
+    dispositivos: dispositivos.map((disp) => ({
+      id: disp.id,
+      nombre: disp.nombre,
+      ...(disp.ficha ? { inspiradoEn: disp.ficha.inspiradoEn } : {}),
+      pasos: disp.pasos.map((p, i) => ({
+        n: i + 1,
+        texto: p.texto,
+        ...(p.error ? { error: p.error } : {}),
+      })),
+      sensores: (disp.sensores ?? []).map((s) => ({
+        id: s.id,
+        nombre: s.nombre,
+        donde: s.donde,
+        indicadores: s.indicadores,
+      })),
+    })),
     capas: config.escena.capas.map((c) => c.id),
     lecturasDescartadas: motor.descartadas.slice(-10).map((d) => ({
       indicador: d.lectura.indicador,

@@ -1,156 +1,338 @@
 [
   {
-    "id": "chaleco_ayni",
-    "nombre": "Chaleco biométrico AYNI",
-    "modelo": "procedural:chaleco",
+    "id": "astroskin",
+    "nombre": "Astroskin · camiseta biométrica",
+    "modelo": "procedural:astroskin",
     "anclaje": "pecho",
     "indicadores": [
       "pulso_reposo",
       "hrv",
-      "spo2",
+      "frecuencia_respiratoria",
       "temperatura",
-      "co2_cabina",
-      "dosis_radiacion",
-      "tasa_dosis_dia",
-      "sueno_horas",
-      "ejercicio_min",
+      "spo2",
       "presion_sistolica",
-      "presion_diastolica",
-      "glucosa"
+      "ejercicio_min",
+      "sueno_horas"
     ],
+    "ficha": {
+      "inspiradoEn": "Astroskin / Bio-Monitor (CSA · Carré Technologies), en la ISS desde 2018",
+      "fuente": "https://www.asc-csa.gc.ca/eng/sciences/bio-monitor.asp",
+      "mide": [
+        "ECG de 3 derivaciones",
+        "Respiración (2 bandas RIP)",
+        "Temperatura de piel",
+        "SpO₂ en la frente",
+        "Presión sistólica por tiempo de tránsito de pulso",
+        "Actividad y sueño"
+      ],
+      "peso": "Camiseta ligera + registrador con 2 pilas AA",
+      "autonomia": "48 h por carga"
+    },
+    "partes": {
+      "camiseta": "Camiseta sin mangas",
+      "banda_rip_torax": "Banda RIP torácica",
+      "banda_rip_abdomen": "Banda RIP abdominal",
+      "electrodos": "4 electrodos textiles de ECG",
+      "temp_piel": "Sensor de temperatura",
+      "registrador": "Registrador (acelerómetro, Bluetooth)",
+      "bolsillo": "Bolsillo lateral",
+      "banda_cabeza": "Banda de cabeza",
+      "modulo_ppg": "Módulo PPG / SpO₂"
+    },
     "sensores": [
       {
         "id": "ecg",
-        "nombre": "Electrodos de ECG",
-        "donde": "Pecho, bajo la clavícula izquierda y sobre las costillas",
+        "nombre": "ECG de 3 derivaciones",
+        "donde": "4 electrodos textiles en el pecho y bajo las costillas",
         "indicadores": ["pulso_reposo", "hrv"],
         "posicion": {
           "tipo": "torso",
-          "altura": 1.33,
-          "angulo": 25
+          "altura": 1.4,
+          "angulo": 30
         }
       },
       {
-        "id": "respiracion",
-        "nombre": "Banda de respiración",
-        "donde": "Alrededor del tórax, a la altura del esternón",
-        "indicadores": [],
+        "id": "rip",
+        "nombre": "Bandas de respiración (RIP)",
+        "donde": "Alrededor del tórax y del abdomen",
+        "indicadores": ["frecuencia_respiratoria"],
         "posicion": {
           "tipo": "torso",
-          "altura": 1.2,
-          "angulo": 0
+          "altura": 1.27,
+          "angulo": -18
         }
       },
       {
-        "id": "oximetro",
-        "nombre": "Oxímetro",
-        "donde": "Clip en el dedo índice",
-        "indicadores": ["spo2"],
-        "posicion": {
-          "tipo": "anclaje",
-          "anclaje": "dedo_indice"
-        }
-      },
-      {
-        "id": "temperatura",
-        "nombre": "Sensor de temperatura de piel",
+        "id": "temp_piel",
+        "nombre": "Temperatura de piel",
         "donde": "Costado izquierdo, bajo la axila",
         "indicadores": ["temperatura"],
         "posicion": {
           "tipo": "torso",
-          "altura": 1.28,
-          "angulo": 85
+          "altura": 1.25,
+          "angulo": 88
         }
       },
       {
-        "id": "co2",
-        "nombre": "Sensor de CO₂ de cabina",
-        "donde": "Hombro derecho, cerca de la boca",
-        "indicadores": ["co2_cabina"],
+        "id": "ppg_frente",
+        "nombre": "PPG y SpO₂ en la frente",
+        "donde": "Banda de cabeza, centro de la frente",
+        "indicadores": ["spo2"],
         "posicion": {
-          "tipo": "torso",
-          "altura": 1.41,
-          "angulo": -40
+          "tipo": "cabeza",
+          "altura": 1.715,
+          "angulo": 0
         }
       },
       {
-        "id": "dosimetro",
-        "nombre": "Dosímetro personal",
-        "donde": "Bolsillo del pecho, lado derecho",
-        "indicadores": ["dosis_radiacion", "tasa_dosis_dia"],
+        "id": "registrador",
+        "nombre": "Registrador",
+        "donde": "Bolsillo del costado izquierdo",
+        "indicadores": ["presion_sistolica", "ejercicio_min", "sueno_horas"],
         "posicion": {
-          "tipo": "torso",
-          "altura": 1.3,
-          "angulo": -25
-        }
-      },
-      {
-        "id": "pulsera",
-        "nombre": "Pulsera de actividad y sueño",
-        "donde": "Muñeca izquierda",
-        "indicadores": ["sueno_horas", "ejercicio_min"],
-        "posicion": {
-          "tipo": "anclaje",
-          "anclaje": "muneca_izq"
-        }
-      },
-      {
-        "id": "brazalete",
-        "nombre": "Brazalete de presión y glucosa",
-        "donde": "Brazo izquierdo, a la altura del corazón",
-        "indicadores": ["presion_sistolica", "presion_diastolica", "glucosa"],
-        "posicion": {
-          "tipo": "anclaje",
-          "anclaje": "brazo_izq"
+          "tipo": "pieza",
+          "pieza": "registrador"
         }
       }
     ],
     "pasos": [
       {
-        "texto": "Humedece los electrodos: una gota de agua en cada electrodo de ECG mejora el contacto con la piel.",
+        "texto": "Humedece los 4 electrodos textiles del interior de la camiseta.",
         "animacion": "presentar",
         "duracionMs": 2500,
         "sensor": "ecg",
-        "error": "Electrodos secos: la señal de pulso se pierde."
+        "error": "Electrodos secos: el ECG pierde señal."
       },
       {
-        "texto": "Ponte el chaleco ajustado: pegado al cuerpo sin cortar la respiración, con la banda a la altura del esternón.",
-        "animacion": "volar_a_anclaje",
+        "texto": "Ponte la camiseta ajustada, pegada a la piel.",
+        "animacion": "colocar",
         "duracionMs": 2500,
-        "sensor": "respiracion",
-        "error": "Chaleco flojo: los sensores se mueven y leen ruido."
+        "error": "Talla grande: las bandas no leen la respiración."
       },
       {
-        "texto": "Coloca el clip del oxímetro en el dedo índice, limpio y tibio. Espera a que la luz se estabilice.",
+        "texto": "Comprueba que las bandas queden a la altura del pecho y del ombligo.",
         "animacion": "ajustar",
-        "duracionMs": 2500,
-        "sensor": "oximetro",
-        "error": "Dedo frío o esmalte oscuro: la SpO₂ sale baja sin estarlo."
+        "duracionMs": 2200,
+        "sensor": "rip",
+        "error": "Banda del pecho demasiado alta: subestima el volumen."
       },
       {
-        "texto": "Guarda el dosímetro en el bolsillo del pecho, también mientras duermes.",
+        "texto": "Colócate la banda de cabeza con el sensor en el centro de la frente.",
         "animacion": "ajustar",
-        "duracionMs": 2000,
-        "sensor": "dosimetro",
-        "error": "Dosímetro fuera del cuerpo: la dosis registrada no es la tuya."
+        "duracionMs": 2200,
+        "sensor": "ppg_frente",
+        "error": "Sensor sobre el pelo o la ceja: SpO₂ inestable."
       },
       {
-        "texto": "Quédate quieto 60 segundos: la primera lectura en reposo fija tu valor del día.",
+        "texto": "Inserta el registrador en el bolsillo lateral y enciéndelo.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "sensor": "registrador",
+        "error": "Registrador sin conectar al broche: no se graba nada."
+      },
+      {
+        "texto": "Quédate quieto 60 segundos para la primera lectura en reposo.",
         "animacion": "medir",
         "duracionMs": 4000,
-        "error": "Medir justo después de ejercicio: el pulso alto dispara una alerta falsa."
-      },
-      {
-        "texto": "Listo. Mira cómo se actualiza tu corazón en el cuerpo 3D.",
-        "animacion": "mostrar_resultado",
-        "duracionMs": 2500,
-        "resaltarZona": "corazon"
+        "resaltarZona": "corazon",
+        "error": "Medir justo después de ejercicio: el pulso alto da una alerta falsa."
       }
     ],
     "erroresComunes": [
       {
-        "texto": "Chaleco flojo: los sensores se mueven y leen ruido.",
+        "texto": "Talla grande: las bandas no leen la respiración.",
         "desplazamiento": [0, -0.04, 0]
+      }
+    ]
+  },
+  {
+    "id": "puma",
+    "nombre": "PUMA · análisis metabólico",
+    "modelo": "procedural:puma",
+    "anclaje": "frente",
+    "indicadores": ["vo2", "vco2", "ventilacion_minuto", "cociente_respiratorio"],
+    "ficha": {
+      "inspiradoEn": "PUMA, Portable Unit for Metabolic Analysis (NASA Glenn)",
+      "fuente": "https://www.nasa.gov/centers/glenn/technology/puma_tech.html",
+      "mide": [
+        "O₂ exhalado (fluorescencia por fibra óptica)",
+        "CO₂ exhalado (infrarrojo)",
+        "Flujo de aire (ultrasonido)",
+        "Presión y temperatura del gas",
+        "VO₂, VCO₂ y ventilación minuto"
+      ],
+      "peso": "Menos de 0,9 kg en total",
+      "autonomia": "Batería de 7,2 V en el módulo de cintura"
+    },
+    "partes": {
+      "mascara": "Máscara oronasal",
+      "sello": "Sello de silicona",
+      "manifold": "Manifold",
+      "canal_izq": "Canal izquierdo",
+      "sensor_o2": "Sensor de O₂ (fluorescencia)",
+      "sensor_co2": "Sensor de CO₂ (infrarrojo)",
+      "canal_der": "Canal derecho",
+      "sensor_flujo": "Flujo ultrasónico",
+      "arnes": "Arnés de cabeza",
+      "cable": "Cable y fibra óptica",
+      "cinturon": "Cinturón",
+      "caja_electronica": "Caja electrónica",
+      "bateria": "Batería 7,2 V"
+    },
+    "sensores": [
+      {
+        "id": "o2",
+        "nombre": "Sensor de O₂",
+        "donde": "Canal izquierdo, junto a la máscara",
+        "indicadores": ["vo2"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "o2"
+        }
+      },
+      {
+        "id": "co2_aliento",
+        "nombre": "Sensor de CO₂ del aliento",
+        "donde": "Canal izquierdo, después del O₂",
+        "indicadores": ["vco2"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "co2_aliento"
+        }
+      },
+      {
+        "id": "flujo",
+        "nombre": "Flujo ultrasónico",
+        "donde": "Canal derecho",
+        "indicadores": ["ventilacion_minuto"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "flujo"
+        }
+      },
+      {
+        "id": "electronica",
+        "nombre": "Caja electrónica",
+        "donde": "Cadera derecha, en el cinturón",
+        "indicadores": ["cociente_respiratorio"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "electronica"
+        }
+      }
+    ],
+    "pasos": [
+      {
+        "texto": "Elige la talla de máscara y revisa el sello de silicona.",
+        "animacion": "despiece",
+        "duracionMs": 2500,
+        "error": "Sello roto o talla equivocada: entra aire de la cabina y el VO₂ sale bajo."
+      },
+      {
+        "texto": "Coloca la máscara cubriendo nariz y boca.",
+        "animacion": "colocar",
+        "duracionMs": 2500,
+        "sensor": "flujo",
+        "error": "Máscara sobre la punta de la nariz: fuga por arriba."
+      },
+      {
+        "texto": "Ajusta primero las correas de abajo y luego las de arriba.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "error": "Correas de arriba muy tensas: la máscara se levanta por abajo."
+      },
+      {
+        "texto": "Engancha el módulo en la cadera derecha y conecta el cable.",
+        "animacion": "ajustar",
+        "duracionMs": 2200,
+        "sensor": "electronica",
+        "error": "Cable tirante: arrastra la máscara al pedalear."
+      },
+      {
+        "texto": "Exhala fuerte: no debe salir aire por los bordes.",
+        "animacion": "medir",
+        "duracionMs": 3000,
+        "sensor": "o2",
+        "error": "Fuga en el sello: el CO₂ sale diluido."
+      },
+      {
+        "texto": "Empieza a pedalear: AYNI muestra tu VO₂ y tu ventilación en vivo.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "pulmones"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Máscara sobre la punta de la nariz: fuga por arriba.",
+        "desplazamiento": [0, 0.025, 0.01]
+      }
+    ]
+  },
+  {
+    "id": "oximetro",
+    "nombre": "Pulsioxímetro de dedo",
+    "modelo": "procedural:oximetro",
+    "anclaje": "dedo_indice",
+    "indicadores": ["spo2", "pulso_reposo"],
+    "ficha": {
+      "inspiradoEn": "Pulsioxímetro de dedo de uso clínico",
+      "fuente": "https://www.fda.gov/medical-devices/safety-communications/pulse-oximeter-accuracy-and-limitations-fda-safety-communication",
+      "mide": ["SpO₂ (luz roja e infrarroja)", "Frecuencia de pulso"],
+      "peso": "≈ 58 × 33 × 32 mm, 30–60 g",
+      "autonomia": "2 pilas AAA"
+    },
+    "partes": {
+      "carcasa_superior": "Carcasa con emisor LED",
+      "pantalla": "Pantalla SpO₂ / pulso",
+      "almohadilla": "Almohadillas de silicona",
+      "carcasa_inferior": "Carcasa con fotodetector",
+      "bisagra": "Bisagra con resorte"
+    },
+    "sensores": [
+      {
+        "id": "pinza",
+        "nombre": "Pinza del oxímetro",
+        "donde": "Índice izquierdo",
+        "indicadores": ["spo2", "pulso_reposo"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "pinza"
+        }
+      }
+    ],
+    "pasos": [
+      {
+        "texto": "Dedo limpio y tibio, sin esmalte oscuro.",
+        "animacion": "presentar",
+        "duracionMs": 2000,
+        "error": "Dedo frío: la SpO₂ sale baja sin estarlo."
+      },
+      {
+        "texto": "Abre la pinza e introduce el índice hasta el tope.",
+        "animacion": "colocar",
+        "duracionMs": 2500,
+        "sensor": "pinza",
+        "error": "Dedo a medio entrar: la luz no atraviesa la uña."
+      },
+      {
+        "texto": "Apoya la mano y no hables durante 30 segundos.",
+        "animacion": "medir",
+        "duracionMs": 3000,
+        "sensor": "pinza",
+        "error": "Mover la mano: lectura inestable."
+      },
+      {
+        "texto": "Compara con la SpO₂ de la banda de cabeza; si difieren más de 3 puntos, repite.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "pulmones"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Dedo a medio entrar: la luz no atraviesa la uña.",
+        "desplazamiento": [0, -0.02, 0.01]
       }
     ]
   },

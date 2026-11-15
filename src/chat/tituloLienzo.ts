@@ -18,7 +18,9 @@ export function tituloLienzo(lienzo: EstadoLienzo, config: ConfigAyni): string {
     case 'comparacion':
       return `${textos.comparar}: ${indicador(lienzo.indicadores[0])} / ${indicador(lienzo.indicadores[1])}`;
     case 'dispositivo': {
-      const disp = config.dispositivos.find((d) => d.pasos.length >= lienzo.paso);
+      const disp =
+        config.dispositivos.find((d) => d.id === lienzo.dispositivo) ??
+        config.dispositivos.find((d) => d.sensores?.length);
       return `${disp?.nombre ?? textos.guiaDispositivo} · ${lienzo.paso}`;
     }
     case 'resumen':

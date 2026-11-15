@@ -5,9 +5,23 @@ import { peorEstado } from '../../motor/reglas';
 
 export type SensorDispositivo = NonNullable<Dispositivo['sensores']>[number];
 
-/** Primer dispositivo con sensores (el chaleco AYNI). */
-export function dispositivoConSensores(config: ConfigAyni): Dispositivo | undefined {
-  return config.dispositivos.find((d) => d.sensores?.length);
+/** Dispositivos con sensores y modelo 3D (Astroskin, PUMA, oxímetro). */
+export function dispositivosConSensores(config: ConfigAyni): Dispositivo[] {
+  return config.dispositivos.filter((d) => d.sensores?.length);
+}
+
+/** Dispositivo con sensores pedido (o el primero si no existe o no se indica). */
+export function dispositivoConSensores(
+  config: ConfigAyni,
+  id?: string | null,
+): Dispositivo | undefined {
+  const lista = dispositivosConSensores(config);
+  return lista.find((d) => d.id === id) ?? lista[0];
+}
+
+/** Dispositivo que contiene un sensor. */
+export function dispositivoDeSensor(config: ConfigAyni, sensor: string): Dispositivo | undefined {
+  return dispositivosConSensores(config).find((d) => d.sensores?.some((s) => s.id === sensor));
 }
 
 /** Peor estado de los indicadores que mide el sensor (sin indicadores: sin dato). */
@@ -29,12 +43,14 @@ export function valorSensor(
   return null;
 }
 
-/** Sensor del chaleco que cubre alguno de los indicadores dados (agenda, "Medir ahora"). */
+/** Sensor (y su dispositivo) que cubre alguno de los indicadores dados (agenda, "Medir ahora"). */
 export function sensorParaIndicadores(
   config: ConfigAyni,
   indicadores: string[],
-): SensorDispositivo | undefined {
-  return dispositivoConSensores(config)?.sensores?.find((s) =>
-    s.indicadores.some((i) => indicadores.includes(i)),
-  );
+): (SensorDispositivo & { dispositivo: string }) | undefined {
+  for (const d of dispositivosConSensores(config)) {
+    const s = d.sensores?.find((x) => x.indicadores.some((i) => indicadores.includes(i)));
+    if (s) return { ...s, dispositivo: d.id };
+  }
+  return undefined;
 }

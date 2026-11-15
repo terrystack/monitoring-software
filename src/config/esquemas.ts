@@ -142,6 +142,13 @@ export const esquemaIndicador = z
         decimales: z.number().int().nonnegative(),
         cicloDiario: z.number().optional(),
         acumulado: z.boolean().optional(),
+        /**
+         * Genera el indicador con su propio flujo aleatorio para no cambiar el resto del CSV
+         * (indicadores añadidos después de fijar los escenarios de demo).
+         */
+        flujoPropio: z.boolean().optional(),
+        /** Cambio de la media por día de misión (unidades/día). */
+        tendenciaDiaria: z.number().optional(),
       })
       .strict(),
   })
@@ -306,6 +313,8 @@ export const esquemaDispositivo = z
               'medir',
               'mostrar_resultado',
               'error',
+              'colocar',
+              'despiece',
             ]),
             duracionMs: z.number().int().positive(),
             resaltarZona: texto.optional(),
@@ -330,10 +339,29 @@ export const esquemaDispositivo = z
                 .object({ tipo: z.literal('torso'), altura: z.number(), angulo: z.number() })
                 .strict(),
               z.object({ tipo: z.literal('anclaje'), anclaje: esquemaAnclaje }).strict(),
+              /** Elipse de la cabeza (ángulo 0° = frente, + = izquierda). */
+              z
+                .object({ tipo: z.literal('cabeza'), altura: z.number(), angulo: z.number() })
+                .strict(),
+              /** Pieza del modelo 3D (el componente calcula su posición). */
+              z.object({ tipo: z.literal('pieza'), pieza: texto }).strict(),
             ]),
           })
           .strict(),
       )
+      .optional(),
+    /** Nombres de las partes del modelo 3D para el despiece (id de la parte → nombre). */
+    partes: z.record(z.string(), texto).optional(),
+    /** Ficha del dispositivo en la pestaña Medición (AYNI_DISPOSITIVOS_3D.md §8). */
+    ficha: z
+      .object({
+        inspiradoEn: texto,
+        fuente: z.string().url(),
+        mide: z.array(texto).min(1),
+        peso: texto.optional(),
+        autonomia: texto.optional(),
+      })
+      .strict()
       .optional(),
     erroresComunes: z.array(
       z
@@ -664,6 +692,14 @@ export const esquemaEscena = z
         hecha: texto,
         atrasada: texto,
         guiaDispositivo: texto,
+        dispositivos: texto,
+        verPiezas: texto,
+        armar: texto,
+        inspiradoEn: texto,
+        queMide: texto,
+        peso: texto,
+        autonomia: texto,
+        noEsReplica: texto,
         errorComun: texto,
         anterior: texto,
         siguientePaso: texto,

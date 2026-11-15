@@ -58,9 +58,17 @@ describe('respaldo local del agente', () => {
     expect(r.texto).toContain('Horas de sueño hoy');
   });
 
-  it('¿Cómo me pongo el chaleco? → paso 1 de la guía', () => {
-    const r = preguntar('¿Cómo me pongo el chaleco?');
-    expect(r.llamadas[0]).toEqual({ nombre: 'mostrar_guia_dispositivo', args: { paso: 1 } });
+  it('¿Cómo me pongo la camiseta Astroskin? → paso 1 de su guía', () => {
+    const r = preguntar('¿Cómo me pongo la camiseta Astroskin?');
+    expect(r.llamadas[0]).toEqual({
+      nombre: 'mostrar_guia_dispositivo',
+      args: { dispositivo: 'astroskin', paso: 1 },
+    });
+  });
+
+  it('pregunta por PUMA → guía de la máscara metabólica', () => {
+    const r = preguntar('¿Cómo uso el PUMA?');
+    expect(r.llamadas[0]).toMatchObject({ args: { dispositivo: 'puma', paso: 1 } });
   });
 
   it('¿Debo avisar al médico de vuelo? → avisos de las zonas fuera de lo normal', () => {
@@ -86,7 +94,7 @@ describe('respaldo local del agente', () => {
     const r = preguntar('El oxímetro marca 88 %, ¿está bien?');
     expect(r.llamadas[0]).toEqual({
       nombre: 'mostrar_guia_dispositivo',
-      args: { paso: 3, sensor: 'oximetro' },
+      args: { dispositivo: 'oximetro', paso: 2, sensor: 'pinza' },
     });
     expect(r.texto).toContain(es.config.escena.respaldo.repetirMedicion);
   });

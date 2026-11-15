@@ -1,66 +1,181 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
-import type { ConfigAyni, IdCapa, ModoCapa } from '../../config/esquemas';
+import type { ConfigAyni, Dispositivo, IdCapa, ModoCapa } from '../../config/esquemas';
 import { useAyni } from '../../estado/store';
 import { Ambiente } from '../Ambiente';
 import { NIVELES, useMovimientoReducido } from '../calidad';
 import { Cuerpo } from '../cuerpo/Cuerpo';
-import { Chaleco } from './Chaleco';
+import { Astroskin } from './astroskin/Astroskin';
+import { VISTA_ASTROSKIN } from './astroskin/geometria';
+import { ProveedorDespiece } from './despiece';
 import { dispositivoConSensores, estadoSensor, valorSensor } from './estadoSensor';
+import type { Variante } from './materiales';
+import { medirPerfil, PERFIL_CABEZA, PERFIL_TORSO, type Perfil } from './medidas';
+import { modeloDe, posicionSensor, puntosDe, type Modelo } from './modelos';
+import { VISTA_OXIMETRO } from './oximetro/geometria';
+import { Oximetro } from './oximetro/Oximetro';
+import { VISTA_PUMA } from './puma/geometria';
+import { Puma } from './puma/Puma';
 import { Sensor } from './Sensor';
-import { medirTorso, posicionSensor, type MedidasTorso } from './torso';
 
 interface Props {
   config: ConfigAyni;
 }
 
-const VISTA = {
-  posicion: new THREE.Vector3(0, 1.3, 1.35),
-  objetivo: new THREE.Vector3(0, 1.22, 0),
-};
-const RAPIDEZ = 5;
+type Animacion = Dispositivo['pasos'][number]['animacion'];
 
-/** Cámara que se acerca al sensor activo (paso o elegido) y vuelve al chaleco sin sensor. */
-function CamaraSensor({ destino }: { destino: THREE.Vector3 | null }) {
+const RAPIDEZ = 5;
+/** Radio de la esfera de los sensores según el tamaño del dispositivo. */
+const RADIO_SENSOR: Record<Modelo, number> = { astroskin: 0.011, puma: 0.0065, oximetro: 0.0045 };
+/** Piel opaca donde el dispositivo se apoya en partes finas (cara, dedo). */
+const PIEL: Record<Modelo, ModoCapa> = {
+  astroskin: 'translucida',
+  puma: 'visible',
+  oximetro: 'visible',
+};
+/** La cámara deja de guiarse a los 1,6 s para que se pueda girar libremente. */
+const TIEMPO_GUIA = 1.6;
+
+const VISTAS: Record<Modelo, { posicion: THREE.Vector3; objetivo: THREE.Vector3 }> = {
+  astroskin: VISTA_ASTROSKIN,
+  puma: VISTA_PUMA,
+  oximetro: VISTA_OXIMETRO,
+};
+
+/** De dónde llega el dispositivo en el paso "colocar" (desplazamiento inicial, m). */
+const ENTRADA: Record<Modelo, [number, number, number]> = {
+  astroskin: [0, 0.38, 0],
+  puma: [0, 0.02, 0.22],
+  oximetro: [0, 0, 0],
+};
+
+const suave = (t: number) => 1 - (1 - Math.min(1, Math.max(0, t))) ** 3;
+
+/** Animación de cada paso sobre el dispositivo completo (presentar, colocar, ajustar). */
+function Animado({
+  animacion,
+  duracionMs,
+  repeticion,
+  entrada,
+  reducido,
+  children,
+}: {
+  animacion: Animacion;
+  duracionMs: number;
+  repeticion: string;
+  entrada: [number, number, number];
+  reducido: boolean;
+  children: ReactNode;
+}) {
+  const grupo = useRef<THREE.Group>(null);
+  const inicio = useRef<number | null>(null);
+  useEffect(() => {
+    inicio.current = null;
+  }, [animacion, repeticion]);
+  useFrame((state) => {
+    const g = grupo.current;
+    if (!g) return;
+    inicio.current ??= state.clock.elapsedTime;
+    const t = reducido ? 1 : (state.clock.elapsedTime - inicio.current) / (duracionMs / 1000);
+    g.position.set(0, 0, 0);
+    g.scale.setScalar(1);
+    if (animacion === 'colocar' || animacion === 'volar_a_anclaje') {
+      const k = 1 - suave(t);
+      g.position.set(entrada[0] * k, entrada[1] * k, entrada[2] * k);
+    }
+    if (animacion === 'ajustar' && !reducido) {
+      // Pequeño "apretar" en el sitio: no escala alrededor del origen del mundo.
+      const k = t < 1 ? Math.sin(Math.PI * t) : 0;
+      g.position.y = -0.004 * k;
+    }
+  });
+  return <group ref={grupo}>{children}</group>;
+}
+
+/** Cámara que va a la vista del dispositivo o al sensor activo y luego deja girar. */
+function CamaraGuiada({
+  posicion,
+  objetivo,
+}: {
+  posicion: THREE.Vector3;
+  objetivo: THREE.Vector3;
+}) {
   const camara = useThree((s) => s.camera);
   const controles = useThree((s) => s.controls) as OrbitControlsImpl | null;
   const reducido = useMovimientoReducido();
-  const objetivo = useRef<{ posicion: THREE.Vector3; objetivo: THREE.Vector3 } | null>(null);
+  const destino = useRef<{ posicion: THREE.Vector3; objetivo: THREE.Vector3; t: number } | null>(
+    null,
+  );
+  const clave = `${posicion.toArray().join()}|${objetivo.toArray().join()}`;
 
   useEffect(() => {
-    objetivo.current = destino
-      ? {
-          objetivo: destino.clone(),
-          posicion: destino
-            .clone()
-            .add(new THREE.Vector3(destino.x * 1.4, 0.12, 1).normalize().multiplyScalar(0.95)),
-        }
-      : { posicion: VISTA.posicion.clone(), objetivo: VISTA.objetivo.clone() };
-    if (reducido && controles && objetivo.current) {
-      camara.position.copy(objetivo.current.posicion);
-      controles.target.copy(objetivo.current.objetivo);
+    destino.current = { posicion: posicion.clone(), objetivo: objetivo.clone(), t: 0 };
+    if (reducido && controles) {
+      camara.position.copy(posicion);
+      controles.target.copy(objetivo);
       controles.update();
-      objetivo.current = null;
+      destino.current = null;
     }
-  }, [destino, reducido, camara, controles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clave, reducido, camara, controles]);
 
   useFrame((_, delta) => {
-    const d = objetivo.current;
+    const d = destino.current;
     if (!d || !controles) return;
-    const k = 1 - Math.exp(-RAPIDEZ * Math.min(delta, 0.1));
+    const dt = Math.min(delta, 0.1);
+    const k = 1 - Math.exp(-RAPIDEZ * dt);
     camara.position.lerp(d.posicion, k);
     controles.target.lerp(d.objetivo, k);
-    if (camara.position.distanceTo(d.posicion) < 0.002) objetivo.current = null;
+    d.t += dt;
+    if (d.t > TIEMPO_GUIA || camara.position.distanceTo(d.posicion) < 0.002) destino.current = null;
   });
   return null;
 }
 
+function DispositivoModelo({
+  modelo,
+  torso,
+  variante,
+  animacion,
+  duracionMs,
+  repeticion,
+  reducido,
+}: {
+  modelo: Modelo;
+  torso: Perfil;
+  variante: Variante;
+  animacion: Animacion;
+  duracionMs: number;
+  repeticion: string;
+  reducido: boolean;
+}) {
+  const motor = useAyni((s) => s.motor);
+  if (modelo === 'puma') return <Puma torso={torso} variante={variante} />;
+  if (modelo === 'oximetro') {
+    const valor = (id: string) => motor?.indicadores[id]?.valor ?? null;
+    const spo2 = valor('spo2');
+    const pulso = valor('pulso_reposo');
+    return (
+      <Oximetro
+        variante={variante}
+        spo2={spo2}
+        pulso={pulso}
+        colocar={animacion === 'colocar' ? duracionMs : null}
+        repeticion={repeticion}
+        reducido={reducido}
+      />
+    );
+  }
+  return <Astroskin perfil={torso} variante={variante} />;
+}
+
 /**
- * Escena de la pestaña Medición: el cuerpo anatómico (solo piel translúcida, sin selección),
- * el chaleco y sus sensores. Fuerza las capas al montar y restaura las anteriores al salir.
+ * Escena de la pestaña Medición (AYNI_DISPOSITIVOS_3D.md): el cuerpo anatómico con la piel
+ * translúcida y el dispositivo activo (Astroskin, PUMA u oxímetro) con sus sensores.
+ * Fuerza las capas al montar y restaura las anteriores al salir.
  */
 export default function EscenaMedicion({ config }: Props) {
   const calidad = useAyni((s) => s.calidad);
@@ -69,48 +184,84 @@ export default function EscenaMedicion({ config }: Props) {
   const sensorElegido = useAyni((s) => s.sensorSeleccionado);
   const repeticion = useAyni((s) => s.repeticionPaso);
   const versionZonas = useAyni((s) => s.versionZonas);
+  const activo = useAyni((s) => s.dispositivoActivo);
+  const despiece = useAyni((s) => s.despiece);
   const reducido = useMovimientoReducido();
   const parametros = NIVELES[calidad];
-  const disp = dispositivoConSensores(config);
+  const disp = dispositivoConSensores(config, activo);
+  const modelo = modeloDe(disp);
   const idPiel = config.zonas.find((z) => z.capa === 'piel')?.id;
 
   useEffect(() => {
-    const s = useAyni.getState();
-    const anterior = s.modoCapa;
-    s.setModosCapa(
-      Object.fromEntries(
-        config.escena.capas.map((c): [IdCapa, ModoCapa] => [
-          c.id,
-          c.id === 'piel' ? 'translucida' : 'oculta',
-        ]),
-      ),
-    );
+    const anterior = useAyni.getState().modoCapa;
     return () => useAyni.getState().setModosCapa(anterior);
-  }, [config]);
+  }, []);
+  useEffect(() => {
+    useAyni
+      .getState()
+      .setModosCapa(
+        Object.fromEntries(
+          config.escena.capas.map((c): [IdCapa, ModoCapa] => [
+            c.id,
+            c.id === 'piel' ? PIEL[modelo] : 'oculta',
+          ]),
+        ),
+      );
+  }, [config, modelo]);
 
-  const medidas: MedidasTorso = useMemo(
-    () => medirTorso(idPiel),
+  const { torso, cabeza } = useMemo(
+    () => ({
+      torso: medirPerfil(idPiel, PERFIL_TORSO),
+      cabeza: medirPerfil(idPiel, PERFIL_CABEZA, 0.1),
+    }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [idPiel, versionZonas],
   );
 
-  const posiciones = useMemo(
-    () => new Map((disp?.sensores ?? []).map((s) => [s.id, posicionSensor(s, medidas)])),
-    [disp, medidas],
-  );
+  const posiciones = useMemo(() => {
+    const piezas = puntosDe(modelo, torso);
+    return new Map(
+      (disp?.sensores ?? []).map((s) => [s.id, posicionSensor(s, torso, cabeza, piezas)]),
+    );
+  }, [disp, modelo, torso, cabeza]);
 
   if (!disp?.sensores) return null;
   const pasoActual = disp.pasos[Math.min(paso, disp.pasos.length - 1)];
+  const animacion = pasoActual?.animacion ?? 'presentar';
   const idActivo = sensorElegido ?? pasoActual?.sensor ?? null;
   const fantasma =
     disp.erroresComunes.find((e) => e.texto === pasoActual?.error && e.desplazamiento)
       ?.desplazamiento ?? null;
   const estados = config.escena.estados;
+  const destinoSensor = idActivo ? posiciones.get(idActivo) : undefined;
+  const vista = VISTAS[modelo];
+  const repeticionClave = `${disp.id}-${paso}-${repeticion}`;
+  const enDespiece = despiece || animacion === 'despiece';
+  // En el despiece la cámara se aleja para que entren las piezas separadas.
+  const vistaGeneral = enDespiece
+    ? {
+        objetivo: vista.objetivo,
+        posicion: vista.objetivo.clone().lerp(vista.posicion, 1.45),
+      }
+    : vista;
+  const camara =
+    destinoSensor && !enDespiece
+      ? {
+          objetivo: destinoSensor,
+          posicion: destinoSensor
+            .clone()
+            .add(
+              new THREE.Vector3(destinoSensor.x * 1.6, 0.08, 1)
+                .normalize()
+                .multiplyScalar(modelo === 'astroskin' ? 0.85 : 0.5),
+            ),
+        }
+      : vistaGeneral;
 
   return (
     <Canvas
       dpr={[1, parametros.dprMaximo]}
-      camera={{ position: VISTA.posicion.toArray(), fov: 38, near: 0.02, far: 60 }}
+      camera={{ position: vista.posicion.toArray(), fov: 38, near: 0.02, far: 60 }}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       onCreated={(estado) => {
         // Solo en desarrollo: acceso para capturas y pruebas desde el navegador.
@@ -119,43 +270,75 @@ export default function EscenaMedicion({ config }: Props) {
     >
       <Ambiente />
       <Cuerpo interactivo={false} />
-      <Chaleco
-        medidas={medidas}
-        animacion={pasoActual?.animacion ?? 'presentar'}
-        duracionMs={pasoActual?.duracionMs ?? 2000}
-        repeticion={`${paso}-${repeticion}`}
-        fantasma={fantasma}
+      <ProveedorDespiece
+        key={disp.id}
+        activo={enDespiece}
+        nombres={disp.partes ?? {}}
+        conEtiquetas={calidad !== 'baja'}
         reducido={reducido}
-      />
-      {disp.sensores.map((s) => {
-        const estado = estadoSensor(s, motor);
-        const color =
-          s.indicadores.length === 0
-            ? '#22D3EE'
-            : (estados.find((e) => e.id === estado)?.color ?? '#64748B');
-        return (
-          <Sensor
-            key={s.id}
-            id={s.id}
-            nombre={s.nombre}
-            posicion={posiciones.get(s.id)!}
-            color={color}
-            etiqueta={valorSensor(s, motor, config)}
-            destacado={s.id === idActivo}
-            sincronizado={pasoActual?.animacion === 'medir'}
-            animado={!reducido && calidad !== 'baja'}
-            conEtiqueta={calidad !== 'baja'}
-            alElegir={() => useAyni.getState().setSensorSeleccionado(s.id)}
+      >
+        <Animado
+          animacion={animacion}
+          duracionMs={pasoActual?.duracionMs ?? 2000}
+          repeticion={repeticionClave}
+          entrada={ENTRADA[modelo]}
+          reducido={reducido}
+        >
+          <DispositivoModelo
+            modelo={modelo}
+            torso={torso}
+            variante="normal"
+            animacion={animacion}
+            duracionMs={pasoActual?.duracionMs ?? 2000}
+            repeticion={repeticionClave}
+            reducido={reducido}
           />
-        );
-      })}
-      <CamaraSensor destino={idActivo ? (posiciones.get(idActivo) ?? null) : null} />
+        </Animado>
+      </ProveedorDespiece>
+      {fantasma && (
+        <group position={fantasma}>
+          <DispositivoModelo
+            modelo={modelo}
+            torso={torso}
+            variante="fantasma"
+            animacion="presentar"
+            duracionMs={1000}
+            repeticion="fantasma"
+            reducido={reducido}
+          />
+        </group>
+      )}
+      {!enDespiece &&
+        disp.sensores.map((s) => {
+          const estado = estadoSensor(s, motor);
+          const color =
+            s.indicadores.length === 0
+              ? '#22D3EE'
+              : (estados.find((e) => e.id === estado)?.color ?? '#64748B');
+          return (
+            <Sensor
+              key={`${disp.id}-${s.id}`}
+              id={s.id}
+              nombre={s.nombre}
+              posicion={posiciones.get(s.id)!}
+              color={color}
+              etiqueta={valorSensor(s, motor, config)}
+              destacado={s.id === idActivo}
+              sincronizado={animacion === 'medir'}
+              animado={!reducido && calidad !== 'baja'}
+              conEtiqueta={calidad !== 'baja'}
+              alElegir={() => useAyni.getState().setSensorSeleccionado(s.id)}
+              radio={RADIO_SENSOR[modelo]}
+            />
+          );
+        })}
+      <CamaraGuiada posicion={camara.posicion} objetivo={camara.objetivo} />
       <OrbitControls
         makeDefault
-        target={VISTA.objetivo.toArray()}
+        target={vista.objetivo.toArray()}
         enablePan={false}
         enableDamping
-        minDistance={0.3}
+        minDistance={0.15}
         maxDistance={3}
       />
     </Canvas>

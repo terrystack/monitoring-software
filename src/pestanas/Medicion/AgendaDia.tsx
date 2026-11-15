@@ -46,8 +46,10 @@ export function AgendaDia({ config, seleccion }: Props) {
 
   const abrirTarea = (indicadores: string[]) => {
     const s = useAyni.getState();
+    const sensor = sensorParaIndicadores(config, indicadores);
+    if (sensor) s.setDispositivoActivo(sensor.dispositivo);
     s.setPasoDispositivo(0);
-    s.setSensorSeleccionado(sensorParaIndicadores(config, indicadores)?.id ?? null);
+    s.setSensorSeleccionado(sensor?.id ?? null);
   };
 
   return (
