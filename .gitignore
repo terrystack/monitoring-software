@@ -13,3 +13,5 @@ dist
 # Capturas y diffs de revisión de Impeccable (se regeneran)
 .impeccable/review
 .impeccable/build/font-match
+
+/local
