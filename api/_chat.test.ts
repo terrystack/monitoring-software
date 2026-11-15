@@ -6,6 +6,8 @@ import { generarLecturas } from '../src/datos/generador';
 import { evaluarSeleccion, resolverSeleccion } from '../src/estado/seleccion';
 import { definirHerramientas, ejecutarLectura } from './_herramientas';
 import { POST } from './chat';
+import { POST as POST_STT } from './stt';
+import { POST as POST_TTS } from './tts';
 
 const resultado = cargarConfig();
 if (!resultado.ok) throw new Error('config inválida');
@@ -64,6 +66,8 @@ describe('POST /api/chat', () => {
     vi.stubEnv('LLM_PROVIDER', 'anthropic');
     vi.stubEnv('LLM_API_KEY', 'clave-de-prueba');
     vi.stubEnv('LLM_MODEL', 'modelo-de-prueba');
+    vi.stubEnv('GEMINI_API_KEY', '');
+    vi.stubEnv('GROQ_API_KEY', '');
   });
   afterEach(() => {
     vi.unstubAllEnvs();
@@ -73,6 +77,7 @@ describe('POST /api/chat', () => {
   it('400 con un cuerpo inválido y 502 sin clave', async () => {
     expect((await POST(peticion({ idioma: 'es' }))).status).toBe(400);
     vi.stubEnv('LLM_API_KEY', '');
+    vi.stubEnv('LLM_PROVIDER', '');
     expect((await POST(peticion(valida))).status).toBe(502);
   });
 
@@ -118,5 +123,110 @@ describe('POST /api/chat', () => {
       vi.fn(async () => new Response('caído', { status: 500 })),
     );
     expect((await POST(peticion(valida))).status).toBe(502);
+  });
+
+  it('si Gemini falla usa el respaldo Groq', async () => {
+    vi.stubEnv('LLM_PROVIDER', '');
+    vi.stubEnv('LLM_API_KEY', '');
+    vi.stubEnv('GEMINI_API_KEY', 'gemini-test');
+    vi.stubEnv('GROQ_API_KEY', 'groq-test');
+    const urls: string[] = [];
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => {
+        urls.push(String(url));
+        if (url.includes('generativelanguage')) {
+          return new Response('caído', { status: 500 });
+        }
+        return new Response(
+          JSON.stringify({
+            choices: [{ message: { content: 'Respuesta Groq.\nRAPIDAS: a | b', tool_calls: [] } }],
+          }),
+          { status: 200 },
+        );
+      }),
+    );
+    const r = await POST(peticion(valida));
+    expect(r.status).toBe(200);
+    expect(await r.json()).toMatchObject({ texto: 'Respuesta Groq.' });
+    expect(urls.some((u) => u.includes('generativelanguage'))).toBe(true);
+    expect(urls.some((u) => u.includes('api.groq.com'))).toBe(true);
+  });
+});
+
+describe('POST /api/stt', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('502 sin GROQ_API_KEY', async () => {
+    vi.stubEnv('GROQ_API_KEY', '');
+    const form = new FormData();
+    form.append('file', new Blob(['abc'], { type: 'audio/webm' }), 'a.webm');
+    const r = await POST_STT(new Request('http://localhost/api/stt', { method: 'POST', body: form }));
+    expect(r.status).toBe(502);
+  });
+
+  it('transcribe con Whisper en Groq', async () => {
+    vi.stubEnv('GROQ_API_KEY', 'groq-test');
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => new Response(JSON.stringify({ text: 'hola mundo' }), { status: 200 })),
+    );
+    const form = new FormData();
+    form.append('file', new Blob(['abc'], { type: 'audio/webm' }), 'a.webm');
+    form.append('language', 'es');
+    const r = await POST_STT(new Request('http://localhost/api/stt', { method: 'POST', body: form }));
+    expect(r.status).toBe(200);
+    expect(await r.json()).toEqual({ texto: 'hola mundo' });
+  });
+});
+
+describe('POST /api/tts', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('502 sin GEMINI_API_KEY', async () => {
+    vi.stubEnv('GEMINI_API_KEY', '');
+    const r = await POST_TTS(
+      new Request('http://localhost/api/tts', {
+        method: 'POST',
+        body: JSON.stringify({ texto: 'hola', idioma: 'es' }),
+      }),
+    );
+    expect(r.status).toBe(502);
+  });
+
+  it('genera audio con Gemini TTS', async () => {
+    vi.stubEnv('GEMINI_API_KEY', 'gemini-test');
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        new Response(
+          JSON.stringify({
+            candidates: [
+              {
+                content: {
+                  parts: [{ inlineData: { mimeType: 'audio/wav', data: 'UklGRg==' } }],
+                },
+              },
+            ],
+          }),
+          { status: 200 },
+        ),
+      ),
+    );
+    const r = await POST_TTS(
+      new Request('http://localhost/api/tts', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ texto: 'hola', idioma: 'es' }),
+      }),
+    );
+    expect(r.status).toBe(200);
+    expect(await r.json()).toEqual({ audio: 'UklGRg==', mediaType: 'audio/wav' });
   });
 });

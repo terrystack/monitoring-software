@@ -21,6 +21,7 @@ export function EntradaChat({ config, pensando, alEnviar }: Props) {
   const [imagen, setImagen] = useState<ImagenAdjunta | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dictando, setDictando] = useState(false);
+  const [transcribiendo, setTranscribiendo] = useState(false);
   const detenerDictado = useRef<() => void>(() => undefined);
   const archivo = useRef<HTMLInputElement>(null);
   const campo = useRef<HTMLTextAreaElement>(null);
@@ -52,12 +53,34 @@ export function EntradaChat({ config, pensando, alEnviar }: Props) {
   };
 
   const alternarDictado = () => {
-    if (dictando) {
+    if (dictando || transcribiendo) {
       detenerDictado.current();
       return;
     }
+    setError(null);
     setDictando(true);
-    detenerDictado.current = iniciarDictado(idioma, setTexto, () => setDictando(false));
+    setTranscribiendo(false);
+    detenerDictado.current = iniciarDictado(
+      idioma,
+      setTexto,
+      () => {
+        setDictando(false);
+        setTranscribiendo(false);
+      },
+      (estado) => {
+        if (estado === 'transcribiendo') {
+          setDictando(false);
+          setTranscribiendo(true);
+        } else if (estado === 'grabando') {
+          setDictando(true);
+          setTranscribiendo(false);
+        } else {
+          setDictando(false);
+          setTranscribiendo(false);
+        }
+      },
+      () => setError(textos.dictadoError),
+    );
   };
 
   return (
@@ -121,16 +144,16 @@ export function EntradaChat({ config, pensando, alEnviar }: Props) {
           <button
             type="button"
             onClick={alternarDictado}
-            aria-pressed={dictando}
-            aria-label={textos.dictar}
-            title={textos.dictar}
+            aria-pressed={dictando || transcribiendo}
+            aria-label={transcribiendo ? textos.dictadoTranscribiendo : textos.dictar}
+            title={transcribiendo ? textos.dictadoTranscribiendo : textos.dictar}
             className={`grid h-10 w-10 shrink-0 place-items-center rounded-md border transition-colors ${
-              dictando
+              dictando || transcribiendo
                 ? 'border-acento bg-acento/20 text-tinta'
                 : 'border-linea text-tinta-suave hover:text-tinta'
             }`}
           >
-            {dictando ? (
+            {dictando || transcribiendo ? (
               <Square size={14} aria-hidden="true" />
             ) : (
               <Mic size={17} aria-hidden="true" />

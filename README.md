@@ -24,24 +24,26 @@ Requiere Node 20 o superior.
 ```bash
 npm i
 npm run dev        # app en http://localhost:5173 (el chat usa el respaldo local)
-npm run dev:full   # app + /api/chat con Vercel dev (agente con modelo de lenguaje)
+npm run dev:full   # app + /api/chat y /api/stt con Vercel dev (agente con modelo de lenguaje)
 ```
 
 Otros scripts: `npm test` (Vitest), `npm run lint`, `npm run build`, `npm run datos` (regenera el CSV sintético), `npm run modelos` (prepara los GLB anatómicos).
 
 ## Variables de entorno (solo servidor)
 
-El modelo de lenguaje se llama únicamente desde la función `api/chat.ts`. La clave **nunca** lleva prefijo `VITE_` ni llega al navegador. En local van en `.env.local`; en Vercel, en _Settings → Environment Variables_ (Production y Preview).
+El modelo, Whisper y TTS se llaman solo desde `api/chat.ts`, `api/stt.ts` y `api/tts.ts`. Las claves **nunca** llevan prefijo `VITE_` ni llegan al navegador. En local van en `.env.local`; en Vercel, en _Settings → Environment Variables_ (Production y Preview).
 
-| Variable          | Uso                                                             |
-| ----------------- | --------------------------------------------------------------- |
-| `LLM_PROVIDER`    | `anthropic` u `openai` (cualquier API compatible con OpenAI)    |
-| `LLM_API_KEY`     | Clave del proveedor                                             |
-| `LLM_MODEL`       | Modelo multimodal (opcional; hay uno por defecto por proveedor) |
-| `LLM_BASE_URL`    | Opcional, para APIs compatibles con OpenAI                      |
-| `CHAT_MAX_TOKENS` | Límite de la respuesta (por defecto 600)                        |
+| Variable              | Uso                                                                 |
+| --------------------- | ------------------------------------------------------------------- |
+| `GEMINI_API_KEY`      | Agente (Flash-Lite) y TTS (`gemini-3.8-flash-lite-tts`)             |
+| `GROQ_API_KEY`        | Respaldo del agente (`openai/gpt-oss-120b`) y STT Whisper           |
+| `LLM_MODEL`           | Opcional; por defecto `gemini-3.5-flash-lite`                       |
+| `LLM_FALLBACK_MODEL`  | Opcional; por defecto `openai/gpt-oss-120b`                         |
+| `TTS_MODEL`           | Opcional; por defecto `gemini-3.8-flash-lite-tts`                   |
+| `TTS_VOICE`           | Opcional; por defecto `Kore`                                        |
+| `CHAT_MAX_TOKENS`     | Límite de la respuesta (por defecto 600)                            |
 
-Ver `.env.example`.
+Voz: dictado con Whisper (`/api/stt`) y respaldo Web Speech; lectura solo con Gemini TTS (`/api/tts`). Ver `.env.example`.
 
 ## Datos sintéticos
 
@@ -53,7 +55,7 @@ Todas las lecturas (`public/data/sinteticos.csv`) son **sintéticas**, generadas
 - 3D con three.js, React Three Fiber y drei; un solo Canvas montado a la vez.
 - Gráficos con ECharts (modular).
 - Motor de reglas puro y testeado (`src/motor/`): línea base, reglas por indicador, reglas multiseñal, aptitud del día y tarjeta de acción.
-- Agente: `api/chat.ts` (Vercel Function) con herramientas de lectura y de visualización, adaptadores Anthropic y OpenAI-compatible; respaldo local en `src/chat/respaldoLocal.ts`. Batería de pruebas en `src/chat/pruebas.md`.
+- Agente: `api/chat.ts` (Vercel Function) con Gemini Flash-Lite (AI Studio) y respaldo Groq; Whisper STT en `api/stt.ts`; Gemini TTS en `api/tts.ts`; respaldo local en `src/chat/respaldoLocal.ts`. Batería de pruebas en `src/chat/pruebas.md`.
 - Español e inglés (`src/config/idiomas/en.json`).
 - Especificaciones: `docs/AYNI_SPEC.md` y `docs/AYNI_FUSION.md`. Diseño: `DESIGN.md`.
 

@@ -543,6 +543,8 @@ export const esquemaEscena = z
         enviar: texto,
         adjuntarImagen: texto,
         dictar: texto,
+        dictadoTranscribiendo: texto,
+        dictadoError: texto,
         leerEnVoz: texto,
         detenerVoz: texto,
         modoSinConexion: texto,

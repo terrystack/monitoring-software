@@ -5,7 +5,7 @@ Como Rosa es la tripulante activa, la pregunta 17 pregunta por otra persona (Ing
 
 ## Cómo correrlas
 
-- **Con el modelo real:** `.env.local` con `LLM_PROVIDER`, `LLM_API_KEY` y `LLM_MODEL` (ver `.env.example`), luego `npm run dev:full` (Vercel dev sirve `/api/chat`). O en la vista previa de Vercel con las variables cargadas en Preview.
+- **Con el modelo real:** `.env.local` con `GEMINI_API_KEY` y `GROQ_API_KEY` (ver `.env.example`), luego `npm run dev:full` (Vercel dev sirve `/api/chat` y `/api/stt`). O en la vista previa de Vercel con las variables cargadas en Preview.
 - **Respaldo local:** sin clave o sin red, el chat responde con `respaldoLocal.ts`. Las 18 preguntas de texto están cubiertas por `respaldoLocal.test.ts` (`npx vitest run src/chat`).
 - En cada respuesta revisa: datos citados (valor y "tu normal"), herramienta de lienzo, idioma y que no aparezca lo prohibido.
 
