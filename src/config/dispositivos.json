@@ -356,6 +356,73 @@
     ]
   },
   {
+    "id": "oximetro",
+    "nombre": "Pulsioxímetro de dedo",
+    "modelo": "procedural:oximetro",
+    "anclaje": "dedo_indice",
+    "indicadores": ["spo2", "pulso_reposo"],
+    "ficha": {
+      "inspiradoEn": "Pulsioxímetro de dedo de uso clínico",
+      "fuente": "https://www.fda.gov/medical-devices/safety-communications/pulse-oximeter-accuracy-and-limitations-fda-safety-communication",
+      "mide": ["SpO₂ (luz roja e infrarroja)", "Frecuencia de pulso"],
+      "peso": "≈ 58 × 33 × 32 mm, 30–60 g",
+      "autonomia": "2 pilas AAA"
+    },
+    "partes": {
+      "carcasa_superior": "Carcasa con emisor LED",
+      "pantalla": "Pantalla SpO₂ / pulso",
+      "almohadilla": "Almohadillas de silicona",
+      "carcasa_inferior": "Carcasa con fotodetector",
+      "bisagra": "Bisagra con resorte"
+    },
+    "sensores": [
+      {
+        "id": "pinza",
+        "nombre": "Pinza del oxímetro",
+        "donde": "Índice izquierdo",
+        "indicadores": ["spo2", "pulso_reposo"],
+        "posicion": {
+          "tipo": "pieza",
+          "pieza": "pinza"
+        }
+      }
+    ],
+    "pasos": [
+      {
+        "texto": "Dedo limpio y tibio, sin esmalte oscuro.",
+        "animacion": "presentar",
+        "duracionMs": 2000,
+        "error": "Dedo frío: la SpO₂ sale baja sin estarlo."
+      },
+      {
+        "texto": "Abre la pinza e introduce el índice hasta el tope.",
+        "animacion": "colocar",
+        "duracionMs": 2500,
+        "sensor": "pinza",
+        "error": "Dedo a medio entrar: la luz no atraviesa la uña."
+      },
+      {
+        "texto": "Apoya la mano y no hables durante 30 segundos.",
+        "animacion": "medir",
+        "duracionMs": 3000,
+        "sensor": "pinza",
+        "error": "Mover la mano: lectura inestable."
+      },
+      {
+        "texto": "Espera a que el valor se estabilice; si cambia más de 3 puntos entre lecturas, repite con otro dedo.",
+        "animacion": "mostrar_resultado",
+        "duracionMs": 2500,
+        "resaltarZona": "pulmones"
+      }
+    ],
+    "erroresComunes": [
+      {
+        "texto": "Dedo a medio entrar: la luz no atraviesa la uña.",
+        "desplazamiento": [0, -0.02, 0.01]
+      }
+    ]
+  },
+  {
     "id": "generico_muneca",
     "nombre": "Pulsera de signos vitales",
     "modelo": "procedural:generico",

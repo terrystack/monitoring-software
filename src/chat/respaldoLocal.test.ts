@@ -99,6 +99,15 @@ describe('respaldo local del agente', () => {
     expect(r.texto).toContain(es.config.escena.respaldo.repetirMedicion);
   });
 
+  it('oxímetro con un valor raro → paso del oxímetro, error común y repetir', () => {
+    const r = preguntar('El oxímetro marca 88 %, ¿está bien?');
+    expect(r.llamadas[0]).toEqual({
+      nombre: 'mostrar_guia_dispositivo',
+      args: { dispositivo: 'oximetro', paso: 2, sensor: 'pinza' },
+    });
+    expect(r.texto).toContain(es.config.escena.respaldo.repetirMedicion);
+  });
+
   it('radiación y CO₂ → valor frente a su límite con la fuente', () => {
     expect(preguntar('¿Cuánta radiación llevo?').texto).toMatch(/600 mSv/);
     expect(preguntar('¿El CO₂ de la cabina está bien?').texto).toContain('NASA-STD-3001');

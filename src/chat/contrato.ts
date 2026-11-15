@@ -52,7 +52,7 @@ export interface ContextoAgente {
   /** Solo zonas en atención o crítico y la seleccionada; `indicadores` son ids. */
   tarjetas: Record<string, Omit<TarjetaAccion, 'indicadores'> & { indicadores: string[] }>;
   agendaHoy: { id: string; titulo: string; hora: string; estado: string }[];
-  /** Dispositivos de la pestaña Medición (PUMA, arnés ECG y diadema EEG). */
+  /** Dispositivos de la pestaña Medición (PUMA, arnés ECG, diadema EEG y oxímetro). */
   dispositivos: {
     id: string;
     nombre: string;

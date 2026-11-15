@@ -12,6 +12,8 @@ import { Arnes, type LecturasArnes } from './arnes/Arnes';
 import { VISTA_ARNES } from './arnes/geometria';
 import { Eeg } from './eeg/Eeg';
 import { VISTA_EEG } from './eeg/geometria';
+import { VISTA_OXIMETRO } from './oximetro/geometria';
+import { Oximetro } from './oximetro/Oximetro';
 import { ProveedorDespiece } from './despiece';
 import { dispositivoConSensores, estadoSensor, valorSensor } from './estadoSensor';
 import type { Variante } from './materiales';
@@ -29,12 +31,18 @@ type Animacion = Dispositivo['pasos'][number]['animacion'];
 
 const RAPIDEZ = 5;
 /** Radio de la esfera de los sensores según el tamaño del dispositivo. */
-const RADIO_SENSOR: Record<Modelo, number> = { puma: 0.0065, arnes: 0.0085, eeg: 0.006 };
+const RADIO_SENSOR: Record<Modelo, number> = {
+  puma: 0.0065,
+  arnes: 0.0085,
+  eeg: 0.006,
+  oximetro: 0.0045,
+};
 /** Piel opaca: los dispositivos se apoyan sobre la piel (cara, pecho y brazo). */
 const PIEL: Record<Modelo, ModoCapa> = {
   puma: 'visible',
   arnes: 'visible',
   eeg: 'visible',
+  oximetro: 'visible',
 };
 /** La cámara deja de guiarse a los 1,6 s para que se pueda girar libremente. */
 const TIEMPO_GUIA = 1.6;
@@ -43,6 +51,7 @@ const VISTAS: Record<Modelo, { posicion: THREE.Vector3; objetivo: THREE.Vector3 
   puma: VISTA_PUMA,
   arnes: VISTA_ARNES,
   eeg: VISTA_EEG,
+  oximetro: VISTA_OXIMETRO,
 };
 
 /** De dónde llega el dispositivo en el paso "colocar" (desplazamiento inicial, m). */
@@ -50,6 +59,7 @@ const ENTRADA: Record<Modelo, [number, number, number]> = {
   puma: [0, 0.02, 0.22],
   arnes: [0, 0.03, 0.26],
   eeg: [0, 0.16, 0.02],
+  oximetro: [0, 0, 0],
 };
 
 /** Solo en desarrollo: `?fasePuma=blockout|estructura` para revisar el modelado por pasadas. */
@@ -147,11 +157,16 @@ function DispositivoModelo({
   torso,
   variante,
   reducido,
+  colocar = null,
+  repeticion,
 }: {
   modelo: Modelo;
   torso: Perfil;
   variante: Variante;
   reducido: boolean;
+  /** Duración (ms) del paso "colocar" (abre la pinza del oxímetro); null si no toca. */
+  colocar?: number | null;
+  repeticion?: string;
 }) {
   const motor = useAyni((s) => s.motor);
   const valor = (id: string) => motor?.indicadores[id]?.valor ?? null;
@@ -166,12 +181,23 @@ function DispositivoModelo({
   );
   if (modelo === 'puma') return <Puma torso={torso} variante={variante} fase={fasePuma()} />;
   if (modelo === 'eeg') return <Eeg variante={variante} reducido={reducido} />;
+  if (modelo === 'oximetro')
+    return (
+      <Oximetro
+        variante={variante}
+        spo2={valor('spo2')}
+        pulso={pulso}
+        colocar={colocar}
+        repeticion={repeticion}
+        reducido={reducido}
+      />
+    );
   return <Arnes variante={variante} lecturas={lecturas} reducido={reducido} />;
 }
 
 /**
  * Escena de la pestaña Medición (AYNI_DISPOSITIVOS_3D.md): el cuerpo anatómico con la piel
- * visible y el dispositivo activo (PUMA, el arnés ECG o la diadema EEG) con sus sensores.
+ * visible y el dispositivo activo (PUMA, arnés ECG, diadema EEG u oxímetro) con sus sensores.
  * Fuerza las capas al montar y restaura las anteriores al salir.
  */
 export default function EscenaMedicion({ config }: Props) {

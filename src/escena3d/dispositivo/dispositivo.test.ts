@@ -12,6 +12,7 @@ import {
 } from './estadoSensor';
 import {
   CARA,
+  DEDO_INDICE_IZQ,
   medirPerfil,
   PERFIL_CABEZA,
   PERFIL_TORSO,
@@ -48,8 +49,8 @@ const config = resultado.config;
 const lista = dispositivosConSensores(config);
 
 describe('dispositivos de la pestaña Medición', () => {
-  it('son PUMA, el arnés ECG y la diadema EEG, con pasos que apuntan a sensores válidos', () => {
-    expect(lista.map((d) => d.id)).toEqual(['puma', 'arnes_ecg', 'eeg']);
+  it('son PUMA, el arnés ECG, la diadema EEG y el oxímetro, con pasos que apuntan a sensores válidos', () => {
+    expect(lista.map((d) => d.id)).toEqual(['puma', 'arnes_ecg', 'eeg', 'oximetro']);
     for (const d of lista) {
       const ids = new Set(d.sensores!.map((s) => s.id));
       for (const p of d.pasos) if (p.sensor) expect(ids.has(p.sensor)).toBe(true);
@@ -63,6 +64,7 @@ describe('dispositivos de la pestaña Medición', () => {
     expect(dispositivoConSensores(config, 'no_existe')?.id).toBe('puma');
     expect(dispositivoConSensores(config)?.id).toBe('puma');
     expect(dispositivoDeSensor(config, 'manguito')?.id).toBe('arnes_ecg');
+    expect(dispositivoDeSensor(config, 'pinza')?.id).toBe('oximetro');
   });
 
   it('cada sensor queda fuera de la piel y cada pieza tiene posición', () => {
@@ -221,5 +223,12 @@ describe('diadema EEG', () => {
     const p = puntosEeg();
     expect(p.modulo.z).toBeLessThan(-0.05);
     expect(p.frontales.z).toBeGreaterThan(0.12);
+  });
+});
+
+describe('oxímetro', () => {
+  it('su sensor queda junto al índice izquierdo', () => {
+    const p = puntosDe('oximetro', PERFIL_TORSO).pinza;
+    expect(p.distanceTo(DEDO_INDICE_IZQ.centro)).toBeLessThan(0.05);
   });
 });

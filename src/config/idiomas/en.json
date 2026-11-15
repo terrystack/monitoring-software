@@ -226,11 +226,11 @@
       "aviso": "When to call the flight surgeon: {aviso}",
       "indicador": "{nombre} today: {valor}; your normal: {normal}.",
       "indicadorSinNormal": "{nombre} today: {valor}.",
-      "sinValor": "I have no measurements of {nombre} yet; you can measure it with PUMA, the ECG harness or the EEG headset, or log it.",
+      "sinValor": "I have no measurements of {nombre} yet; you can measure it with PUMA, the ECG harness, the EEG headset or the oximeter, or log it.",
       "prediccion": "Based on your data, it could leave your normal in {n} days.",
       "dispositivo": "{dispositivo}, step {n}: {paso}",
       "medicoNada": "No zone is outside your normal; keep your routine and report any symptoms.",
-      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with PUMA, the ECG harness or the EEG headset.",
+      "noEntiendo": "I can explain your status today, a body zone, an indicator or how to measure yourself with PUMA, the ECG harness, the EEG headset or the oximeter.",
       "noDiagnostico": "I can't diagnose diseases; I only compare your data with your normal.",
       "noMedicamento": "I don't prescribe medication or doses: the flight surgeon decides that.",
       "sinInternet": "I don't have internet; I explain with what is on board.",
@@ -1001,6 +1001,39 @@
         "espina": "Spine and crown hub",
         "brazos": "5 flexible segmented arms",
         "electrodos": "5 dry electrodes (Fz, F3, F4, C3, C4)"
+      }
+    },
+    "oximetro": {
+      "nombre": "Fingertip pulse oximeter",
+      "pasos": [
+        "Clean, warm finger, no dark nail polish.",
+        "Open the clip and slide your index finger all the way in.",
+        "Rest your hand and do not talk for 30 seconds.",
+        "Wait for the value to settle; if it changes by more than 3 points between readings, repeat on another finger."
+      ],
+      "erroresComunes": ["Finger half in: the light does not pass through the nail."],
+      "erroresPasos": [
+        "Cold finger: SpO₂ reads low when it is not.",
+        "Finger half in: the light does not pass through the nail.",
+        "Moving the hand: unstable reading.",
+        ""
+      ],
+      "sensores": {
+        "pinza": {
+          "nombre": "Oximeter clip",
+          "donde": "Left index finger"
+        }
+      },
+      "ficha": {
+        "inspiradoEn": "Clinical fingertip pulse oximeter",
+        "mide": ["SpO₂ (red and infrared light)", "Pulse rate"]
+      },
+      "partes": {
+        "carcasa_superior": "Housing with LED emitter",
+        "pantalla": "SpO₂ / pulse display",
+        "almohadilla": "Silicone pads",
+        "carcasa_inferior": "Housing with photodetector",
+        "bisagra": "Spring hinge"
       }
     },
     "generico_muneca": {

@@ -3,15 +3,16 @@ import type { Dispositivo } from '../../config/esquemas';
 import { ANCLAJES } from '../cuerpo/anclajes';
 import { puntosArnes } from './arnes/geometria';
 import { puntosEeg } from './eeg/geometria';
+import { puntosOximetro } from './oximetro/geometria';
 import type { SensorDispositivo } from './estadoSensor';
 import { puntoSuperficie, type Perfil } from './medidas';
 import { puntosPuma } from './puma/geometria';
 
-export type Modelo = 'puma' | 'arnes' | 'eeg';
+export type Modelo = 'puma' | 'arnes' | 'eeg' | 'oximetro';
 
 export function modeloDe(d: Dispositivo | undefined): Modelo {
   const m = d?.modelo.replace('procedural:', '');
-  return m === 'arnes' || m === 'eeg' ? m : 'puma';
+  return m === 'arnes' || m === 'eeg' || m === 'oximetro' ? m : 'puma';
 }
 
 /** Posición (mundo) de un sensor según su tipo de posición. */
@@ -36,5 +37,6 @@ export function posicionSensor(
 export function puntosDe(modelo: Modelo, torso: Perfil) {
   if (modelo === 'arnes') return puntosArnes();
   if (modelo === 'eeg') return puntosEeg();
+  if (modelo === 'oximetro') return puntosOximetro();
   return puntosPuma(torso);
 }
