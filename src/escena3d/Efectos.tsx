@@ -27,6 +27,7 @@ export function Efectos() {
   }, [zonaHover, zonaSeleccionada, version]);
 
   if (!p.bloom && !p.vignette && !p.outline) return null;
+  return <></>;
   return (
     <EffectComposer multisampling={p.multisampling}>
       {p.outline && seleccion.length > 0 ? (

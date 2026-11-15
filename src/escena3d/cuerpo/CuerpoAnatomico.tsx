@@ -60,6 +60,7 @@ function ControlCapa({
 
 /** Cuerpo anatómico (Z-Anatomy / BodyParts3D, piel MakeHuman) con los materiales de AYNI. */
 export function CuerpoAnatomico({ onListo }: { onListo: () => void }) {
+  const [renderizado, setRenderizado] = useState(false);
   const gltf = useGLTF(URL_CUERPO, DECODIFICADOR_DRACO);
   const zonas = useAyni((s) => s.config?.zonas);
   const { transmision, particulasFlujo } = useParametrosCalidad();
@@ -102,6 +103,7 @@ export function CuerpoAnatomico({ onListo }: { onListo: () => void }) {
   const reducido = useMovimientoReducido();
 
   useFrame((state) => {
+    if (!renderizado) setRenderizado(true);
     const t = state.clock.elapsedTime;
     const estadoCuerpo = useAyni.getState().estadoCuerpo;
 
@@ -136,7 +138,7 @@ export function CuerpoAnatomico({ onListo }: { onListo: () => void }) {
   });
 
   return (
-    <>
+    <group visible={renderizado}>
       <Bvh>
         <primitive object={preparado.raiz} />
       </Bvh>
@@ -153,6 +155,6 @@ export function CuerpoAnatomico({ onListo }: { onListo: () => void }) {
           opacidadVascular={opacidadVascular}
         />
       ))}
-    </>
+    </group>
   );
 }

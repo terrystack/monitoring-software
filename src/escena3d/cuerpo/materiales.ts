@@ -26,6 +26,7 @@ export function crearMaterialSoloProfundidad(): THREE.MeshBasicMaterial {
 }
 
 /** Material translúcido con emisivo de estado (huesos, músculos, vasos). */
+// En crearMaterialTranslucido, crearMaterialOrgano, etc.
 export function crearMaterialTranslucido(
   color: string,
   opciones: Partial<THREE.MeshStandardMaterialParameters> = {},
@@ -36,6 +37,8 @@ export function crearMaterialTranslucido(
     metalness: 0,
     transparent: true,
     depthWrite: false,
+    depthTest: true, // Asegurar esto
+    alphaTest: 0.01, // Añadir esto para evitar parpadeo de píxeles casi transparentes
     ...opciones,
   });
 }
@@ -151,7 +154,9 @@ export function crearMaterialHalo(): THREE.ShaderMaterial {
       void main() {
         vec3 alOjo = normalize(cameraPosition - vPosW);
         // Exponente alto: en fondo oscuro, sumas lineales pequeñas ya se ven tras pasar a sRGB.
-        float borde = pow(1.0 - abs(dot(alOjo, normalize(vNormalW))), 5.0);
+        vec3 normal = dot(vNormalW, vNormalW) > 0.00000001 ? normalize(vNormalW) : vec3(0.0, 0.0, 1.0);
+        float cara = clamp(abs(dot(alOjo, normal)), 0.0, 1.0);
+        float borde = pow(max(1.0 - cara, 0.0001), 5.0);
         float n = ruido(vPosW * 6.0 + vec3(0.0, uTiempo * 0.35, uTiempo * 0.2)) * 0.6
                 + ruido(vPosW * 15.0 - vec3(uTiempo * 0.5)) * 0.4;
         float alfa = borde * (0.6 + n * 0.9) * uIntensidad * uOpacidad;
@@ -210,7 +215,9 @@ export function crearMaterialHolografico(): THREE.ShaderMaterial {
 
       void main() {
         vec3 alOjo = normalize(cameraPosition - vPosW);
-        float fresnel = pow(1.0 - abs(dot(alOjo, normalize(vNormalW))), 1.6);
+        vec3 normal = dot(vNormalW, vNormalW) > 0.00000001 ? normalize(vNormalW) : vec3(0.0, 0.0, 1.0);
+        float cara = clamp(abs(dot(alOjo, normal)), 0.0, 1.0);
+        float fresnel = pow(max(1.0 - cara, 0.0001), 1.6);
         float lineas = 0.85 + 0.15 * sin(vPosW.y * 260.0);
         float yEscaneo = (fract(uTiempo * 0.12) * 1.3 - 0.15) * uAltura;
         float escaneo = uEscaneo * (1.0 - smoothstep(0.0, 0.035, abs(vPosW.y - yEscaneo)));
