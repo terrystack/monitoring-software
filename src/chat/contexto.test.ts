@@ -50,8 +50,9 @@ describe('contexto del agente', () => {
       expect(texto).not.toContain(otro.nombre);
   });
 
-  it('pesa menos de 25 KB y respeta el idioma', () => {
-    expect(JSON.stringify(construirContexto(base)).length).toBeLessThan(25_000);
+  it('pesa menos de 30 KB y respeta el idioma', () => {
+    // 25 KB → 30 KB al sumar los indicadores de Evaluaciones (PVT-B, estrés y MHCL).
+    expect(JSON.stringify(construirContexto(base)).length).toBeLessThan(30_000);
     const en = configEnIdioma(config, 'en');
     const c = construirContexto({
       ...base,

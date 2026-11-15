@@ -17,7 +17,7 @@ export function diaSemana(fecha: string): number {
 
 /**
  * Agenda del día de datos `dia` (AYNI_FUSION.md §7.4): hecha si hay una lectura de alguno de
- * sus indicadores ese día; si no, atrasada cuando ya pasó su hora (en días anteriores al
+ * sus indicadores ese día (y de su contexto, si la tarea lo fija, p. ej. PVT al despertar); si no, atrasada cuando ya pasó su hora (en días anteriores al
  * último, todo lo no hecho está atrasado) y pendiente en otro caso.
  * `ahoraHHMM` es la hora actual del reloj y solo cuenta en el último día de datos.
  */
@@ -31,16 +31,19 @@ export function agendaDelDia(
   const fecha = fechaDeDia(config, dia).slice(0, 10);
   const dow = diaSemana(fecha);
   const ultimoDia = dia >= config.tripulantes.generador.dias;
-  const delDia = new Set(
-    lecturas
-      .filter((l) => l.tripulanteId === tripulanteId && diaDe(l.fechaHora) === fecha)
-      .map((l) => l.indicador),
+  const delDia = lecturas.filter(
+    (l) => l.tripulanteId === tripulanteId && diaDe(l.fechaHora) === fecha,
   );
   return config.rutina
     .filter((t) => t.franja !== 'semanal' || (t.diasSemana ?? []).includes(dow))
     .sort((a, b) => a.hora.localeCompare(b.hora))
     .map((tarea) => {
-      if (tarea.indicadores.some((i) => delDia.has(i))) return { tarea, estado: 'hecha' };
+      const hecha = delDia.some(
+        (l) =>
+          tarea.indicadores.includes(l.indicador) &&
+          (!tarea.contexto || l.contexto === tarea.contexto),
+      );
+      if (hecha) return { tarea, estado: 'hecha' };
       const vencida = !ultimoDia || tarea.hora <= ahoraHHMM;
       return { tarea, estado: vencida ? 'atrasada' : 'pendiente' };
     });

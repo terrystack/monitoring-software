@@ -10,6 +10,7 @@ import { PestanaAgente } from './chat/PestanaAgente';
 import { PestanaCuerpo3D } from './pestanas/Cuerpo3D/PestanaCuerpo3D';
 import { PestanaMedicion } from './pestanas/Medicion/PestanaMedicion';
 import { PestanaMonitoreo } from './pestanas/Monitoreo/PestanaMonitoreo';
+import { PestanaEvaluaciones } from './pestanas/Evaluaciones/PestanaEvaluaciones';
 
 interface Props {
   resultadoConfig: ResultadoConfig;
@@ -79,6 +80,9 @@ function Aplicacion({ base }: { base: ConfigAyni }) {
         {pestana === 'cuerpo3d' && <PestanaCuerpo3D config={config} seleccion={seleccion} />}
         {pestana === 'monitoreo' && <PestanaMonitoreo config={config} seleccion={seleccion} />}
         {pestana === 'medicion' && <PestanaMedicion config={config} seleccion={seleccion} />}
+        {pestana === 'evaluaciones' && (
+          <PestanaEvaluaciones config={config} seleccion={seleccion} />
+        )}
         {pestana === 'agente' && <PestanaAgente config={config} seleccion={seleccion} />}
       </main>
       <PanelPerfil config={config} seleccion={seleccion} />

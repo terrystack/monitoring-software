@@ -527,7 +527,7 @@ Errores: `400` (validación Zod), `413` (> 6 MB), `502` (proveedor), `504` (> 25
   limites: { radiacionCarreraMSv: 600, co2: '≤ 3 mmHg promedio 1 h (NASA-STD-3001)' }
 }
 ```
-Tamaño objetivo < 25 KB. Test: el contexto se construye sin red y solo contiene datos del motor y la configuración.
+Tamaño objetivo < 30 KB (era 25 KB antes de los indicadores de Evaluaciones). Test: el contexto se construye sin red y solo contiene datos del motor y la configuración.
 
 ### 8.7 Herramientas
 

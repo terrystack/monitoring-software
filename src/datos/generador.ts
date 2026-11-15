@@ -10,6 +10,20 @@ const PULSO_EJERCICIO_EXTRA = 50;
 /** Indicadores acumulados y el indicador diario del que se suman. */
 const FUENTE_ACUMULADO: Record<string, string> = { dosis_radiacion: 'tasa_dosis_dia' };
 const HORA_PICO_CICLO = 15;
+/**
+ * Indicadores que se calculan a partir de otro en la misma toma de rutina (frecuencia
+ * `rutina`): la velocidad de respuesta del PVT-B es 1000 / tiempo de reacción.
+ */
+const DERIVADOS: Record<string, { de: string; calcular: (v: number) => number }> = {
+  velocidad_respuesta: { de: 'tiempo_reaccion', calcular: (tr) => 1000 / tr },
+};
+/**
+ * Indicadores que antes eran diarios y pasaron a `rutina`: siguen consumiendo un sorteo diario
+ * del flujo principal para que el resto del CSV sintético (y los escenarios de demo) no cambie.
+ */
+const SORTEO_HEREDADO = new Set(['tiempo_reaccion']);
+/** Desfase de semilla del flujo aleatorio de las tomas de rutina (no altera los demás datos). */
+const DESFASE_SEMILLA_RUTINA = 3;
 
 /** PRNG mulberry32: misma semilla → misma secuencia. */
 export function crearAleatorio(semilla: number) {
@@ -60,7 +74,20 @@ function horasDe(ind: Indicador, config: ConfigAyni): string[] {
       const tarea = config.rutina.find((t) => t.indicadores.includes(ind.id));
       return [tarea?.hora ?? HORA_DIARIA_SIN_TAREA];
     }
+    case 'rutina':
+      return tareasDe(ind, config).map((t) => t.hora);
   }
+}
+
+function tareasDe(ind: Indicador, config: ConfigAyni) {
+  return config.rutina.filter((t) => t.indicadores.includes(ind.id));
+}
+
+/** Día de la semana ISO (1 = lunes … 7 = domingo) del día `dia` del generador. */
+function diaSemanaDe(fechaInicio: string, dia: number): number {
+  const fecha = new Date(`${fechaInicio}T00:00:00Z`);
+  fecha.setUTCDate(fecha.getUTCDate() + dia - 1);
+  return ((fecha.getUTCDay() + 6) % 7) + 1;
 }
 
 /** Sección 4.5: contexto de cada lectura generada. */
@@ -94,6 +121,10 @@ function generarTripulante(
 
   for (let dia = 1; dia <= dias; dia++) {
     for (const ind of config.indicadores) {
+      if (ind.sintetico.frecuencia === 'rutina') {
+        if (SORTEO_HEREDADO.has(ind.id)) aleatorio.gauss();
+        continue;
+      }
       if (ind.sintetico.acumulado) continue;
       const media = ind.sintetico.media + (trip.desviosPersonales[ind.id] ?? 0);
       for (const hora of horasDe(ind, config)) {
@@ -126,6 +157,54 @@ function generarTripulante(
         fuente: fuenteDe(pulso),
         contexto: 'ejercicio',
         dia,
+      });
+    }
+  }
+  return lecturas;
+}
+
+/**
+ * Tomas de la frecuencia `rutina` (PVT-B, estrés, MHCL): una lectura por tarea de rutina.json
+ * que incluye el indicador, con el contexto de la tarea; las semanales solo en sus días.
+ * Usan su propio flujo aleatorio para no cambiar el resto del CSV sintético.
+ */
+function generarRutina(
+  trip: Tripulante,
+  config: ConfigAyni,
+  aleatorio: ReturnType<typeof crearAleatorio>,
+): LecturaInterna[] {
+  const { fechaInicio, dias } = config.tripulantes.generador;
+  const lecturas: LecturaInterna[] = [];
+  const deRutina = config.indicadores.filter((i) => i.sintetico.frecuencia === 'rutina');
+  for (let dia = 1; dia <= dias; dia++) {
+    const dow = diaSemanaDe(fechaInicio, dia);
+    for (const ind of deRutina) {
+      if (DERIVADOS[ind.id]) continue;
+      const media = ind.sintetico.media + (trip.desviosPersonales[ind.id] ?? 0);
+      for (const tarea of tareasDe(ind, config)) {
+        if (tarea.franja === 'semanal' && !(tarea.diasSemana ?? []).includes(dow)) continue;
+        lecturas.push({
+          tripulanteId: trip.id,
+          fechaHora: fechaHoraIso(fechaInicio, dia, tarea.hora),
+          indicador: ind.id,
+          valor: ajustar(media + aleatorio.gauss() * ind.sintetico.desv, ind),
+          unidad: ind.unidad,
+          fuente: fuenteDe(ind),
+          contexto: tarea.contexto ?? contextoDe(ind, tarea.hora),
+          dia,
+        });
+      }
+    }
+  }
+  for (const ind of deRutina) {
+    const derivado = DERIVADOS[ind.id];
+    if (!derivado) continue;
+    for (const l of lecturas.filter((x) => x.indicador === derivado.de)) {
+      lecturas.push({
+        ...l,
+        indicador: ind.id,
+        unidad: ind.unidad,
+        valor: ajustar(derivado.calcular(l.valor), ind),
       });
     }
   }
@@ -205,9 +284,13 @@ function generarAcumulados(
 /** Sección 4.5: genera todas las lecturas sintéticas de forma reproducible. */
 export function generarLecturas(config: ConfigAyni): Lectura[] {
   const aleatorio = crearAleatorio(config.tripulantes.generador.semilla);
-  const base = config.tripulantes.tripulantes.flatMap((t) =>
-    generarTripulante(t, config, aleatorio),
+  const aleatorioRutina = crearAleatorio(
+    config.tripulantes.generador.semilla + DESFASE_SEMILLA_RUTINA,
   );
+  const base = [
+    ...config.tripulantes.tripulantes.flatMap((t) => generarTripulante(t, config, aleatorio)),
+    ...config.tripulantes.tripulantes.flatMap((t) => generarRutina(t, config, aleatorioRutina)),
+  ];
   aplicarEscenarios(base, config, false);
   const acumulados = config.tripulantes.tripulantes.flatMap((t) =>
     generarAcumulados(base, t, config),

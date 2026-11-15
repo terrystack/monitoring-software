@@ -301,7 +301,12 @@ function Accesibilidad({ config }: { config: ConfigAyni }) {
       <button
         type="button"
         onClick={() => {
-          void borrarLecturasManuales().then(() => useAyni.getState().setLecturasManuales([]));
+          void borrarLecturasManuales().then(() => {
+            const s = useAyni.getState();
+            s.setLecturasManuales([]);
+            s.setSesionesPvt([]);
+            s.setSesionesMhcl([]);
+          });
         }}
         className="mt-2 self-start rounded-md border border-linea px-3 py-1.5 text-[0.82rem] text-tinta-suave hover:border-estado-critico/60 hover:text-tinta"
       >

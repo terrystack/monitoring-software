@@ -1,5 +1,17 @@
 [
   {
+    "id": "pvt_despertar",
+    "titulo": "PVT-B y estrés al despertar",
+    "franja": "manana",
+    "hora": "07:00",
+    "indicadores": ["velocidad_respuesta", "tiempo_reaccion", "estres"],
+    "dispositivo": "manual",
+    "duracionMin": 4,
+    "puntos": 15,
+    "obligatoria": true,
+    "contexto": "despertar"
+  },
+  {
     "id": "pulso_hrv_despertar",
     "titulo": "Pulso y variabilidad al despertar",
     "franja": "manana",
@@ -77,6 +89,18 @@
     "obligatoria": true
   },
   {
+    "id": "pvt_noche",
+    "titulo": "PVT-B y estrés antes de dormir",
+    "franja": "noche",
+    "hora": "21:00",
+    "indicadores": ["velocidad_respuesta", "tiempo_reaccion", "estres"],
+    "dispositivo": "manual",
+    "duracionMin": 4,
+    "puntos": 15,
+    "obligatoria": true,
+    "contexto": "noche"
+  },
+  {
     "id": "masa_corporal",
     "titulo": "Masa corporal",
     "franja": "semanal",
@@ -89,15 +113,15 @@
     "obligatoria": true
   },
   {
-    "id": "prueba_reaccion",
-    "titulo": "Prueba de reacción",
+    "id": "mhcl_semanal",
+    "titulo": "Lista de salud mental (MHCL)",
     "franja": "semanal",
     "hora": "10:30",
-    "diasSemana": [3, 6],
-    "indicadores": ["tiempo_reaccion"],
+    "diasSemana": [7],
+    "indicadores": ["mhcl_adaptacion", "mhcl_autorregulacion", "mhcl_aprension"],
     "dispositivo": "manual",
-    "duracionMin": 1,
-    "puntos": 15,
-    "obligatoria": false
+    "duracionMin": 5,
+    "puntos": 20,
+    "obligatoria": true
   }
 ]

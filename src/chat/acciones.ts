@@ -72,7 +72,9 @@ export function efectoDeLlamada(l: LlamadaVisualizacion, ids: IdsValidos): Efect
       return { lienzo: { tipo: 'resumen' } };
     case 'abrir_pestana': {
       const r = z
-        .object({ pestana: z.enum(['cuerpo3d', 'monitoreo', 'medicion', 'agente']) })
+        .object({
+          pestana: z.enum(['cuerpo3d', 'monitoreo', 'medicion', 'evaluaciones', 'agente']),
+        })
         .safeParse(l.args);
       return r.success ? { pestana: r.data.pestana } : null;
     }
