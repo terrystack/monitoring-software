@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, } from 'lucide-react';
 import type { ConfigAyni, IdCapa, ModoCapa } from '../config/esquemas';
 import type { Seleccion } from '../estado/seleccion';
 import { useAyni, type Pestana } from '../estado/store';
@@ -64,19 +64,7 @@ export function Lienzo({ config, seleccion }: Props) {
   };
 
   const pestana = PESTANA_DE[lienzo.tipo];
-  const abrirEnPestana = () => {
-    const s = useAyni.getState();
-    if (lienzo.tipo === 'dispositivo') {
-      if (lienzo.dispositivo) s.setDispositivoActivo(lienzo.dispositivo);
-      s.setPasoDispositivo(lienzo.paso - 1);
-      s.setSensorSeleccionado(lienzo.sensor);
-    }
-    if (lienzo.tipo === 'grafico') {
-      s.setZonaFiltro(config.indicadores.find((i) => i.id === lienzo.indicador)?.zonas[0] ?? null);
-      s.setRangoDias(lienzo.dias);
-    }
-    if (pestana) s.setPestana(pestana);
-  };
+
 
   return (
     <section aria-labelledby="lienzo-titulo" className="relative flex h-full min-h-0 flex-col">
@@ -105,16 +93,7 @@ export function Lienzo({ config, seleccion }: Props) {
         >
           <ChevronRight size={16} aria-hidden="true" />
         </button>
-        {pestana && (
-          <button
-            type="button"
-            onClick={abrirEnPestana}
-            className="flex items-center gap-1.5 whitespace-nowrap rounded-md border border-linea px-2.5 py-1 text-[0.8rem] text-tinta-suave hover:text-tinta"
-          >
-            <ExternalLink size={13} aria-hidden="true" />
-            {textos.abrirEnPestana}
-          </button>
-        )}
+        {pestana}
       </header>
       <div
         key={JSON.stringify(lienzo)}
