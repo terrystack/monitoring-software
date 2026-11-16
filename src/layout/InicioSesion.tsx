@@ -129,52 +129,62 @@ export function InicioSesion({ onEntrar }: Props) {
         ))}
       </div>
 
-      <form
-        onSubmit={enviar}
-        aria-label="Inicio de sesión"
-        className="panel relative z-10 flex w-full max-w-sm flex-col gap-4 px-6 py-7 shadow-[0_18px_60px_rgba(0,0,0,0.55)]"
-      >
-        <div className="flex flex-col gap-1">
-          <span className="rotulo">HANAN PACHA</span>
-          <h1 className="text-xl font-semibold text-tinta">Iniciar sesión</h1>
-          <p className="text-[0.8rem] text-tinta-suave">Accede al monitoreo de salud del astronauta.</p>
-        </div>
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center gap-6 px-4">
+        <img
+          src="/marca/hanan-pacha.png"
+          alt="Hanan Pacha"
+          className="h-20 w-auto object-contain sm:h-24"
+          width={400}
+          height={96}
+          decoding="async"
+        />
 
-        <label className="flex flex-col gap-1 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue">
-          Usuario o correo
-          <input
-            type="text"
-            name="usuario"
-            autoComplete="username"
-            autoFocus
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
-            placeholder="astronauta@hanan.pacha"
-            className="rounded-md border border-linea bg-fondo-profundo/70 px-3 py-2 text-[0.9rem] font-normal normal-case tracking-normal text-tinta placeholder:text-tinta-tenue focus:border-acento"
-          />
-        </label>
-
-        <label className="flex flex-col gap-1 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue">
-          Contraseña
-          <input
-            type="password"
-            name="contrasena"
-            autoComplete="current-password"
-            value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)}
-            placeholder="••••••••"
-            className="rounded-md border border-linea bg-fondo-profundo/70 px-3 py-2 text-[0.9rem] font-normal normal-case tracking-normal text-tinta placeholder:text-tinta-tenue focus:border-acento"
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="mt-1 flex items-center justify-center gap-2 rounded-md border border-acento bg-acento px-4 py-2.5 text-[0.9rem] font-semibold text-fondo-profundo transition-colors hover:bg-acento/85"
+        <form
+          onSubmit={enviar}
+          aria-label="Inicio de sesión"
+          className="panel flex w-full flex-col gap-4 px-6 py-7 shadow-[0_18px_60px_rgba(0,0,0,0.55)]"
         >
-          <LogIn size={18} aria-hidden="true" />
-          LOGIN
-        </button>
-      </form>
+          <div className="flex flex-col gap-1">
+            <h1 className="text-xl font-semibold text-tinta">Iniciar sesión</h1>
+            <p className="text-[0.8rem] text-tinta-suave">Accede al monitoreo de salud del astronauta.</p>
+          </div>
+
+          <label className="flex flex-col gap-1 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue">
+            Usuario o correo
+            <input
+              type="text"
+              name="usuario"
+              autoComplete="username"
+              autoFocus
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+              placeholder="astronauta@hanan.pacha"
+              className="rounded-md border border-linea bg-fondo-profundo/70 px-3 py-2 text-[0.9rem] font-normal normal-case tracking-normal text-tinta placeholder:text-tinta-tenue focus:border-acento"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tinta-tenue">
+            Contraseña
+            <input
+              type="password"
+              name="contrasena"
+              autoComplete="current-password"
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
+              placeholder="••••••••"
+              className="rounded-md border border-linea bg-fondo-profundo/70 px-3 py-2 text-[0.9rem] font-normal normal-case tracking-normal text-tinta placeholder:text-tinta-tenue focus:border-acento"
+            />
+          </label>
+
+          <button
+            type="submit"
+            className="mt-1 flex items-center justify-center gap-2 rounded-md border border-acento bg-acento px-4 py-2.5 text-[0.9rem] font-semibold text-fondo-profundo transition-colors hover:bg-acento/85"
+          >
+            <LogIn size={18} aria-hidden="true" />
+            LOGIN
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
