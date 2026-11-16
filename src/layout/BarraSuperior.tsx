@@ -22,14 +22,14 @@ export function BarraSuperior({ config, seleccion }: Props) {
   const nombre = tripulante?.nombre ?? '';
 
   return (
-    <header className="relative z-[60] flex shrink-0 flex-wrap items-center gap-x-4 border-b border-acento/25 bg-fondo-profundo/80 px-4 lg:h-12 lg:flex-nowrap">
+    <header className="relative z-[60] flex shrink-0 flex-wrap items-center gap-x-4 border-b border-acento/25 bg-fondo-profundo/80 px-4 lg:h-16 lg:flex-nowrap">
       <a href="/" className="flex shrink-0 items-center py-2 lg:py-0" aria-label="Hanan Pacha">
         <img
           src="/marca/hanan-pacha.png"
           alt="Hanan Pacha"
-          className="h-8 w-auto object-contain sm:h-9"
-          width={180}
-          height={36}
+          className="h-12 w-auto object-contain sm:h-14"
+          width={280}
+          height={56}
           decoding="async"
         />
       </a>
