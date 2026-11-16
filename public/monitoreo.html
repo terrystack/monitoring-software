@@ -1,1739 +1,2193 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="artifact-type" content="dashboard">
-  <meta name="design-style" content="aurora">
-  <title>Monitoreo de Radiación Espacial — Estación Espacial Internacional (EEI)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
-  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
-  <style>
-    :root {
-      color-scheme: dark;
-
-      /* Page and surfaces: deep oceanic slate steps (Aurora) */
-      --background: #0c1214;
-      --surface-container-low: #111a1e;
-      --surface-container: #152024;
-      --surface-container-high: #1c2a30;
-
-      /* Text */
-      --on-surface: #edf3f5;
-      --on-surface-variant: #94a8b0;
-
-      /* Borders */
-      --outline: #38515c;
-      --outline-variant: #213138;
-
-      /* Accents */
-      --primary: #63c7d6;
-      --on-primary: #081214;
-      --primary-container: #163840;
-      --on-primary-container: #c7f0f7;
-      --secondary: #5d7882;
-      --tertiary: #87d69b;
-      --error: #f27474;
-      --on-error: #1a0606;
-
-      /* Semantic status tokens */
-      --positive: #87d69b;
-      --warning: #e8b954;
-      --focus: #63c7d6;
-
-      /* Data series */
-      --data-1: #63c7d6;
-      --data-2: #87d69b;
-      --data-3: #e8b954;
-      --data-4: #f08c70;
-      --data-context: #415861;
-
-      /* Fonts */
-      --font-headline: 'Instrument Sans', sans-serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --font-label: 'Geist Mono', monospace;
-
-      /* Shape */
-      --rounded: 0.5rem;
-      --rounded-lg: 0.75rem;
-      --rounded-full: 9999px;
-
-      /* Style effects */
-      --hairline: 1px solid var(--outline-variant);
-      --hairline-strong: 1px solid var(--outline);
-      --panel-gradient: linear-gradient(180deg, #162226 0%, #111a1e 100%);
-      --heading-tracking: -0.025em;
-      --label-tracking: 0.06em;
-
-      /* Tints and borders for alert levels */
-      --sage-tint: color-mix(in srgb, var(--positive) 13%, transparent);
-      --sage-border: color-mix(in srgb, var(--positive) 38%, transparent);
-      --cyan-tint: color-mix(in srgb, var(--primary) 13%, transparent);
-      --cyan-border: color-mix(in srgb, var(--primary) 38%, transparent);
-      --amber-tint: color-mix(in srgb, var(--warning) 14%, transparent);
-      --amber-border: color-mix(in srgb, var(--warning) 40%, transparent);
-      --red-tint: color-mix(in srgb, var(--error) 15%, transparent);
-      --red-border: color-mix(in srgb, var(--error) 45%, transparent);
-      --chart-fill-cyan: color-mix(in srgb, var(--data-1) 14%, transparent);
-      --chart-fill-sage: color-mix(in srgb, var(--data-2) 14%, transparent);
-      --chart-fill-amber: color-mix(in srgb, var(--data-3) 16%, transparent);
-      --chart-fill-red: color-mix(in srgb, var(--error) 18%, transparent);
-
-      /* Type scale (Dashboard) */
-      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
-      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
-      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
-      --label-size: 0.75rem;
-
-      /* Spacing scale (4pt base) */
-      --space-2xs: 0.125rem;
-      --space-xs: 0.25rem;
-      --space-sm: 0.5rem;
-      --space-md: 1rem;
-      --space-lg: 1.5rem;
-      --space-xl: 2.5rem;
-      --space-2xl: 4rem;
-
-      /* Motion */
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-      --dur-micro: 120ms;
-      --dur-short: 220ms;
-      --dur-long: 420ms;
-    }
-
-    /* Base reset */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { overflow-x: clip; margin: 0; padding: 0; }
-    header { position: static !important; }
-
-    body {
-      background-color: var(--background);
-      color: var(--on-surface);
-      font-family: var(--font-body);
-      font-size: var(--body-size);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    button, input, select, textarea {
-      font-family: inherit;
-      color: inherit;
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    .page-grid {
-      display: grid;
-      gap: var(--space-lg);
-      padding: var(--space-lg);
-      max-width: 1320px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-    .page-grid * { min-width: 0; }
-
-    /* Header */
-    .dashboard-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: var(--space-md);
-      padding-bottom: var(--space-md);
-      border-bottom: var(--hairline);
-    }
-
-    .header-copy {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-      max-width: 72ch;
-    }
-
-    .title {
-      font-family: var(--font-headline);
-      font-size: var(--display-size);
-      font-weight: 600;
-      letter-spacing: var(--heading-tracking);
-      line-height: 1.1;
-      color: var(--on-surface);
-      margin: 0;
-    }
-
-    .subtitle {
-      margin: 0;
-      color: var(--on-surface-variant);
-      font-size: var(--body-size);
-    }
-
-    .header-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-sm);
-      min-height: 44px;
-      padding: 0 var(--space-md);
-      border-radius: var(--rounded);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 500;
-      letter-spacing: var(--label-tracking);
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background-color var(--dur-micro) var(--ease-out),
-                  box-shadow var(--dur-micro) var(--ease-out),
-                  transform var(--dur-micro) var(--ease-out);
-      border: var(--hairline-strong);
-      background-color: var(--surface-container);
-      color: var(--on-surface);
-    }
-
-    .btn:hover:not(:disabled) {
-      background-color: var(--surface-container-high);
-    }
-
-    .btn:active:not(:disabled) {
-      transform: translateY(1px);
-    }
-
-    .btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: var(--on-primary);
-      border-color: var(--primary);
-      font-weight: 600;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background-color: var(--on-primary-container);
-    }
-
-    .btn-armed {
-      background-color: var(--red-tint);
-      color: var(--error);
-      border-color: var(--red-border);
-    }
-
-    .inline-feedback {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--positive);
-      min-height: 1.25rem;
-    }
-
-    /* Panels */
-    .panel {
-      background: var(--panel-gradient);
-      border: var(--hairline);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-lg);
-    }
-
-    .panel-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-md);
-    }
-
-    .section-title {
-      font-family: var(--font-headline);
-      font-size: var(--headline-size);
-      font-weight: 600;
-      letter-spacing: var(--heading-tracking);
-      line-height: 1.15;
-      color: var(--on-surface);
-      margin: 0;
-    }
-
-    .panel-subtitle {
-      margin: var(--space-xs) 0 0;
-      color: var(--on-surface-variant);
-      font-size: var(--body-size);
-    }
-
-    .data-label {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 500;
-      letter-spacing: var(--label-tracking);
-      text-transform: uppercase;
-      color: var(--on-surface-variant);
-    }
-
-    /* Global Alert Banner */
-    .alert-banner {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      gap: var(--space-md);
-      padding: var(--space-md) var(--space-lg);
-      border-radius: var(--rounded-lg);
-      border: var(--hairline);
-      background: var(--surface-container-low);
-      transition: background-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out);
-    }
-
-    .alert-banner.status-green {
-      background-color: var(--sage-tint);
-      border-color: var(--sage-border);
-    }
-    .alert-banner.status-yellow {
-      background-color: var(--amber-tint);
-      border-color: var(--amber-border);
-    }
-    .alert-banner.status-red {
-      background-color: var(--red-tint);
-      border-color: var(--red-border);
-    }
-
-    .alert-icon-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: var(--rounded);
-      background-color: var(--background);
-      border: var(--hairline);
-      flex-shrink: 0;
-    }
-
-    .status-green .alert-icon-wrap { color: var(--positive); border-color: var(--sage-border); }
-    .status-yellow .alert-icon-wrap { color: var(--warning); border-color: var(--amber-border); }
-    .status-red .alert-icon-wrap { color: var(--error); border-color: var(--red-border); }
-
-    .alert-title {
-      font-family: var(--font-headline);
-      font-size: var(--subhead-size);
-      font-weight: 600;
-      margin: 0 0 var(--space-2xs);
-      color: var(--on-surface);
-    }
-
-    .alert-desc {
-      margin: 0;
-      color: var(--on-surface-variant);
-      font-size: var(--body-size);
-    }
-
-    .alert-badge-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: var(--space-xs);
-    }
-
-    /* Status chips */
-    .status-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: var(--rounded);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 500;
-      letter-spacing: var(--label-tracking);
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .status-chip.green {
-      background-color: var(--sage-tint);
-      color: var(--positive);
-      border: 1px solid var(--sage-border);
-    }
-    .status-chip.yellow {
-      background-color: var(--amber-tint);
-      color: var(--warning);
-      border: 1px solid var(--amber-border);
-    }
-    .status-chip.red {
-      background-color: var(--red-tint);
-      color: var(--error);
-      border: 1px solid var(--red-border);
-    }
-    .status-chip.cyan {
-      background-color: var(--cyan-tint);
-      color: var(--primary);
-      border: 1px solid var(--cyan-border);
-    }
-
-    /* Controls Panel */
-    .controls-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: var(--space-md);
-      align-items: end;
-    }
-
-    .control-block {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-
-    .span-12 { grid-column: span 12; }
-    .span-7 { grid-column: span 7; }
-    .span-6 { grid-column: span 6; }
-    .span-5 { grid-column: span 5; }
-    .span-4 { grid-column: span 4; }
-    .span-3 { grid-column: span 3; }
-    .span-2 { grid-column: span 2; }
-
-    .segmented-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
-
-    .seg-btn {
-      min-height: 44px;
-      padding: 0 var(--space-md);
-      border-radius: var(--rounded);
-      background-color: var(--background);
-      border: var(--hairline);
-      color: var(--on-surface-variant);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 500;
-      letter-spacing: var(--label-tracking);
-      text-transform: uppercase;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      transition: background-color var(--dur-micro) var(--ease-out),
-                  color var(--dur-micro) var(--ease-out),
-                  box-shadow var(--dur-micro) var(--ease-out);
-    }
-
-    .seg-btn:hover {
-      background-color: var(--surface-container-high);
-      color: var(--on-surface);
-    }
-
-    .seg-btn.active {
-      background-color: var(--primary-container);
-      color: var(--on-primary-container);
-      border-color: var(--primary);
-      box-shadow: inset 0 0 0 1px var(--primary);
-    }
-
-    .seg-btn.active-warn {
-      background-color: var(--amber-tint);
-      color: var(--warning);
-      border-color: var(--warning);
-      box-shadow: inset 0 0 0 1px var(--warning);
-    }
-
-    .seg-btn.active-danger {
-      background-color: var(--red-tint);
-      color: var(--error);
-      border-color: var(--error);
-      box-shadow: inset 0 0 0 1px var(--error);
-    }
-
-    .input-control, .select-control {
-      width: 100%;
-      min-height: 44px;
-      background-color: var(--background);
-      border: var(--hairline-strong);
-      border-radius: var(--rounded);
-      color: var(--on-surface);
-      padding: var(--space-xs) var(--space-md);
-      font-family: var(--font-label);
-      font-size: var(--body-size);
-    }
-
-    .select-control {
-      padding-right: var(--space-xl);
-      cursor: pointer;
-    }
-
-    .well {
-      background-color: var(--background);
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      padding: var(--space-md);
-    }
-
-    .slider-pair {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 96px;
-      gap: var(--space-sm);
-      align-items: center;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--primary);
-      min-height: 44px;
-      cursor: pointer;
-    }
-
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      min-height: 44px;
-      padding: var(--space-xs) var(--space-sm);
-      background-color: var(--background);
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      cursor: pointer;
-      font-size: var(--body-size);
-      color: var(--on-surface);
-    }
-
-    .checkbox-row input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--primary);
-      cursor: pointer;
-    }
-
-    /* KPI Row */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-      gap: var(--space-md);
-    }
-
-    .kpi-card {
-      background: var(--panel-gradient);
-      border: var(--hairline);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-lg);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: var(--space-sm);
-      border-top-width: 3px;
-      border-top-style: solid;
-      border-top-color: var(--outline);
-      transition: border-top-color var(--dur-short) var(--ease-out);
-    }
-
-    .kpi-card.level-green { border-top-color: var(--positive); }
-    .kpi-card.level-yellow { border-top-color: var(--warning); }
-    .kpi-card.level-red { border-top-color: var(--error); }
-
-    .kpi-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: var(--space-sm);
-    }
-
-    .kpi-value-row {
-      display: flex;
-      align-items: baseline;
-      gap: var(--space-xs);
-      flex-wrap: wrap;
-    }
-
-    .metric-value {
-      font-family: var(--font-headline);
-      font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: var(--heading-tracking);
-      line-height: 1.08;
-      color: var(--on-surface);
-    }
-
-    .metric-unit {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    .metric-sub {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-      display: flex;
-      justify-content: space-between;
-      gap: var(--space-sm);
-      padding-top: var(--space-xs);
-      border-top: var(--hairline);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 8px;
-      background-color: var(--background);
-      border: var(--hairline);
-      border-radius: var(--rounded-full);
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      border-radius: var(--rounded-full);
-      transition: width var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
-      background-color: var(--positive);
-    }
-
-    .progress-fill.yellow { background-color: var(--warning); }
-    .progress-fill.red { background-color: var(--error); }
-
-    /* Charts Layout */
-    .two-col-asymmetric {
-      display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      gap: var(--space-lg);
-    }
-
-    .two-col-balanced {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: var(--space-lg);
-    }
-
-    .chart-box {
-      position: relative;
-      width: 100%;
-      min-height: 300px;
-      background-color: var(--background);
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      padding: var(--space-md);
-    }
-
-    .chart-box canvas {
-      width: 100% !important;
-      height: 280px !important;
-    }
-
-    .legend-inline {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-md);
-      margin-top: var(--space-sm);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .legend-swatch {
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-      display: inline-block;
-    }
-
-    .swatch-cyan { background-color: var(--data-1); }
-    .swatch-sage { background-color: var(--data-2); }
-    .swatch-amber { background-color: var(--data-3); }
-    .swatch-coral { background-color: var(--data-4); }
-    .swatch-red { background-color: var(--error); }
-
-    /* Tissue table & bars */
-    .organ-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    .organ-row {
-      background-color: var(--background);
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      padding: var(--space-sm) var(--space-md);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-
-    .organ-row-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-sm);
-      flex-wrap: wrap;
-    }
-
-    .organ-name {
-      font-weight: 600;
-      color: var(--on-surface);
-      font-size: var(--body-size);
-    }
-
-    .organ-vals {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-variant-numeric: tabular-nums;
-      color: var(--on-surface);
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    /* Tables */
-    .table-wrap {
-      overflow-x: auto;
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      background-color: var(--background);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    th {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 500;
-      letter-spacing: var(--label-tracking);
-      text-transform: uppercase;
-      color: var(--on-surface-variant);
-      padding: var(--space-sm) var(--space-md);
-      border-bottom: var(--hairline-strong);
-      background-color: var(--surface-container-low);
-      white-space: nowrap;
-    }
-
-    td {
-      padding: var(--space-sm) var(--space-md);
-      border-bottom: var(--hairline);
-      font-size: var(--body-size);
-      vertical-align: top;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .agency-row {
-      cursor: pointer;
-      transition: background-color var(--dur-micro) var(--ease-out);
-    }
-
-    .agency-row:hover {
-      background-color: var(--surface-container);
-    }
-
-    .agency-row.selected-row {
-      background-color: var(--primary-container);
-    }
-
-    .num-cell {
-      font-family: var(--font-label);
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    /* Context cards inside agency panel */
-    .context-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
-      gap: var(--space-sm);
-      margin-bottom: var(--space-md);
-    }
-
-    .context-tile {
-      background-color: var(--background);
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      padding: var(--space-sm) var(--space-md);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2xs);
-    }
-
-    .context-val {
-      font-family: var(--font-headline);
-      font-weight: 600;
-      font-size: var(--subhead-size);
-      color: var(--on-surface);
-    }
-
-    .rbe-pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-xs);
-      margin-top: var(--space-sm);
-    }
-
-    .rbe-pill {
-      background-color: var(--surface-container);
-      border: var(--hairline);
-      border-radius: var(--rounded);
-      padding: var(--space-xs) var(--space-sm);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    .rbe-pill strong {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    /* Footer */
-    .source-footer {
-      border-top: var(--hairline);
-      padding-top: var(--space-md);
-      color: var(--on-surface-variant);
-      font-size: var(--label-size);
-      font-family: var(--font-label);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: var(--space-sm);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1024px) {
-      .two-col-asymmetric,
-      .two-col-balanced {
-        grid-template-columns: 1fr;
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="artifact-type" content="dashboard" />
+    <meta name="design-style" content="aurora" />
+    <title>Space Radiation Monitoring — International Space Station (ISS)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+
+        /* Page and surfaces: deep oceanic slate steps (Aurora) */
+        --background: #0c1214;
+        --surface-container-low: #111a1e;
+        --surface-container: #152024;
+        --surface-container-high: #1c2a30;
+
+        /* Text */
+        --on-surface: #edf3f5;
+        --on-surface-variant: #94a8b0;
+
+        /* Borders */
+        --outline: #38515c;
+        --outline-variant: #213138;
+
+        /* Accents */
+        --primary: #63c7d6;
+        --on-primary: #081214;
+        --primary-container: #163840;
+        --on-primary-container: #c7f0f7;
+        --secondary: #5d7882;
+        --tertiary: #87d69b;
+        --error: #f27474;
+        --on-error: #1a0606;
+
+        /* Semantic status tokens */
+        --positive: #87d69b;
+        --warning: #e8b954;
+        --focus: #63c7d6;
+
+        /* Data series */
+        --data-1: #63c7d6;
+        --data-2: #87d69b;
+        --data-3: #e8b954;
+        --data-4: #f08c70;
+        --data-context: #415861;
+
+        /* Fonts */
+        --font-headline: 'Instrument Sans', sans-serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+        --font-label: 'Geist Mono', monospace;
+
+        /* Shape */
+        --rounded: 0.5rem;
+        --rounded-lg: 0.75rem;
+        --rounded-full: 9999px;
+
+        /* Style effects */
+        --hairline: 1px solid var(--outline-variant);
+        --hairline-strong: 1px solid var(--outline);
+        --panel-gradient: linear-gradient(180deg, #162226 0%, #111a1e 100%);
+        --heading-tracking: -0.025em;
+        --label-tracking: 0.06em;
+
+        /* Tints and borders for alert levels */
+        --sage-tint: color-mix(in srgb, var(--positive) 13%, transparent);
+        --sage-border: color-mix(in srgb, var(--positive) 38%, transparent);
+        --cyan-tint: color-mix(in srgb, var(--primary) 13%, transparent);
+        --cyan-border: color-mix(in srgb, var(--primary) 38%, transparent);
+        --amber-tint: color-mix(in srgb, var(--warning) 14%, transparent);
+        --amber-border: color-mix(in srgb, var(--warning) 40%, transparent);
+        --red-tint: color-mix(in srgb, var(--error) 15%, transparent);
+        --red-border: color-mix(in srgb, var(--error) 45%, transparent);
+        --chart-fill-cyan: color-mix(in srgb, var(--data-1) 14%, transparent);
+        --chart-fill-sage: color-mix(in srgb, var(--data-2) 14%, transparent);
+        --chart-fill-amber: color-mix(in srgb, var(--data-3) 16%, transparent);
+        --chart-fill-red: color-mix(in srgb, var(--error) 18%, transparent);
+
+        /* Type scale (Dashboard) */
+        --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+        --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+        --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+        --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+        --label-size: 0.75rem;
+
+        /* Spacing scale (4pt base) */
+        --space-2xs: 0.125rem;
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+        --space-xl: 2.5rem;
+        --space-2xl: 4rem;
+
+        /* Motion */
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+        --dur-micro: 120ms;
+        --dur-short: 220ms;
+        --dur-long: 420ms;
       }
-      .span-7, .span-6, .span-5, .span-4, .span-3, .span-2 {
+
+      /* Base reset */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        overflow-x: clip;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        position: static !important;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--on-surface);
+        font-family: var(--font-body);
+        font-size: var(--body-size);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .page-grid {
+        display: grid;
+        gap: var(--space-lg);
+        padding: var(--space-lg);
+        max-width: 1320px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      .page-grid * {
+        min-width: 0;
+      }
+
+      /* Header */
+      .dashboard-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: var(--space-md);
+        padding-bottom: var(--space-md);
+        border-bottom: var(--hairline);
+      }
+
+      .header-copy {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        max-width: 72ch;
+      }
+
+      .title {
+        font-family: var(--font-headline);
+        font-size: var(--display-size);
+        font-weight: 600;
+        letter-spacing: var(--heading-tracking);
+        line-height: 1.1;
+        color: var(--on-surface);
+        margin: 0;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--on-surface-variant);
+        font-size: var(--body-size);
+      }
+
+      .header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        min-height: 44px;
+        padding: 0 var(--space-md);
+        border-radius: var(--rounded);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: 500;
+        letter-spacing: var(--label-tracking);
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background-color var(--dur-micro) var(--ease-out),
+          box-shadow var(--dur-micro) var(--ease-out),
+          transform var(--dur-micro) var(--ease-out);
+        border: var(--hairline-strong);
+        background-color: var(--surface-container);
+        color: var(--on-surface);
+      }
+
+      .btn:hover:not(:disabled) {
+        background-color: var(--surface-container-high);
+      }
+
+      .btn:active:not(:disabled) {
+        transform: translateY(1px);
+      }
+
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--on-primary);
+        border-color: var(--primary);
+        font-weight: 600;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background-color: var(--on-primary-container);
+      }
+
+      .btn-armed {
+        background-color: var(--red-tint);
+        color: var(--error);
+        border-color: var(--red-border);
+      }
+
+      .inline-feedback {
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        color: var(--positive);
+        min-height: 1.25rem;
+      }
+
+      /* Panels */
+      .panel {
+        background: var(--panel-gradient);
+        border: var(--hairline);
+        border-radius: var(--rounded-lg);
+        padding: var(--space-lg);
+      }
+
+      .panel-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+      }
+
+      .section-title {
+        font-family: var(--font-headline);
+        font-size: var(--headline-size);
+        font-weight: 600;
+        letter-spacing: var(--heading-tracking);
+        line-height: 1.15;
+        color: var(--on-surface);
+        margin: 0;
+      }
+
+      .panel-subtitle {
+        margin: var(--space-xs) 0 0;
+        color: var(--on-surface-variant);
+        font-size: var(--body-size);
+      }
+
+      .data-label {
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: 500;
+        letter-spacing: var(--label-tracking);
+        text-transform: uppercase;
+        color: var(--on-surface-variant);
+      }
+
+      /* Global Alert Banner */
+      .alert-banner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--space-md);
+        padding: var(--space-md) var(--space-lg);
+        border-radius: var(--rounded-lg);
+        border: var(--hairline);
+        background: var(--surface-container-low);
+        transition:
+          background-color var(--dur-short) var(--ease-out),
+          box-shadow var(--dur-short) var(--ease-out);
+      }
+
+      .alert-banner.status-green {
+        background-color: var(--sage-tint);
+        border-color: var(--sage-border);
+      }
+      .alert-banner.status-yellow {
+        background-color: var(--amber-tint);
+        border-color: var(--amber-border);
+      }
+      .alert-banner.status-red {
+        background-color: var(--red-tint);
+        border-color: var(--red-border);
+      }
+
+      .alert-icon-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--rounded);
+        background-color: var(--background);
+        border: var(--hairline);
+        flex-shrink: 0;
+      }
+
+      .status-green .alert-icon-wrap {
+        color: var(--positive);
+        border-color: var(--sage-border);
+      }
+      .status-yellow .alert-icon-wrap {
+        color: var(--warning);
+        border-color: var(--amber-border);
+      }
+      .status-red .alert-icon-wrap {
+        color: var(--error);
+        border-color: var(--red-border);
+      }
+
+      .alert-title {
+        font-family: var(--font-headline);
+        font-size: var(--subhead-size);
+        font-weight: 600;
+        margin: 0 0 var(--space-2xs);
+        color: var(--on-surface);
+      }
+
+      .alert-desc {
+        margin: 0;
+        color: var(--on-surface-variant);
+        font-size: var(--body-size);
+      }
+
+      .alert-badge-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: var(--space-xs);
+      }
+
+      /* Status chips */
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--rounded);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: 500;
+        letter-spacing: var(--label-tracking);
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .status-chip.green {
+        background-color: var(--sage-tint);
+        color: var(--positive);
+        border: 1px solid var(--sage-border);
+      }
+      .status-chip.yellow {
+        background-color: var(--amber-tint);
+        color: var(--warning);
+        border: 1px solid var(--amber-border);
+      }
+      .status-chip.red {
+        background-color: var(--red-tint);
+        color: var(--error);
+        border: 1px solid var(--red-border);
+      }
+      .status-chip.cyan {
+        background-color: var(--cyan-tint);
+        color: var(--primary);
+        border: 1px solid var(--cyan-border);
+      }
+
+      /* Controls Panel */
+      .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: var(--space-md);
+        align-items: end;
+      }
+
+      .control-block {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .span-12 {
+        grid-column: span 12;
+      }
+      .span-7 {
+        grid-column: span 7;
+      }
+      .span-6 {
         grid-column: span 6;
       }
-    }
+      .span-5 {
+        grid-column: span 5;
+      }
+      .span-4 {
+        grid-column: span 4;
+      }
+      .span-3 {
+        grid-column: span 3;
+      }
+      .span-2 {
+        grid-column: span 2;
+      }
 
-    @media (max-width: 640px) {
-      .page-grid {
-        padding: var(--space-sm);
+      .segmented-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+
+      .seg-btn {
+        min-height: 44px;
+        padding: 0 var(--space-md);
+        border-radius: var(--rounded);
+        background-color: var(--background);
+        border: var(--hairline);
+        color: var(--on-surface-variant);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: 500;
+        letter-spacing: var(--label-tracking);
+        text-transform: uppercase;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        transition:
+          background-color var(--dur-micro) var(--ease-out),
+          color var(--dur-micro) var(--ease-out),
+          box-shadow var(--dur-micro) var(--ease-out);
+      }
+
+      .seg-btn:hover {
+        background-color: var(--surface-container-high);
+        color: var(--on-surface);
+      }
+
+      .seg-btn.active {
+        background-color: var(--primary-container);
+        color: var(--on-primary-container);
+        border-color: var(--primary);
+        box-shadow: inset 0 0 0 1px var(--primary);
+      }
+
+      .seg-btn.active-warn {
+        background-color: var(--amber-tint);
+        color: var(--warning);
+        border-color: var(--warning);
+        box-shadow: inset 0 0 0 1px var(--warning);
+      }
+
+      .seg-btn.active-danger {
+        background-color: var(--red-tint);
+        color: var(--error);
+        border-color: var(--error);
+        box-shadow: inset 0 0 0 1px var(--error);
+      }
+
+      .input-control,
+      .select-control {
+        width: 100%;
+        min-height: 44px;
+        background-color: var(--background);
+        border: var(--hairline-strong);
+        border-radius: var(--rounded);
+        color: var(--on-surface);
+        padding: var(--space-xs) var(--space-md);
+        font-family: var(--font-label);
+        font-size: var(--body-size);
+      }
+
+      .select-control {
+        padding-right: var(--space-xl);
+        cursor: pointer;
+      }
+
+      .well {
+        background-color: var(--background);
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        padding: var(--space-md);
+      }
+
+      .slider-pair {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 96px;
+        gap: var(--space-sm);
+        align-items: center;
+      }
+
+      input[type='range'] {
+        width: 100%;
+        accent-color: var(--primary);
+        min-height: 44px;
+        cursor: pointer;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        min-height: 44px;
+        padding: var(--space-xs) var(--space-sm);
+        background-color: var(--background);
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        cursor: pointer;
+        font-size: var(--body-size);
+        color: var(--on-surface);
+      }
+
+      .checkbox-row input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      /* KPI Row */
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
         gap: var(--space-md);
       }
-      .alert-banner {
-        grid-template-columns: 1fr;
+
+      .kpi-card {
+        background: var(--panel-gradient);
+        border: var(--hairline);
+        border-radius: var(--rounded-lg);
+        padding: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: var(--space-sm);
+        border-top-width: 3px;
+        border-top-style: solid;
+        border-top-color: var(--outline);
+        transition: border-top-color var(--dur-short) var(--ease-out);
       }
-      .alert-badge-group {
+
+      .kpi-card.level-green {
+        border-top-color: var(--positive);
+      }
+      .kpi-card.level-yellow {
+        border-top-color: var(--warning);
+      }
+      .kpi-card.level-red {
+        border-top-color: var(--error);
+      }
+
+      .kpi-top {
+        display: flex;
+        justify-content: space-between;
         align-items: flex-start;
+        gap: var(--space-sm);
       }
-      .controls-grid {
-        grid-template-columns: 1fr;
-      }
-      .span-12, .span-7, .span-6, .span-5, .span-4, .span-3, .span-2 {
-        grid-column: span 1;
-      }
-      .slider-pair {
-        grid-template-columns: 1fr;
-      }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+      .kpi-value-row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-xs);
+        flex-wrap: wrap;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="page-grid">
-    <header class="dashboard-header">
-      <div class="header-copy">
-        <h1 class="title">Monitoreo de Radiación Espacial en la Estación Espacial Internacional</h1>
-        <p class="subtitle">
-          Panel operativo para seguimiento de dosis absorbida, dosis efectiva, dosis equivalente tisular y espectro LET según estándares de las agencias socias de la EEI.
-        </p>
-      </div>
-      <div class="header-actions">
-        <span id="action-feedback" class="inline-feedback" aria-live="polite"></span>
-        <button type="button" class="btn btn-primary" onclick="exportTelemetryCSV()">
-          <i data-lucide="download" aria-hidden="true"></i>
-          Exportar reporte CSV
-        </button>
-        <button type="button" id="btn-reset" class="btn" onclick="handleResetDefaults(this)">
-          <i data-lucide="rotate-ccw" aria-hidden="true"></i>
-          Restablecer valores
-        </button>
-      </div>
-    </header>
 
-    <!-- Global Operational Alert Banner -->
-    <section id="global-alert-banner" class="alert-banner status-green" aria-live="polite">
-      <div class="alert-icon-wrap" id="global-alert-icon">
-        <i data-lucide="shield-check" aria-hidden="true"></i>
-      </div>
-      <div>
-        <h2 class="alert-title" id="global-alert-title">Estado Nominal LEO — Parámetros dentro de margen operativo</h2>
-        <p class="alert-desc" id="global-alert-desc">
-          Exposición continua dominada por radiación cósmica galáctica (GCR) y cruces rutinarios de cinturones atrapados. Mantener principio ALARA y dosimetría personal activa.
-        </p>
-      </div>
-      <div class="alert-badge-group">
-        <span id="global-alert-chip" class="status-chip green">VERDE · NOMINAL</span>
-        <span class="data-label" id="global-rule-ref">Reglas de Vuelo EEI Vol. B Sec. B14</span>
-      </div>
-    </section>
+      .metric-value {
+        font-family: var(--font-headline);
+        font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: var(--heading-tracking);
+        line-height: 1.08;
+        color: var(--on-surface);
+      }
 
-    <!-- Simulation & Filter Control Panel -->
-    <section class="panel" aria-label="Configuración de misión y simulación ambiental">
-      <div class="panel-header">
+      .metric-unit {
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        color: var(--on-surface-variant);
+      }
+
+      .metric-sub {
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        color: var(--on-surface-variant);
+        display: flex;
+        justify-content: space-between;
+        gap: var(--space-sm);
+        padding-top: var(--space-xs);
+        border-top: var(--hairline);
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 8px;
+        background-color: var(--background);
+        border: var(--hairline);
+        border-radius: var(--rounded-full);
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: var(--rounded-full);
+        transition:
+          width var(--dur-short) var(--ease-out),
+          background-color var(--dur-short) var(--ease-out);
+        background-color: var(--positive);
+      }
+
+      .progress-fill.yellow {
+        background-color: var(--warning);
+      }
+      .progress-fill.red {
+        background-color: var(--error);
+      }
+
+      /* Charts Layout */
+      .two-col-asymmetric {
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: var(--space-lg);
+      }
+
+      .two-col-balanced {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-lg);
+      }
+
+      .chart-box {
+        position: relative;
+        width: 100%;
+        min-height: 300px;
+        background-color: var(--background);
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        padding: var(--space-md);
+      }
+
+      .chart-box canvas {
+        width: 100% !important;
+        height: 280px !important;
+      }
+
+      .legend-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-top: var(--space-sm);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        color: var(--on-surface-variant);
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+      }
+
+      .legend-swatch {
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        display: inline-block;
+      }
+
+      .swatch-cyan {
+        background-color: var(--data-1);
+      }
+      .swatch-sage {
+        background-color: var(--data-2);
+      }
+      .swatch-amber {
+        background-color: var(--data-3);
+      }
+      .swatch-coral {
+        background-color: var(--data-4);
+      }
+      .swatch-red {
+        background-color: var(--error);
+      }
+
+      /* Tissue table & bars */
+      .organ-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .organ-row {
+        background-color: var(--background);
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        padding: var(--space-sm) var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .organ-row-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-sm);
+        flex-wrap: wrap;
+      }
+
+      .organ-name {
+        font-weight: 600;
+        color: var(--on-surface);
+        font-size: var(--body-size);
+      }
+
+      .organ-vals {
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-variant-numeric: tabular-nums;
+        color: var(--on-surface);
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      /* Tables */
+      .table-wrap {
+        overflow-x: auto;
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        background-color: var(--background);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      th {
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: 500;
+        letter-spacing: var(--label-tracking);
+        text-transform: uppercase;
+        color: var(--on-surface-variant);
+        padding: var(--space-sm) var(--space-md);
+        border-bottom: var(--hairline-strong);
+        background-color: var(--surface-container-low);
+        white-space: nowrap;
+      }
+
+      td {
+        padding: var(--space-sm) var(--space-md);
+        border-bottom: var(--hairline);
+        font-size: var(--body-size);
+        vertical-align: top;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      .agency-row {
+        cursor: pointer;
+        transition: background-color var(--dur-micro) var(--ease-out);
+      }
+
+      .agency-row:hover {
+        background-color: var(--surface-container);
+      }
+
+      .agency-row.selected-row {
+        background-color: var(--primary-container);
+      }
+
+      .num-cell {
+        font-family: var(--font-label);
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      /* Context cards inside agency panel */
+      .context-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+      }
+
+      .context-tile {
+        background-color: var(--background);
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        padding: var(--space-sm) var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2xs);
+      }
+
+      .context-val {
+        font-family: var(--font-headline);
+        font-weight: 600;
+        font-size: var(--subhead-size);
+        color: var(--on-surface);
+      }
+
+      .rbe-pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        margin-top: var(--space-sm);
+      }
+
+      .rbe-pill {
+        background-color: var(--surface-container);
+        border: var(--hairline);
+        border-radius: var(--rounded);
+        padding: var(--space-xs) var(--space-sm);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        color: var(--on-surface-variant);
+      }
+
+      .rbe-pill strong {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* Footer */
+      .source-footer {
+        border-top: var(--hairline);
+        padding-top: var(--space-md);
+        color: var(--on-surface-variant);
+        font-size: var(--label-size);
+        font-family: var(--font-label);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--space-sm);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        .two-col-asymmetric,
+        .two-col-balanced {
+          grid-template-columns: 1fr;
+        }
+        .span-7,
+        .span-6,
+        .span-5,
+        .span-4,
+        .span-3,
+        .span-2 {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page-grid {
+          padding: var(--space-sm);
+          gap: var(--space-md);
+        }
+        .alert-banner {
+          grid-template-columns: 1fr;
+        }
+        .alert-badge-group {
+          align-items: flex-start;
+        }
+        .controls-grid {
+          grid-template-columns: 1fr;
+        }
+        .span-12,
+        .span-7,
+        .span-6,
+        .span-5,
+        .span-4,
+        .span-3,
+        .span-2 {
+          grid-column: span 1;
+        }
+        .slider-pair {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-grid">
+      <header class="dashboard-header">
+        <div class="header-copy">
+          <h1 class="title">Space Radiation Monitoring on the International Space Station</h1>
+          <p class="subtitle">
+            Operational dashboard for tracking absorbed dose, effective dose, tissue equivalent
+            dose, and LET spectrum according to ISS partner agency standards.
+          </p>
+        </div>
+        <div class="header-actions">
+          <span id="action-feedback" class="inline-feedback" aria-live="polite"></span>
+          <button type="button" class="btn btn-primary" onclick="exportTelemetryCSV()">
+            <i data-lucide="download" aria-hidden="true"></i>
+            Export CSV Report
+          </button>
+          <button type="button" id="btn-reset" class="btn" onclick="handleResetDefaults(this)">
+            <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            Reset Defaults
+          </button>
+        </div>
+      </header>
+
+      <!-- Global Operational Alert Banner -->
+      <section id="global-alert-banner" class="alert-banner status-green" aria-live="polite">
+        <div class="alert-icon-wrap" id="global-alert-icon">
+          <i data-lucide="shield-check" aria-hidden="true"></i>
+        </div>
         <div>
-          <h2 class="section-title">Parámetros de Misión, Agencia y Entorno Radiológico</h2>
-          <p class="panel-subtitle">Selecciona la agencia del tripulante, escenario de clima espacial o ajusta manualmente la telemetría dosimétrica.</p>
+          <h2 class="alert-title" id="global-alert-title">
+            Nominal LEO Status — Parameters within operational margin
+          </h2>
+          <p class="alert-desc" id="global-alert-desc">
+            Continuous exposure dominated by galactic cosmic radiation (GCR) and routine
+            trapped-belt crossings. Maintain ALARA principle and active personal dosimetry.
+          </p>
         </div>
-        <span class="status-chip cyan" id="active-instrument-badge">Dosímetro: NASA CAD / RAD</span>
-      </div>
+        <div class="alert-badge-group">
+          <span id="global-alert-chip" class="status-chip green">GREEN · NOMINAL</span>
+          <span class="data-label" id="global-rule-ref">ISS Flight Rules Vol. B Sec. B14</span>
+        </div>
+      </section>
 
-      <div class="controls-grid">
-        <div class="control-block span-6">
-          <span class="data-label">Agencia Espacial Socia (EEI)</span>
-          <div class="segmented-row" role="group" aria-label="Selector de Agencia Espacial">
-            <button type="button" class="seg-btn active" data-agency="NASA" onclick="selectAgency('NASA')">NASA</button>
-            <button type="button" class="seg-btn" data-agency="ESA" onclick="selectAgency('ESA')">ESA</button>
-            <button type="button" class="seg-btn" data-agency="RSA" onclick="selectAgency('RSA')">RSA</button>
-            <button type="button" class="seg-btn" data-agency="JAXA" onclick="selectAgency('JAXA')">JAXA</button>
-            <button type="button" class="seg-btn" data-agency="CSA" onclick="selectAgency('CSA')">CSA</button>
-          </div>
-        </div>
-
-        <div class="control-block span-6">
-          <span class="data-label">Escenario de Entorno Espacial</span>
-          <div class="segmented-row" role="group" aria-label="Selector de Escenario Orbital">
-            <button type="button" class="seg-btn active" data-scenario="nominal" onclick="applyScenario('nominal')">Nominal LEO</button>
-            <button type="button" class="seg-btn" data-scenario="elevated" onclick="applyScenario('elevated')">Elevado (GCR / SAA)</button>
-            <button type="button" class="seg-btn" data-scenario="spe" onclick="applyScenario('spe')">Tormenta Solar (SPE)</button>
-          </div>
-        </div>
-
-        <div class="control-block span-2">
-          <label class="data-label" for="select-sex">Sexo biológico</label>
-          <select id="select-sex" class="select-control" onchange="updateCrewProfile()">
-            <option value="F">Femenino</option>
-            <option value="M">Masculino</option>
-          </select>
-        </div>
-
-        <div class="control-block span-2">
-          <label class="data-label" for="select-age">Edad 1.er vuelo</label>
-          <select id="select-age" class="select-control" onchange="updateCrewProfile()">
-            <option value="27-30">27–30 años</option>
-            <option value="31-35" selected>31–35 años</option>
-            <option value="36-40">36–40 años</option>
-            <option value="41-45">41–45 años</option>
-            <option value=">45">&gt; 45 años</option>
-          </select>
-        </div>
-
-        <div class="control-block span-2">
-          <label class="data-label" for="select-shielding">Configuración física</label>
-          <select id="select-shielding" class="select-control" onchange="updateCrewProfile()">
-            <option value="standard" selected>Módulo EEI estándar</option>
-            <option value="shelter">Refugio SPE reforzado</option>
-            <option value="eva">EVA (Traje espacial)</option>
-          </select>
-        </div>
-
-        <div class="control-block span-3">
-          <label class="data-label" for="input-mission-days">Días de misión (1–365)</label>
-          <input type="number" id="input-mission-days" class="input-control" min="1" max="365" value="180" oninput="updateMissionDays(this.value)">
-        </div>
-
-        <div class="control-block span-3">
-          <label class="data-label" for="input-prior-dose">Dosis carrera previa (mSv)</label>
-          <input type="number" id="input-prior-dose" class="input-control" min="0" max="950" step="10" value="160" oninput="updatePriorDose(this.value)">
-        </div>
-
-        <div class="control-block span-4">
-          <label class="data-label" for="slider-dose-rate">Tasa de Dosis Absorbida (mGy/día)</label>
-          <div class="well slider-pair">
-            <input type="range" id="slider-dose-rate" min="0.05" max="2.50" step="0.01" value="0.24" oninput="syncDoseFromSlider(this.value)">
-            <input type="number" id="num-dose-rate" class="input-control" min="0.05" max="2.50" step="0.01" value="0.24" oninput="syncDoseFromNumber(this.value)">
-          </div>
-        </div>
-
-        <div class="control-block span-4">
-          <label class="data-label" for="slider-let">LET Medio Ponderado (keV/µm)</label>
-          <div class="well slider-pair">
-            <input type="range" id="slider-let" min="1.5" max="35.0" step="0.1" value="6.8" oninput="syncLetFromSlider(this.value)">
-            <input type="number" id="num-let" class="input-control" min="1.5" max="35.0" step="0.1" value="6.8" oninput="syncLetFromNumber(this.value)">
-          </div>
-        </div>
-
-        <div class="control-block span-4">
-          <span class="data-label">Presupuesto Médico / Biomédico Terrestre</span>
-          <label class="checkbox-row" for="chk-medical">
-            <input type="checkbox" id="chk-medical" onchange="toggleMedicalPolicy()">
-            <span id="medical-policy-label">Aplicar regla de agencia (incluir si JAXA/RSA)</span>
-          </label>
-        </div>
-      </div>
-    </section>
-
-    <!-- Top-Line 4 Key Metrics (KPI Cards) -->
-    <section class="kpi-grid" aria-label="Indicadores principales de radiación">
-      <!-- 1. Dosis Absorbida -->
-      <article id="kpi-absorbed" class="kpi-card level-green">
-        <div class="kpi-top">
-          <span class="data-label">Dosis Absorbida (D)</span>
-          <span id="badge-absorbed" class="status-chip green">Nominal</span>
-        </div>
-        <div class="kpi-value-row">
-          <span class="metric-value" id="val-absorbed-rate">0.24</span>
-          <span class="metric-unit">mGy/día</span>
-        </div>
-        <div class="progress-track" aria-hidden="true">
-          <div id="bar-absorbed" class="progress-fill" style="width: 30%;"></div>
-        </div>
-        <div class="metric-sub">
-          <span id="sub-absorbed-mission">Misión: 43.2 mGy</span>
-          <span id="sub-absorbed-earth">171× fondo terrestre</span>
-        </div>
-      </article>
-
-      <!-- 2. Dosis Efectiva -->
-      <article id="kpi-effective" class="kpi-card level-green">
-        <div class="kpi-top">
-          <span class="data-label">Dosis Efectiva (E)</span>
-          <span id="badge-effective" class="status-chip green">Nominal</span>
-        </div>
-        <div class="kpi-value-row">
-          <span class="metric-value" id="val-effective-career">231</span>
-          <span class="metric-unit" id="unit-effective-limit">/ 600 mSv carrera</span>
-        </div>
-        <div class="progress-track" aria-hidden="true">
-          <div id="bar-effective" class="progress-fill" style="width: 38.5%;"></div>
-        </div>
-        <div class="metric-sub">
-          <span id="sub-effective-rate">Tasa: 0.40 mSv/día</span>
-          <span id="sub-effective-pmd">PMD restante: 932 d</span>
-        </div>
-      </article>
-
-      <!-- 3. Dosis Equivalente Tisular -->
-      <article id="kpi-tissue" class="kpi-card level-green">
-        <div class="kpi-top">
-          <span class="data-label">Dosis Equivalente Tisular Máx.</span>
-          <span id="badge-tissue" class="status-chip green">Nominal</span>
-        </div>
-        <div class="kpi-value-row">
-          <span class="metric-value" id="val-tissue-peak">18.4</span>
-          <span class="metric-unit" id="unit-tissue-peak">mGy-eq (30 d · BFO)</span>
-        </div>
-        <div class="progress-track" aria-hidden="true">
-          <div id="bar-tissue" class="progress-fill" style="width: 12%;"></div>
-        </div>
-        <div class="metric-sub">
-          <span id="sub-tissue-organ">Órgano crítico: BFO (5.0 cm)</span>
-          <span id="sub-tissue-pct">7.4% del límite</span>
-        </div>
-      </article>
-
-      <!-- 4. Transferencia Lineal de Energía (LET) -->
-      <article id="kpi-let" class="kpi-card level-green">
-        <div class="kpi-top">
-          <span class="data-label">Transferencia Lineal (LET)</span>
-          <span id="badge-let" class="status-chip green">Nominal</span>
-        </div>
-        <div class="kpi-value-row">
-          <span class="metric-value" id="val-let-mean">6.8</span>
-          <span class="metric-unit">keV/µm</span>
-        </div>
-        <div class="progress-track" aria-hidden="true">
-          <div id="bar-let" class="progress-fill" style="width: 22%;"></div>
-        </div>
-        <div class="metric-sub">
-          <span id="sub-let-q">Factor calidad Q̄: 1.65</span>
-          <span id="sub-let-high">Alto LET (≥10): 24%</span>
-        </div>
-      </article>
-    </section>
-
-    <!-- Row 2: Primary Charts (Telemetry Timeline + LET Spectrum) -->
-    <section class="two-col-asymmetric">
-      <article class="panel">
+      <!-- Simulation & Filter Control Panel -->
+      <section class="panel" aria-label="Mission configuration and environmental simulation">
         <div class="panel-header">
           <div>
-            <h2 class="section-title">Perfil Orbital de Telemetría (Últimas 24 Horas)</h2>
-            <p class="panel-subtitle">Tasa de dosis absorbida (mGy/día) y efectiva (mSv/día) a través de 16 órbitas LEO, cruces de la Anomalía del Atlántico Sur (SAA) y respuesta a SPE.</p>
+            <h2 class="section-title">Mission, Agency &amp; Radiological Environment Parameters</h2>
+            <p class="panel-subtitle">
+              Select crew member space agency, space weather scenario, or manually adjust dosimetric
+              telemetry.
+            </p>
           </div>
-          <span class="data-label" id="telemetry-orbit-tag">Altitud ~415 km · Inclinación 51.6°</span>
+          <span class="status-chip cyan" id="active-instrument-badge"
+            >Dosimeter: NASA CAD / RAD</span
+          >
         </div>
-        <div class="chart-box">
-          <canvas id="chart-telemetry"></canvas>
-        </div>
-        <div class="legend-inline">
-          <span class="legend-item"><span class="legend-swatch swatch-cyan"></span>Dosis Absorbida (mGy/día)</span>
-          <span class="legend-item"><span class="legend-swatch swatch-sage"></span>Dosis Efectiva (mSv/día)</span>
-          <span class="legend-item"><span class="legend-swatch swatch-amber"></span>Umbral Elevado (0.30–0.40 mGy/día)</span>
-          <span class="legend-item"><span class="legend-swatch swatch-red"></span>Nivel Alerta / Contingencia SPE</span>
-        </div>
-      </article>
 
-      <article class="panel">
-        <div class="panel-header">
-          <div>
-            <h2 class="section-title">Espectro de Transferencia Lineal de Energía (LET)</h2>
-            <p class="panel-subtitle">Contribución fraccional a la dosis por rango de LET en agua/tejido (keV/µm) y ponderación de calidad biológica.</p>
+        <div class="controls-grid">
+          <div class="control-block span-6">
+            <span class="data-label">Partner Space Agency (ISS)</span>
+            <div class="segmented-row" role="group" aria-label="Space Agency Selector">
+              <button
+                type="button"
+                class="seg-btn active"
+                data-agency="NASA"
+                onclick="selectAgency('NASA')"
+              >
+                NASA
+              </button>
+              <button type="button" class="seg-btn" data-agency="ESA" onclick="selectAgency('ESA')">
+                ESA
+              </button>
+              <button type="button" class="seg-btn" data-agency="RSA" onclick="selectAgency('RSA')">
+                RSA
+              </button>
+              <button
+                type="button"
+                class="seg-btn"
+                data-agency="JAXA"
+                onclick="selectAgency('JAXA')"
+              >
+                JAXA
+              </button>
+              <button type="button" class="seg-btn" data-agency="CSA" onclick="selectAgency('CSA')">
+                CSA
+              </button>
+            </div>
+          </div>
+
+          <div class="control-block span-6">
+            <span class="data-label">Space Environment Scenario</span>
+            <div class="segmented-row" role="group" aria-label="Orbital Scenario Selector">
+              <button
+                type="button"
+                class="seg-btn active"
+                data-scenario="nominal"
+                onclick="applyScenario('nominal')"
+              >
+                Nominal LEO
+              </button>
+              <button
+                type="button"
+                class="seg-btn"
+                data-scenario="elevated"
+                onclick="applyScenario('elevated')"
+              >
+                Elevated (GCR / SAA)
+              </button>
+              <button
+                type="button"
+                class="seg-btn"
+                data-scenario="spe"
+                onclick="applyScenario('spe')"
+              >
+                Solar Storm (SPE)
+              </button>
+            </div>
+          </div>
+
+          <div class="control-block span-2">
+            <label class="data-label" for="select-sex">Biological Sex</label>
+            <select id="select-sex" class="select-control" onchange="updateCrewProfile()">
+              <option value="F">Female</option>
+              <option value="M">Male</option>
+            </select>
+          </div>
+
+          <div class="control-block span-2">
+            <label class="data-label" for="select-age">Age at 1st Flight</label>
+            <select id="select-age" class="select-control" onchange="updateCrewProfile()">
+              <option value="27-30">27–30 yrs</option>
+              <option value="31-35" selected>31–35 yrs</option>
+              <option value="36-40">36–40 yrs</option>
+              <option value="41-45">41–45 yrs</option>
+              <option value=">45">&gt; 45 yrs</option>
+            </select>
+          </div>
+
+          <div class="control-block span-2">
+            <label class="data-label" for="select-shielding">Physical Shielding</label>
+            <select id="select-shielding" class="select-control" onchange="updateCrewProfile()">
+              <option value="standard" selected>Standard ISS Module</option>
+              <option value="shelter">Reinforced SPE Shelter</option>
+              <option value="eva">EVA (Spacesuit)</option>
+            </select>
+          </div>
+
+          <div class="control-block span-3">
+            <label class="data-label" for="input-mission-days">Mission Days (1–365)</label>
+            <input
+              type="number"
+              id="input-mission-days"
+              class="input-control"
+              min="1"
+              max="365"
+              value="180"
+              oninput="updateMissionDays(this.value)"
+            />
+          </div>
+
+          <div class="control-block span-3">
+            <label class="data-label" for="input-prior-dose">Prior Career Dose (mSv)</label>
+            <input
+              type="number"
+              id="input-prior-dose"
+              class="input-control"
+              min="0"
+              max="950"
+              step="10"
+              value="160"
+              oninput="updatePriorDose(this.value)"
+            />
+          </div>
+
+          <div class="control-block span-4">
+            <label class="data-label" for="slider-dose-rate">Absorbed Dose Rate (mGy/day)</label>
+            <div class="well slider-pair">
+              <input
+                type="range"
+                id="slider-dose-rate"
+                min="0.05"
+                max="2.50"
+                step="0.01"
+                value="0.24"
+                oninput="syncDoseFromSlider(this.value)"
+              />
+              <input
+                type="number"
+                id="num-dose-rate"
+                class="input-control"
+                min="0.05"
+                max="2.50"
+                step="0.01"
+                value="0.24"
+                oninput="syncDoseFromNumber(this.value)"
+              />
+            </div>
+          </div>
+
+          <div class="control-block span-4">
+            <label class="data-label" for="slider-let">Mean Weighted LET (keV/µm)</label>
+            <div class="well slider-pair">
+              <input
+                type="range"
+                id="slider-let"
+                min="1.5"
+                max="35.0"
+                step="0.1"
+                value="6.8"
+                oninput="syncLetFromSlider(this.value)"
+              />
+              <input
+                type="number"
+                id="num-let"
+                class="input-control"
+                min="1.5"
+                max="35.0"
+                step="0.1"
+                value="6.8"
+                oninput="syncLetFromNumber(this.value)"
+              />
+            </div>
+          </div>
+
+          <div class="control-block span-4">
+            <span class="data-label">Terrestrial Medical / Biomedical Budget</span>
+            <label class="checkbox-row" for="chk-medical">
+              <input type="checkbox" id="chk-medical" onchange="toggleMedicalPolicy()" />
+              <span id="medical-policy-label">Apply agency rule (include if JAXA/RSA)</span>
+            </label>
           </div>
         </div>
-        <div class="chart-box">
-          <canvas id="chart-let"></canvas>
-        </div>
-        <div class="rbe-pill-row" aria-label="Valores RBE recomendados por NASA STD-3001 para efectos no cancerígenos">
-          <span class="rbe-pill">Protones &gt;2 MeV: <strong>RBE 1.5</strong></span>
-          <span class="rbe-pill">Iones pesados (Z≥10): <strong>RBE 2.5</strong> (1–4)</span>
-          <span class="rbe-pill">Neutrones 5–50 MeV: <strong>RBE 3.5</strong></span>
-          <span class="rbe-pill">Neutrones 1–5 MeV: <strong>RBE 6.0</strong></span>
-        </div>
-      </article>
-    </section>
+      </section>
 
-    <!-- Row 3: Organ Equivalent Dose + Agency Limits Context -->
-    <section class="two-col-balanced">
-      <!-- Organ / Tissue Equivalent Dose -->
-      <article class="panel">
-        <div class="panel-header">
-          <div>
-            <h2 class="section-title">Dosis Equivalente Tisular por Órgano Crítico</h2>
-            <p class="panel-subtitle">Evaluación frente a límites deterministas/estocásticos (mGy-eq o mSv) a profundidades de referencia.</p>
+      <!-- Top-Line 4 Key Metrics (KPI Cards) -->
+      <section class="kpi-grid" aria-label="Key radiation indicators">
+        <!-- 1. Absorbed Dose -->
+        <article id="kpi-absorbed" class="kpi-card level-green">
+          <div class="kpi-top">
+            <span class="data-label">Absorbed Dose (D)</span>
+            <span id="badge-absorbed" class="status-chip green">Nominal</span>
           </div>
-          <div class="segmented-row" role="group" aria-label="Intervalo de evaluación tisular">
-            <button type="button" class="seg-btn active" data-interval="30d" onclick="selectTissueInterval('30d')">30 días</button>
-            <button type="button" class="seg-btn" data-interval="1y" onclick="selectTissueInterval('1y')">Anual</button>
-            <button type="button" class="seg-btn" data-interval="career" onclick="selectTissueInterval('career')">Carrera</button>
+          <div class="kpi-value-row">
+            <span class="metric-value" id="val-absorbed-rate">0.24</span>
+            <span class="metric-unit">mGy/day</span>
           </div>
-        </div>
-
-        <div id="organ-list" class="organ-list"></div>
-      </article>
-
-      <!-- Agency Context & Multilateral Comparison -->
-      <article class="panel">
-        <div class="panel-header">
-          <div>
-            <h2 class="section-title" id="agency-detail-title">Estándar Operativo: NASA (STD-3001, 2022)</h2>
-            <p class="panel-subtitle" id="agency-detail-subtitle">Límite de exposición espacial permisible (SPEL) basado en dosis efectiva femenina de referencia (35 años).</p>
+          <div class="progress-track" aria-hidden="true">
+            <div id="bar-absorbed" class="progress-fill" style="width: 30%"></div>
           </div>
-          <span class="status-chip cyan" id="agency-career-chip">Carrera: 600 mSv</span>
-        </div>
+          <div class="metric-sub">
+            <span id="sub-absorbed-mission">Mission: 43.2 mGy</span>
+            <span id="sub-absorbed-earth">171× Earth background</span>
+          </div>
+        </article>
 
-        <div class="context-grid" id="agency-context-tiles"></div>
+        <!-- 2. Effective Dose -->
+        <article id="kpi-effective" class="kpi-card level-green">
+          <div class="kpi-top">
+            <span class="data-label">Effective Dose (E)</span>
+            <span id="badge-effective" class="status-chip green">Nominal</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="metric-value" id="val-effective-career">231</span>
+            <span class="metric-unit" id="unit-effective-limit">/ 600 mSv career</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="bar-effective" class="progress-fill" style="width: 38.5%"></div>
+          </div>
+          <div class="metric-sub">
+            <span id="sub-effective-rate">Rate: 0.40 mSv/day</span>
+            <span id="sub-effective-pmd">Remaining PMD: 932 d</span>
+          </div>
+        </article>
 
-        <p class="panel-subtitle" id="agency-methodology-text" style="margin-bottom: var(--space-md);"></p>
+        <!-- 3. Tissue Equivalent Dose -->
+        <article id="kpi-tissue" class="kpi-card level-green">
+          <div class="kpi-top">
+            <span class="data-label">Max Tissue Equivalent Dose</span>
+            <span id="badge-tissue" class="status-chip green">Nominal</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="metric-value" id="val-tissue-peak">18.4</span>
+            <span class="metric-unit" id="unit-tissue-peak">mGy-eq (30 d · BFO)</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="bar-tissue" class="progress-fill" style="width: 12%"></div>
+          </div>
+          <div class="metric-sub">
+            <span id="sub-tissue-organ">Critical organ: BFO (5.0 cm)</span>
+            <span id="sub-tissue-pct">7.4% of limit</span>
+          </div>
+        </article>
 
-        <div class="table-wrap">
-          <table aria-label="Comparativa de límites de radiación por agencia espacial socia de la EEI">
-            <thead>
-              <tr>
-                <th>Agencia</th>
-                <th style="text-align: right;">Límite Carrera</th>
-                <th>Métrica de Riesgo</th>
-                <th>BFO 30 d / 1 año</th>
-                <th>Dosis Médicas</th>
-              </tr>
-            </thead>
-            <tbody id="agency-table-body"></tbody>
-          </table>
-        </div>
-      </article>
-    </section>
+        <!-- 4. Linear Energy Transfer (LET) -->
+        <article id="kpi-let" class="kpi-card level-green">
+          <div class="kpi-top">
+            <span class="data-label">Linear Energy Transfer (LET)</span>
+            <span id="badge-let" class="status-chip green">Nominal</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="metric-value" id="val-let-mean">6.8</span>
+            <span class="metric-unit">keV/µm</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="bar-let" class="progress-fill" style="width: 22%"></div>
+          </div>
+          <div class="metric-sub">
+            <span id="sub-let-q">Quality factor Q̄: 1.65</span>
+            <span id="sub-let-high">High LET (≥10): 24%</span>
+          </div>
+        </article>
+      </section>
 
-    <footer class="source-footer">
-      <span>Fuente científica: Shavers M. et al. (2024), «Space agency-specific standards for crew dose and risk assessment of ionising radiation exposures for the International Space Station», Zeitschrift für Medizinische Physik 34: 14–30 (en colaboración con ICRP Task Group 115).</span>
-      <span>Estándares referenciados: NASA-STD-3001 Rev. B (2022) · ISS MORD SSP 50260 · ISS MED Vol. A &amp; B · ICRP Pub. 60, 103, 116, 118, 123.</span>
-    </footer>
-  </div>
+      <!-- Row 2: Primary Charts (Telemetry Timeline + LET Spectrum) -->
+      <section class="two-col-asymmetric">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="section-title">Orbital Telemetry Profile (Last 24 Hours)</h2>
+              <p class="panel-subtitle">
+                Absorbed (mGy/day) and effective (mSv/day) dose rates across 16 LEO orbits, South
+                Atlantic Anomaly (SAA) crossings, and SPE response.
+              </p>
+            </div>
+            <span class="data-label" id="telemetry-orbit-tag"
+              >Altitude ~415 km · Inclination 51.6°</span
+            >
+          </div>
+          <div class="chart-box">
+            <canvas id="chart-telemetry"></canvas>
+          </div>
+          <div class="legend-inline">
+            <span class="legend-item"
+              ><span class="legend-swatch swatch-cyan"></span>Absorbed Dose (mGy/day)</span
+            >
+            <span class="legend-item"
+              ><span class="legend-swatch swatch-sage"></span>Effective Dose (mSv/day)</span
+            >
+            <span class="legend-item"
+              ><span class="legend-swatch swatch-amber"></span>Elevated Threshold (0.30–0.40
+              mGy/day)</span
+            >
+            <span class="legend-item"
+              ><span class="legend-swatch swatch-red"></span>Alert Level / SPE Contingency</span
+            >
+          </div>
+        </article>
 
-  <api-shim></api-shim>
-  <script>
-    // --- Reference Data grounded strictly in Shavers et al. (2024) ---
-    const AGENCIES = {
-      NASA: {
-        code: `NASA`,
-        fullName: `NASA (Estados Unidos — STD-3001 Rev. B, 2022)`,
-        subtitle: `Límite de exposición espacial permisible (SPEL) universal basado en dosis efectiva media para mujer de 35 años.`,
-        careerLimitText: `600 mSv`,
-        riskMetric: `REID / REIC (media 3% mortalidad)`,
-        bfoShortText: `250 / 600 mGy-eq`,
-        medicalPolicy: `Excluidas del límite SPEL (registradas en historial anual)`,
-        medicalDefaultIncluded: false,
-        medicalBaselineMsv: 35,
-        dosimeters: `Crew Active Dosimeter (CAD), RAD y monitores de área`,
-        transportModels: `HZETRN · NSCR-2012 · Q_NASA(Z_eff, E)`,
-        consentPolicy: `Sin consentimiento informado formal para astronautas gubernamentales (la FAA sí lo exige en vuelos privados)`,
-        extraLimits: `Límite SPE de diseño: < 250 mSv (ref. oct. 1989). Límite tecnología nuclear: < 20 mSv/año.`,
-        methodology: `NASA reemplazó en 2022 el límite basado en el percentil 95 de REID por un SPEL universal de 600 mSv calculado con parámetros de mujer de 35 años (media < 3% REID). Aplica factores de calidad Q_NASA diferenciados (reducidos por 4 en pico para leucemia frente a tumores sólidos) y límites no cancerígenos en Gray-Equivalente (mGy-eq) para evitar cataratas tempranas (<5 años), daño circulatorio e hipocampal.`,
-        getCareerLimit: function() { return 600; },
-        getOrganLimits: function() {
-          return [
-            { id: `bfo`, name: `Órganos Hematopoyéticos (BFO · 5.0 cm)`, unit: `mGy-eq`, l30: 250, l1y: 600, lcar: null, note: `Consenso EEI / NASA STD-3001` },
-            { id: `eye`, name: `Cristalino del Ojo (0.3 cm)`, unit: `mGy-eq`, l30: 1000, l1y: 2000, lcar: 4000, note: `Prevenir cataratas tempranas (<5 años)` },
-            { id: `skin`, name: `Piel (0.01 cm)`, unit: `mGy-eq`, l30: 1500, l1y: 3000, lcar: 6000, note: `Efectos deterministas cutáneos` },
-            { id: `circ`, name: `Sistema Circulatorio (Corazón y arterias)`, unit: `mGy-eq`, l30: 250, l1y: 500, lcar: 1000, note: `Promedio en músculo cardíaco y arterias` },
-            { id: `cns`, name: `SNC (Hipocampo — dosis total)`, unit: `mGy`, l30: 500, l1y: 1000, lcar: 1500, note: `Límite calculado en el hipocampo` },
-            { id: `cnshze`, name: `SNC Iones Pesados (Z ≥ 10)`, unit: `mGy`, l30: null, l1y: 100, lcar: 250, note: `Protección frente a HZE en hipocampo` }
-          ];
-        }
-      },
-      ESA: {
-        code: `ESA`,
-        fullName: `ESA (Agencia Espacial Europea — EAC / HRE-OM)`,
-        subtitle: `Límite de carrera de 1 Sv independiente de edad y sexo (basado en 50 mSv/año × 20 años), en revisión continua.`,
-        careerLimitText: `1,000 mSv (1 Sv)`,
-        riskMetric: `RADS (Reducción de Supervivencia Atribuida)`,
-        bfoShortText: `250 / 500 mSv`,
-        medicalPolicy: `Registradas obligatoriamente; fuera del tope orbital estándar`,
-        medicalDefaultIncluded: false,
-        medicalBaselineMsv: 30,
-        dosimeters: `EuCPD (3 pasivos: TLD + CR-39 PADC) y ESA Active Dosimeter (EAD)`,
-        transportModels: `Modelos ambientales EEI · Simulación GSI/FAIR (hasta 10 GeV/n)`,
-        consentPolicy: `Entrenamiento obligatorio y vigilancia médica continua pre, durante y post-vuelo`,
-        extraLimits: `Límites ESA adicionales (ICRP 60): Ojo 0.5 Sv (30 d) / 1.0 Sv (anual); Piel 1.5 Sv (30 d) / 3.0 Sv (anual).`,
-        methodology: `ESA adopta un límite estocástico de 1 Sv para toda la carrera y límites específicos para evitar efectos tisulares deterministas en BFO, ojo y piel. Emplea dosímetros pasivos EuCPD (IVA, EVA y referencia) combinando termoluminiscencia para bajo LET y detectores de trazas CR-39 PADC para GCR y neutrones, complementados por unidades activas EAD.`,
-        getCareerLimit: function() { return 1000; },
-        getOrganLimits: function() {
-          return [
-            { id: `bfo`, name: `Órganos Hematopoyéticos (BFO · Médula roja)`, unit: `mSv`, l30: 250, l1y: 500, lcar: 1000, note: `Consenso MMOP / ISS MED Vol. A` },
-            { id: `eye`, name: `Cristalino del Ojo (0.3 cm)`, unit: `mSv`, l30: 500, l1y: 1000, lcar: 4000, note: `Umbral determinista ESA (ICRP 60)` },
-            { id: `skin`, name: `Piel (0.01 cm)`, unit: `mSv`, l30: 1500, l1y: 3000, lcar: 6000, note: `Umbral determinista ESA (ICRP 60)` },
-            { id: `circ`, name: `Sistema Circulatorio (Ref. monitoreo)`, unit: `mGy-eq`, l30: 250, l1y: 500, lcar: 1000, note: `En estudio europeo HRA / efectos tardíos` },
-            { id: `cns`, name: `SNC (Hipocampo — Ref. EEI)`, unit: `mGy`, l30: 500, l1y: 1000, lcar: 1500, note: `Investigación activa en efectos neuro-cardiovasculares` }
-          ];
-        }
-      },
-      RSA: {
-        code: `RSA`,
-        fullName: `RSA / Roscosmos (Federación Rusa — IBMP RAS)`,
-        subtitle: `Límite de carrera de 1 Sv en Dosis Generalizada (H) sobre todos los efectos patológicos, con restricción bienal.`,
-        careerLimitText: `1,000 mSv (1 Sv)`,
-        riskMetric: `TRR (Riesgo Total de Radiación) y MLR`,
-        bfoShortText: `250 / 500 mSv`,
-        medicalPolicy: `Incluidas en H_before_flight (ej. tabla ref. 250 mSv)`,
-        medicalDefaultIncluded: true,
-        medicalBaselineMsv: 120,
-        dosimeters: `Dosímetros estacionarios en Segmento Ruso y USOS + pasivos individuales`,
-        transportModels: `CREME86 · SPENVIS · ISO 15390 · AP8/AE8 · COSRAD · GEANT4`,
-        consentPolicy: `Consentimiento informado obligatorio en todos los casos (cosmonautas y turistas)`,
-        extraLimits: `Regla de 2 años: si dosis en 2 años previos > 200 mSv (0.2 Sv), la siguiente misión debe ser < 20 mSv (0.02 Sv).`,
-        methodology: `RSA calcula la Dosis Generalizada H = D · QF · TF · SF · MF, incorporando factores temporales, espaciales y de estrés no radiológico (microgravedad, hipomagnetismo). El criterio principal es el Riesgo Total de Radiación (TRR = R_cáncer + R_otros efectos) y la Reducción Media de Vida (MLR), demostrando que a 1,000 mSv el riesgo total (~7.0%) supera ampliamente al riesgo aislado de cáncer.`,
-        getCareerLimit: function() { return 1000; },
-        getOrganLimits: function() {
-          return [
-            { id: `bfo`, name: `Órganos Hematopoyéticos (BFO · Consenso EEI)`, unit: `mSv`, l30: 250, l1y: 500, lcar: 1000, note: `Consenso MMOP EEI + evaluación diaria RS/USOS` },
-            { id: `eye`, name: `Cristalino del Ojo (Ref. EEI)`, unit: `mSv`, l30: 500, l1y: 1000, lcar: 4000, note: `Protección frente a reacciones tisulares` },
-            { id: `skin`, name: `Piel (Ref. EEI)`, unit: `mSv`, l30: 1500, l1y: 3000, lcar: 6000, note: `Control en actividades IVA y EVA` },
-            { id: `circ`, name: `Sistema Circulatorio (TRR no-cáncer)`, unit: `mSv`, l30: 250, l1y: 500, lcar: 1000, note: `Incluido en mortalidad total patológica TRR` }
-          ];
-        }
-      },
-      JAXA: {
-        code: `JAXA`,
-        fullName: `JAXA (Agencia Japonesa de Exploración Aeroespacial)`,
-        subtitle: `Límites de carrera estratificados por edad en el primer vuelo y sexo (0.5 a 1.0 Sv), orientados a LACM ~3%.`,
-        careerLimitText: `500–1,000 mSv`,
-        riskMetric: `LACM (~3% mortalidad cáncer atribuida)`,
-        bfoShortText: `250 / 500 mSv`,
-        medicalPolicy: `Incluidas obligatoriamente (exámenes médicos, entrenamiento e investigación)`,
-        medicalDefaultIncluded: true,
-        medicalBaselineMsv: 45,
-        dosimeters: `Crew-PADLES (personal pasivo LET) + normalización en vuelo con NASA RAD`,
-        transportModels: `CREME86 · AP8/AE8 · HERMES · EGS4 · JINC · ICRP 60 Q(L) · CADrays 3D`,
-        consentPolicy: `Revisión anual obligatoria del historial de carrera y proyección previa a cada asignación`,
-        extraLimits: `Piel carrera: 20 Sv (20,000 mSv). Cristalino > 0.5 Sv (500 mSv): seguimiento oftalmológico continuo.`,
-        methodology: `JAXA suma al límite de carrera las dosis espaciales, exámenes médicos de certificación, entrenamiento y protocolos biomédicos. En vuelo ajusta sus cálculos 3D CADrays mediante las lecturas en tiempo real de RAD (Ec. 1–2) y al regreso refina la dosis efectiva y de órganos con el espectro LET medido por Crew-PADLES (Ec. 3–4), calculando LACM con modelos ERR/EAR (DDREF=2 sólidos, DDREF=1 leucemia).`,
-        getCareerLimit: function(sex, ageBracket) {
-          const table = {
-            M: { '27-30': 600, '31-35': 700, '36-40': 800, '41-45': 950, '>45': 1000 },
-            F: { '27-30': 500, '31-35': 600, '36-40': 650, '41-45': 750, '>45': 800 }
-          };
-          return (table[sex] && table[sex][ageBracket]) ? table[sex][ageBracket] : 600;
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="section-title">Linear Energy Transfer (LET) Spectrum</h2>
+              <p class="panel-subtitle">
+                Fractional dose contribution by LET bin in water/tissue (keV/µm) and biological
+                quality weighting.
+              </p>
+            </div>
+          </div>
+          <div class="chart-box">
+            <canvas id="chart-let"></canvas>
+          </div>
+          <div
+            class="rbe-pill-row"
+            aria-label="NASA STD-3001 recommended RBE values for non-cancer effects"
+          >
+            <span class="rbe-pill">Protons &gt;2 MeV: <strong>RBE 1.5</strong></span>
+            <span class="rbe-pill">Heavy ions (Z≥10): <strong>RBE 2.5</strong> (1–4)</span>
+            <span class="rbe-pill">Neutrons 5–50 MeV: <strong>RBE 3.5</strong></span>
+            <span class="rbe-pill">Neutrons 1–5 MeV: <strong>RBE 6.0</strong></span>
+          </div>
+        </article>
+      </section>
+
+      <!-- Row 3: Organ Equivalent Dose + Agency Limits Context -->
+      <section class="two-col-balanced">
+        <!-- Organ / Tissue Equivalent Dose -->
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="section-title">Tissue Equivalent Dose by Critical Organ</h2>
+              <p class="panel-subtitle">
+                Evaluation against deterministic/stochastic limits (mGy-eq or mSv) at reference
+                tissue depths.
+              </p>
+            </div>
+            <div class="segmented-row" role="group" aria-label="Tissue evaluation interval">
+              <button
+                type="button"
+                class="seg-btn active"
+                data-interval="30d"
+                onclick="selectTissueInterval('30d')"
+              >
+                30 Days
+              </button>
+              <button
+                type="button"
+                class="seg-btn"
+                data-interval="1y"
+                onclick="selectTissueInterval('1y')"
+              >
+                Annual
+              </button>
+              <button
+                type="button"
+                class="seg-btn"
+                data-interval="career"
+                onclick="selectTissueInterval('career')"
+              >
+                Career
+              </button>
+            </div>
+          </div>
+
+          <div id="organ-list" class="organ-list"></div>
+        </article>
+
+        <!-- Agency Context & Multilateral Comparison -->
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="section-title" id="agency-detail-title">
+                Operational Standard: NASA (STD-3001, 2022)
+              </h2>
+              <p class="panel-subtitle" id="agency-detail-subtitle">
+                Space Permissible Exposure Limit (SPEL) based on reference 35-year-old female
+                effective dose.
+              </p>
+            </div>
+            <span class="status-chip cyan" id="agency-career-chip">Career: 600 mSv</span>
+          </div>
+
+          <div class="context-grid" id="agency-context-tiles"></div>
+
+          <p
+            class="panel-subtitle"
+            id="agency-methodology-text"
+            style="margin-bottom: var(--space-md)"
+          ></p>
+
+          <div class="table-wrap">
+            <table aria-label="Comparison of radiation limits by ISS partner space agency">
+              <thead>
+                <tr>
+                  <th>Agency</th>
+                  <th style="text-align: right">Career Limit</th>
+                  <th>Risk Metric</th>
+                  <th>BFO 30 d / 1 yr</th>
+                  <th>Medical Doses</th>
+                </tr>
+              </thead>
+              <tbody id="agency-table-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <footer class="source-footer">
+        <span
+          >Scientific source: Shavers M. et al. (2024), “Space agency-specific standards for crew
+          dose and risk assessment of ionising radiation exposures for the International Space
+          Station”, Zeitschrift für Medizinische Physik 34: 14–30 (in collaboration with ICRP Task
+          Group 115).</span
+        >
+        <span
+          >Referenced standards: NASA-STD-3001 Rev. B (2022) · ISS MORD SSP 50260 · ISS MED Vol. A
+          &amp; B · ICRP Pub. 60, 103, 116, 118, 123.</span
+        >
+      </footer>
+    </div>
+
+    <api-shim></api-shim>
+    <script>
+      // --- Reference Data grounded strictly in Shavers et al. (2024) ---
+      const AGENCIES = {
+        NASA: {
+          code: `NASA`,
+          fullName: `NASA (United States — STD-3001 Rev. B, 2022)`,
+          subtitle: `Universal Space Permissible Exposure Limit (SPEL) based on mean effective dose for a 35-year-old female.`,
+          careerLimitText: `600 mSv`,
+          riskMetric: `REID / REIC (mean 3% mortality)`,
+          bfoShortText: `250 / 600 mGy-eq`,
+          medicalPolicy: `Excluded from SPEL limit (logged in annual record)`,
+          medicalDefaultIncluded: false,
+          medicalBaselineMsv: 35,
+          dosimeters: `Crew Active Dosimeter (CAD), RAD, and area monitors`,
+          transportModels: `HZETRN · NSCR-2012 · Q_NASA(Z_eff, E)`,
+          consentPolicy: `No formal informed consent for government astronauts (FAA requires it for private spaceflight)`,
+          extraLimits: `Design SPE limit: < 250 mSv (Oct. 1989 ref.). Nuclear technology limit: < 20 mSv/yr.`,
+          methodology: `In 2022, NASA replaced the 95th percentile REID-based limit with a universal 600 mSv SPEL calculated using 35-year-old female parameters (mean < 3% REID). It applies differentiated Q_NASA quality factors (reduced by 4 at peak for leukemia vs. solid tumors) and non-cancer limits in Gray-Equivalent (mGy-eq) to prevent early cataracts (<5 yrs), circulatory, and hippocampal damage.`,
+          getCareerLimit: function () {
+            return 600;
+          },
+          getOrganLimits: function () {
+            return [
+              {
+                id: `bfo`,
+                name: `Blood-Forming Organs (BFO · 5.0 cm)`,
+                unit: `mGy-eq`,
+                l30: 250,
+                l1y: 600,
+                lcar: null,
+                note: `ISS Consensus / NASA STD-3001`,
+              },
+              {
+                id: `eye`,
+                name: `Eye Lens (0.3 cm)`,
+                unit: `mGy-eq`,
+                l30: 1000,
+                l1y: 2000,
+                lcar: 4000,
+                note: `Prevent early cataracts (<5 yrs)`,
+              },
+              {
+                id: `skin`,
+                name: `Skin (0.01 cm)`,
+                unit: `mGy-eq`,
+                l30: 1500,
+                l1y: 3000,
+                lcar: 6000,
+                note: `Deterministic cutaneous effects`,
+              },
+              {
+                id: `circ`,
+                name: `Circulatory System (Heart & arteries)`,
+                unit: `mGy-eq`,
+                l30: 250,
+                l1y: 500,
+                lcar: 1000,
+                note: `Averaged over heart muscle & arteries`,
+              },
+              {
+                id: `cns`,
+                name: `CNS (Hippocampus — total dose)`,
+                unit: `mGy`,
+                l30: 500,
+                l1y: 1000,
+                lcar: 1500,
+                note: `Limit calculated at hippocampus`,
+              },
+              {
+                id: `cnshze`,
+                name: `CNS Heavy Ions (Z ≥ 10)`,
+                unit: `mGy`,
+                l30: null,
+                l1y: 100,
+                lcar: 250,
+                note: `Protection against HZE in hippocampus`,
+              },
+            ];
+          },
         },
-        getOrganLimits: function(sex, ageBracket) {
-          const car = this.getCareerLimit(sex, ageBracket);
-          return [
-            { id: `bfo`, name: `Órganos Hematopoyéticos (BFO · Consenso EEI)`, unit: `mSv`, l30: 250, l1y: 500, lcar: car, note: `Consenso EEI + límite carrera edad/sexo` },
-            { id: `eye`, name: `Cristalino del Ojo (Umbral examen JAXA)`, unit: `mSv`, l30: 500, l1y: 1000, lcar: 500, note: `> 500 mSv activa exámenes médicos continuos` },
-            { id: `skin`, name: `Piel (Límite equivalente de órgano JAXA)`, unit: `mSv`, l30: 1500, l1y: 3000, lcar: 20000, note: `Límite de carrera JAXA Tabla 4: 20 Sv` }
-          ];
-        }
-      },
-      CSA: {
-        code: `CSA`,
-        fullName: `CSA (Agencia Espacial Canadiense — MED Vol. A)`,
-        subtitle: `Límite de carrera de 1 Sv (efectiva/BFO), complementado con límites de órgano y enfoque de corto plazo de NASA.`,
-        careerLimitText: `1,000 mSv (1 Sv)`,
-        riskMetric: `Estudio DALY (Años de Vida Ajustados por Discapacidad)`,
-        bfoShortText: `250 / 600 mGy-eq`,
-        medicalPolicy: `Reportes de misión NASA RHO + biodosimetría Health Canada`,
-        medicalDefaultIncluded: false,
-        medicalBaselineMsv: 30,
-        dosimeters: `Crew Active Dosimeters (CAD) provistos por NASA + análisis RHO`,
-        transportModels: `Reportes operacionales NASA SRAG / RHO · Biodosimetría cromosómica`,
-        consentPolicy: `Cumplimiento de SSP 50260 (MORD) y estándares médicos ISS MED Rev 3.3`,
-        extraLimits: `Límites de carrera Tabla 1: BFO (5.0 cm) 1.0 Sv · Ojo (0.3 cm) 4.0 Sv · Piel (0.01 cm) 6.0 Sv.`,
-        methodology: `Los astronautas de la CSA portan dosímetros activos NASA CAD que almacenan y reportan telemetría resuelta en tiempo. El Oficial de Salud Radiológica (RHO) de NASA entrega los informes de exposición y riesgo de cáncer. CSA mantiene un límite de carrera de 1 Sv en BFO (superior al de NASA) junto a los límites de corto plazo de NASA y evalúa la métrica DALY para misiones de exploración.`,
-        getCareerLimit: function() { return 1000; },
-        getOrganLimits: function() {
-          return [
-            { id: `bfo`, name: `Órganos Hematopoyéticos (BFO · 5.0 cm)`, unit: `mSv`, l30: 250, l1y: 600, lcar: 1000, note: `Tabla 1 CSA (1.0 Sv carrera) + corto plazo NASA` },
-            { id: `eye`, name: `Cristalino del Ojo (0.3 cm)`, unit: `mSv`, l30: 1000, l1y: 2000, lcar: 4000, note: `Tabla 1 CSA (4.0 Sv carrera)` },
-            { id: `skin`, name: `Piel (0.01 cm)`, unit: `mSv`, l30: 1500, l1y: 3000, lcar: 6000, note: `Tabla 1 CSA (6.0 Sv carrera)` }
-          ];
-        }
-      }
-    };
+        ESA: {
+          code: `ESA`,
+          fullName: `ESA (European Space Agency — EAC / HRE-OM)`,
+          subtitle: `Age- and sex-independent career limit of 1 Sv (based on 50 mSv/yr × 20 yrs), under continuous review.`,
+          careerLimitText: `1,000 mSv (1 Sv)`,
+          riskMetric: `RADS (Radiation Attributed Decrease of Survival)`,
+          bfoShortText: `250 / 500 mSv`,
+          medicalPolicy: `Mandatorily recorded; outside standard orbital cap`,
+          medicalDefaultIncluded: false,
+          medicalBaselineMsv: 30,
+          dosimeters: `EuCPD (3 passive: TLD + CR-39 PADC) & ESA Active Dosimeter (EAD)`,
+          transportModels: `ISS environmental models · GSI/FAIR simulation (up to 10 GeV/n)`,
+          consentPolicy: `Mandatory training and continuous pre-, in-, and post-flight medical surveillance`,
+          extraLimits: `Additional ESA limits (ICRP 60): Eye 0.5 Sv (30 d) / 1.0 Sv (annual); Skin 1.5 Sv (30 d) / 3.0 Sv (annual).`,
+          methodology: `ESA adopts a 1 Sv stochastic career limit alongside specific limits to prevent deterministic tissue effects in BFO, eye, and skin. It uses EuCPD passive dosimeters (IVA, EVA, and reference) combining thermoluminescence for low-LET and CR-39 PADC track-etch detectors for GCR and neutrons, complemented by EAD active units.`,
+          getCareerLimit: function () {
+            return 1000;
+          },
+          getOrganLimits: function () {
+            return [
+              {
+                id: `bfo`,
+                name: `Blood-Forming Organs (BFO · Red marrow)`,
+                unit: `mSv`,
+                l30: 250,
+                l1y: 500,
+                lcar: 1000,
+                note: `MMOP Consensus / ISS MED Vol. A`,
+              },
+              {
+                id: `eye`,
+                name: `Eye Lens (0.3 cm)`,
+                unit: `mSv`,
+                l30: 500,
+                l1y: 1000,
+                lcar: 4000,
+                note: `ESA deterministic threshold (ICRP 60)`,
+              },
+              {
+                id: `skin`,
+                name: `Skin (0.01 cm)`,
+                unit: `mSv`,
+                l30: 1500,
+                l1y: 3000,
+                lcar: 6000,
+                note: `ESA deterministic threshold (ICRP 60)`,
+              },
+              {
+                id: `circ`,
+                name: `Circulatory System (Monitoring ref.)`,
+                unit: `mGy-eq`,
+                l30: 250,
+                l1y: 500,
+                lcar: 1000,
+                note: `Under European HRA / late-effects study`,
+              },
+              {
+                id: `cns`,
+                name: `CNS (Hippocampus — ISS ref.)`,
+                unit: `mGy`,
+                l30: 500,
+                l1y: 1000,
+                lcar: 1500,
+                note: `Active research in neuro-cardiovascular effects`,
+              },
+            ];
+          },
+        },
+        RSA: {
+          code: `RSA`,
+          fullName: `RSA / Roscosmos (Russian Federation — IBMP RAS)`,
+          subtitle: `1 Sv career limit in Generalized Dose (H) across all pathological effects, with biennial restriction.`,
+          careerLimitText: `1,000 mSv (1 Sv)`,
+          riskMetric: `TRR (Total Radiation Risk) & MLR`,
+          bfoShortText: `250 / 500 mSv`,
+          medicalPolicy: `Included in H_before_flight (e.g., 250 mSv ref. table)`,
+          medicalDefaultIncluded: true,
+          medicalBaselineMsv: 120,
+          dosimeters: `Stationary dosimeters in Russian Segment & USOS + individual passive`,
+          transportModels: `CREME86 · SPENVIS · ISO 15390 · AP8/AE8 · COSRAD · GEANT4`,
+          consentPolicy: `Mandatory informed consent in all cases (cosmonauts and spaceflight participants)`,
+          extraLimits: `2-year rule: if dose in prior 2 yrs > 200 mSv (0.2 Sv), next mission must be < 20 mSv (0.02 Sv).`,
+          methodology: `RSA calculates Generalized Dose H = D · QF · TF · SF · MF, incorporating temporal, spatial, and non-radiation stress factors (microgravity, hypomagnetism). The primary criterion is Total Radiation Risk (TRR = R_cancer + R_other effects) and Mean Life Reduction (MLR), showing that at 1,000 mSv total risk (~7.0%) substantially exceeds cancer-only risk.`,
+          getCareerLimit: function () {
+            return 1000;
+          },
+          getOrganLimits: function () {
+            return [
+              {
+                id: `bfo`,
+                name: `Blood-Forming Organs (BFO · ISS Consensus)`,
+                unit: `mSv`,
+                l30: 250,
+                l1y: 500,
+                lcar: 1000,
+                note: `ISS MMOP Consensus + daily RS/USOS evaluation`,
+              },
+              {
+                id: `eye`,
+                name: `Eye Lens (ISS ref.)`,
+                unit: `mSv`,
+                l30: 500,
+                l1y: 1000,
+                lcar: 4000,
+                note: `Protection against tissue reactions`,
+              },
+              {
+                id: `skin`,
+                name: `Skin (ISS ref.)`,
+                unit: `mSv`,
+                l30: 1500,
+                l1y: 3000,
+                lcar: 6000,
+                note: `Control during IVA and EVA activities`,
+              },
+              {
+                id: `circ`,
+                name: `Circulatory System (Non-cancer TRR)`,
+                unit: `mSv`,
+                l30: 250,
+                l1y: 500,
+                lcar: 1000,
+                note: `Included in total pathological mortality TRR`,
+              },
+            ];
+          },
+        },
+        JAXA: {
+          code: `JAXA`,
+          fullName: `JAXA (Japan Aerospace Exploration Agency)`,
+          subtitle: `Career limits stratified by age at first flight and sex (0.5 to 1.0 Sv), targeting ~3% LACM.`,
+          careerLimitText: `500–1,000 mSv`,
+          riskMetric: `LACM (~3% lifetime attributable cancer mortality)`,
+          bfoShortText: `250 / 500 mSv`,
+          medicalPolicy: `Mandatorily included (medical exams, training & research)`,
+          medicalDefaultIncluded: true,
+          medicalBaselineMsv: 45,
+          dosimeters: `Crew-PADLES (personal passive LET) + in-flight normalization via NASA RAD`,
+          transportModels: `CREME86 · AP8/AE8 · HERMES · EGS4 · JINC · ICRP 60 Q(L) · CADrays 3D`,
+          consentPolicy: `Mandatory annual career history review and pre-assignment dose projection`,
+          extraLimits: `Skin career: 20 Sv (20,000 mSv). Eye lens > 0.5 Sv (500 mSv): continuous ophthalmological follow-up.`,
+          methodology: `JAXA adds space doses, certification medical exams, training, and biomedical protocols into the career limit. In-flight, it adjusts 3D CADrays calculations using real-time RAD readings (Eq. 1–2) and post-flight refines effective and organ doses with the LET spectrum measured by Crew-PADLES (Eq. 3–4), computing LACM via ERR/EAR models (DDREF=2 solid, DDREF=1 leukemia).`,
+          getCareerLimit: function (sex, ageBracket) {
+            const table = {
+              M: { '27-30': 600, '31-35': 700, '36-40': 800, '41-45': 950, '>45': 1000 },
+              F: { '27-30': 500, '31-35': 600, '36-40': 650, '41-45': 750, '>45': 800 },
+            };
+            return table[sex] && table[sex][ageBracket] ? table[sex][ageBracket] : 600;
+          },
+          getOrganLimits: function (sex, ageBracket) {
+            const car = this.getCareerLimit(sex, ageBracket);
+            return [
+              {
+                id: `bfo`,
+                name: `Blood-Forming Organs (BFO · ISS Consensus)`,
+                unit: `mSv`,
+                l30: 250,
+                l1y: 500,
+                lcar: car,
+                note: `ISS Consensus + age/sex career limit`,
+              },
+              {
+                id: `eye`,
+                name: `Eye Lens (JAXA exam threshold)`,
+                unit: `mSv`,
+                l30: 500,
+                l1y: 1000,
+                lcar: 500,
+                note: `> 500 mSv triggers continuous medical exams`,
+              },
+              {
+                id: `skin`,
+                name: `Skin (JAXA organ equivalent limit)`,
+                unit: `mSv`,
+                l30: 1500,
+                l1y: 3000,
+                lcar: 20000,
+                note: `JAXA Table 4 career limit: 20 Sv`,
+              },
+            ];
+          },
+        },
+        CSA: {
+          code: `CSA`,
+          fullName: `CSA (Canadian Space Agency — MED Vol. A)`,
+          subtitle: `1 Sv career limit (effective/BFO), complemented by organ limits and NASA short-term approach.`,
+          careerLimitText: `1,000 mSv (1 Sv)`,
+          riskMetric: `DALY Study (Disability-Adjusted Life Years)`,
+          bfoShortText: `250 / 600 mGy-eq`,
+          medicalPolicy: `NASA RHO mission reports + Health Canada biodosimetry`,
+          medicalDefaultIncluded: false,
+          medicalBaselineMsv: 30,
+          dosimeters: `NASA-supplied Crew Active Dosimeters (CAD) + RHO analysis`,
+          transportModels: `NASA SRAG / RHO operational reports · Chromosomal biodosimetry`,
+          consentPolicy: `Compliance with SSP 50260 (MORD) and ISS MED Rev 3.3 medical standards`,
+          extraLimits: `Table 1 career limits: BFO (5.0 cm) 1.0 Sv · Eye (0.3 cm) 4.0 Sv · Skin (0.01 cm) 6.0 Sv.`,
+          methodology: `CSA astronauts wear NASA CAD active dosimeters that log and report time-resolved telemetry. NASA's Radiation Health Officer (RHO) provides exposure and cancer risk reports. CSA maintains a 1 Sv BFO career limit (higher than NASA's) alongside NASA short-term limits and evaluates the DALY metric for exploration missions.`,
+          getCareerLimit: function () {
+            return 1000;
+          },
+          getOrganLimits: function () {
+            return [
+              {
+                id: `bfo`,
+                name: `Blood-Forming Organs (BFO · 5.0 cm)`,
+                unit: `mSv`,
+                l30: 250,
+                l1y: 600,
+                lcar: 1000,
+                note: `CSA Table 1 (1.0 Sv career) + NASA short-term`,
+              },
+              {
+                id: `eye`,
+                name: `Eye Lens (0.3 cm)`,
+                unit: `mSv`,
+                l30: 1000,
+                l1y: 2000,
+                lcar: 4000,
+                note: `CSA Table 1 (4.0 Sv career)`,
+              },
+              {
+                id: `skin`,
+                name: `Skin (0.01 cm)`,
+                unit: `mSv`,
+                l30: 1500,
+                l1y: 3000,
+                lcar: 6000,
+                note: `CSA Table 1 (6.0 Sv career)`,
+              },
+            ];
+          },
+        },
+      };
 
-    const SCENARIOS = {
-      nominal: {
-        label: `Nominal LEO`,
+      const SCENARIOS = {
+        nominal: {
+          label: `Nominal LEO`,
+          doseRate: 0.24,
+          letMean: 6.8,
+          spePulseMsv: 0,
+          highLetRatio: 0.24,
+          saaPeakFactor: 1.85,
+        },
+        elevated: {
+          label: `Elevated (GCR / SAA)`,
+          doseRate: 0.42,
+          letMean: 11.4,
+          spePulseMsv: 0,
+          highLetRatio: 0.42,
+          saaPeakFactor: 2.45,
+        },
+        spe: {
+          label: `Solar Storm (SPE)`,
+          doseRate: 1.85,
+          letMean: 4.2,
+          spePulseMsv: 235,
+          highLetRatio: 0.14,
+          saaPeakFactor: 3.1,
+        },
+      };
+
+      const SHIELDING_FACTORS = {
+        standard: { label: `Standard ISS Module`, doseMult: 1.0, speMult: 1.0, letShift: 0 },
+        shelter: { label: `Reinforced SPE Shelter`, doseMult: 0.78, speMult: 0.35, letShift: 0.8 },
+        eva: { label: `EVA (Spacesuit)`, doseMult: 1.38, speMult: 1.65, letShift: -1.1 },
+      };
+
+      const LET_BINS = [`0.2–1`, `1–3`, `3–10`, `10–30`, `30–100`, `100–300`];
+
+      // --- Mutable Application State ---
+      let appState = {
+        agency: `NASA`,
+        scenario: `nominal`,
+        sex: `F`,
+        ageBracket: `31-35`,
+        shielding: `standard`,
+        missionDays: 180,
+        priorDoseMsv: 160,
         doseRate: 0.24,
         letMean: 6.8,
-        spePulseMsv: 0,
-        highLetRatio: 0.24,
-        saaPeakFactor: 1.85
-      },
-      elevated: {
-        label: `Elevado (GCR / SAA)`,
-        doseRate: 0.42,
-        letMean: 11.4,
-        spePulseMsv: 0,
-        highLetRatio: 0.42,
-        saaPeakFactor: 2.45
-      },
-      spe: {
-        label: `Tormenta Solar (SPE)`,
-        doseRate: 1.85,
-        letMean: 4.2,
-        spePulseMsv: 235,
-        highLetRatio: 0.14,
-        saaPeakFactor: 3.10
+        includeMedical: false,
+        tissueInterval: `30d`,
+        customTelemetry: false,
+      };
+
+      let telemetryChart = null;
+      let letChart = null;
+
+      // --- Utility: read CSS variables cleanly (zero inline hex in JS) ---
+      function cssVar(name) {
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
       }
-    };
 
-    const SHIELDING_FACTORS = {
-      standard: { label: `Módulo EEI estándar`, doseMult: 1.0, speMult: 1.0, letShift: 0 },
-      shelter: { label: `Refugio SPE reforzado`, doseMult: 0.78, speMult: 0.35, letShift: 0.8 },
-      eva: { label: `EVA (Traje espacial)`, doseMult: 1.38, speMult: 1.65, letShift: -1.1 }
-    };
-
-    const LET_BINS = [
-      `0.2–1`, `1–3`, `3–10`, `10–30`, `30–100`, `100–300`
-    ];
-
-    // --- Mutable Application State ---
-    let appState = {
-      agency: `NASA`,
-      scenario: `nominal`,
-      sex: `F`,
-      ageBracket: `31-35`,
-      shielding: `standard`,
-      missionDays: 180,
-      priorDoseMsv: 160,
-      doseRate: 0.24,
-      letMean: 6.8,
-      includeMedical: false,
-      tissueInterval: `30d`,
-      customTelemetry: false
-    };
-
-    let telemetryChart = null;
-    let letChart = null;
-
-    // --- Utility: read CSS variables cleanly (zero inline hex in JS) ---
-    function cssVar(name) {
-      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    }
-
-    // --- Physics / Dosimetry Calculations ---
-    function computeQualityFactor(letVal) {
-      // Piecewise approximation aligned with ICRP 60 Q(L) / NASA effective Q on ISS
-      if (letVal <= 10) {
-        return Math.max(1.0, 1.0 + 0.105 * (letVal - 1.0));
+      // --- Physics / Dosimetry Calculations ---
+      function computeQualityFactor(letVal) {
+        if (letVal <= 10) {
+          return Math.max(1.0, 1.0 + 0.105 * (letVal - 1.0));
+        }
+        if (letVal <= 100) {
+          return 1.945 + 0.145 * (letVal - 10);
+        }
+        return 15.0;
       }
-      if (letVal <= 100) {
-        return 1.945 + 0.145 * (letVal - 10);
-      }
-      return 15.0;
-    }
 
-    function computeMetrics() {
-      const ag = AGENCIES[appState.agency];
-      const sh = SHIELDING_FACTORS[appState.shielding];
-      const sc = SCENARIOS[appState.scenario];
+      function computeMetrics() {
+        const ag = AGENCIES[appState.agency];
+        const sh = SHIELDING_FACTORS[appState.shielding];
+        const sc = SCENARIOS[appState.scenario];
 
-      const effectiveLet = Math.max(1.5, Math.min(35, appState.letMean + sh.letShift));
-      const qMean = computeQualityFactor(effectiveLet);
+        const effectiveLet = Math.max(1.5, Math.min(35, appState.letMean + sh.letShift));
+        const qMean = computeQualityFactor(effectiveLet);
 
-      // Sex-specific subtle difference on ISS (~1.08 ratio female:male for NASA NSCR-2012)
-      const sexFactor = (appState.agency === `NASA` && appState.sex === `M`) ? 0.93 : 1.0;
+        const sexFactor = appState.agency === `NASA` && appState.sex === `M` ? 0.93 : 1.0;
 
-      // Absorbed dose rate (mGy/day)
-      const effAbsRate = appState.doseRate * sh.doseMult;
-      const missionAbsDose = effAbsRate * appState.missionDays;
-      const earthRatio = Math.round(effAbsRate / 0.0014);
+        const effAbsRate = appState.doseRate * sh.doseMult;
+        const missionAbsDose = effAbsRate * appState.missionDays;
+        const earthRatio = Math.round(effAbsRate / 0.0014);
 
-      // Effective dose rate (mSv/day)
-      const effSvRate = effAbsRate * qMean * sexFactor;
-      const speEventMsv = (appState.scenario === `spe` ? sc.spePulseMsv * sh.speMult : 0);
-      const missionEffDose = (effSvRate * appState.missionDays) + speEventMsv;
+        const effSvRate = effAbsRate * qMean * sexFactor;
+        const speEventMsv = appState.scenario === `spe` ? sc.spePulseMsv * sh.speMult : 0;
+        const missionEffDose = effSvRate * appState.missionDays + speEventMsv;
 
-      // Medical dose addition if policy checked
-      const medicalMsv = appState.includeMedical ? ag.medicalBaselineMsv : 0;
-      const careerLimit = ag.getCareerLimit(appState.sex, appState.ageBracket);
-      const careerTotalMsv = appState.priorDoseMsv + missionEffDose + medicalMsv;
-      const careerPct = (careerTotalMsv / careerLimit) * 100;
+        const medicalMsv = appState.includeMedical ? ag.medicalBaselineMsv : 0;
+        const careerLimit = ag.getCareerLimit(appState.sex, appState.ageBracket);
+        const careerTotalMsv = appState.priorDoseMsv + missionEffDose + medicalMsv;
+        const careerPct = (careerTotalMsv / careerLimit) * 100;
 
-      // Remaining PMD (Permissible Mission Duration) in days at current effective rate
-      const remainingBudget = Math.max(0, careerLimit - careerTotalMsv);
-      const pmdRemaining = effSvRate > 0 ? Math.floor(remainingBudget / effSvRate) : 999;
+        const remainingBudget = Math.max(0, careerLimit - careerTotalMsv);
+        const pmdRemaining = effSvRate > 0 ? Math.floor(remainingBudget / effSvRate) : 999;
 
-      // High-LET fraction (>= 10 keV/um)
-      const highLetPct = Math.min(82, Math.max(8, Math.round((effectiveLet / 26) * 100)));
+        const highLetPct = Math.min(82, Math.max(8, Math.round((effectiveLet / 26) * 100)));
 
-      // Organ / tissue equivalent doses for 30d, 1y, career
-      const organSpecs = ag.getOrganLimits(appState.sex, appState.ageBracket);
-      const days30 = Math.min(30, appState.missionDays);
-      const days1y = Math.min(365, appState.missionDays);
+        const organSpecs = ag.getOrganLimits(appState.sex, appState.ageBracket);
+        const days30 = Math.min(30, appState.missionDays);
+        const days1y = Math.min(365, appState.missionDays);
 
-      // Tissue-specific RBE modifiers grounded in Table 6 & GCR/SPE behavior
-      const organs = organSpecs.map(function(spec) {
-        let rbeMod = 1.0;
-        let speWeight = 1.0;
-        if (spec.id === `bfo`) { rbeMod = 0.88; speWeight = 0.92; }
-        if (spec.id === `eye`) { rbeMod = 1.08; speWeight = 1.12; }
-        if (spec.id === `skin`) { rbeMod = 1.18; speWeight = 1.55; }
-        if (spec.id === `circ`) { rbeMod = 0.92; speWeight = 0.85; }
-        if (spec.id === `cns`) { rbeMod = 0.72; speWeight = 0.65; } // mGy
-        if (spec.id === `cnshze`) { rbeMod = 0.28 * (highLetPct / 24); speWeight = 0.05; } // heavy ions Z>=10
+        const organs = organSpecs.map(function (spec) {
+          let rbeMod = 1.0;
+          let speWeight = 1.0;
+          if (spec.id === `bfo`) {
+            rbeMod = 0.88;
+            speWeight = 0.92;
+          }
+          if (spec.id === `eye`) {
+            rbeMod = 1.08;
+            speWeight = 1.12;
+          }
+          if (spec.id === `skin`) {
+            rbeMod = 1.18;
+            speWeight = 1.55;
+          }
+          if (spec.id === `circ`) {
+            rbeMod = 0.92;
+            speWeight = 0.85;
+          }
+          if (spec.id === `cns`) {
+            rbeMod = 0.72;
+            speWeight = 0.65;
+          }
+          if (spec.id === `cnshze`) {
+            rbeMod = 0.28 * (highLetPct / 24);
+            speWeight = 0.05;
+          }
 
-        const val30 = (effAbsRate * (spec.id.indexOf(`cns`) === 0 ? 1 : qMean * 0.85) * rbeMod * days30) + (speEventMsv * 0.75 * speWeight);
-        const val1y = (effAbsRate * (spec.id.indexOf(`cns`) === 0 ? 1 : qMean * 0.85) * rbeMod * days1y) + (speEventMsv * 0.75 * speWeight);
-        const valCar = (appState.priorDoseMsv * (spec.id === `cnshze` ? 0.25 : 0.85)) + (effAbsRate * (spec.id.indexOf(`cns`) === 0 ? 1 : qMean * 0.85) * rbeMod * appState.missionDays) + (speEventMsv * 0.75 * speWeight);
+          const val30 =
+            effAbsRate * (spec.id.indexOf(`cns`) === 0 ? 1 : qMean * 0.85) * rbeMod * days30 +
+            speEventMsv * 0.75 * speWeight;
+          const val1y =
+            effAbsRate * (spec.id.indexOf(`cns`) === 0 ? 1 : qMean * 0.85) * rbeMod * days1y +
+            speEventMsv * 0.75 * speWeight;
+          const valCar =
+            appState.priorDoseMsv * (spec.id === `cnshze` ? 0.25 : 0.85) +
+            effAbsRate *
+              (spec.id.indexOf(`cns`) === 0 ? 1 : qMean * 0.85) *
+              rbeMod *
+              appState.missionDays +
+            speEventMsv * 0.75 * speWeight;
+
+          return {
+            id: spec.id,
+            name: spec.name,
+            unit: spec.unit,
+            note: spec.note,
+            limits: { '30d': spec.l30, '1y': spec.l1y, career: spec.lcar },
+            values: { '30d': val30, '1y': val1y, career: valCar },
+          };
+        });
+
+        let peakOrgan = organs[0];
+        let peakPct = 0;
+        organs.forEach(function (o) {
+          const lim = o.limits[appState.tissueInterval];
+          if (lim) {
+            const pct = (o.values[appState.tissueInterval] / lim) * 100;
+            if (pct > peakPct) {
+              peakPct = pct;
+              peakOrgan = o;
+            }
+          }
+        });
+
+        let levelAbsorbed = `green`;
+        if (effAbsRate > 0.45 || missionAbsDose > 100 || appState.scenario === `spe`) {
+          levelAbsorbed = `red`;
+        } else if (effAbsRate >= 0.3 || missionAbsDose >= 80) {
+          levelAbsorbed = `yellow`;
+        }
+
+        let levelEffective = `green`;
+        if (careerPct >= 95 || speEventMsv >= 250) {
+          levelEffective = `red`;
+        } else if (careerPct >= 75 || effSvRate > 0.5 || speEventMsv >= 100) {
+          levelEffective = `yellow`;
+        }
+
+        let levelTissue = `green`;
+        if (peakPct >= 95) {
+          levelTissue = `red`;
+        } else if (peakPct >= 70) {
+          levelTissue = `yellow`;
+        }
+
+        let levelLet = `green`;
+        if (effectiveLet > 18 || (appState.scenario === `spe` && speEventMsv >= 150)) {
+          levelLet = `red`;
+        } else if (effectiveLet >= 10) {
+          levelLet = `yellow`;
+        }
+
+        let overallLevel = `green`;
+        if (
+          levelAbsorbed === `red` ||
+          levelEffective === `red` ||
+          levelTissue === `red` ||
+          levelLet === `red` ||
+          appState.scenario === `spe`
+        ) {
+          overallLevel = `red`;
+        } else if (
+          levelAbsorbed === `yellow` ||
+          levelEffective === `yellow` ||
+          levelTissue === `yellow` ||
+          levelLet === `yellow`
+        ) {
+          overallLevel = `yellow`;
+        }
 
         return {
-          id: spec.id,
-          name: spec.name,
-          unit: spec.unit,
-          note: spec.note,
-          limits: { '30d': spec.l30, '1y': spec.l1y, 'career': spec.lcar },
-          values: { '30d': val30, '1y': val1y, 'career': valCar }
+          effAbsRate,
+          missionAbsDose,
+          earthRatio,
+          effectiveLet,
+          qMean,
+          effSvRate,
+          speEventMsv,
+          missionEffDose,
+          medicalMsv,
+          careerLimit,
+          careerTotalMsv,
+          careerPct,
+          pmdRemaining,
+          highLetPct,
+          organs,
+          peakOrgan,
+          peakPct,
+          levels: {
+            absorbed: levelAbsorbed,
+            effective: levelEffective,
+            tissue: levelTissue,
+            let: levelLet,
+            overall: overallLevel,
+          },
         };
-      });
-
-      // Find peak organ utilization for selected interval (or worst across 30d/1y/career)
-      let peakOrgan = organs[0];
-      let peakPct = 0;
-      organs.forEach(function(o) {
-        const lim = o.limits[appState.tissueInterval];
-        if (lim) {
-          const pct = (o.values[appState.tissueInterval] / lim) * 100;
-          if (pct > peakPct) {
-            peakPct = pct;
-            peakOrgan = o;
-          }
-        }
-      });
-
-      // Determine individual alert levels ('green' | 'yellow' | 'red')
-      let levelAbsorbed = `green`;
-      if (effAbsRate > 0.45 || missionAbsDose > 100 || appState.scenario === `spe`) {
-        levelAbsorbed = `red`;
-      } else if (effAbsRate >= 0.30 || missionAbsDose >= 80) {
-        levelAbsorbed = `yellow`;
       }
 
-      let levelEffective = `green`;
-      if (careerPct >= 95 || speEventMsv >= 250) {
-        levelEffective = `red`;
-      } else if (careerPct >= 75 || effSvRate > 0.50 || speEventMsv >= 100) {
-        levelEffective = `yellow`;
-      }
-
-      let levelTissue = `green`;
-      if (peakPct >= 95) {
-        levelTissue = `red`;
-      } else if (peakPct >= 70) {
-        levelTissue = `yellow`;
-      }
-
-      let levelLet = `green`;
-      if (effectiveLet > 18 || (appState.scenario === `spe` && speEventMsv >= 150)) {
-        levelLet = `red`;
-      } else if (effectiveLet >= 10) {
-        levelLet = `yellow`;
-      }
-
-      // Overall operational status
-      let overallLevel = `green`;
-      if (levelAbsorbed === `red` || levelEffective === `red` || levelTissue === `red` || levelLet === `red` || appState.scenario === `spe`) {
-        overallLevel = `red`;
-      } else if (levelAbsorbed === `yellow` || levelEffective === `yellow` || levelTissue === `yellow` || levelLet === `yellow`) {
-        overallLevel = `yellow`;
-      }
-
-      return {
-        effAbsRate,
-        missionAbsDose,
-        earthRatio,
-        effectiveLet,
-        qMean,
-        effSvRate,
-        speEventMsv,
-        missionEffDose,
-        medicalMsv,
-        careerLimit,
-        careerTotalMsv,
-        careerPct,
-        pmdRemaining,
-        highLetPct,
-        organs,
-        peakOrgan,
-        peakPct,
-        levels: {
-          absorbed: levelAbsorbed,
-          effective: levelEffective,
-          tissue: levelTissue,
-          let: levelLet,
-          overall: overallLevel
-        }
-      };
-    }
-
-    // --- UI Rendering ---
-    function renderAll() {
-      const m = computeMetrics();
-      const ag = AGENCIES[appState.agency];
-
-      renderHeaderAndButtons();
-      renderGlobalAlert(m, ag);
-      renderKpis(m, ag);
-      renderOrgans(m);
-      renderAgencyPanel(m, ag);
-      renderCharts(m);
-
-      if (window.lucide && typeof window.lucide.createIcons === `function`) {
-        window.lucide.createIcons();
-      }
-    }
-
-    function renderHeaderAndButtons() {
-      // Agency buttons
-      document.querySelectorAll(`[data-agency]`).forEach(function(btn) {
-        btn.classList.toggle(`active`, btn.dataset.agency === appState.agency);
-      });
-
-      // Scenario buttons
-      document.querySelectorAll(`[data-scenario]`).forEach(function(btn) {
-        btn.classList.remove(`active`, `active-warn`, `active-danger`);
-        if (btn.dataset.scenario === appState.scenario) {
-          if (appState.scenario === `elevated`) btn.classList.add(`active-warn`);
-          else if (appState.scenario === `spe`) btn.classList.add(`active-danger`);
-          else btn.classList.add(`active`);
-        }
-      });
-
-      // Tissue interval buttons
-      document.querySelectorAll(`[data-interval]`).forEach(function(btn) {
-        btn.classList.toggle(`active`, btn.dataset.interval === appState.tissueInterval);
-      });
-
-      const instBadge = document.getElementById(`active-instrument-badge`);
-      if (instBadge) {
-        instBadge.textContent = `Instrumento: ` + AGENCIES[appState.agency].dosimeters.split(`(`)[0].trim();
-      }
-
-      const medLabel = document.getElementById(`medical-policy-label`);
-      const chkMed = document.getElementById(`chk-medical`);
-      if (chkMed) chkMed.checked = appState.includeMedical;
-      if (medLabel) {
+      // --- UI Rendering ---
+      function renderAll() {
+        const m = computeMetrics();
         const ag = AGENCIES[appState.agency];
-        medLabel.textContent = appState.includeMedical
-          ? `Incluir +${ag.medicalBaselineMsv} mSv médicos/biomédicos en carrera`
-          : `Excluidas del tope orbital (historial registrado)`;
+
+        renderHeaderAndButtons();
+        renderGlobalAlert(m, ag);
+        renderKpis(m, ag);
+        renderOrgans(m);
+        renderAgencyPanel(m, ag);
+        renderCharts(m);
+
+        if (window.lucide && typeof window.lucide.createIcons === `function`) {
+          window.lucide.createIcons();
+        }
       }
-    }
 
-    function renderGlobalAlert(m, ag) {
-      const banner = document.getElementById(`global-alert-banner`);
-      const title = document.getElementById(`global-alert-title`);
-      const desc = document.getElementById(`global-alert-desc`);
-      const chip = document.getElementById(`global-alert-chip`);
-      const iconWrap = document.getElementById(`global-alert-icon`);
-      const ruleRef = document.getElementById(`global-rule-ref`);
-      if (!banner || !title || !desc || !chip || !iconWrap) return;
+      function renderHeaderAndButtons() {
+        document.querySelectorAll(`[data-agency]`).forEach(function (btn) {
+          btn.classList.toggle(`active`, btn.dataset.agency === appState.agency);
+        });
 
-      banner.classList.remove(`status-green`, `status-yellow`, `status-red`);
-      chip.classList.remove(`green`, `yellow`, `red`);
+        document.querySelectorAll(`[data-scenario]`).forEach(function (btn) {
+          btn.classList.remove(`active`, `active-warn`, `active-danger`);
+          if (btn.dataset.scenario === appState.scenario) {
+            if (appState.scenario === `elevated`) btn.classList.add(`active-warn`);
+            else if (appState.scenario === `spe`) btn.classList.add(`active-danger`);
+            else btn.classList.add(`active`);
+          }
+        });
 
-      if (m.levels.overall === `red`) {
-        banner.classList.add(`status-red`);
-        chip.classList.add(`red`);
-        iconWrap.innerHTML = `<i data-lucide="shield-alert" aria-hidden="true"></i>`;
-        if (appState.scenario === `spe`) {
-          chip.textContent = `ROJO · ALERTA TORMENTA SOLAR SPE`;
-          title.textContent = `Contingencia SPE Activa — Activar protocolos de refugio en módulo blindado`;
-          desc.textContent = `Evento de protones solares en curso (+${m.speEventMsv.toFixed(0)} mSv estimados). Suspender actividades extravehiculares (EVA), trasladar tripulación a zonas de mayor blindaje y verificar umbral de diseño SPE (< 250 mSv) y límite BFO 30 días.`;
+        document.querySelectorAll(`[data-interval]`).forEach(function (btn) {
+          btn.classList.toggle(`active`, btn.dataset.interval === appState.tissueInterval);
+        });
+
+        const instBadge = document.getElementById(`active-instrument-badge`);
+        if (instBadge) {
+          instBadge.textContent =
+            `Instrument: ` + AGENCIES[appState.agency].dosimeters.split(`(`)[0].trim();
+        }
+
+        const medLabel = document.getElementById(`medical-policy-label`);
+        const chkMed = document.getElementById(`chk-medical`);
+        if (chkMed) chkMed.checked = appState.includeMedical;
+        if (medLabel) {
+          const ag = AGENCIES[appState.agency];
+          medLabel.textContent = appState.includeMedical
+            ? `Include +${ag.medicalBaselineMsv} mSv medical/biomedical in career`
+            : `Excluded from orbital cap (logged in record)`;
+        }
+      }
+
+      function renderGlobalAlert(m, ag) {
+        const banner = document.getElementById(`global-alert-banner`);
+        const title = document.getElementById(`global-alert-title`);
+        const desc = document.getElementById(`global-alert-desc`);
+        const chip = document.getElementById(`global-alert-chip`);
+        const iconWrap = document.getElementById(`global-alert-icon`);
+        const ruleRef = document.getElementById(`global-rule-ref`);
+        if (!banner || !title || !desc || !chip || !iconWrap) return;
+
+        banner.classList.remove(`status-green`, `status-yellow`, `status-red`);
+        chip.classList.remove(`green`, `yellow`, `red`);
+
+        if (m.levels.overall === `red`) {
+          banner.classList.add(`status-red`);
+          chip.classList.add(`red`);
+          iconWrap.innerHTML = `<i data-lucide="shield-alert" aria-hidden="true"></i>`;
+          if (appState.scenario === `spe`) {
+            chip.textContent = `RED · SOLAR STORM SPE ALERT`;
+            title.textContent = `Active SPE Contingency — Activate shielded module shelter protocols`;
+            desc.textContent = `Solar particle event in progress (+${m.speEventMsv.toFixed(0)} mSv estimated). Suspend extravehicular activities (EVA), relocate crew to high-shielding zones, and verify SPE design threshold (< 250 mSv) and 30-day BFO limit.`;
+          } else {
+            chip.textContent = `RED · CRITICAL LIMIT`;
+            title.textContent = `Critical Threshold Reached (${ag.code}) — Aeromedical Flight Rules Review`;
+            desc.textContent = `Projected exposure (${m.careerTotalMsv.toFixed(0)} mSv, ${m.careerPct.toFixed(1)}% of career limit) or tissue dose (${m.peakPct.toFixed(1)}% in ${m.peakOrgan.name.split(`(`)[0].trim()}) requires immediate mitigation or mission duration adjustment.`;
+          }
+          if (ruleRef) ruleRef.textContent = `ISS Contingency · Flight Rules Sec. B14`;
+        } else if (m.levels.overall === `yellow`) {
+          banner.classList.add(`status-yellow`);
+          chip.classList.add(`yellow`);
+          iconWrap.innerHTML = `<i data-lucide="alert-triangle" aria-hidden="true"></i>`;
+          chip.textContent = `YELLOW · ELEVATED LEVEL`;
+          title.textContent = `Elevated Orbital Exposure — Intensive monitoring and ALARA optimization`;
+          desc.textContent = `Absorbed rate (${m.effAbsRate.toFixed(2)} mGy/day) or high-LET fraction (${m.effectiveLet.toFixed(1)} keV/µm) above typical baseline (< 0.30 mGy/day). Review SRAG space weather forecast and career margins (${m.careerPct.toFixed(1)}%).`;
+          if (ruleRef) ruleRef.textContent = `Enhanced Surveillance · ${ag.code}`;
         } else {
-          chip.textContent = `ROJO · LÍMITE CRÍTICO`;
-          title.textContent = `Umbral Crítico Alcanzado (${ag.code}) — Revisión de Reglas de Vuelo Aeromédicas`;
-          desc.textContent = `La exposición proyectada (${m.careerTotalMsv.toFixed(0)} mSv, ${m.careerPct.toFixed(1)}% del límite de carrera) o la dosis tisular (${m.peakPct.toFixed(1)}% en ${m.peakOrgan.name.split(`(`)[0].trim()}) requiere mitigación inmediata o ajuste de duración de misión.`;
+          banner.classList.add(`status-green`);
+          chip.classList.add(`green`);
+          iconWrap.innerHTML = `<i data-lucide="shield-check" aria-hidden="true"></i>`;
+          chip.textContent = `GREEN · NOMINAL`;
+          title.textContent = `Nominal LEO Status — Parameters within operational margin (${ag.code})`;
+          desc.textContent = `Stable baseline exposure from GCR and routine geomagnetic belt passes (${m.effAbsRate.toFixed(2)} mGy/day · ${m.effSvRate.toFixed(2)} mSv/day). Maintain ALARA principle and continuous personal dosimetry.`;
+          if (ruleRef) ruleRef.textContent = `Nominal Operations · ISS MORD SSP 50260`;
         }
-        if (ruleRef) ruleRef.textContent = `Contingencia EEI · Reglas de Vuelo Sec. B14`;
-      } else if (m.levels.overall === `yellow`) {
-        banner.classList.add(`status-yellow`);
-        chip.classList.add(`yellow`);
-        iconWrap.innerHTML = `<i data-lucide="alert-triangle" aria-hidden="true"></i>`;
-        chip.textContent = `AMARILLO · NIVEL ELEVADO`;
-        title.textContent = `Exposición Elevada en Órbita — Monitoreo intensivo y optimización ALARA`;
-        desc.textContent = `Tasa absorbida (${m.effAbsRate.toFixed(2)} mGy/día) o fracción de alto LET (${m.effectiveLet.toFixed(1)} keV/µm) por encima de la línea base típica (< 0.30 mGy/día). Revisar pronóstico de clima espacial SRAG y márgenes de carrera (${m.careerPct.toFixed(1)}%).`;
-        if (ruleRef) ruleRef.textContent = `Vigilancia Reforzada · ${ag.code}`;
-      } else {
-        banner.classList.add(`status-green`);
-        chip.classList.add(`green`);
-        iconWrap.innerHTML = `<i data-lucide="shield-check" aria-hidden="true"></i>`;
-        chip.textContent = `VERDE · NOMINAL`;
-        title.textContent = `Estado Nominal LEO — Parámetros dentro de margen operativo (${ag.code})`;
-        desc.textContent = `Exposición basal estable por GCR y pasos rutinarios por cinturones geomagnéticos (${m.effAbsRate.toFixed(2)} mGy/día · ${m.effSvRate.toFixed(2)} mSv/día). Mantener principio ALARA y dosimetría personal continua.`;
-        if (ruleRef) ruleRef.textContent = `Operación Nominal · ISS MORD SSP 50260`;
       }
-    }
 
-    function setCardLevel(cardEl, badgeEl, level, textMap) {
-      if (!cardEl || !badgeEl) return;
-      cardEl.classList.remove(`level-green`, `level-yellow`, `level-red`);
-      badgeEl.classList.remove(`green`, `yellow`, `red`);
-      cardEl.classList.add(`level-` + level);
-      badgeEl.classList.add(level);
-      badgeEl.textContent = textMap[level];
-    }
+      function setCardLevel(cardEl, badgeEl, level, textMap) {
+        if (!cardEl || !badgeEl) return;
+        cardEl.classList.remove(`level-green`, `level-yellow`, `level-red`);
+        badgeEl.classList.remove(`green`, `yellow`, `red`);
+        cardEl.classList.add(`level-` + level);
+        badgeEl.classList.add(level);
+        badgeEl.textContent = textMap[level];
+      }
 
-    function setBarLevel(barEl, pct, level) {
-      if (!barEl) return;
-      barEl.classList.remove(`yellow`, `red`);
-      if (level === `yellow`) barEl.classList.add(`yellow`);
-      if (level === `red`) barEl.classList.add(`red`);
-      barEl.style.width = Math.min(100, Math.max(3, pct)).toFixed(1) + `%`;
-    }
+      function setBarLevel(barEl, pct, level) {
+        if (!barEl) return;
+        barEl.classList.remove(`yellow`, `red`);
+        if (level === `yellow`) barEl.classList.add(`yellow`);
+        if (level === `red`) barEl.classList.add(`red`);
+        barEl.style.width = Math.min(100, Math.max(3, pct)).toFixed(1) + `%`;
+      }
 
-    function renderKpis(m, ag) {
-      // 1. Absorbed
-      const absRateEl = document.getElementById(`val-absorbed-rate`);
-      const absMissionEl = document.getElementById(`sub-absorbed-mission`);
-      const absEarthEl = document.getElementById(`sub-absorbed-earth`);
-      if (absRateEl) absRateEl.textContent = m.effAbsRate.toFixed(2);
-      if (absMissionEl) absMissionEl.textContent = `Misión: ` + m.missionAbsDose.toFixed(1) + ` mGy`;
-      if (absEarthEl) absEarthEl.textContent = m.earthRatio + `× fondo terrestre`;
-      setCardLevel(
-        document.getElementById(`kpi-absorbed`),
-        document.getElementById(`badge-absorbed`),
-        m.levels.absorbed,
-        { green: `Nominal`, yellow: `Elevado`, red: `Crítico / SPE` }
-      );
-      setBarLevel(document.getElementById(`bar-absorbed`), (m.effAbsRate / 0.60) * 100, m.levels.absorbed);
+      function renderKpis(m, ag) {
+        // 1. Absorbed
+        const absRateEl = document.getElementById(`val-absorbed-rate`);
+        const absMissionEl = document.getElementById(`sub-absorbed-mission`);
+        const absEarthEl = document.getElementById(`sub-absorbed-earth`);
+        if (absRateEl) absRateEl.textContent = m.effAbsRate.toFixed(2);
+        if (absMissionEl)
+          absMissionEl.textContent = `Mission: ` + m.missionAbsDose.toFixed(1) + ` mGy`;
+        if (absEarthEl) absEarthEl.textContent = m.earthRatio + `× Earth background`;
+        setCardLevel(
+          document.getElementById(`kpi-absorbed`),
+          document.getElementById(`badge-absorbed`),
+          m.levels.absorbed,
+          { green: `Nominal`, yellow: `Elevated`, red: `Critical / SPE` },
+        );
+        setBarLevel(
+          document.getElementById(`bar-absorbed`),
+          (m.effAbsRate / 0.6) * 100,
+          m.levels.absorbed,
+        );
 
-      // 2. Effective
-      const effCareerEl = document.getElementById(`val-effective-career`);
-      const effLimitEl = document.getElementById(`unit-effective-limit`);
-      const effRateEl = document.getElementById(`sub-effective-rate`);
-      const effPmdEl = document.getElementById(`sub-effective-pmd`);
-      if (effCareerEl) effCareerEl.textContent = Math.round(m.careerTotalMsv).toLocaleString(`es-MX`);
-      if (effLimitEl) effLimitEl.textContent = `/ ` + m.careerLimit.toLocaleString(`es-MX`) + ` mSv (` + ag.code + `)`;
-      if (effRateEl) effRateEl.textContent = `Tasa: ` + m.effSvRate.toFixed(2) + ` mSv/día`;
-      if (effPmdEl) effPmdEl.textContent = `PMD restante: ` + m.pmdRemaining + ` d`;
-      setCardLevel(
-        document.getElementById(`kpi-effective`),
-        document.getElementById(`badge-effective`),
-        m.levels.effective,
-        { green: `Nominal`, yellow: `Elevado`, red: `Límite` }
-      );
-      setBarLevel(document.getElementById(`bar-effective`), m.careerPct, m.levels.effective);
+        // 2. Effective
+        const effCareerEl = document.getElementById(`val-effective-career`);
+        const effLimitEl = document.getElementById(`unit-effective-limit`);
+        const effRateEl = document.getElementById(`sub-effective-rate`);
+        const effPmdEl = document.getElementById(`sub-effective-pmd`);
+        if (effCareerEl)
+          effCareerEl.textContent = Math.round(m.careerTotalMsv).toLocaleString(`en-US`);
+        if (effLimitEl)
+          effLimitEl.textContent =
+            `/ ` + m.careerLimit.toLocaleString(`en-US`) + ` mSv (` + ag.code + `)`;
+        if (effRateEl) effRateEl.textContent = `Rate: ` + m.effSvRate.toFixed(2) + ` mSv/day`;
+        if (effPmdEl) effPmdEl.textContent = `Remaining PMD: ` + m.pmdRemaining + ` d`;
+        setCardLevel(
+          document.getElementById(`kpi-effective`),
+          document.getElementById(`badge-effective`),
+          m.levels.effective,
+          { green: `Nominal`, yellow: `Elevated`, red: `Limit` },
+        );
+        setBarLevel(document.getElementById(`bar-effective`), m.careerPct, m.levels.effective);
 
-      // 3. Tissue Equivalent
-      const tisPeakEl = document.getElementById(`val-tissue-peak`);
-      const tisUnitEl = document.getElementById(`unit-tissue-peak`);
-      const tisOrgEl = document.getElementById(`sub-tissue-organ`);
-      const tisPctEl = document.getElementById(`sub-tissue-pct`);
-      const intervalLabels = { '30d': `30 d`, '1y': `Anual`, 'career': `Carrera` };
-      const peakVal = m.peakOrgan.values[appState.tissueInterval];
-      const shortOrgName = m.peakOrgan.name.split(`(`)[0].trim();
-      if (tisPeakEl) tisPeakEl.textContent = peakVal.toFixed(1);
-      if (tisUnitEl) tisUnitEl.textContent = m.peakOrgan.unit + ` (` + intervalLabels[appState.tissueInterval] + `)`;
-      if (tisOrgEl) tisOrgEl.textContent = `Crítico: ` + shortOrgName;
-      if (tisPctEl) tisPctEl.textContent = m.peakPct.toFixed(1) + `% del límite`;
-      setCardLevel(
-        document.getElementById(`kpi-tissue`),
-        document.getElementById(`badge-tissue`),
-        m.levels.tissue,
-        { green: `Nominal`, yellow: `Elevado`, red: `Límite` }
-      );
-      setBarLevel(document.getElementById(`bar-tissue`), m.peakPct, m.levels.tissue);
+        // 3. Tissue Equivalent
+        const tisPeakEl = document.getElementById(`val-tissue-peak`);
+        const tisUnitEl = document.getElementById(`unit-tissue-peak`);
+        const tisOrgEl = document.getElementById(`sub-tissue-organ`);
+        const tisPctEl = document.getElementById(`sub-tissue-pct`);
+        const intervalLabels = { '30d': `30 d`, '1y': `Annual`, career: `Career` };
+        const peakVal = m.peakOrgan.values[appState.tissueInterval];
+        const shortOrgName = m.peakOrgan.name.split(`(`)[0].trim();
+        if (tisPeakEl) tisPeakEl.textContent = peakVal.toFixed(1);
+        if (tisUnitEl)
+          tisUnitEl.textContent =
+            m.peakOrgan.unit + ` (` + intervalLabels[appState.tissueInterval] + `)`;
+        if (tisOrgEl) tisOrgEl.textContent = `Critical: ` + shortOrgName;
+        if (tisPctEl) tisPctEl.textContent = m.peakPct.toFixed(1) + `% of limit`;
+        setCardLevel(
+          document.getElementById(`kpi-tissue`),
+          document.getElementById(`badge-tissue`),
+          m.levels.tissue,
+          { green: `Nominal`, yellow: `Elevated`, red: `Limit` },
+        );
+        setBarLevel(document.getElementById(`bar-tissue`), m.peakPct, m.levels.tissue);
 
-      // 4. LET
-      const letValEl = document.getElementById(`val-let-mean`);
-      const letQEl = document.getElementById(`sub-let-q`);
-      const letHighEl = document.getElementById(`sub-let-high`);
-      if (letValEl) letValEl.textContent = m.effectiveLet.toFixed(1);
-      if (letQEl) letQEl.textContent = `Factor Q̄(L): ` + m.qMean.toFixed(2);
-      if (letHighEl) letHighEl.textContent = `Alto LET (≥10): ` + m.highLetPct + `%`;
-      setCardLevel(
-        document.getElementById(`kpi-let`),
-        document.getElementById(`badge-let`),
-        m.levels.let,
-        { green: `Nominal`, yellow: `Alto LET`, red: `Crítico` }
-      );
-      setBarLevel(document.getElementById(`bar-let`), (m.effectiveLet / 25) * 100, m.levels.let);
-    }
+        // 4. LET
+        const letValEl = document.getElementById(`val-let-mean`);
+        const letQEl = document.getElementById(`sub-let-q`);
+        const letHighEl = document.getElementById(`sub-let-high`);
+        if (letValEl) letValEl.textContent = m.effectiveLet.toFixed(1);
+        if (letQEl) letQEl.textContent = `Factor Q̄(L): ` + m.qMean.toFixed(2);
+        if (letHighEl) letHighEl.textContent = `High LET (≥10): ` + m.highLetPct + `%`;
+        setCardLevel(
+          document.getElementById(`kpi-let`),
+          document.getElementById(`badge-let`),
+          m.levels.let,
+          { green: `Nominal`, yellow: `High LET`, red: `Critical` },
+        );
+        setBarLevel(document.getElementById(`bar-let`), (m.effectiveLet / 25) * 100, m.levels.let);
+      }
 
-    function renderOrgans(m) {
-      const list = document.getElementById(`organ-list`);
-      if (!list) return;
-      const iv = appState.tissueInterval;
+      function renderOrgans(m) {
+        const list = document.getElementById(`organ-list`);
+        if (!list) return;
+        const iv = appState.tissueInterval;
 
-      list.innerHTML = m.organs.map(function(org) {
-        const val = org.values[iv];
-        const lim = org.limits[iv];
-        let pct = 0;
-        let level = `green`;
-        let limitStr = `Sin límite en intervalo`;
+        list.innerHTML = m.organs
+          .map(function (org) {
+            const val = org.values[iv];
+            const lim = org.limits[iv];
+            let pct = 0;
+            let level = `green`;
+            let limitStr = `No limit in interval`;
 
-        if (lim) {
-          pct = (val / lim) * 100;
-          limitStr = `/ ` + lim.toLocaleString(`es-MX`) + ` ` + org.unit + ` (` + pct.toFixed(1) + `%)`;
-          if (pct >= 95) level = `red`;
-          else if (pct >= 70) level = `yellow`;
-        }
+            if (lim) {
+              pct = (val / lim) * 100;
+              limitStr =
+                `/ ` + lim.toLocaleString(`en-US`) + ` ` + org.unit + ` (` + pct.toFixed(1) + `%)`;
+              if (pct >= 95) level = `red`;
+              else if (pct >= 70) level = `yellow`;
+            }
 
-        const chipLabel = level === `red` ? `Límite` : (level === `yellow` ? `Elevado` : `Nominal`);
-        const fillClass = level === `red` ? `red` : (level === `yellow` ? `yellow` : ``);
+            const chipLabel =
+              level === `red` ? `Limit` : level === `yellow` ? `Elevated` : `Nominal`;
+            const fillClass = level === `red` ? `red` : level === `yellow` ? `yellow` : ``;
 
-        return `
+            return `
           <div class="organ-row">
             <div class="organ-row-top">
               <div>
@@ -1750,49 +2204,52 @@
             </div>
           </div>
         `;
-      }).join(``);
-    }
+          })
+          .join(``);
+      }
 
-    function renderAgencyPanel(m, ag) {
-      const titleEl = document.getElementById(`agency-detail-title`);
-      const subEl = document.getElementById(`agency-detail-subtitle`);
-      const chipEl = document.getElementById(`agency-career-chip`);
-      const tilesEl = document.getElementById(`agency-context-tiles`);
-      const methEl = document.getElementById(`agency-methodology-text`);
-      const tbody = document.getElementById(`agency-table-body`);
+      function renderAgencyPanel(m, ag) {
+        const titleEl = document.getElementById(`agency-detail-title`);
+        const subEl = document.getElementById(`agency-detail-subtitle`);
+        const chipEl = document.getElementById(`agency-career-chip`);
+        const tilesEl = document.getElementById(`agency-context-tiles`);
+        const methEl = document.getElementById(`agency-methodology-text`);
+        const tbody = document.getElementById(`agency-table-body`);
 
-      if (titleEl) titleEl.textContent = `Estándar Operativo: ` + ag.fullName;
-      if (subEl) subEl.textContent = ag.subtitle;
-      if (chipEl) chipEl.textContent = `Carrera: ` + m.careerLimit.toLocaleString(`es-MX`) + ` mSv`;
-      if (methEl) methEl.textContent = ag.methodology;
+        if (titleEl) titleEl.textContent = `Operational Standard: ` + ag.fullName;
+        if (subEl) subEl.textContent = ag.subtitle;
+        if (chipEl)
+          chipEl.textContent = `Career: ` + m.careerLimit.toLocaleString(`en-US`) + ` mSv`;
+        if (methEl) methEl.textContent = ag.methodology;
 
-      if (tilesEl) {
-        tilesEl.innerHTML = `
+        if (tilesEl) {
+          tilesEl.innerHTML = `
           <div class="context-tile">
-            <span class="data-label">Métrica de Riesgo</span>
+            <span class="data-label">Risk Metric</span>
             <span class="context-val">${ag.riskMetric}</span>
           </div>
           <div class="context-tile">
-            <span class="data-label">Dosimetría en Vuelo</span>
+            <span class="data-label">In-Flight Dosimetry</span>
             <span class="context-val">${ag.dosimeters}</span>
           </div>
           <div class="context-tile">
-            <span class="data-label">Códigos de Transporte</span>
+            <span class="data-label">Transport Codes</span>
             <span class="context-val">${ag.transportModels}</span>
           </div>
           <div class="context-tile">
-            <span class="data-label">Reglas Específicas</span>
+            <span class="data-label">Specific Rules</span>
             <span class="context-val">${ag.extraLimits}</span>
           </div>
         `;
-      }
+        }
 
-      if (tbody) {
-        const order = [`NASA`, `ESA`, `RSA`, `JAXA`, `CSA`];
-        tbody.innerHTML = order.map(function(code) {
-          const item = AGENCIES[code];
-          const isSelected = code === appState.agency;
-          return `
+        if (tbody) {
+          const order = [`NASA`, `ESA`, `RSA`, `JAXA`, `CSA`];
+          tbody.innerHTML = order
+            .map(function (code) {
+              const item = AGENCIES[code];
+              const isSelected = code === appState.agency;
+              return `
             <tr class="agency-row ${isSelected ? `selected-row` : ``}" onclick="selectAgency('${code}')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectAgency('${code}');}">
               <td><strong>${item.code}</strong></td>
               <td class="num-cell">${item.careerLimitText}</td>
@@ -1801,441 +2258,498 @@
               <td>${item.medicalPolicy}</td>
             </tr>
           `;
-        }).join(``);
+            })
+            .join(``);
+        }
       }
-    }
 
-    function renderCharts(m) {
-      const cCyan = cssVar(`--data-1`);
-      const cSage = cssVar(`--data-2`);
-      const cAmber = cssVar(`--data-3`);
-      const cCoral = cssVar(`--data-4`);
-      const cRed = cssVar(`--error`);
-      const cGrid = cssVar(`--outline-variant`);
-      const cText = cssVar(`--on-surface-variant`);
-      const cFillCyan = cssVar(`--chart-fill-cyan`);
-      const cFillSage = cssVar(`--chart-fill-sage`);
-      const monoFont = cssVar(`--font-label`);
+      function renderCharts(m) {
+        const cCyan = cssVar(`--data-1`);
+        const cSage = cssVar(`--data-2`);
+        const cAmber = cssVar(`--data-3`);
+        const cCoral = cssVar(`--data-4`);
+        const cRed = cssVar(`--error`);
+        const cGrid = cssVar(`--outline-variant`);
+        const cText = cssVar(`--on-surface-variant`);
+        const cFillCyan = cssVar(`--chart-fill-cyan`);
+        const cFillSage = cssVar(`--chart-fill-sage`);
+        const monoFont = cssVar(`--font-label`);
 
-      // Generate 24h orbital profile (24 hourly points with periodic SAA crossings + optional SPE spike)
-      const hours = [];
-      const absSeries = [];
-      const effSeries = [];
-      const warnLine = [];
-      const critLine = [];
+        const hours = [];
+        const absSeries = [];
+        const effSeries = [];
+        const warnLine = [];
+        const critLine = [];
 
-      for (let h = 0; h < 24; h++) {
-        hours.push((h < 10 ? `0` + h : h) + `:00`);
-        // South Atlantic Anomaly modulation around hours 4-6 and 15-17
-        let saaBoost = 1.0;
-        if (h === 4 || h === 5 || h === 15 || h === 16) saaBoost = 1.48;
-        if (h === 6 || h === 17) saaBoost = 1.22;
+        for (let h = 0; h < 24; h++) {
+          hours.push((h < 10 ? `0` + h : h) + `:00`);
+          let saaBoost = 1.0;
+          if (h === 4 || h === 5 || h === 15 || h === 16) saaBoost = 1.48;
+          if (h === 6 || h === 17) saaBoost = 1.22;
 
-        // SPE transient ramp between 18:00 and 23:00
-        let speFactor = 1.0;
-        if (appState.scenario === `spe` && h >= 17) {
-          const ramps = [1.2, 1.8, 2.3, 2.1, 1.7, 1.4, 1.2];
-          speFactor = ramps[h - 17] || 1.2;
+          let speFactor = 1.0;
+          if (appState.scenario === `spe` && h >= 17) {
+            const ramps = [1.2, 1.8, 2.3, 2.1, 1.7, 1.4, 1.2];
+            speFactor = ramps[h - 17] || 1.2;
+          }
+
+          const absVal = Number((m.effAbsRate * saaBoost * speFactor).toFixed(3));
+          const effVal = Number((m.effSvRate * saaBoost * speFactor).toFixed(3));
+          absSeries.push(absVal);
+          effSeries.push(effVal);
+          warnLine.push(0.3);
+          critLine.push(0.45);
         }
 
-        const absVal = Number((m.effAbsRate * saaBoost * speFactor).toFixed(3));
-        const effVal = Number((m.effSvRate * saaBoost * speFactor).toFixed(3));
-        absSeries.push(absVal);
-        effSeries.push(effVal);
-        warnLine.push(0.30);
-        critLine.push(0.45);
-      }
-
-      const telCanvas = document.getElementById(`chart-telemetry`);
-      if (telCanvas && window.Chart) {
-        if (telemetryChart) telemetryChart.destroy();
-        telemetryChart = new Chart(telCanvas.getContext(`2d`), {
-          type: `line`,
-          data: {
-            labels: hours,
-            datasets: [
-              {
-                label: `Dosis Absorbida (mGy/día)`,
-                data: absSeries,
-                borderColor: cCyan,
-                backgroundColor: cFillCyan,
-                borderWidth: 2,
-                fill: true,
-                tension: 0.32,
-                pointRadius: 2
-              },
-              {
-                label: `Dosis Efectiva (mSv/día)`,
-                data: effSeries,
-                borderColor: cSage,
-                backgroundColor: cFillSage,
-                borderWidth: 2,
-                fill: false,
-                tension: 0.32,
-                pointRadius: 2
-              },
-              {
-                label: `Umbral Elevado (0.30 mGy/d)`,
-                data: warnLine,
-                borderColor: cAmber,
-                borderWidth: 1.5,
-                borderDash: [5, 5],
-                pointRadius: 0,
-                fill: false
-              },
-              {
-                label: `Umbral Límite (>0.45 mGy/d)`,
-                data: critLine,
-                borderColor: cRed,
-                borderWidth: 1.5,
-                borderDash: [3, 4],
-                pointRadius: 0,
-                fill: false
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: `index`, intersect: false },
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                titleFont: { family: monoFont },
-                bodyFont: { family: monoFont }
-              }
+        const telCanvas = document.getElementById(`chart-telemetry`);
+        if (telCanvas && window.Chart) {
+          if (telemetryChart) telemetryChart.destroy();
+          telemetryChart = new Chart(telCanvas.getContext(`2d`), {
+            type: `line`,
+            data: {
+              labels: hours,
+              datasets: [
+                {
+                  label: `Absorbed Dose (mGy/day)`,
+                  data: absSeries,
+                  borderColor: cCyan,
+                  backgroundColor: cFillCyan,
+                  borderWidth: 2,
+                  fill: true,
+                  tension: 0.32,
+                  pointRadius: 2,
+                },
+                {
+                  label: `Effective Dose (mSv/day)`,
+                  data: effSeries,
+                  borderColor: cSage,
+                  backgroundColor: cFillSage,
+                  borderWidth: 2,
+                  fill: false,
+                  tension: 0.32,
+                  pointRadius: 2,
+                },
+                {
+                  label: `Elevated Threshold (0.30 mGy/d)`,
+                  data: warnLine,
+                  borderColor: cAmber,
+                  borderWidth: 1.5,
+                  borderDash: [5, 5],
+                  pointRadius: 0,
+                  fill: false,
+                },
+                {
+                  label: `Limit Threshold (>0.45 mGy/d)`,
+                  data: critLine,
+                  borderColor: cRed,
+                  borderWidth: 1.5,
+                  borderDash: [3, 4],
+                  pointRadius: 0,
+                  fill: false,
+                },
+              ],
             },
-            scales: {
-              x: {
-                grid: { color: cGrid },
-                ticks: { color: cText, font: { family: monoFont, size: 11 }, maxTicksLimit: 8 }
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              interaction: { mode: `index`, intersect: false },
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  titleFont: { family: monoFont },
+                  bodyFont: { family: monoFont },
+                },
               },
-              y: {
-                beginAtZero: true,
-                grid: { color: cGrid },
-                ticks: { color: cText, font: { family: monoFont, size: 11 } },
-                title: { display: true, text: `mGy/día · mSv/día`, color: cText, font: { family: monoFont, size: 11 } }
-              }
-            }
-          }
-        });
-      }
-
-      // LET Spectrum Chart across 6 logarithmic bins
-      const baseLow = Math.max(10, 100 - m.highLetPct);
-      const lowSplit = [0.28, 0.40, 0.32];
-      const highSplit = [0.46, 0.34, 0.20];
-      const letDist = [
-        Number((baseLow * lowSplit[0]).toFixed(1)),
-        Number((baseLow * lowSplit[1]).toFixed(1)),
-        Number((baseLow * lowSplit[2]).toFixed(1)),
-        Number((m.highLetPct * highSplit[0]).toFixed(1)),
-        Number((m.highLetPct * highSplit[1]).toFixed(1)),
-        Number((m.highLetPct * highSplit[2]).toFixed(1))
-      ];
-
-      const barColors = [cCyan, cCyan, cSage, cAmber, cCoral, cRed];
-
-      const letCanvas = document.getElementById(`chart-let`);
-      if (letCanvas && window.Chart) {
-        if (letChart) letChart.destroy();
-        letChart = new Chart(letCanvas.getContext(`2d`), {
-          type: `bar`,
-          data: {
-            labels: LET_BINS,
-            datasets: [
-              {
-                label: `% Dosis por intervalo LET`,
-                data: letDist,
-                backgroundColor: barColors,
-                borderRadius: 3
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: function(ctx) {
-                    return ctx.parsed.y + `% de dosis acumulada`;
-                  }
-                }
-              }
+              scales: {
+                x: {
+                  grid: { color: cGrid },
+                  ticks: { color: cText, font: { family: monoFont, size: 11 }, maxTicksLimit: 8 },
+                },
+                y: {
+                  beginAtZero: true,
+                  grid: { color: cGrid },
+                  ticks: { color: cText, font: { family: monoFont, size: 11 } },
+                  title: {
+                    display: true,
+                    text: `mGy/day · mSv/day`,
+                    color: cText,
+                    font: { family: monoFont, size: 11 },
+                  },
+                },
+              },
             },
-            scales: {
-              x: {
-                grid: { display: false },
-                ticks: { color: cText, font: { family: monoFont, size: 11 } },
-                title: { display: true, text: `LET en agua (keV/µm) — Bajo LET (<10) vs Alto LET HZE (≥10)`, color: cText, font: { family: monoFont, size: 11 } }
+          });
+        }
+
+        const baseLow = Math.max(10, 100 - m.highLetPct);
+        const lowSplit = [0.28, 0.4, 0.32];
+        const highSplit = [0.46, 0.34, 0.2];
+        const letDist = [
+          Number((baseLow * lowSplit[0]).toFixed(1)),
+          Number((baseLow * lowSplit[1]).toFixed(1)),
+          Number((baseLow * lowSplit[2]).toFixed(1)),
+          Number((m.highLetPct * highSplit[0]).toFixed(1)),
+          Number((m.highLetPct * highSplit[1]).toFixed(1)),
+          Number((m.highLetPct * highSplit[2]).toFixed(1)),
+        ];
+
+        const barColors = [cCyan, cCyan, cSage, cAmber, cCoral, cRed];
+
+        const letCanvas = document.getElementById(`chart-let`);
+        if (letCanvas && window.Chart) {
+          if (letChart) letChart.destroy();
+          letChart = new Chart(letCanvas.getContext(`2d`), {
+            type: `bar`,
+            data: {
+              labels: LET_BINS,
+              datasets: [
+                {
+                  label: `% Dose by LET bin`,
+                  data: letDist,
+                  backgroundColor: barColors,
+                  borderRadius: 3,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function (ctx) {
+                      return ctx.parsed.y + `% of accumulated dose`;
+                    },
+                  },
+                },
               },
-              y: {
-                beginAtZero: true,
-                max: 50,
-                grid: { color: cGrid },
-                ticks: {
-                  color: cText,
-                  font: { family: monoFont, size: 11 },
-                  callback: function(v) { return v + `%`; }
-                }
-              }
+              scales: {
+                x: {
+                  grid: { display: false },
+                  ticks: { color: cText, font: { family: monoFont, size: 11 } },
+                  title: {
+                    display: true,
+                    text: `LET in water (keV/µm) — Low LET (<10) vs High LET HZE (≥10)`,
+                    color: cText,
+                    font: { family: monoFont, size: 11 },
+                  },
+                },
+                y: {
+                  beginAtZero: true,
+                  max: 50,
+                  grid: { color: cGrid },
+                  ticks: {
+                    color: cText,
+                    font: { family: monoFont, size: 11 },
+                    callback: function (v) {
+                      return v + `%`;
+                    },
+                  },
+                },
+              },
+            },
+          });
+        }
+      }
+
+      // --- Interactive Handlers ---
+      function selectAgency(code) {
+        if (!AGENCIES[code]) return;
+        appState.agency = code;
+        appState.includeMedical = AGENCIES[code].medicalDefaultIncluded;
+        renderAll();
+        persistState();
+      }
+
+      function applyScenario(scenarioKey) {
+        if (!SCENARIOS[scenarioKey]) return;
+        const sc = SCENARIOS[scenarioKey];
+        appState.scenario = scenarioKey;
+        appState.doseRate = sc.doseRate;
+        appState.letMean = sc.letMean;
+
+        const sDose = document.getElementById(`slider-dose-rate`);
+        const nDose = document.getElementById(`num-dose-rate`);
+        const sLet = document.getElementById(`slider-let`);
+        const nLet = document.getElementById(`num-let`);
+        if (sDose) sDose.value = sc.doseRate;
+        if (nDose) nDose.value = sc.doseRate;
+        if (sLet) sLet.value = sc.letMean;
+        if (nLet) nLet.value = sc.letMean;
+
+        renderAll();
+        persistState();
+      }
+
+      function selectTissueInterval(iv) {
+        appState.tissueInterval = iv;
+        renderAll();
+        persistState();
+      }
+
+      function updateCrewProfile() {
+        const sexEl = document.getElementById(`select-sex`);
+        const ageEl = document.getElementById(`select-age`);
+        const shEl = document.getElementById(`select-shielding`);
+        if (sexEl) appState.sex = sexEl.value;
+        if (ageEl) appState.ageBracket = ageEl.value;
+        if (shEl) appState.shielding = shEl.value;
+        renderAll();
+        persistState();
+      }
+
+      function updateMissionDays(val) {
+        const num = Math.max(1, Math.min(365, parseInt(val, 10) || 1));
+        appState.missionDays = num;
+        renderAll();
+        persistState();
+      }
+
+      function updatePriorDose(val) {
+        const num = Math.max(0, Math.min(950, parseFloat(val) || 0));
+        appState.priorDoseMsv = num;
+        renderAll();
+        persistState();
+      }
+
+      function syncDoseFromSlider(val) {
+        const num = parseFloat(val) || 0.24;
+        appState.doseRate = num;
+        const numInput = document.getElementById(`num-dose-rate`);
+        if (numInput) numInput.value = num;
+        renderAll();
+        persistState();
+      }
+
+      function syncDoseFromNumber(val) {
+        const num = Math.max(0.05, Math.min(2.5, parseFloat(val) || 0.24));
+        appState.doseRate = num;
+        const sliderInput = document.getElementById(`slider-dose-rate`);
+        if (sliderInput) sliderInput.value = num;
+        renderAll();
+        persistState();
+      }
+
+      function syncLetFromSlider(val) {
+        const num = parseFloat(val) || 6.8;
+        appState.letMean = num;
+        const numInput = document.getElementById(`num-let`);
+        if (numInput) numInput.value = num;
+        renderAll();
+        persistState();
+      }
+
+      function syncLetFromNumber(val) {
+        const num = Math.max(1.5, Math.min(35.0, parseFloat(val) || 6.8));
+        appState.letMean = num;
+        const sliderInput = document.getElementById(`slider-let`);
+        if (sliderInput) sliderInput.value = num;
+        renderAll();
+        persistState();
+      }
+
+      function toggleMedicalPolicy() {
+        const chk = document.getElementById(`chk-medical`);
+        if (chk) appState.includeMedical = chk.checked;
+        renderAll();
+        persistState();
+      }
+
+      function handleResetDefaults(btn) {
+        if (btn && btn.dataset.armed !== `true`) {
+          btn.dataset.armed = `true`;
+          btn.classList.add(`btn-armed`);
+          btn.textContent = `Confirm Reset`;
+          setTimeout(function () {
+            if (btn.dataset.armed === `true`) {
+              btn.dataset.armed = `false`;
+              btn.classList.remove(`btn-armed`);
+              btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true"></i> Reset Defaults`;
+              if (window.lucide) window.lucide.createIcons();
             }
-          }
-        });
-      }
-    }
-
-    // --- Interactive Handlers (Hoisted function declarations) ---
-    function selectAgency(code) {
-      if (!AGENCIES[code]) return;
-      appState.agency = code;
-      appState.includeMedical = AGENCIES[code].medicalDefaultIncluded;
-      renderAll();
-      persistState();
-    }
-
-    function applyScenario(scenarioKey) {
-      if (!SCENARIOS[scenarioKey]) return;
-      const sc = SCENARIOS[scenarioKey];
-      appState.scenario = scenarioKey;
-      appState.doseRate = sc.doseRate;
-      appState.letMean = sc.letMean;
-
-      const sDose = document.getElementById(`slider-dose-rate`);
-      const nDose = document.getElementById(`num-dose-rate`);
-      const sLet = document.getElementById(`slider-let`);
-      const nLet = document.getElementById(`num-let`);
-      if (sDose) sDose.value = sc.doseRate;
-      if (nDose) nDose.value = sc.doseRate;
-      if (sLet) sLet.value = sc.letMean;
-      if (nLet) nLet.value = sc.letMean;
-
-      renderAll();
-      persistState();
-    }
-
-    function selectTissueInterval(iv) {
-      appState.tissueInterval = iv;
-      renderAll();
-      persistState();
-    }
-
-    function updateCrewProfile() {
-      const sexEl = document.getElementById(`select-sex`);
-      const ageEl = document.getElementById(`select-age`);
-      const shEl = document.getElementById(`select-shielding`);
-      if (sexEl) appState.sex = sexEl.value;
-      if (ageEl) appState.ageBracket = ageEl.value;
-      if (shEl) appState.shielding = shEl.value;
-      renderAll();
-      persistState();
-    }
-
-    function updateMissionDays(val) {
-      const num = Math.max(1, Math.min(365, parseInt(val, 10) || 1));
-      appState.missionDays = num;
-      renderAll();
-      persistState();
-    }
-
-    function updatePriorDose(val) {
-      const num = Math.max(0, Math.min(950, parseFloat(val) || 0));
-      appState.priorDoseMsv = num;
-      renderAll();
-      persistState();
-    }
-
-    function syncDoseFromSlider(val) {
-      const num = parseFloat(val) || 0.24;
-      appState.doseRate = num;
-      const numInput = document.getElementById(`num-dose-rate`);
-      if (numInput) numInput.value = num;
-      renderAll();
-      persistState();
-    }
-
-    function syncDoseFromNumber(val) {
-      const num = Math.max(0.05, Math.min(2.50, parseFloat(val) || 0.24));
-      appState.doseRate = num;
-      const sliderInput = document.getElementById(`slider-dose-rate`);
-      if (sliderInput) sliderInput.value = num;
-      renderAll();
-      persistState();
-    }
-
-    function syncLetFromSlider(val) {
-      const num = parseFloat(val) || 6.8;
-      appState.letMean = num;
-      const numInput = document.getElementById(`num-let`);
-      if (numInput) numInput.value = num;
-      renderAll();
-      persistState();
-    }
-
-    function syncLetFromNumber(val) {
-      const num = Math.max(1.5, Math.min(35.0, parseFloat(val) || 6.8));
-      appState.letMean = num;
-      const sliderInput = document.getElementById(`slider-let`);
-      if (sliderInput) sliderInput.value = num;
-      renderAll();
-      persistState();
-    }
-
-    function toggleMedicalPolicy() {
-      const chk = document.getElementById(`chk-medical`);
-      if (chk) appState.includeMedical = chk.checked;
-      renderAll();
-      persistState();
-    }
-
-    function handleResetDefaults(btn) {
-      if (btn && btn.dataset.armed !== `true`) {
-        btn.dataset.armed = `true`;
-        btn.classList.add(`btn-armed`);
-        btn.textContent = `Confirmar restablecimiento`;
-        setTimeout(function() {
-          if (btn.dataset.armed === `true`) {
-            btn.dataset.armed = `false`;
-            btn.classList.remove(`btn-armed`);
-            btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true"></i> Restablecer valores`;
-            if (window.lucide) window.lucide.createIcons();
-          }
-        }, 4000);
-        return;
-      }
-
-      if (btn) {
-        btn.dataset.armed = `false`;
-        btn.classList.remove(`btn-armed`);
-        btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true"></i> Restablecer valores`;
-      }
-
-      appState = {
-        agency: `NASA`,
-        scenario: `nominal`,
-        sex: `F`,
-        ageBracket: `31-35`,
-        shielding: `standard`,
-        missionDays: 180,
-        priorDoseMsv: 160,
-        doseRate: 0.24,
-        letMean: 6.8,
-        includeMedical: false,
-        tissueInterval: `30d`
-      };
-      syncControlsFromState();
-      renderAll();
-      persistState();
-      showFeedback(`Parámetros restablecidos a línea base LEO`);
-    }
-
-    function exportTelemetryCSV() {
-      const m = computeMetrics();
-      const ag = AGENCIES[appState.agency];
-      const rows = [
-        [`Variable`, `Valor`, `Unidad`, `Estado_Alerta`, `Referencia`],
-        [`Agencia`, ag.code, `-`, m.levels.overall, ag.fullName],
-        [`Escenario`, SCENARIOS[appState.scenario].label, `-`, m.levels.overall, SHIELDING_FACTORS[appState.shielding].label],
-        [`Tasa Dosis Absorbida`, m.effAbsRate.toFixed(3), `mGy/dia`, m.levels.absorbed, `Tipico EEI < 0.30 mGy/dia`],
-        [`Dosis Absorbida Mision`, m.missionAbsDose.toFixed(2), `mGy`, m.levels.absorbed, appState.missionDays + ` dias`],
-        [`Tasa Dosis Efectiva`, m.effSvRate.toFixed(3), `mSv/dia`, m.levels.effective, `Tipico EEI 0.2-0.5 mSv/dia`],
-        [`Dosis Efectiva Carrera`, m.careerTotalMsv.toFixed(1), `mSv`, m.levels.effective, `Limite ` + m.careerLimit + ` mSv`],
-        [`LET Medio Ponderado`, m.effectiveLet.toFixed(1), `keV/um`, m.levels.let, `Factor Q medio ` + m.qMean.toFixed(2)]
-      ];
-      m.organs.forEach(function(o) {
-        rows.push([
-          `Organo: ` + o.name,
-          o.values[appState.tissueInterval].toFixed(2),
-          o.unit,
-          m.levels.tissue,
-          `Intervalo ` + appState.tissueInterval + ` · Limite ` + (o.limits[appState.tissueInterval] || `N/A`)
-        ]);
-      });
-
-      const csv = rows.map(function(r) {
-        return r.map(function(c) { return `"` + String(c).replace(/"/g, `""`) + `"`; }).join(`,`);
-      }).join(`\n`);
-
-      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
-        window.notebookAppApi.triggerFileDownload({
-          content: csv,
-          contentType: `text/csv`,
-          encoding: `UTF-8`,
-          filename: `eei_radiacion_` + ag.code.toLowerCase() + `.csv`
-        });
-      } else {
-        const blob = new Blob([csv], { type: `text/csv;charset=utf-8;` });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement(`a`);
-        a.href = url;
-        a.download = `eei_radiacion_` + ag.code.toLowerCase() + `.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-      showFeedback(`Reporte CSV exportado`);
-    }
-
-    function showFeedback(msg) {
-      const el = document.getElementById(`action-feedback`);
-      if (!el) return;
-      el.textContent = msg;
-      setTimeout(function() {
-        if (el.textContent === msg) el.textContent = ``;
-      }, 3200);
-    }
-
-    function syncControlsFromState() {
-      const setVal = function(id, val) {
-        const el = document.getElementById(id);
-        if (el) el.value = val;
-      };
-      setVal(`select-sex`, appState.sex);
-      setVal(`select-age`, appState.ageBracket);
-      setVal(`select-shielding`, appState.shielding);
-      setVal(`input-mission-days`, appState.missionDays);
-      setVal(`input-prior-dose`, appState.priorDoseMsv);
-      setVal(`slider-dose-rate`, appState.doseRate);
-      setVal(`num-dose-rate`, appState.doseRate);
-      setVal(`slider-let`, appState.letMean);
-      setVal(`num-let`, appState.letMean);
-    }
-
-    // --- State Persistence via notebookAppApi ---
-    async function persistState() {
-      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
-        try {
-          await window.notebookAppApi.setAppState(appState);
-        } catch (err) {
-          // Safe fallback if host rejects
+          }, 4000);
+          return;
         }
-      }
-    }
 
-    async function initDashboard() {
-      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
-        try {
-          const saved = await window.notebookAppApi.getAppState();
-          if (saved && typeof saved === `object`) {
-            appState = Object.assign({}, appState, saved);
+        if (btn) {
+          btn.dataset.armed = `false`;
+          btn.classList.remove(`btn-armed`);
+          btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true"></i> Reset Defaults`;
+        }
+
+        appState = {
+          agency: `NASA`,
+          scenario: `nominal`,
+          sex: `F`,
+          ageBracket: `31-35`,
+          shielding: `standard`,
+          missionDays: 180,
+          priorDoseMsv: 160,
+          doseRate: 0.24,
+          letMean: 6.8,
+          includeMedical: false,
+          tissueInterval: `30d`,
+        };
+        syncControlsFromState();
+        renderAll();
+        persistState();
+        showFeedback(`Parameters reset to LEO baseline`);
+      }
+
+      function exportTelemetryCSV() {
+        const m = computeMetrics();
+        const ag = AGENCIES[appState.agency];
+        const rows = [
+          [`Variable`, `Value`, `Unit`, `Alert_Status`, `Reference`],
+          [`Agency`, ag.code, `-`, m.levels.overall, ag.fullName],
+          [
+            `Scenario`,
+            SCENARIOS[appState.scenario].label,
+            `-`,
+            m.levels.overall,
+            SHIELDING_FACTORS[appState.shielding].label,
+          ],
+          [
+            `Absorbed Dose Rate`,
+            m.effAbsRate.toFixed(3),
+            `mGy/day`,
+            m.levels.absorbed,
+            `Typical ISS < 0.30 mGy/day`,
+          ],
+          [
+            `Mission Absorbed Dose`,
+            m.missionAbsDose.toFixed(2),
+            `mGy`,
+            m.levels.absorbed,
+            appState.missionDays + ` days`,
+          ],
+          [
+            `Effective Dose Rate`,
+            m.effSvRate.toFixed(3),
+            `mSv/day`,
+            m.levels.effective,
+            `Typical ISS 0.2-0.5 mSv/day`,
+          ],
+          [
+            `Career Effective Dose`,
+            m.careerTotalMsv.toFixed(1),
+            `mSv`,
+            m.levels.effective,
+            `Limit ` + m.careerLimit + ` mSv`,
+          ],
+          [
+            `Mean Weighted LET`,
+            m.effectiveLet.toFixed(1),
+            `keV/um`,
+            m.levels.let,
+            `Mean Quality Factor Q ` + m.qMean.toFixed(2),
+          ],
+        ];
+        m.organs.forEach(function (o) {
+          rows.push([
+            `Organ: ` + o.name,
+            o.values[appState.tissueInterval].toFixed(2),
+            o.unit,
+            m.levels.tissue,
+            `Interval ` +
+              appState.tissueInterval +
+              ` · Limit ` +
+              (o.limits[appState.tissueInterval] || `N/A`),
+          ]);
+        });
+
+        const csv = rows
+          .map(function (r) {
+            return r
+              .map(function (c) {
+                return `"` + String(c).replace(/"/g, `""`) + `"`;
+              })
+              .join(`,`);
+          })
+          .join(`\n`);
+
+        if (
+          window.notebookAppApi &&
+          typeof window.notebookAppApi.triggerFileDownload === `function`
+        ) {
+          window.notebookAppApi.triggerFileDownload({
+            content: csv,
+            contentType: `text/csv`,
+            encoding: `UTF-8`,
+            filename: `iss_radiation_` + ag.code.toLowerCase() + `.csv`,
+          });
+        } else {
+          const blob = new Blob([csv], { type: `text/csv;charset=utf-8;` });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement(`a`);
+          a.href = url;
+          a.download = `iss_radiation_` + ag.code.toLowerCase() + `.csv`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+        showFeedback(`CSV Report exported`);
+      }
+
+      function showFeedback(msg) {
+        const el = document.getElementById(`action-feedback`);
+        if (!el) return;
+        el.textContent = msg;
+        setTimeout(function () {
+          if (el.textContent === msg) el.textContent = ``;
+        }, 3200);
+      }
+
+      function syncControlsFromState() {
+        const setVal = function (id, val) {
+          const el = document.getElementById(id);
+          if (el) el.value = val;
+        };
+        setVal(`select-sex`, appState.sex);
+        setVal(`select-age`, appState.ageBracket);
+        setVal(`select-shielding`, appState.shielding);
+        setVal(`input-mission-days`, appState.missionDays);
+        setVal(`input-prior-dose`, appState.priorDoseMsv);
+        setVal(`slider-dose-rate`, appState.doseRate);
+        setVal(`num-dose-rate`, appState.doseRate);
+        setVal(`slider-let`, appState.letMean);
+        setVal(`num-let`, appState.letMean);
+      }
+
+      // --- State Persistence via notebookAppApi ---
+      async function persistState() {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          try {
+            await window.notebookAppApi.setAppState(appState);
+          } catch (err) {
+            // Safe fallback if host rejects
           }
-        } catch (err) {
-          // Proceed with default state
         }
       }
 
-      syncControlsFromState();
-      renderAll();
+      async function initDashboard() {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          try {
+            const saved = await window.notebookAppApi.getAppState();
+            if (saved && typeof saved === `object`) {
+              appState = Object.assign({}, appState, saved);
+            }
+          } catch (err) {
+            // Proceed with default state
+          }
+        }
 
-      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
-        window.notebookAppApi.notifyAppReady();
+        syncControlsFromState();
+        renderAll();
+
+        if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+          window.notebookAppApi.notifyAppReady();
+        }
       }
-    }
 
-    document.addEventListener(`DOMContentLoaded`, initDashboard);
-  </script>
-</body>
+      document.addEventListener(`DOMContentLoaded`, initDashboard);
+    </script>
+  </body>
 </html>
