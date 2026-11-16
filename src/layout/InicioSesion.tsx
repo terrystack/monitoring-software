@@ -133,9 +133,9 @@ export function InicioSesion({ onEntrar }: Props) {
         <img
           src="/marca/hanan-pacha.png"
           alt="Hanan Pacha"
-          className="h-24 w-auto object-contain sm:h-[7.2rem]"
-          width={480}
-          height={115}
+          className="h-[7.5rem] w-auto object-contain sm:h-36"
+          width={600}
+          height={144}
           decoding="async"
         />
 
