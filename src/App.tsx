@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { formatearErrorConfig, type ConfigAyni, type ResultadoConfig } from './config/esquemas';
 import { configEnIdioma } from './config/idioma';
 import { useAyni } from './estado/store';
 import { useFuenteEstado } from './estado/useFuenteEstado';
 import { BarraSuperior } from './layout/BarraSuperior';
+import { InicioSesion } from './layout/InicioSesion';
 import { PaginaCreditos, RUTA_CREDITOS } from './layout/PaginaCreditos';
 import { PanelPerfil } from './layout/PanelPerfil';
 import { PestanaAgente } from './chat/PestanaAgente';
@@ -17,6 +18,11 @@ interface Props {
 }
 
 export default function App({ resultadoConfig }: Props) {
+  const [sesionIniciada, setSesionIniciada] = useState(false);
+
+  // El inicio de sesión es lo primero que se muestra al entrar al proyecto.
+  if (!sesionIniciada) return <InicioSesion onEntrar={() => setSesionIniciada(true)} />;
+
   if (!resultadoConfig.ok) {
     return (
       <main
