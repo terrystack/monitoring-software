@@ -259,7 +259,8 @@ export default function EscenaMedicion({ config }: Props) {
   const destinoSensor = idActivo ? posiciones.get(idActivo) : undefined;
   const vista = VISTAS[modelo];
   const repeticionClave = `${disp.id}-${paso}-${repeticion}`;
-  const enDespiece = despiece || animacion === 'despiece';
+  // Solo el botón Ver piezas / Armar controla el despiece (no la animación del paso).
+  const enDespiece = despiece;
   // En el despiece la cámara se aleja para que entren las piezas separadas.
   const vistaGeneral = enDespiece
     ? {

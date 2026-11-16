@@ -81,7 +81,7 @@
     "pasos": [
       {
         "texto": "Elige la talla de máscara y revisa el sello de silicona.",
-        "animacion": "despiece",
+        "animacion": "presentar",
         "duracionMs": 2500,
         "error": "Sello roto o talla equivocada: entra aire de la cabina y el VO₂ sale bajo."
       },
