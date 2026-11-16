@@ -13,7 +13,7 @@ export function PestanaMonitoreo({ config }: Props) {
   return (
     <div className="absolute inset-0">
       <h1 className="sr-only">{titulo}</h1>
-      <iframe title={titulo} src="/monitoreo.html" className="h-full w-full border-0 bg-[#0c1214]" />
+      <iframe title={titulo} src="/monitoreo.html" className="h-full w-full border-0 bg-[#050816]" />
     </div>
   );
 }

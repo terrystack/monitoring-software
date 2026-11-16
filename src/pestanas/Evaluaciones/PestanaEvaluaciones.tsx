@@ -16,7 +16,7 @@ export function PestanaEvaluaciones({ config }: Props) {
       <iframe
         title={titulo}
         src="/sleep_assessment.html"
-        className="h-full w-full border-0 bg-[#f2f6f7]"
+        className="h-full w-full border-0 bg-[#050816]"
       />
     </div>
   );
