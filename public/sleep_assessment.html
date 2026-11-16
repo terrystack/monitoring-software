@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sleep Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f6f7;--surface:#fff;--text:#0f1d22;--muted:#506871;--line:#d3e0e4;--accent:#0b6b7a;--ink:#fff;--soft:#e2f1f4;--good:#2a8a57;--warn:#b7791f;--bad:#c2453a;--gd:#e3f3ea;--wd:#faf0d9;--bd:#f9e3e0;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1214;--surface:#142024;--text:#edf3f5;--muted:#94a8b0;--line:#253840;--accent:#63c7d6;--ink:#081214;--soft:#163840;--good:#87d69b;--warn:#e8b954;--bad:#f27474;--gd:#17301f;--wd:#33290f;--bd:#3a1b1b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1214;--surface:#142024;--text:#edf3f5;--muted:#94a8b0;--line:#253840;--accent:#63c7d6;--ink:#081214;--soft:#163840;--good:#87d69b;--warn:#e8b954;--bad:#f27474;--gd:#17301f;--wd:#33290f;--bd:#3a1b1b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.55 'Plus Jakarta Sans',system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:860px;margin:0 auto;padding:20px 16px 56px}
+h1,h2,h3{font-family:'Instrument Sans',system-ui,sans-serif;letter-spacing:-.02em;line-height:1.15;margin:0}
+h1{font-size:clamp(1.9rem,1.4rem + 2.2vw,2.8rem);font-weight:700}
+h2{font-size:1.5rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:.6rem 0}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:16px}
+.steps{display:flex;gap:6px;margin:4px 0 18px}
+.steps span{flex:1;font-size:.8rem;color:var(--muted);border-top:3px solid var(--line);padding-top:6px}
+.steps span.on{color:var(--text);border-color:var(--accent);font-weight:600}
+.steps span.done{border-color:var(--good)}
+.btn{font:600 1rem 'Instrument Sans',sans-serif;background:var(--accent);color:var(--ink);border:0;border-radius:10px;padding:12px 22px;cursor:pointer;min-height:44px}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.btn:focus-visible,input:focus-visible,.pad:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label{display:block;font-weight:500;font-size:.9rem;margin-bottom:4px}
+input[type=time],input[type=number]{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);min-height:44px}
+.tst{font:700 3rem/1 'Instrument Sans',sans-serif;font-variant-numeric:tabular-nums}
+.vas{margin:18px 0}
+.vas .top{display:flex;justify-content:space-between;align-items:baseline}
+.vas output{font:600 1.1rem 'Instrument Sans';font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);height:32px}
+.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+.pad{display:grid;place-items:center;height:220px;border-radius:16px;background:var(--bg);border:2px solid var(--line);font:700 3.2rem 'Instrument Sans';font-variant-numeric:tabular-nums;cursor:pointer;user-select:none;touch-action:manipulation;text-align:center;padding:10px}
+.pad.go{background:var(--bad);color:#fff;border-color:var(--bad)}
+.pad.fb{font-size:1.4rem;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;width:0;background:var(--accent)}
+.gauge{position:relative;height:30px;border-radius:8px;overflow:hidden;display:flex;margin:44px 0 28px}
+.gauge b{display:block;height:100%}
+.mk{position:absolute;top:-34px;transform:translateX(-50%);font-size:.75rem;font-weight:600;white-space:nowrap;text-align:center}
+.mk::after{content:"";display:block;width:2px;height:34px;background:currentColor;margin:2px auto 0}
+.mk.you{color:var(--text)}.mk.iss{color:var(--muted);top:auto;bottom:-34px;transform:translateX(-50%)}
+.mk.iss::after{display:none}
+.axis{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:-22px}
+.chip{display:inline-block;padding:4px 12px;border-radius:999px;font-weight:600;font-size:.85rem}
+.chip.ok{background:var(--gd);color:var(--good)}.chip.mid{background:var(--wd);color:var(--warn)}.chip.low{background:var(--bd);color:var(--bad)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:420px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:.8rem}
+td.n{font-variant-numeric:tabular-nums}
+.scale{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;margin-top:6px}
+.scale button{font:500 .9rem 'Instrument Sans',sans-serif;min-height:40px;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer}
+.scale button.sel{background:var(--accent);color:var(--ink);border-color:var(--accent);font-weight:700}
+.scale button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tag{font-size:.72rem;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px}
+select{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);min-height:44px}
+.card{box-shadow:0 1px 2px rgba(15,29,34,.07),0 8px 24px rgba(15,29,34,.04)}
+.top{padding:6px 0 18px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.85rem;color:var(--accent);margin-bottom:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--soft)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.tabs button{font:600 .95rem 'Instrument Sans',sans-serif;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 14px;cursor:pointer;min-height:44px}
+.tabs button.on{color:var(--text);border-color:var(--accent)}
+.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.heat{display:grid;gap:3px;min-width:560px;align-items:center}
+.cell{text-align:center;padding:8px 2px;border-radius:6px;font-size:.8rem;font-variant-numeric:tabular-nums}
+.hide{display:none}
+@media (prefers-reduced-motion:no-preference){.sec{animation:in .25s ease-out}@keyframes in{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <div class="brand"><span class="dot"></span>Sleep Program · ISS</div><h1>Sleep Assessment</h1>
+  <p class="muted">Assessment of sleep, subjective state and sustained attention. Based on Jones et al., <em>SLEEP</em> 2022: 24 astronauts on six-month missions.</p>
+</header>
+<nav class='tabs' aria-label='Sections'><button id='tTest' class='on'>Test</button><button id='tDash'>Analysis dashboard</button><button id='tHist'>Participant history</button><button id='tData'>Data</button></nav>
+<nav class="steps" id="steps" aria-label="Progress"><span>Sleep</span><span>State</span><span>Attention</span><span>Results</span></nav>
+
+<section id="s0" class="sec card">
+  <h2>What you will do</h2>
+  <p>You will report how long you slept last night, rate how you feel and take a 3-minute reaction test. At the end you will see what relationship the study found between the amount of sleep and these scores.</p>
+  <p class="small muted">This is an educational tool, not a diagnosis. Take the reaction test in a quiet place with the keyboard or touchscreen within reach.</p>
+  <div style="max-width:320px;margin-top:16px"><label for="pid">Participant code</label><input type="text" id="pid" maxlength="24" placeholder="e.g. A-07" style="width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);min-height:44px"></div>
+  <div class="row"><button class="btn" id="go1">Start</button></div>
+</section>
+
+<section id="s1" class="sec card hide">
+  <h2>How did you sleep last night?</h2>
+  <p class="muted small">As in the study: we subtract the time to fall asleep and the time awake from the time in bed.</p>
+  <div class="grid">
+    <div><label for="bed">Bedtime</label><input type="time" id="bed" value="23:30"></div>
+    <div><label for="wake">Wake-up time</label><input type="time" id="wake" value="07:00"></div>
+    <div><label for="lat">Minutes to fall asleep</label><input type="number" id="lat" min="0" max="300" value="15"></div>
+    <div><label for="awk">Minutes awake at night</label><input type="number" id="awk" min="0" max="300" value="10"></div>
+    <div><label for="aft">Minutes in bed after waking</label><input type="number" id="aft" min="0" max="300" value="10"></div>
+  </div>
+  <div class="row" style="margin-top:22px;justify-content:space-between"><div><div class="tst" id="tstOut" aria-live="polite">0,0 h</div><div class="muted small">estimated total sleep</div></div><div class="muted small" id="eff" style="text-align:right"></div></div>
+  <label for="qs" style="margin-top:18px">Quick adjustment of total sleep (3.0–10.5 h)</label><input type="range" id="qs" min="3" max="10.5" step="0.1" value="7" style="accent-color:var(--accent);width:100%"><div class="ends"><span>3 h</span><span>≤ 6 h deficit</span><span>7–8 h ref.</span><span>8.5 h scheduled</span><span>10.5 h</span></div>
+  <p class="hide" id="hint"></p>
+  <div class="grid" style="margin-top:14px"><div><label for="ses">Session</label><select id="ses"><option>Morning</option><option>Evening</option></select></div><div><label for="day">Day type</label><select id="day"><option>Workday</option><option>Weekend</option></select></div><div><label for="shf">Sleep shift</label><select id="shf"><option>Standard</option><option>Shifted</option></select></div><div><label for="caf">Caffeine today (cups)</label><input type="number" id="caf" min="0" max="20" value="1"></div></div>
+  <div class="row"><button class="btn" id="go2">Next</button></div>
+</section>
+
+<section id="s2" class="sec card hide">
+  <h2>How do you feel right now?</h2>
+  <p class="muted small">Pick a value from 0 to 10 for each scale, as in the study.</p>
+  <div id="vasBox"></div>
+  <div class="row"><button class="btn" id="go3">Next</button></div>
+</section>
+
+<section id="s3" class="sec card hide">
+  <h2>Reaction test (3 minutes)</h2>
+  <p id="pvtHelp">When the box turns red and starts counting, press the space bar or tap the box as fast as you can. Responding before it turns red counts as a false start.</p>
+  <div class="pad" id="pad" role="button" tabindex="0" aria-label="Response area">Ready</div>
+  <div class="bar" aria-hidden="true"><i id="prog"></i></div>
+  <div class="row"><button class="btn" id="startPvt">Start test</button><button class="btn ghost" id="skipPvt">Skip and see results</button></div>
+</section>
+
+<section id="s4" class="sec hide">
+  <div class="card">
+    <h2>Your sleep: <span id="rTst"></span></h2>
+    <p><span class="chip" id="rChip"></span></p>
+    <div class="gauge" id="gauge" role="img" aria-label="Sleep-hours scale with your value and the ISS average"></div>
+    <div class="axis"><span>3 h</span><span>6 h</span><span>7 h</span><span>9 h</span><span>10.5 h</span></div>
+    <p id="rMsg"></p>
+  </div>
+  <div class="card">
+    <h3>What the study associated with your sleep range</h3>
+    <p class="muted small">The difference is what the authors found compared with sleeping 7–8 h, in points on the 0–100 scale. Your rating is only what you entered today.</p>
+    <div class="tw"><table><thead><tr><th>State</th><th>Your rating</th><th>Difference in the study</th></tr></thead><tbody id="rTbl"></tbody></table></div>
+  </div>
+  <div class="card" id="rPvt"></div>
+  <div class="card" id="rBase"></div>
+  <div class="card">
+    <h3>Putting it in context</h3>
+    <p class="small">ISS astronauts had an 8.5-hour sleep opportunity and slept 6.5 h on average (±1.4). They slept the scheduled time on only 5.9% of nights, and 34.9% of nights were 6 h or less. They slept more on weekends (6.9 h versus 6.3 h).</p>
+    <p class="small muted">Limitations: observational study of 24 astronauts (5 women) with self-reported sleep. It shows associations, not causes. Your browser adds delay to reaction times, so compare your results with yourself on different days, not with the paper.</p>
+    <div class="row"><button class="btn" id="copy">Copy summary</button><button class="btn ghost" id="again">Repeat the test</button></div>
+    <p class="small" id="copyMsg" aria-live="polite"></p>
+  </div>
+</section>
+<section id="s5" class="sec card hide">
+  <h2>Data panel</h2>
+  <p class="muted small">Records saved on this computer. Export the CSV to train the model.</p>
+  <div class="grid" id="dStats"></div>
+  <h3 style="margin-top:22px">Distribution by hours of sleep</h3>
+  <div id="dBars"></div>
+  <div class="row"><button class="btn" id="dCsv">Export CSV</button><button class="btn ghost" id="dJson">Export JSON</button><button class="btn ghost" id="dBack">Back</button><button class="btn ghost" id="dClr">Delete data</button></div>
+  <p class="small" id="dMsg" aria-live="polite"></p>
+</section>
+<section id='s7' class='sec hide'>
+  <div class='card'><h2>Participant history</h2><p class='muted small'>Each night is compared with the same participant on baseline nights (7–8 h of sleep), next to the change the study found.</p>
+    <div style='max-width:320px'><label for='hid'>Participant code</label><input type='text' id='hid' maxlength='24' placeholder='e.g. A-07' style='width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);min-height:44px'></div>
+    <div class='row'><button class='btn' id='hGo'>Show history</button></div></div>
+  <div id='hOut'></div>
+</section>
+<section id='s6' class='sec hide'>
+  <div class='card'><h2>Sleep and stress: analysis</h2><p class='muted small'>Results of the Jones et al. (2022) study of ISS astronauts. At the end you will find the data collected on this computer.</p></div>
+  <div class='card'><h3>Stress by hours of sleep</h3><p class='muted small'>Difference in points (0–100 scale) versus sleeping 7–8 h. Red: more stress. Green: less. Gray: no significant difference.</p><div id='cStress'></div></div>
+  <div class='card'><h3>All states by hours of sleep</h3><p class='muted small'>Same calculation for each scale. Bold: significant difference (p &lt; 0.05). Red: worse; green: better.</p><div class='tw' id='cHeat'></div></div>
+  <div class='card'><h3>Response speed (1/RT) by hours of sleep</h3><p class='muted small'>Higher is better. Approximate values read from Fig. 2A of the paper; the axis starts at 4.3.</p><div id='cSpeed'></div></div>
+  <div class='card'><h3>Stress across the mission</h3><p class='muted small'>Mean score by mission quarter. Approximate values read from Fig. 1H; the axis starts at 30. Stress was higher in MQ4 than in MQ1 and MQ2.</p><div id='cQ'></div></div>
+  <div class='card'><h3>Workdays and weekends</h3><p class='muted small'>Percentage of nights with 6 h of sleep or less. Mean sleep was 6.3 h on weekdays and 6.9 h on weekends.</p><div id='cWk'></div></div>
+  <div class='card'><h3>Relationships among astronauts with rising stress</h3><p class='muted small'>Between-subject correlations (n = 15). Red: positive relationship. Blue: negative relationship.</p><div id='cCorr'></div></div>
+  <div class='card'><h3>Your data: sleep and stress</h3><p class='muted small'>Records on this computer. Red band: 6 h or less. Green band: 7–8 h.</p><div id='cMine'></div></div>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const BIN=['≤ 4 h','4–5 h','5–6 h','6–7 h','7–8 h (ref.)','8–9 h','> 9 h'];
+const bi=h=>h<=4?0:h<=5?1:h<=6?2:h<=7?3:h<=8?4:h<=9?5:6;
+// Table 1, Jones et al. 2022: beta by sleep range (ref. 7-8 h) and significance (p<0.05)
+const VAS=[
+['stress','Stress','Not stressed','Very stressed',[7.652,3.765,2.633,.545,0,-1.064,-.516],[1,1,1,0,0,0,0]],
+['mental','Mental fatigue','Not fatigued','Very fatigued',[10.578,8.508,4.012,1.676,0,-1.326,-3.92],[1,1,1,0,0,0,0]],
+['phys','Physical exhaustion','Not exhausted','Very exhausted',[7.751,5.522,2.406,.403,0,-2.929,-5.319],[1,1,1,0,0,0,1]],
+['sleepy','Sleepiness','Very alert','Very sleepy',[12.793,9.542,5.265,1.424,0,-3.772,-4.909],[1,1,1,0,0,1,1]],
+['tired','Tiredness','Rested','Very tired',[15.594,12.733,7.804,1.963,0,-2.438,-5.722],[1,1,1,0,0,0,1]],
+['workload','Workload','Very low','Extreme',[9.953,13.084,14.239,6.341,0,-10.495,-16.547],[1,1,1,1,0,1,1]],
+['sleepq','Sleep quality','Very good','Very poor',[21.137,21.493,9.154,3.656,0,-3.581,-10.016],[1,1,1,1,0,0,1]]];
+const S={tst:7,vas:{},pvt:null};
+const fmt=(x,d=1)=>x.toFixed(d);
+function show(n){
+  ['s0','s1','s2','s3','s4','s5','s6','s7'].forEach((id,i)=>$('#'+id).classList.toggle('hide',i!==n));
+  [...$('#steps').children].forEach((el,i)=>{el.className=(i+1===n)?'on':(i+1<n&&n<5?'done':'')});
+  document.querySelectorAll('.tabs button').forEach((b,i)=>b.classList.toggle('on',i===(n===6?1:n===7?2:n===5?3:0)));window.scrollTo(0,0);
+}
+function calc(){
+  const [bh,bm]=$('#bed').value.split(':').map(Number),[wh,wm]=$('#wake').value.split(':').map(Number);
+  let tib=(wh*60+wm)-(bh*60+bm); if(tib<=0)tib+=1440;
+  const m=Math.max(0,tib-(+$('#lat').value||0)-(+$('#awk').value||0)-(+$('#aft').value||0));
+  S.tst=m/60;S.tib=tib/60;sync();
+}
+['bed','wake','lat','awk','aft'].forEach(id=>$('#'+id).addEventListener('input',calc));
+const TAG={stress:'Morning and evening',workload:'Evening',sleepq:'Morning (10 = worst)'};
+$('#vasBox').innerHTML=VAS.map(v=>`<div class="vas"><div class="top"><span><b style="font-weight:600">${v[1]}</b>${TAG[v[0]]?`<span class="tag">${TAG[v[0]]}</span>`:''}</span><output id="o_${v[0]}"></output></div><input type="hidden" id="v_${v[0]}" value="50"><div class="scale" role="group" aria-label="${v[1]}">${[0,1,2,3,4,5,6,7,8,9,10].map(n=>`<button type="button" data-k="${v[0]}" data-n="${n}">${n}</button>`).join('')}</div><div class="ends"><span>0 · ${v[2]}</span><span>10 · ${v[3]}</span></div></div>`).join('');
+function setV(k,n){$('#v_'+k).value=n*10;$('#o_'+k).textContent=n+' / 10 ('+n*10+' pts)';document.querySelectorAll(`[data-k="${k}"]`).forEach(b=>{const on=+b.dataset.n===n;b.classList.toggle('sel',on);b.setAttribute('aria-pressed',on)})}
+$('#vasBox').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(b)setV(b.dataset.k,+b.dataset.n)});
+VAS.forEach(v=>setV(v[0],5));
+function sync(){
+  $('#tstOut').textContent=fmt(S.tst)+' h';$('#qs').value=Math.min(10.5,Math.max(3,S.tst));
+  if(S.tib)$('#eff').textContent=fmt(S.tst/S.tib*100)+' % efficiency · '+fmt(S.tib)+' h in bed';
+  const b=bi(S.tst);
+  $('#hint').textContent=b===4?'You are in the reference range (7–8 h).':'Range '+BIN[b]+' vs. ref. 7–8 h: '+['stress','workload','mental','sleepq'].map(k=>{const v=VAS.find(x=>x[0]===k);const d=v[4][b];return v[1]+' '+(d>=0?'+':'−')+fmt(Math.abs(d),2)+' pts'}).join(' · ');
+}
+$('#qs').addEventListener('input',e=>{S.tst=+e.target.value;sync()});
+$('#go1').onclick=()=>{calc();show(1)};
+$('#go2').onclick=()=>show(2);
+$('#go3').onclick=()=>show(3);
+$('#skipPvt').onclick=()=>{stopPvt();S.pvt=null;results()};
+
+// PVT-B style reaction test: 3 min, 1-4 s intervals, lapse >=355 ms, false start <130 ms
+let P=null;
+const pad=$('#pad');
+function isi(){return 1000+Math.random()*3000}
+function startPvt(){
+  P={end:performance.now()+180000,rts:[],fs:0,state:'wait',t:0,to:0,lim:0};
+  $('#startPvt').classList.add('hide');$('#skipPvt').classList.add('hide');
+  pad.className='pad';pad.textContent='+';
+  P.to=setTimeout(stim,isi());requestAnimationFrame(loop);
+}
+function stopPvt(){if(P){clearTimeout(P.to);clearTimeout(P.lim);P.state='done'}}
+function loop(){
+  if(!P||P.state==='done')return;
+  const now=performance.now();
+  $('#prog').style.width=Math.min(100,(1-(P.end-now)/180000)*100)+'%';
+  if(P.state==='stim')pad.textContent=Math.round(now-P.t);
+  requestAnimationFrame(loop);
+}
+function stim(){
+  if(performance.now()>=P.end)return finish();
+  P.state='stim';P.t=performance.now();pad.className='pad go';
+  P.lim=setTimeout(()=>record(1000),1000);
+}
+function feedback(txt){
+  P.state='fb';pad.className='pad fb';pad.textContent=txt;
+  P.to=setTimeout(()=>{if(performance.now()>=P.end)return finish();P.state='wait';pad.className='pad';pad.textContent='+';P.to=setTimeout(stim,isi())},700);
+}
+function record(rt){
+  clearTimeout(P.lim);
+  if(rt<130){P.fs++;return feedback('False start')}
+  P.rts.push(rt);feedback(Math.round(rt)+' ms'+(rt>=355?' · lapse':''));
+}
+function press(){
+  if(!P)return;
+  if(P.state==='wait'){clearTimeout(P.to);P.fs++;feedback('False start')}
+  else if(P.state==='stim')record(performance.now()-P.t);
+}
+function finish(){
+  const r=P.rts,n=r.length;
+  S.pvt=n?{n,rt:r.reduce((a,b)=>a+b,0)/n,sp:r.reduce((a,b)=>a+1000/b,0)/n,lap:r.filter(x=>x>=355).length,fs:P.fs}:null;
+  stopPvt();P=null;results();
+}
+$('#startPvt').onclick=e=>{e.target.blur();startPvt()};
+pad.addEventListener('pointerdown',e=>{e.preventDefault();press()});
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&P&&!$('#s3').classList.contains('hide')){e.preventDefault();press()}});
+
+function results(){
+  const h=S.tst,b=bi(h),pos=x=>(Math.min(10.5,Math.max(3,x))-3)/7.5*100;
+  $('#rTst').textContent=fmt(h)+' h';
+  const cls=b>=4?'ok':b===3?'mid':'low';
+  $('#rChip').className='chip '+cls;
+  $('#rChip').textContent=b>=4?'Within or above the recommended range':b===3?'Slightly below the recommended range':'Below 6 h';
+  const seg=[[3,6,'var(--bd)','var(--bad)'],[6,7,'var(--wd)','var(--warn)'],[7,10.5,'var(--gd)','var(--good)']];
+  $('#gauge').innerHTML=seg.map(s=>`<b style="width:${(s[1]-s[0])/7.5*100}%;background:${s[2]};border-bottom:4px solid ${s[3]}"></b>`).join('')+
+   `<span class="mk you" style="left:${pos(h)}%">You</span><span class="mk iss" style="left:${pos(6.5)}%;color:var(--muted)">▲ ISS average 6.5 h</span>`;
+  const msg=[
+   'With 5 h or less, the study found higher scores on every state (stress, fatigue, sleepiness, tiredness, exhaustion) and slower psychomotor response.',
+   'With 5 h or less, the study found higher scores on every state (stress, fatigue, sleepiness, tiredness, exhaustion) and slower psychomotor response.',
+   'With less than 6 h, astronauts responded more slowly and scored higher on stress, mental fatigue, sleepiness and tiredness.',
+   'Between 6 and 7 h there were no significant differences in stress or somatic states versus 7–8 h, but self-rated sleep quality was worse and workload higher.',
+   'You are in the range recommended by sleep societies and used as the reference in the study.',
+   'With 8–9 h, the study found less sleepiness and lower workload than with 7–8 h.',
+   'With more than 9 h, astronauts responded faster than those sleeping 7 h or less and scored lower on sleepiness, tiredness and exhaustion.'][b];
+  $('#rMsg').textContent=msg;saveRec(h,b);baseCard();
+  $('#rTbl').innerHTML=VAS.map(v=>{
+    const val=$('#v_'+v[0]).value,d=v[4][b],sg=v[5][b];
+    const diff=b===4?'Reference':(d>0?'+':d<0?'−':'')+fmt(Math.abs(d))+' pts · '+(sg?(d>0?'higher':'lower'):'no significant difference');
+    return `<tr><td>${v[1]}</td><td class="n">${val}/100</td><td class="n">${diff}</td></tr>`;
+  }).join('');
+  const p=S.pvt;
+  $('#rPvt').innerHTML=p?`<h3>Your reaction test</h3><div class="grid" style="margin-top:12px">
+   <div><div class="tst" style="font-size:2rem">${Math.round(p.rt)} ms</div><div class="muted small">mean reaction time</div></div>
+   <div><div class="tst" style="font-size:2rem">${fmt(p.sp,2)}</div><div class="muted small">mean speed (1/RT, s⁻¹)</div></div>
+   <div><div class="tst" style="font-size:2rem">${p.lap}</div><div class="muted small">lapses (≥ 355 ms)</div></div>
+   <div><div class="tst" style="font-size:2rem">${p.fs}</div><div class="muted small">false starts</div></div></div>
+   <p class="small muted">Response speed was the measure most sensitive to sleep loss in the study: with 6 h or less it was significantly slower than with more than 6 h. In Fig. 2A of the paper it is about 4.5 s⁻¹ with 4 h or less and 4.7 s⁻¹ with more than 9 h (values read from the chart).</p>`
+   :`<h3>Reaction test</h3><p class="muted">You did not take the reaction test. Repeat the test to add it.</p>`;
+  window.__sum=`Sleep test (Jones et al., SLEEP 2022)\nSleep: ${fmt(h)} h (range ${BIN[b]}), ${$('#ses').value}, ${$('#day').value}, shift ${$('#shf').value}, caffeine ${$('#caf').value} cups\n`+VAS.map(v=>`${v[1]}: ${$('#v_'+v[0]).value}/100`).join('\n')+(p?`\nReaction: ${Math.round(p.rt)} ms, ${fmt(p.sp,2)} s⁻¹, ${p.lap} lapses, ${p.fs} false starts`:'');
+  show(4);
+}
+$('#copy').onclick=async()=>{
+  try{await navigator.clipboard.writeText(window.__sum);$('#copyMsg').textContent='Summary copied.'}
+  catch(e){$('#copyMsg').textContent='Could not copy. Select the results text manually.'}
+};
+$('#again').onclick=()=>{
+  S.pvt=null;pad.className='pad';pad.textContent='Ready';$('#prog').style.width='0';
+  $('#startPvt').classList.remove('hide');$('#skipPvt').classList.remove('hide');$('#copyMsg').textContent='';
+  VAS.forEach(v=>setV(v[0],5));show(0);
+};
+const load=()=>{try{return JSON.parse(localStorage.getItem('tsRec')||'[]')}catch(e){return[]}};
+function saveRec(h,b){
+  const p=S.pvt,r={id:($('#pid').value||'anon').trim(),date:new Date().toISOString(),session:$('#ses').value,day_type:$('#day').value,shift:$('#shf').value,caffeine_cups:+$('#caf').value||0,tst_h:+h.toFixed(2),tib_h:+(S.tib||0).toFixed(2),efficiency:S.tib?+(h/S.tib).toFixed(3):'',bin:b};
+  VAS.forEach(v=>r[v[0]]=+$('#v_'+v[0]).value/10);
+  r.pvt_rt_ms=p?Math.round(p.rt):'';r.pvt_vel=p?+p.sp.toFixed(3):'';r.pvt_lapses=p?p.lap:'';r.pvt_false_starts=p?p.fs:'';
+  r.sleep_deficient=h<=6?1:0;
+  try{const a=load();a.push(r);localStorage.setItem('tsRec',JSON.stringify(a))}catch(e){}
+}
+function panel(){
+  const a=load(),n=a.length,pc=f=>n?fmt(a.filter(f).length/n*100,0)+' %':'—';
+  const st=[[n,'records'],[pc(x=>x.sleep_deficient),'sleep ≤ 6 h'],[pc(x=>x.tst_h<7),'sleep under 7 h'],[n?fmt(a.reduce((s,x)=>s+x.tst_h,0)/n)+' h':'—','mean sleep']];
+  $('#dStats').innerHTML=st.map(s=>`<div><div class="tst" style="font-size:2rem">${s[0]}</div><div class="muted small">${s[1]}</div></div>`).join('');
+  $('#dBars').innerHTML=BIN.map((l,i)=>{const c=a.filter(x=>x.bin===i).length,w=n?c/n*100:0;return `<div style="display:flex;align-items:center;gap:10px;margin:6px 0"><span class="small" style="width:90px">${l}</span><div class="bar" style="flex:1;margin:0"><i style="width:${w}%;background:${i<3?'var(--bad)':i===3?'var(--warn)':'var(--good)'}"></i></div><span class="small n" style="width:28px;text-align:right">${c}</span></div>`}).join('');
+}
+function dl(name,text,type){
+  try{const u=URL.createObjectURL(new Blob([text],{type}));const x=document.createElement('a');x.href=u;x.download=name;document.body.appendChild(x);x.click();x.remove();setTimeout(()=>URL.revokeObjectURL(u),500);$('#dMsg').textContent='File generated.'}
+  catch(e){try{navigator.clipboard.writeText(text)}catch(_){}$('#dMsg').textContent='Could not download. The content was copied to the clipboard.'}
+}
+$('#dCsv').onclick=()=>{const a=load();if(!a.length){$('#dMsg').textContent='No records yet.';return}const k=Object.keys(a[0]),nl=String.fromCharCode(10);dl('sleep_test.csv',[k.join(',')].concat(a.map(r=>k.map(c=>JSON.stringify(r[c]??'')).join(','))).join(nl),'text/csv')};
+$('#dJson').onclick=()=>{const a=load();if(!a.length){$('#dMsg').textContent='No records yet.';return}dl('sleep_test.json',JSON.stringify(a,null,2),'application/json')};
+$('#dClr').onclick=e=>{if(e.target.dataset.a!=='1'){e.target.dataset.a='1';e.target.textContent='Confirm deletion';return}try{localStorage.removeItem('tsRec')}catch(x){}e.target.dataset.a='0';e.target.textContent='Delete data';panel()};
+const AX=['≤4','4–5','5–6','6–7','7–8','8–9','>9'];
+function bars(it,o){
+  const W=640,H=250,L=46,B=34,T=18,R=8,pw=W-L-R,ph=H-T-B,lo=o.min,hi=o.max,d=o.d||0,y=v=>T+ph*(1-(v-lo)/(hi-lo)),bw=pw/it.length,base=y(lo>0?lo:0),zero=lo>0?lo:0;
+  let s=`<svg viewBox='0 0 ${W} ${H}' role='img' aria-label='${o.t}' style='width:100%;height:auto;display:block'>`;
+  for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,yy=y(v);s+=`<line x1='${L}' x2='${W-R}' y1='${yy}' y2='${yy}' stroke='var(--line)'/><text x='${L-6}' y='${yy+4}' text-anchor='end' font-size='11' fill='var(--muted)'>${fmt(v,o.td??d)}</text>`}
+  it.forEach((b,i)=>{const x=L+i*bw+bw*.17,w=bw*.66,yv=y(b.v),yt=Math.min(yv,base),h=Math.max(2,Math.abs(yv-base));
+    s+=`<rect x='${x}' y='${yt}' width='${w}' height='${h}' rx='4' fill='${b.c}'/><text x='${x+w/2}' y='${b.v>=zero?yt-5:yt+h+13}' text-anchor='middle' font-size='11' font-weight='600' fill='var(--text)'>${fmt(b.v,d)}</text><text x='${x+w/2}' y='${H-12}' text-anchor='middle' font-size='11' fill='var(--muted)'>${b.l}</text>`});
+  return s+'</svg>';
+}
+function pear(x,y){const n=x.length,mx=x.reduce((s,v)=>s+v,0)/n,my=y.reduce((s,v)=>s+v,0)/n;let a=0,b=0,c=0;for(let i=0;i<n;i++){a+=(x[i]-mx)*(y[i]-my);b+=(x[i]-mx)**2;c+=(y[i]-my)**2}return b&&c?a/Math.sqrt(b*c):null}
+function scat(a){
+  const W=640,H=260,L=40,B=34,T=12,R=10,pw=W-L-R,ph=H-T-B,x=v=>L+pw*(Math.min(10.5,Math.max(3,v))-3)/7.5,y=v=>T+ph*(1-v/10);
+  let s=`<svg viewBox='0 0 ${W} ${H}' role='img' aria-label='Sleep and stress of the records' style='width:100%;height:auto;display:block'><rect x='${x(3)}' y='${T}' width='${x(6)-x(3)}' height='${ph}' fill='var(--bd)'/><rect x='${x(7)}' y='${T}' width='${x(8)-x(7)}' height='${ph}' fill='var(--gd)'/>`;
+  for(let v=0;v<=10;v+=2){s+=`<line x1='${L}' x2='${W-R}' y1='${y(v)}' y2='${y(v)}' stroke='var(--line)'/><text x='${L-6}' y='${y(v)+4}' text-anchor='end' font-size='11' fill='var(--muted)'>${v}</text>`}
+  [3,6,7,8,10.5].forEach(v=>{s+=`<text x='${x(v)}' y='${H-14}' text-anchor='middle' font-size='11' fill='var(--muted)'>${fmt(v)} h</text>`});
+  a.forEach(r=>{s+=`<circle cx='${x(r.tst_h)}' cy='${y(r.stress)}' r='5.5' fill='var(--accent)' fill-opacity='.65' stroke='var(--accent)'/>`});
+  return s+`<text x='12' y='${T+ph/2}' font-size='11' fill='var(--muted)' transform='rotate(-90 12 ${T+ph/2})' text-anchor='middle'>Stress (0–10)</text></svg>`;
+}
+function dash(){
+  const g=k=>VAS.find(v=>v[0]===k),st=g('stress'),cs=(v,i)=>i===4?'var(--muted)':v[5][i]?(v[4][i]>0?'var(--bad)':'var(--good)'):'var(--line)';
+  $('#cStress').innerHTML=bars(st[4].map((b,i)=>({l:AX[i]+' h',v:b,c:cs(st,i)})),{min:-2,max:8,t:'Stress by hours of sleep',d:1,td:0});
+  $('#cHeat').innerHTML=`<div class='heat' style='grid-template-columns:130px repeat(7,1fr)'><span></span>`+AX.map(a=>`<b class='small' style='text-align:center'>${a} h</b>`).join('')+VAS.map(v=>`<span class='small'>${v[1]}</span>`+v[4].map((b,i)=>{const col=b>0?'var(--bad)':'var(--good)';return `<span class='cell' style='background:color-mix(in srgb,${col} ${Math.min(60,Math.abs(b)*4.5)}%,transparent);font-weight:${v[5][i]?700:400}'>${i===4?'ref.':(b>0?'+':'')+fmt(b,1)}</span>`}).join('')).join('')+'</div>';
+  $('#cSpeed').innerHTML=bars([4.5,4.53,4.56,4.62,4.64,4.66,4.74].map((v,i)=>({l:AX[i]+' h',v,c:i<3?'var(--bad)':i<5?'var(--warn)':'var(--good)'})),{min:4.3,max:4.8,t:'Response speed by hours of sleep',d:2});
+  $('#cQ').innerHTML=bars([['MQ1 (0–40 d)',37.2],['MQ2 (41–80 d)',37.2],['MQ3 (81–120 d)',39.4],['MQ4 (≥121 d)',40.8]].map(q=>({l:q[0],v:q[1],c:'var(--accent)'})),{min:30,max:45,t:'Stress by mission quarter',d:1,td:0});
+  $('#cWk').innerHTML=bars([{l:'Workdays',v:40,c:'var(--bad)'},{l:'Weekend',v:22.5,c:'var(--good)'}],{min:0,max:50,t:'Nights of 6 h or less',d:1,td:0});
+  $('#cCorr').innerHTML=[['Rising stress and sleep duration',-.69,'p = 0.004'],['Rising stress and physical exhaustion',.55,'p = 0.028'],['Physical exhaustion and sleep quality',-.80,'p = 0.0002'],['Physical exhaustion and tiredness',.81,'p = 0.0002']].map(c=>`<div style='margin:14px 0'><div class='small'>${c[0]} <span class='muted'>· ρ = ${fmt(c[1],2)} · ${c[2]}</span></div><div style='position:relative;height:14px;background:var(--line);border-radius:7px;margin-top:6px'><i style='position:absolute;top:0;bottom:0;left:${c[1]<0?50+c[1]*50:50}%;width:${Math.abs(c[1])*50}%;background:${c[1]<0?'var(--accent)':'var(--bad)'};border-radius:7px'></i><i style='position:absolute;left:50%;top:-2px;bottom:-2px;width:2px;background:var(--text)'></i></div></div>`).join('');
+  const a=load().filter(r=>typeof r.stress==='number');
+  if(!a.length){$('#cMine').innerHTML=`<p class='muted'>No records on this computer yet. Complete the test to see your data here.</p>`}
+  else{
+    const r=a.length>2?pear(a.map(x=>x.tst_h),a.map(x=>x.stress)):null,mean=l=>l.length?fmt(l.reduce((s,x)=>s+x.stress,0)/l.length)+' / 10 (n = '+l.length+')':'no data';
+    $('#cMine').innerHTML=scat(a)+`<div class='grid' style='margin-top:12px'><div><div class='tst' style='font-size:1.6rem'>${r===null?'—':fmt(r,2)}</div><div class='muted small'>Pearson correlation (sleep and stress)</div></div><div><div class='tst' style='font-size:1.6rem'>${mean(a.filter(x=>x.tst_h<=6))}</div><div class='muted small'>mean stress with 6 h or less</div></div><div><div class='tst' style='font-size:1.6rem'>${mean(a.filter(x=>x.tst_h>6))}</div><div class='muted small'>mean stress with more than 6 h</div></div></div>`;
+  }
+  show(6);
+}
+const mn=l=>l.reduce((s,x)=>s+x,0)/l.length;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const okR=r=>typeof r.bin==='number'&&VAS.every(v=>typeof r[v[0]]==='number');
+const sg=x=>(x>0?'+':x<0?'−':'')+fmt(Math.abs(x),1);
+const verdict=d=>d>5?['Worse than the study average','low']:d<-5?['Better than the study average','ok']:['Similar to the study average','mid'];
+function cmp(base,oth){return VAS.map(v=>{const k=v[0],bm=mn(base.map(r=>r[k]*10)),act=mn(oth.map(r=>r[k]*10))-bm,exp=mn(oth.map(r=>v[4][r.bin]));return{n:v[1],bm,act,exp,d:act-exp}})}
+function cmpTable(rows){return `<div class='tw'><table><thead><tr><th>State</th><th>Your baseline</th><th>Your change</th><th>Study change</th><th>Reading</th></tr></thead><tbody>`+rows.map(r=>{const v=verdict(r.d);return `<tr><td>${r.n}</td><td class='n'>${fmt(r.bm,0)}</td><td class='n'>${sg(r.act)} pts</td><td class='n'>${sg(r.exp)} pts</td><td><span class='chip ${v[1]}'>${v[0]}</span></td></tr>`}).join('')+`</tbody></table></div><p class='small muted'>Scores on the 0–100 scale; higher means worse. Changes are relative to the participant average on baseline nights (7–8 h). A difference of 5 points or less from the study change is read as similar. This is an indicative comparison, not a diagnosis.</p>`}
+function baseCard(){
+  const a=load().filter(okR),cur=a[a.length-1],el=$('#rBase');
+  if(!cur){el.innerHTML='';return}
+  const base=a.filter(r=>r.id===cur.id&&r.bin===4&&r!==cur);
+  let h=`<h3>Compared with your own baseline</h3>`;
+  if(cur.bin===4)h+=`<p class='small'>This night is in your baseline range (7–8 h). It will be used as a reference for future comparisons.</p>`;
+  else if(!base.length)h+=`<p class='small muted'>No baseline yet for participant ${esc(cur.id)}. Complete the test after a night of 7–8 h to unlock this comparison.</p>`;
+  else h+=`<p class='muted small'>Your ratings today minus your average on ${base.length} baseline night(s), next to the change the study found for your sleep range.</p>`+cmpTable(cmp(base,[cur]));
+  el.innerHTML=h;
+}
+function hist(){
+  const id=($('#hid').value||'anon').trim(),a=load().filter(r=>okR(r)&&r.id===id),o=$('#hOut');
+  if(!a.length){o.innerHTML=`<div class='card'><p class='muted'>No records for participant ${esc(id)}.</p></div>`;return}
+  const base=a.filter(r=>r.bin===4),oth=a.filter(r=>r.bin!==4),last=a.slice(-14);
+  let h=`<div class='card'><div class='grid'>`+[[a.length,'nights recorded'],[base.length,'baseline nights (7–8 h)'],[fmt(mn(a.map(r=>r.tst_h)))+' h','mean sleep'],[a.filter(r=>r.tst_h<=6).length,'nights of 6 h or less']].map(s=>`<div><div class='tst' style='font-size:2rem'>${s[0]}</div><div class='muted small'>${s[1]}</div></div>`).join('')+`</div></div>`;
+  h+=`<div class='card'><h3>Compared with baseline</h3>`+(base.length&&oth.length?`<p class='muted small'>Average of all non-baseline nights against the average of ${base.length} baseline night(s).</p>`+cmpTable(cmp(base,oth)):`<p class='muted small'>The comparison needs at least one baseline night (7–8 h) and one night outside that range.</p>`)+`</div>`;
+  const lb=r=>r.date.slice(5,10);
+  h+=`<div class='card'><h3>Hours of sleep, last nights</h3><p class='muted small'>Red: 6 h or less. Amber: 6–7 h. Green: more than 7 h.</p>`+bars(last.map(r=>({l:lb(r),v:r.tst_h,c:r.bin<3?'var(--bad)':r.bin===3?'var(--warn)':'var(--good)'})),{min:0,max:10,t:'Hours of sleep by record',d:1,td:0})+`</div>`;
+  h+=`<div class='card'><h3>Stress, last nights</h3><p class='muted small'>Scale 0–10; higher means more stress.</p>`+bars(last.map(r=>({l:lb(r),v:r.stress,c:'var(--accent)'})),{min:0,max:10,t:'Stress by record',d:1,td:0})+`</div>`;
+  o.innerHTML=h;
+}
+$('#hGo').onclick=hist;
+$('#tHist').onclick=()=>{if(!$('#hid').value)$('#hid').value=$('#pid').value;hist();show(7)};
+$('#tTest').onclick=()=>show(0);
+$('#tDash').onclick=dash;
+$('#tData').onclick=()=>{panel();show(5)};
+$('#dBack').onclick=()=>show(0);
+show(0);calc();
+</script>
+</body>
+</html>
