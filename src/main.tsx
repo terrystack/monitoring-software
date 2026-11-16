@@ -7,6 +7,7 @@ import App from './App.tsx';
 import { cargarConfig } from './config/esquemas';
 import { configEnIdioma } from './config/idioma';
 import { useAyni } from './estado/store';
+import { Analytics } from '@vercel/analytics/react';
 import './index.css';
 
 const resultadoConfig = cargarConfig();
@@ -17,6 +18,7 @@ if (resultadoConfig.ok) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <Analytics />
     <App resultadoConfig={resultadoConfig} />
   </StrictMode>,
 );
