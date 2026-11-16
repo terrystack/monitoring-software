@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { LogIn } from 'lucide-react';
 
 interface Props {
@@ -13,6 +13,8 @@ interface Estrella {
   opacidad: number;
   difuminado: number;
   brillo: number;
+  /** Profundidad en el eje Z: las estrellas cercanas se desplazan más que las lejanas. */
+  profundidad: number;
 }
 
 /** Generador pseudoaleatorio con semilla para que el cielo estrellado sea estable. */
@@ -39,6 +41,7 @@ function crearEstrellas(cantidad: number): Estrella[] {
       opacidad: 0.25 + azar() * (grande ? 0.75 : 0.5),
       difuminado: grande ? 1.5 + azar() * 1.5 : 0.3 + azar() * 0.7,
       brillo: grande ? 10 + azar() * 12 : 3 + azar() * 4,
+      profundidad: -60 - azar() * 340,
     };
   });
 }
@@ -48,6 +51,32 @@ export function InicioSesion({ onEntrar }: Props) {
   const estrellas = useMemo(() => crearEstrellas(120), []);
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const cieloRef = useRef<HTMLDivElement>(null);
+
+  // Paralaje 3D: el cielo estrellado rota levemente siguiendo al puntero.
+  useEffect(() => {
+    const cielo = cieloRef.current;
+    if (!cielo) return;
+
+    let frame = 0;
+    const mover = (e: MouseEvent) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        cielo.style.setProperty('--giro-x', `${(-y * 7).toFixed(2)}deg`);
+        cielo.style.setProperty('--giro-y', `${(x * 7).toFixed(2)}deg`);
+      });
+    };
+
+    window.addEventListener('mousemove', mover);
+    return () => {
+      window.removeEventListener('mousemove', mover);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   const enviar = (e: FormEvent) => {
     e.preventDefault();
@@ -55,7 +84,10 @@ export function InicioSesion({ onEntrar }: Props) {
   };
 
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden bg-fondo-profundo">
+    <div
+      className="relative flex h-full items-center justify-center overflow-hidden bg-fondo-profundo"
+      style={{ perspective: '900px' }}
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-fondo-profundo via-[#070b1c] to-fondo-medio"
@@ -69,7 +101,16 @@ export function InicioSesion({ onEntrar }: Props) {
             'radial-gradient(50% 40% at 82% 82%, rgba(99,102,241,0.12), transparent 72%)',
         }}
       />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+      <div
+        ref={cieloRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 transition-transform duration-200 ease-out"
+        style={{
+          transform: 'rotateX(var(--giro-x, 0deg)) rotateY(var(--giro-y, 0deg))',
+          transformStyle: 'preserve-3d',
+          willChange: 'transform',
+        }}
+      >
         {estrellas.map((e, i) => (
           <span
             key={i}
@@ -82,6 +123,7 @@ export function InicioSesion({ onEntrar }: Props) {
               opacity: e.opacidad,
               filter: `blur(${e.difuminado}px)`,
               boxShadow: `0 0 ${e.brillo}px ${e.brillo / 2}px rgba(226,240,255,0.85)`,
+              transform: `translateZ(${e.profundidad}px)`,
             }}
           />
         ))}
